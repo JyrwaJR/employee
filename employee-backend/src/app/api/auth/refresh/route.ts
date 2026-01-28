@@ -2,7 +2,7 @@ import { NextRequest } from "next/server";
 import { handleApiErrors } from "@src/utils/errors/handleApiErrors";
 import { UnauthorizedError } from "@src/utils/errors/unAuthError";
 import { TokenServices } from "@src/services/tokens";
-import { JWT } from "@src/libs/auth/auth/jwt";
+import { JWT } from "@src/libs/auth/jwt";
 import { SuccessResponse } from "@src/utils/next-response";
 import { TokenSchema } from "@src/utils/validation/token";
 

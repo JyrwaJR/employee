@@ -3,7 +3,8 @@ import { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { logger } from "../logger";
 
 import axiosInstance from "../api";
-import { MetaT } from "@/src/types/meta";
+
+import { MetaT } from "../../types/meta";
 
 export interface ApiResponse<T> {
   success: boolean;

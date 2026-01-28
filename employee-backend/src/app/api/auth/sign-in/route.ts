@@ -5,7 +5,7 @@ import { NextRequest } from "next/server";
 import { AuthServices } from "@services/auth";
 import { BcryptService } from "@src/libs/auth/bcrypt";
 import { TokenServices } from "@src/services/tokens";
-import { JWT } from "@src/libs/auth/auth/jwt";
+import { JWT } from "@src/libs/auth/jwt";
 
 export async function POST(req: NextRequest) {
   try {
