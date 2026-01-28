@@ -1,0 +1,67 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Production builds
+dist/
+build/
+.next/
+.expo/
+.expo-shared/
+
+# Environment variables
+.env*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+*.lcov
+
+# IDEs
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Turborepo
+.turbo/
+
+# Temporary Metro/Expo
+tmp/
+__temp__
+
+# iOS/Android specific (employee-mobile)
+apps/employee-mobile/.expo/
+apps/employee-mobile/ios/build/
+apps/employee-mobile/android/app/build/
+apps/employee-mobile/android/.gradle/
+apps/employee-mobile/android/app/build/
+apps/employee-mobile/node_modules/
+
+# Next.js specific (employee-backend)  
+apps/employee-backend/.next/
+apps/employee-backend/out/
+apps/employee-backend/node_modules/
+
+# Per-app local overrides (optional, create these too)
+employee-mobile/.gitignore
+employee-backend/.gitignore
+generated

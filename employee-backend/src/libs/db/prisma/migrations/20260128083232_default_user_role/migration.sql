@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "User" ALTER COLUMN "role" SET DEFAULT 'USER',
+ALTER COLUMN "auth_id" DROP NOT NULL;

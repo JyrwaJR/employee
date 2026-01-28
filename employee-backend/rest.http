@@ -1,0 +1,57 @@
+@refresh_token="$2b$14$iaW2wRQSNhaXJVslfVs3Zu/9RDIWapaArR4ihMURIGSMpxTvNpidy"
+@access_token=eyJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOiI2YmIyZmVlOS1iMzEyLTRhMDMtOGYxYy1lODM1MjNkOTM1NTEiLCJleHAiOjE3Njk2MDQ2NDZ9.1w9t0aN-CkuXMFTv0K-0eKmPWz75hQWRIBA3Yg3LZQk
+
+### 
+
+# @name Sign In
+
+POST {{NEXT_PUBLIC_API_URL}}/auth/sign-in HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "1f6w0e@example.com",
+    "password": "password2C@"
+}
+
+
+### 
+
+# @name Sign up
+
+POST {{NEXT_PUBLIC_API_URL}}/auth/sign-up HTTP/1.1
+Content-Type: application/json
+
+{
+  "first_name":"Harrison",
+    "last_name":"jurwa",
+    "email": "1f6w0e@example.com",
+    "password": "password2C@"
+}
+
+### 
+
+# @name refresh token 
+
+POST {{NEXT_PUBLIC_API_URL}}/auth/refresh HTTP/1.1
+Content-Type: application/json
+
+{
+    "refresh_token": {{refresh_token}}
+}
+
+
+### 
+
+# @name get me
+
+GET {{NEXT_PUBLIC_API_URL}}/auth/me HTTP/1.1
+Content-Type: application/json
+Aukhorization: Bearer {{access_token}}
+
+
+### 
+
+# @name get me
+
+POST {{NEXT_PUBLIC_API_URL}}/auth/logout HTTP/1.1
+Content-Type: application/json
