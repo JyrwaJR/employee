@@ -29,7 +29,18 @@ export const SignUpSchema = LoginSchema.extend({
     .string()
     .min(1, "Last name is required")
     .regex(/^[a-zA-Z]+$/, "Last name must only contain letters"),
+  confirm_password: passwordValidation,
   role: z
     .enum([$Enums.Role.USER, $Enums.Role.ADMIN, $Enums.Role.SUPER_ADMIN])
     .optional(),
-}).strict();
+})
+  .superRefine(({ password, confirm_password }, ctx) => {
+    if (password !== confirm_password) {
+      ctx.addIssue({
+        code: "custom",
+        message: "Passwords do not match",
+        path: ["confirm_password", "password"],
+      });
+    }
+  })
+  .strict();
