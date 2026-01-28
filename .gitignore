@@ -65,3 +65,4 @@ apps/employee-backend/node_modules/
 employee-mobile/.gitignore
 employee-backend/.gitignore
 generated
+.vercel

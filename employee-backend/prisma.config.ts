@@ -3,10 +3,12 @@ import "dotenv/config";
 
 export default defineConfig({
   schema: "./src/libs/db/prisma/schema.prisma",
+  engine: "classic",
   migrations: {
     path: "./src/libs/db/prisma/migrations/",
   },
   datasource: {
     url: env("DATABASE_URL"),
+    directUrl: env("DIRECT_URL"),
   },
 });
