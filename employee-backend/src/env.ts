@@ -12,9 +12,6 @@ export const env = createEnv({
     REFRESH_TOKEN_TTL: z.coerce.number().min(1),
     NODE_ENV: z.string().min(1),
   },
-  client: {
-    NEXT_PUBLIC_API_URL: z.url().min(1),
-  },
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     AES_KEY: process.env.AES_KEY,
@@ -23,7 +20,6 @@ export const env = createEnv({
     ACCESS_TOKEN_TTL: process.env.ACCESS_TOKEN_TTL,
     REFRESH_TOKEN_TTL: process.env.REFRESH_TOKEN_TTL,
     NODE_ENV: process.env.NODE_ENV,
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
     SALT: process.env.SALT,
   },
 });
