@@ -1,7 +1,12 @@
+import { ProviderWrapper } from '../components/provider';
 import './global.css';
 
 import { Stack } from 'expo-router';
 
 export default function Layout() {
-  return <Stack />;
+  return (
+    <ProviderWrapper>
+      <Stack />
+    </ProviderWrapper>
+  );
 }

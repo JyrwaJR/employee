@@ -1,5 +1,5 @@
-import { fetch } from 'react-native-ssl-pinning';
-// import { getAccessToken } from '../auth/tokenManager';
+import { fetch as sslFetch } from 'react-native-ssl-pinning';
+import z from 'zod';
 
 /* ================================
    Config
@@ -8,8 +8,10 @@ import { fetch } from 'react-native-ssl-pinning';
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL!;
 const TIMEOUT = 10000;
 
-if (!BASE_URL.startsWith('https://')) {
-  throw new Error('API must use HTTPS');
+if (!BASE_URL?.startsWith('https://')) {
+  // Warn instead of throw in DEV to avoid crashing if env is missing
+  if (__DEV__) console.warn('API URL is missing or not HTTPS');
+  else throw new Error('API must use HTTPS');
 }
 
 /* ================================
@@ -27,9 +29,10 @@ type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 type HeadersMap = Record<string, string>;
 
-interface PinningResponse {
+// Unified internal response shape to handle both fetch and ssl-pinning
+interface InternalResponse {
   status: number;
-  body: string;
+  body: string; // We will treat body as string for both initially
   headers: HeadersMap;
 }
 
@@ -58,8 +61,17 @@ const buildError = <T>(message: string, error?: unknown): ApiResponse<T> => ({
   error: typeof error === 'string' || typeof error === 'object' ? (error as any) : undefined,
 });
 
+const isValidUrl = (url: string): boolean => {
+  try {
+    z.string().url().parse(url);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 /* ================================
-   Core request (ssl-pinning safe)
+   Core Request
 ================================ */
 
 async function request<T>(
@@ -70,7 +82,7 @@ async function request<T>(
 ): Promise<ApiResponse<T>> {
   try {
     if (__DEV__) {
-      console.log(`[HTTP] ${method} =>`, path);
+      console.log(`[HTTP] ${method} => ${path}`);
     }
 
     // const token = await getAccessToken();
@@ -82,22 +94,74 @@ async function request<T>(
       ...extraHeaders,
     };
 
-    const raw = await withTimeout(
-      fetch(`${BASE_URL}${path}`, {
-        method,
-        timeoutInterval: TIMEOUT,
-        sslPinning: { certs: ['api_cert'] },
-        headers,
-        body: body ? JSON.stringify(body) : undefined,
-      }),
-      TIMEOUT
-    );
+    const url = `${BASE_URL}${path}`;
 
-    const response = raw as unknown as PinningResponse;
+    if (!isValidUrl(url)) {
+      return buildError<T>('Invalid URL');
+    }
 
-    const json = parseJsonSafe<any>(response.body);
+    // ---------------------------------------------------------
+    //  SWITCH LOGIC: DEV (Standard Fetch) vs PROD (SSL Pinning)
+    // ---------------------------------------------------------
+    let internalResponse: InternalResponse;
 
-    if (response.status >= 400) {
+    try {
+      if (__DEV__) {
+        // --- 1. Standard Fetch (Dev Mode) ---
+        const raw = await withTimeout(
+          fetch(url, {
+            method,
+            headers,
+            body: body ? JSON.stringify(body) : undefined,
+          }),
+          TIMEOUT
+        );
+
+        const text = await raw.text();
+
+        // Convert standard Headers to plain object
+        const responseHeaders: HeadersMap = {};
+        raw.headers.forEach((value, key) => {
+          responseHeaders[key] = value;
+        });
+
+        internalResponse = {
+          status: raw.status,
+          body: text,
+          headers: responseHeaders,
+        };
+      } else {
+        // --- 2. SSL Pinning Fetch (Production) ---
+        // Note: We use 'sslFetch' renamed import here
+        const raw = await withTimeout(
+          sslFetch(url, {
+            method,
+            timeoutInterval: TIMEOUT,
+            sslPinning: { certs: ['api_cert'] },
+            headers,
+            body: body ? JSON.stringify(body) : undefined,
+          }),
+          TIMEOUT
+        );
+
+        internalResponse = {
+          status: raw.status,
+          // ssl-pinning returns 'bodyString' or 'body' depending on version/platform
+          body: (raw as any).bodyString || raw.json(),
+          headers: raw.headers,
+        };
+      }
+    } catch (error: any) {
+      return buildError<T>(error.message || 'Request timeout');
+    }
+
+    // ---------------------------------------------------------
+    //  Unified Response Handling
+    // ---------------------------------------------------------
+
+    const json = parseJsonSafe<any>(internalResponse.body);
+
+    if (internalResponse.status >= 400) {
       return buildError<T>(json?.message ?? 'Request failed', json?.error ?? json);
     }
 
@@ -110,7 +174,6 @@ async function request<T>(
     if (error instanceof Error) {
       return buildError<T>(error.message);
     }
-
     return buildError<T>('Something went wrong');
   }
 }

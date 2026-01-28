@@ -1,10 +1,10 @@
 import { Stack, Link } from 'expo-router';
 
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 
-import { Button } from '@/src/components/Button';
 import { Container } from '@/src/components/Container';
 import { ScreenContent } from '@/src/components/ScreenContent';
+import { ModernButton } from '../components/ui/button';
 
 export default function Home() {
   return (
@@ -12,8 +12,8 @@ export default function Home() {
       <Stack.Screen options={{ title: 'Home' }} />
       <Container>
         <ScreenContent path="app/index.tsx" title="Home"></ScreenContent>
-        <Link href={{ pathname: '/details', params: { name: 'Dan' } }} asChild>
-          <Button title="Show Details" />
+        <Link href="/auth/sign-up">
+          <Text>Click</Text>
         </Link>
       </Container>
     </View>
