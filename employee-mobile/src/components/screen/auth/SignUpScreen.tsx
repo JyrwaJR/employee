@@ -1,14 +1,7 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Alert,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  Platform,
-  ScrollView,
-} from 'react-native';
-import { Link } from 'expo-router';
+import { View, Text, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Link, useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -16,34 +9,37 @@ import { useMutation } from '@tanstack/react-query';
 import { SignUpSchema } from '@utils/validiation/auth';
 import { ModernButton } from '../../ui/button';
 import { ModernInput } from '../../ui/input';
+import { http } from '@/src/utils/http';
+import { AUTH_ENDPOINTS } from '@/src/libs/endpoints/auth';
+import { toast } from 'sonner-native';
 
 // --- 2. Zod Validation Schema (Updated) ---
 type SignUpFormInputs = z.infer<typeof SignUpSchema>;
 
-// --- 3. Mock API Call ---
-const signUpApi = async (data: SignUpFormInputs) => {
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-  console.log('Registering:', data);
-  return { success: true, userId: 'new-user-123' };
-};
-
 export const SignUpScreen = () => {
+  const router = useRouter();
+
   const signUpMutation = useMutation({
-    mutationFn: signUpApi,
-    onSuccess: () => Alert.alert('Account Created', 'Please check your email to verify.'),
-    onError: (err: Error) => Alert.alert('Error', err.message),
+    mutationFn: (data: SignUpFormInputs) => http.post(AUTH_ENDPOINTS.POST_SIGN_UP, data),
+    onSuccess: (data) => {
+      if (data.success) {
+        router.replace('/auth');
+        toast.success(data.message);
+        return data;
+      }
+      toast.error(data.message);
+      return data;
+    },
   });
 
   const { control, handleSubmit } = useForm<SignUpFormInputs>({
     resolver: zodResolver(SignUpSchema),
   });
 
-  const onSubmit = (data: SignUpFormInputs) => {
-    signUpMutation.mutate(data);
-  };
+  const onSubmit = (data: SignUpFormInputs) => signUpMutation.mutate(data);
 
   return (
-    <SafeAreaView className="flex-1">
+    <SafeAreaView className="flex-1 bg-white">
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="flex-1">
@@ -95,7 +91,7 @@ export const SignUpScreen = () => {
               name="password"
               label="Password"
               placeholder="Create a password"
-              // secureTextEntry
+              secureTextEntry
             />
 
             <ModernInput

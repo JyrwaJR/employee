@@ -31,11 +31,11 @@ export async function POST(req: NextRequest) {
 
     const authId = tokenRecord.auth_id;
 
-    const hashNewRefreshToken = await JWT.signRefreshToken({ userId });
+    const newRefreshToken = await JWT.signRefreshToken({ userId });
 
     await TokenServices.createToken({
       user_id: userId,
-      hash: hashNewRefreshToken,
+      hash: newRefreshToken,
       auth_id: authId,
     });
 
@@ -44,9 +44,9 @@ export async function POST(req: NextRequest) {
     return SuccessResponse({
       data: {
         access_token: newAccessToken,
-        refresh_token: hashNewRefreshToken,
+        refresh_token: newRefreshToken,
       },
-      message: "Successful refresh",
+      message: "Successfull refresh",
     });
   } catch (error) {
     return handleApiErrors(error);

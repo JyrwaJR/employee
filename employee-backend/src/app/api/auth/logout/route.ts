@@ -2,12 +2,13 @@ import { TokenServices } from "@src/services/tokens";
 import { handleApiErrors } from "@src/utils/errors/handleApiErrors";
 import { UnauthorizedError } from "@src/utils/errors/unAuthError";
 import { SuccessResponse } from "@src/utils/next-response";
+import { TokenSchema } from "@src/utils/validation/token";
 import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {
-    const authHeader = req.headers.get("authorization");
-    const refreshToken = authHeader?.split(" ")[1];
+    const body = TokenSchema.parse(await req.json());
+    const refreshToken = body.refresh_token;
 
     if (!refreshToken) throw new UnauthorizedError("Unauthorized");
 

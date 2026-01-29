@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -19,16 +19,34 @@ import { LoginSchema } from '@utils/validiation/auth';
 import { AUTH_ENDPOINTS } from '@/src/libs/endpoints/auth';
 import { http } from '@/src/utils/http';
 import { toast } from 'sonner-native';
+import { TokenStoreManager } from '@/src/libs/stores/auth';
+import { useAuth } from '@/src/hooks/auth/useAuth';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
-// --- 6. Main Login Screen ---
+type LoginResT = {
+  created_at: string;
+  first_name: string;
+  last_name: string;
+  refresh_token: string;
+  role: string;
+  updated_at: string;
+};
 export const LoginScreen = () => {
+  const { refresh } = useAuth();
+
   const loginMutation = useMutation({
-    mutationFn: (data: LoginFormInputs) => http.post(AUTH_ENDPOINTS.POST_SIGN_IN, data),
-    onSuccess: (data) => {
+    mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(AUTH_ENDPOINTS.POST_SIGN_IN, data),
+    onSuccess: async (data) => {
       if (data.success) {
+        const response = data.data;
+
+        if (data.token && response?.refresh_token) {
+          await TokenStoreManager.addToken(data.token);
+          await TokenStoreManager.addRefreshToken(response?.refresh_token);
+        }
         toast.success('Signed in successfully.');
+        refresh();
         return data;
       }
       toast.error(data.message);

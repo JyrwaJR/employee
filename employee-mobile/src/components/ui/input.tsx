@@ -4,7 +4,7 @@ import { Controller, UseControllerProps } from 'react-hook-form';
 import { cn } from '@/src/libs/cn';
 
 interface InputProps {
-  control: UseControllerProps['control'];
+  control: any;
   name: string;
   placeholder: string;
   secureTextEntry?: boolean;

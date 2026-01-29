@@ -40,6 +40,8 @@ export const JWT = {
   },
 
   async hash(token: string) {
-    return crypto.createHash("sha256").update(token).digest("hex");
+    const salt = crypto.randomBytes(16).toString("hex");
+    const content = token + salt;
+    return crypto.createHash("sha256").update(content).digest("hex");
   },
 };
