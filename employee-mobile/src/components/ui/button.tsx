@@ -7,9 +7,16 @@ interface ButtonProps {
   title: string;
   variant?: 'primary' | 'google';
   isLoading?: boolean;
+  className?: string;
 }
 
-export const ModernButton = ({ onPress, title, variant = 'primary', isLoading }: ButtonProps) => {
+export const ModernButton = ({
+  onPress,
+  className,
+  title,
+  variant = 'primary',
+  isLoading,
+}: ButtonProps) => {
   const isGoogle = variant === 'google';
 
   return (
@@ -20,7 +27,8 @@ export const ModernButton = ({ onPress, title, variant = 'primary', isLoading }:
       className={cn(
         'flex-row items-center justify-center rounded-2xl py-4 shadow-sm',
         isGoogle ? 'border border-gray-200 bg-white' : 'bg-gray-900',
-        isLoading && 'opacity-70'
+        isLoading && 'opacity-70',
+        className
       )}>
       {isLoading ? (
         <ActivityIndicator color={isGoogle ? '#000' : '#FFF'} />

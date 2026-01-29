@@ -1,8 +1,11 @@
 import { cn } from '@/src/libs/cn';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, StatusBar, FlatList } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { Container } from '../../common/Container';
+import { StatBox } from '../../common/StatsBox';
+import { Stack } from 'expo-router';
+import { CustomHeader } from '../../common/CustomHeader';
+import { DrawerToggleButton } from '@react-navigation/drawer';
 
 // --- Mock Data ---
 const EMPLOYEES = [
@@ -48,25 +51,6 @@ const STATS = [
   { label: 'Active Now', value: '38', color: 'bg-green-50 text-green-600' },
   { label: 'On Leave', value: '4', color: 'bg-orange-50 text-orange-600' },
 ];
-
-// --- Components ---
-
-const StatCard = ({
-  label,
-  value,
-  colorClass,
-}: {
-  label: string;
-  value: string;
-  colorClass: string;
-}) => (
-  <View className="mr-3 flex-1 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm last:mr-0">
-    <Text className="mb-1 text-xs font-medium uppercase tracking-wider text-gray-500">{label}</Text>
-    <View className={cn('self-start rounded-lg px-2 py-1', colorClass.split(' ')[0])}>
-      <Text className={cn('text-2xl font-bold', colorClass.split(' ')[1])}>{value}</Text>
-    </View>
-  </View>
-);
 
 const EmployeeCard = ({ item }: { item: (typeof EMPLOYEES)[0] }) => {
   // Status Color Logic
@@ -114,7 +98,6 @@ export const HomeScreen = () => {
   return (
     <Container className="flex-1 bg-gray-50">
       <StatusBar barStyle="dark-content" />
-
       {/* Top Header Section */}
       <View className="z-10 rounded-b-[32px] bg-white px-6 pb-6 pt-4 shadow-sm">
         {/* Nav Bar */}
@@ -146,7 +129,7 @@ export const HomeScreen = () => {
         {/* Stats Row */}
         <View className="mb-8 flex-row gap-x-2">
           {STATS.map((stat, index) => (
-            <StatCard key={index} label={stat.label} value={stat.value} colorClass={stat.color} />
+            <StatBox key={index} label={stat.label} value={stat.value} color={stat.color} />
           ))}
         </View>
 
@@ -169,7 +152,7 @@ export const HomeScreen = () => {
       </View>
 
       {/* Floating Action Button (FAB) */}
-      <View className="absolute bottom-8 left-6 right-6">
+      <View className="absolute bottom-2 left-6 right-6">
         <TouchableOpacity
           activeOpacity={0.9}
           className="flex-row items-center justify-center rounded-2xl bg-gray-900 py-4 shadow-lg">

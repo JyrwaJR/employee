@@ -11,20 +11,25 @@ import {
 } from 'react-native';
 import { Container } from '../../common/Container';
 import { cn } from '@/src/libs/cn';
+import { useMutation } from '@tanstack/react-query';
+import { http } from '@/src/utils/http';
+import { AUTH_ENDPOINTS } from '@/src/libs/endpoints/auth';
+import { TokenStoreManager } from '@/src/libs/stores/auth';
+import { toast } from 'sonner-native';
+import { useAuth } from '@/src/hooks/auth/useAuth';
+import { StatBox } from '../../common/StatsBox';
 
 // --- Mock Data ---
 const USER = {
-  name: 'Amit Kumar Sharma',
+  name: 'John doe',
   role: 'Senior Technical Officer',
   id: 'GOV-2024-8821',
-  avatar: 'https://i.pravatar.cc/300?u=amit', // Placeholder image
+  avatar: 'https://i.pravatar.cc/300?u=john', // Placeholder image
   email: 'amit.sharma@nic.in',
   phone: '+91 98765 43210',
   department: 'Ministry of Electronics & IT',
   location: 'New Delhi',
 };
-
-// --- Components ---
 
 /**
  * A reusable row for settings options (e.g., "Change Password")
@@ -77,22 +82,37 @@ const MenuRow = ({
 /**
  * Small stat box for "Leaves", "Attendance", etc.
  */
-const StatBox = ({ label, value, color }: { label: string; value: string; color: string }) => (
-  <View className="mx-1.5 flex-1 items-center rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
-    <Text className={cn('mb-1 text-xl font-bold', color)}>{value}</Text>
-    <Text className="text-xs font-medium uppercase tracking-wider text-gray-400">{label}</Text>
-  </View>
-);
 
 // --- Main Screen ---
 
 export const ProfileScreen = () => {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
+  const { refresh } = useAuth();
+
+  const { mutate } = useMutation({
+    mutationFn: (refresh_token: string) => http.post(AUTH_ENDPOINTS.POST_LOGOUT, { refresh_token }),
+    onSuccess: async (data) => {
+      if (data.success) {
+        await TokenStoreManager.removeToken();
+        await TokenStoreManager.removeRefreshToken();
+        refresh();
+        return data;
+      }
+      toast.error(data.message);
+    },
+  });
+
+  const onLogout = async () => {
+    const refreshToken = await TokenStoreManager.getRefreshToken();
+    if (refreshToken) {
+      mutate(refreshToken);
+    }
+  };
 
   const handleLogout = () => {
     Alert.alert('Log Out', 'Are you sure you want to log out?', [
       { text: 'Cancel', style: 'cancel' },
-      { text: 'Log Out', style: 'destructive', onPress: () => console.log('Logged out') },
+      { text: 'Log Out', style: 'destructive', onPress: () => onLogout() },
     ]);
   };
 
@@ -213,7 +233,6 @@ export const ProfileScreen = () => {
         {/* Footer */}
         <View className="items-center pb-8">
           <Text className="text-xs text-gray-400">v1.2.4 (Build 405)</Text>
-          <Text className="mt-1 text-[10px] text-gray-300">Made with 💙 by NIC</Text>
         </View>
       </ScrollView>
     </Container>

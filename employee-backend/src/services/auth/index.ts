@@ -26,7 +26,6 @@ export const AuthServices = {
         user: {
           omit: {
             auth_id: true,
-            id: true,
           },
         },
       },

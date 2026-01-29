@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, StatusBar, Share } from 'react-native';
 import { Container } from '../../common/Container';
 import { cn } from '@/src/libs/cn';
+import { Stack } from 'expo-router';
 
 // --- Mock Data: Central Govt Employee (Level 10) ---
 const SALARY_DATA = {
@@ -92,18 +93,16 @@ const SectionHeader = ({ title, icon }: { title: string; icon: string }) => (
   </View>
 );
 
-// --- Main Screen ---
-
 export const PayslipScreen = () => {
-  const handleDownload = () => {
-    Share.share({
-      message: `Salary Slip for ${SALARY_DATA.month} generated. Net Pay: ₹${NET_PAY}`,
-    });
-  };
-
   return (
-    <Container className="flex-1 bg-gray-50">
-      <StatusBar barStyle="dark-content" />
+    <Container className="flex-1">
+      <Stack.Screen
+        options={{
+          title: 'Payslip',
+          headerShown: true,
+          headerBackButtonDisplayMode: 'generic',
+        }}
+      />
       <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
         {/* Government Header Block */}
         <View className="mb-8 items-center">
@@ -183,15 +182,6 @@ export const PayslipScreen = () => {
           This is a computer-generated payslip. No signature is required. Generated via NIC e-HRMS.
         </Text>
       </ScrollView>
-
-      {/* Floating Action Button for PDF */}
-      <View className="absolute bottom-6 right-6">
-        <TouchableOpacity
-          activeOpacity={0.9}
-          className="h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 shadow-lg shadow-blue-600/30">
-          <Text className="text-xl text-white">⬇️</Text>
-        </TouchableOpacity>
-      </View>
     </Container>
   );
 };

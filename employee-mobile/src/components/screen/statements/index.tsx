@@ -151,7 +151,7 @@ export const StatementScreen = () => {
       />
 
       {/* Summary Widget (Bottom) */}
-      <View className="absolute bottom-6 left-6 right-6 flex-row items-center justify-between rounded-2xl bg-gray-900 p-4 shadow-lg">
+      <View className="absolute bottom-2 left-6 right-6 flex-row items-center justify-between rounded-2xl bg-gray-900 p-4 shadow-lg">
         <View>
           <Text className="text-xs font-medium uppercase tracking-wider text-gray-400">
             YTD Earnings ({selectedYear})
