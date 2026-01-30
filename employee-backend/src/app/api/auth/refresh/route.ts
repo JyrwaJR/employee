@@ -8,11 +8,25 @@ import { TokenSchema } from "@src/utils/validation/token";
 
 export async function POST(req: NextRequest) {
   try {
-    // 3. Get refresh token from body/cookie (NOT Authorization header)
-    const { refresh_token } = TokenSchema.parse(await req.json()); // Expo sends in body
+    const { refresh_token } = TokenSchema.parse(await req.json());
 
     if (!refresh_token) {
       throw new UnauthorizedError("Refresh token required");
+    }
+
+    // check if someone is using the old refresh token
+    const isTokenRevoked = await TokenServices.getUnique({
+      where: { hash: refresh_token, is_revoked: true },
+    });
+
+    if (isTokenRevoked) {
+      // revoke all tokens seem like user is using the old refresh token
+      await TokenServices.updateMany({
+        where: { user_id: isTokenRevoked.user_id },
+        data: { is_revoked: true },
+      });
+
+      throw new UnauthorizedError("Unauthorized");
     }
 
     const tokenRecord = await TokenServices.getUnique({

@@ -23,7 +23,8 @@ Content-Type: application/json
   "first_name":"Harrison",
     "last_name":"jurwa",
     "email": "1f6w0e@example.com",
-    "password": "password2C@"
+    "password": "password2C@",
+    "confirm_password": "password2C@"
 }
 
 ### 
@@ -34,7 +35,7 @@ POST {{NEXT_PUBLIC_API_URL}}/auth/refresh HTTP/1.1
 Content-Type: application/json
 
 {
-    "refresh_token": "{{REFRESH_TOKEN}}"
+   "refresh_token": "{{REFRESH_TOKEN}}"
 }
 
 ### 
@@ -48,8 +49,35 @@ Authorization: Bearer {{ACCESS_TOKEN}}
 
 ### 
 
-# @name get me
+# @name logout 
 
 POST {{NEXT_PUBLIC_API_URL}}/auth/logout HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {{REFRESH_TOKEN}}
+
+{
+  "refresh_token": {{REFRESH_TOKEN}}
+}
+
+### 
+
+# @name employees
+
+GET {{NEXT_PUBLIC_API_URL}}/employees HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{ACCESS_TOKEN}}
+
+### 
+
+# @name unique employees
+
+GET {{NEXT_PUBLIC_API_URL}}/employees/ee535703-2dc5-4c2d-872b-67987a10139a
+Content-Type: application/json
+Authorization: Bearer {{ACCESS_TOKEN}}
+
+### 
+
+# @name  employees salary slip
+
+GET {{NEXT_PUBLIC_API_URL}}/employees/ee535703-2dc5-4c2d-872b-67987a10139a/salary
+Content-Type: application/json
+Authorization: Bearer {{ACCESS_TOKEN}}

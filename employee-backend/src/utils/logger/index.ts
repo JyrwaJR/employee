@@ -38,8 +38,6 @@ const formatData = (type: ErrorType, ...args: any[]): string => {
 
 // eslint-disable-next-line
 const logMethod = async (type: ErrorType, ...args: any[]): Promise<void> => {
-  const now = new Date().toISOString();
-
   if (process.env.NODE_ENV === "development") {
     console.log(formatData(type, ...args));
   }
@@ -61,19 +59,9 @@ const logMethod = async (type: ErrorType, ...args: any[]): Promise<void> => {
 
       if (type !== "LOG") {
         // Logging to server
-        // await addLogsToDB({
-        //   type,
-        //   content,
-        //   message,
-        //   isBackend: true,
-        //   timestamp: now,
-        // });
       }
     } catch (error) {
-      console.error("Failed to save logs to database", {
-        type,
-        error,
-      });
+      console.error("Failed to save logs to database");
     }
   }
 };

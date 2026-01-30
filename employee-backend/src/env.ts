@@ -11,8 +11,12 @@ export const env = createEnv({
     ACCESS_TOKEN_TTL: z.coerce.number().min(1),
     REFRESH_TOKEN_TTL: z.coerce.number().min(1),
     NODE_ENV: z.string().min(1),
+    UPSTASH_REDIS_REST_URL: z.string().min(1),
+    UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
   },
   runtimeEnv: {
+    UPSTASH_REDIS_REST_URL: process.env.UPSTASH_REDIS_REST_URL,
+    UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN,
     DATABASE_URL: process.env.DATABASE_URL,
     AES_KEY: process.env.AES_KEY,
     JWT_ACCESS_SECRET: process.env.JWT_ACCESS_SECRET,

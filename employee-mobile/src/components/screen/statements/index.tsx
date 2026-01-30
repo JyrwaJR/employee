@@ -3,7 +3,13 @@ import { View, Text, FlatList, TouchableOpacity, SafeAreaView, StatusBar } from 
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Container } from '../../common/Container';
-import { router } from 'expo-router';
+import { router, Stack } from 'expo-router';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@/src/hooks/auth/useAuth';
+import { LoadingScreen } from '../../common/LoadingScreen';
+import { http } from '@/src/utils/http';
+import { SalarySlip } from '@/src/types/employee';
+import { SALARY_ENDPOINTS } from '@/src/libs/endpoints/salary';
 
 // --- Utility ---
 function cn(...inputs: ClassValue[]) {
@@ -46,13 +52,7 @@ const YearFilter = ({
   </TouchableOpacity>
 );
 
-const HistoryCard = ({
-  item,
-  onPress,
-}: {
-  item: (typeof SALARY_HISTORY)[0];
-  onPress: () => void;
-}) => (
+const HistoryCard = ({ item, onPress }: { item: SalarySlip; onPress: () => void }) => (
   <TouchableOpacity
     activeOpacity={0.7}
     onPress={onPress}
@@ -62,27 +62,25 @@ const HistoryCard = ({
       <View
         className={cn(
           'mr-4 h-12 w-12 items-center justify-center rounded-xl',
-          item.status === 'Paid' ? 'bg-blue-50' : 'bg-orange-50'
+          item.status === 'PAID' ? 'bg-blue-50' : 'bg-orange-50'
         )}>
-        <Text className="text-xl">{item.status === 'Paid' ? '📄' : '⏳'}</Text>
+        <Text className="text-xl">{item.status === 'PAID' ? '📄' : '⏳'}</Text>
       </View>
 
       <View>
         <Text className="text-base font-bold text-gray-900">{item.month}</Text>
-        <Text className="text-xs font-medium text-gray-500">Credited on {item.date}</Text>
+        <Text className="text-xs font-medium text-gray-500">Credited on {item.created_at}</Text>
       </View>
     </View>
 
     {/* Right: Amount & Arrow */}
     <View className="items-end">
-      <Text className="text-base font-bold text-gray-900">
-        ₹{item.amount.toLocaleString('en-IN')}
-      </Text>
+      <Text className="text-base font-bold text-gray-900">₹{item.total_earnings}</Text>
       <View className="mt-1 flex-row items-center">
         <View
           className={cn(
             'mr-1.5 h-2 w-2 rounded-full',
-            item.status === 'Paid' ? 'bg-green-500' : 'bg-orange-400'
+            item.status === 'PAID' ? 'bg-green-500' : 'bg-orange-400'
           )}
         />
         <Text className="text-xs font-medium text-gray-400">{item.status}</Text>
@@ -91,16 +89,40 @@ const HistoryCard = ({
   </TouchableOpacity>
 );
 
-export const StatementScreen = () => {
+type Props = {
+  idx?: string;
+  isTab?: boolean;
+};
+
+export const StatementScreen = ({ idx, isTab }: Props) => {
+  const { user } = useAuth();
   const [selectedYear, setSelectedYear] = useState('2026');
 
-  // Filter logic (simple example)
-  const filteredData = SALARY_HISTORY.filter((item) => item.year === selectedYear);
+  const id = idx ? idx : user?.employee_id || '';
+
+  const { data, isFetching } = useQuery({
+    queryKey: ['employee salary', id],
+    queryFn: () => http.get<SalarySlip[]>(SALARY_ENDPOINTS.GET_EMPLOYEEE_SALARY.replace(':id', id)),
+    select: (data) => data.data,
+    enabled: !!id,
+  });
+
+  const filteredData = data?.filter((item) => item.year.toString() === selectedYear) || [];
+
+  if (isFetching) return <LoadingScreen />;
 
   return (
     <Container className="flex-1 bg-gray-50">
       <StatusBar barStyle="dark-content" />
-
+      {!isTab && (
+        <Stack.Screen
+          options={{
+            title: 'History',
+            headerBackButtonDisplayMode: 'generic',
+            headerShown: true,
+          }}
+        />
+      )}
       {/* Header */}
       <View className="z-10 rounded-b-[32px] bg-white px-6 pb-6 pt-2 shadow-sm">
         <View className="mb-6 flex-row items-center justify-between">
@@ -144,7 +166,7 @@ export const StatementScreen = () => {
           <HistoryCard
             item={item}
             onPress={() => {
-              router.push(`/statements/${item.id}`);
+              router.push(`/employees/salary/${item.id}`);
             }}
           />
         )}
@@ -157,7 +179,7 @@ export const StatementScreen = () => {
             YTD Earnings ({selectedYear})
           </Text>
           <Text className="text-lg font-bold text-white">
-            ₹{filteredData.reduce((acc, curr) => acc + curr.amount, 0).toLocaleString('en-IN')}
+            {data?.reduce((acc, item) => acc + parseInt(item.total_earnings), 0)}
           </Text>
         </View>
         <TouchableOpacity className="rounded-lg bg-white/10 px-4 py-2">

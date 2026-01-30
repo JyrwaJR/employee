@@ -19,18 +19,6 @@ import { toast } from 'sonner-native';
 import { useAuth } from '@/src/hooks/auth/useAuth';
 import { StatBox } from '../../common/StatsBox';
 
-// --- Mock Data ---
-const USER = {
-  name: 'John doe',
-  role: 'Senior Technical Officer',
-  id: 'GOV-2024-8821',
-  avatar: 'https://i.pravatar.cc/300?u=john', // Placeholder image
-  email: 'amit.sharma@nic.in',
-  phone: '+91 98765 43210',
-  department: 'Ministry of Electronics & IT',
-  location: 'New Delhi',
-};
-
 /**
  * A reusable row for settings options (e.g., "Change Password")
  */
@@ -87,6 +75,7 @@ const MenuRow = ({
 
 export const ProfileScreen = () => {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
+  const { user } = useAuth();
   const { refresh } = useAuth();
 
   const { mutate } = useMutation({
@@ -117,15 +106,15 @@ export const ProfileScreen = () => {
   };
 
   return (
-    <Container className="flex-1 bg-gray-50">
+    <Container className="flex-1">
       <StatusBar barStyle="dark-content" />
 
       {/* --- 1. Header Section (Sticky-ish look) --- */}
-      <View className="z-10 rounded-b-[32px] bg-white px-6 pb-8 pt-2 shadow-sm">
+      <View className="z-10 rounded-b-[32px] bg-white px-6 pb-8 pt-5 shadow-sm">
         <View className="items-center">
           <View className="relative">
             <Image
-              source={{ uri: USER.avatar }}
+              source={{ uri: user?.avatar }}
               className="mb-4 h-24 w-24 rounded-full border-4 border-gray-50"
             />
             <TouchableOpacity className="absolute bottom-4 right-0 h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-gray-900">
@@ -134,11 +123,11 @@ export const ProfileScreen = () => {
           </View>
 
           <Text className="text-center text-2xl font-bold tracking-tight text-gray-900">
-            {USER.name}
+            {user?.first_name}
           </Text>
-          <Text className="mb-1 text-sm font-medium text-blue-600">{USER.role}</Text>
+          <Text className="mb-1 text-sm font-medium text-blue-600">{user?.role}</Text>
           <View className="mt-2 rounded-full bg-gray-100 px-3 py-1">
-            <Text className="text-xs font-medium text-gray-500">ID: {USER.id}</Text>
+            <Text className="text-xs font-medium text-gray-500">ID: {user?.id}</Text>
           </View>
         </View>
 
@@ -163,7 +152,7 @@ export const ProfileScreen = () => {
               </View>
               <View>
                 <Text className="text-xs text-gray-400">Official Email</Text>
-                <Text className="text-sm font-medium text-gray-900">{USER.email}</Text>
+                <Text className="text-sm font-medium text-gray-900">{user?.email}</Text>
               </View>
             </View>
             <View className="mb-4 flex-row items-center">
@@ -172,7 +161,7 @@ export const ProfileScreen = () => {
               </View>
               <View>
                 <Text className="text-xs text-gray-400">Phone</Text>
-                <Text className="text-sm font-medium text-gray-900">{USER.phone}</Text>
+                <Text className="text-sm font-medium text-gray-900">{user?.phone}</Text>
               </View>
             </View>
             <View className="flex-row items-center">
@@ -181,7 +170,7 @@ export const ProfileScreen = () => {
               </View>
               <View>
                 <Text className="text-xs text-gray-400">Department</Text>
-                <Text className="text-sm font-medium text-gray-900">{USER.department}</Text>
+                <Text className="text-sm font-medium text-gray-900">{user?.department}</Text>
               </View>
             </View>
           </View>

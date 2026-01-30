@@ -1,5 +1,5 @@
 import EmployeeDetailScreen from '@/src/components/screen/employee/EmployeeDetails';
-import { Stack } from 'expo-router';
+import { Stack, useLocalSearchParams } from 'expo-router';
 
 export default function page() {
   return (

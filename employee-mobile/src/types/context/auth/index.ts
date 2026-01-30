@@ -4,6 +4,11 @@ export type UserT = {
   first_name: string;
   last_name: string;
   role: 'SUPER_ADMIN' | 'ADMIN' | 'USER';
+  avatar: string;
+  location: string;
+  phone: string;
+  department: string;
+  employee_id: string;
 };
 
 export type AuthContextT = {

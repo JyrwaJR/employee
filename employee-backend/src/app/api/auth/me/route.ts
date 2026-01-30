@@ -9,9 +9,13 @@ export async function GET(req: NextRequest) {
 
     const data = {
       id: auth.user_id,
+      employee_id: auth.user.employee_id,
       email: auth.email,
       phone: "0987654321",
       first_name: auth.user.first_name,
+      avatar: "https://i.pravatar.cc/300?u=" + auth.user.first_name,
+      department: "Ministry of Electronics & IT",
+      location: "New Delhi",
       last_name: auth.user.last_name,
       role: auth.user.role,
       created_at: auth.user.created_at,

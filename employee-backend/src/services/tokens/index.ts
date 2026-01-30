@@ -8,14 +8,26 @@ type CreateProps = {
   user_id: string;
   auth_id: string;
 };
+
 type UpdateProps = {
   where: Prisma.TokenWhereUniqueInput;
   data: Prisma.TokenUpdateInput;
 };
+
+type UpdateManyProps = {
+  where: Prisma.TokenWhereInput;
+  data: Prisma.TokenUpdateInput;
+};
+
 export const TokenServices = {
   async updateUnique({ where, data }: UpdateProps) {
     return await prisma.token.update({ where, data });
   },
+
+  async updateMany({ where, data }: UpdateManyProps) {
+    return await prisma.token.updateMany({ where, data });
+  },
+
   async getUnique({ where }: { where: Prisma.TokenWhereUniqueInput }) {
     return await prisma.token.findUnique({ where });
   },

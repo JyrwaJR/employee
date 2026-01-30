@@ -12,28 +12,31 @@ model Auth {
   id            String    @id @default(uuid())
   email         String    @unique
   hash_password String // store hashed password
-  user_id       String    @unique
-  user          User      @relation(fields: [user_id], references: [id])
+  last_login_at DateTime?
   created_at    DateTime  @default(now())
   updated_at    DateTime  @updatedAt
-  last_login_at DateTime?
-  tokens        Token[]
+
+  user_id String  @unique
+  user    User    @relation(fields: [user_id], references: [id])
+  tokens  Token[]
 
   @@index([user_id])
   @@index([email])
 }
 
 model User {
-  id         String  @id @default(uuid())
-  role       Role    @default(USER)
-  auth_id    String? @unique
-  first_name String
-  last_name  String
-  auth       Auth?
-  tokens     Token[]
-
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
+  id          String           @id @default(uuid())
+  role        Role             @default(USER)
+  auth_id     String?          @unique
+  first_name  String
+  last_name   String
+  auth        Auth?
+  tokens      Token[]
+  isActive    Boolean          @default(true)
+  created_at  DateTime         @default(now())
+  updated_at  DateTime         @updatedAt
+  employee_id String?
+  employee    EmployeeProfile?
 
   @@index([role])
   @@index([id])
@@ -59,8 +62,208 @@ model Token {
   @@index([expires_at])
 }
 
+model EmployeeProfile {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Official Service Details
+  employee_id     String    @unique // e.g. "GOV-2026-8821"
+  designation     String // e.g. "Senior Technical Officer"
+  department      String // e.g. "Ministry of Electronics & IT"
+  office_location String // e.g. "CGO Complex, New Delhi"
+  city_class      CityClass @default(X) // Determines HRA %
+
+  // 7th Pay Commission Matrix Position
+  pay_level       Int // e.g. 10
+  pay_cell        Int // e.g. 1
+  date_of_joining DateTime
+  status          EmploymentStatus @default(ACTIVE)
+
+  // Identifiers & Banking
+  pan_number      String?
+  pran_number     String? // NPS Account Number (Mandatory for Govt)
+  cghs_card_no    String? // Central Govt Health Scheme ID
+  uan_number      String? // Universal Account Number (if applicable)
+  bank_account_no String?
+  bank_ifsc       String?
+
+  // Relations
+  current_structure SalaryStructure? // The settings for NEXT month
+  salary_slips      SalarySlip[] // The history of PAST months
+  revisions         SalaryRevision[] // History of increments/promotions
+  leaves            LeaveRecord[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SalaryStructure {
+  id          String          @id @default(uuid())
+  employee_id String          @unique
+  employee    EmployeeProfile @relation(fields: [employee_id], references: [id])
+
+  // Earnings Config
+  basic_pay       Decimal  @default(0) @db.Decimal(10, 2)
+  da_rate         Decimal  @default(50.00) @db.Decimal(5, 2) // Current DA % (e.g. 50%)
+  hra_fixed       Decimal? @db.Decimal(10, 2) // Overrides % if set
+  transport_allow Decimal  @default(0) @db.Decimal(10, 2)
+  npa             Decimal  @default(0) @db.Decimal(10, 2) // Non-Practicing Allowance
+
+  // Deductions Config
+  is_nps_active    Boolean @default(true) // If true, auto-calc 10%
+  cghs_tier_amount Decimal @default(650) @db.Decimal(10, 2) // Fixed based on Pay Level
+  cgegis_amount    Decimal @default(60) @db.Decimal(10, 2) // Group Insurance
+  license_fee      Decimal @default(0) @db.Decimal(10, 2) // Govt Quarter Fee
+
+  effective_date DateTime @default(now())
+  updated_at     DateTime @updatedAt
+}
+
+model SalarySlip {
+  id          String          @id @default(uuid())
+  employee_id String
+  employee    EmployeeProfile @relation(fields: [employee_id], references: [id])
+
+  month        Month
+  year         Int
+  status       PaymentStatus @default(PENDING)
+  payment_date DateTime?
+
+  // --- EARNINGS ---
+  basic_pay Decimal @db.Decimal(10, 2)
+  da        Decimal @db.Decimal(10, 2) // Dearness Allowance
+  hra       Decimal @db.Decimal(10, 2) // House Rent Allowance
+
+  transport_allow Decimal @db.Decimal(10, 2) // TA
+  da_on_ta        Decimal @db.Decimal(10, 2) // DA on TA component
+
+  npa     Decimal @default(0) @db.Decimal(10, 2)
+  sba     Decimal @default(0) @db.Decimal(10, 2) // Special Duty Allowance
+  arrears Decimal @default(0) @db.Decimal(10, 2) // DA Arrears/Increment Arrears
+  bonus   Decimal @default(0) @db.Decimal(10, 2) // Diwali Bonus etc.
+
+  total_earnings Decimal @db.Decimal(10, 2)
+
+  // --- DEDUCTIONS ---
+  nps_tier_1  Decimal @db.Decimal(10, 2) // National Pension System
+  cghs        Decimal @db.Decimal(10, 2)
+  cgegis      Decimal @db.Decimal(10, 2)
+  license_fee Decimal @default(0) @db.Decimal(10, 2) // Govt Accommodation
+
+  income_tax Decimal @db.Decimal(10, 2) // TDS
+  prof_tax   Decimal @db.Decimal(10, 2)
+  gpf        Decimal @default(0) @db.Decimal(10, 2) // General Provident Fund (Old Pension)
+  recovery   Decimal @default(0) @db.Decimal(10, 2) // Advance/Overpayment recovery
+
+  total_deductions Decimal @db.Decimal(10, 2)
+
+  // --- FINAL ---
+  net_payable Decimal @db.Decimal(10, 2)
+
+  remarks      String? @db.Text // e.g. "Arrears for Jan-Mar paid"
+  generated_by String? // Admin ID
+
+  created_at DateTime @default(now())
+
+  @@unique([employee_id, month, year]) // Prevent duplicate slips
+}
+
+model SalaryRevision {
+  id             String          @id @default(uuid())
+  employee_id    String
+  employee       EmployeeProfile @relation(fields: [employee_id], references: [id])
+  effective_date DateTime
+  type           RevisionType
+
+  // Track the Matrix Move
+  prev_pay_level Int
+  prev_pay_cell  Int
+  prev_basic     Decimal @db.Decimal(10, 2)
+
+  new_pay_level Int
+  new_pay_cell  Int
+  new_basic     Decimal @db.Decimal(10, 2)
+
+  remarks     String? // e.g. "MACP Granted to Level 11 via Order No. 123"
+  approved_by String? // Admin ID
+
+  created_at DateTime @default(now())
+}
+
+model LeaveRecord {
+  id          String          @id @default(uuid())
+  employee_id String
+  employee    EmployeeProfile @relation(fields: [employee_id], references: [id])
+
+  type       String // EL (Earned Leave), CL (Casual), HPL (Half Pay)
+  start_date DateTime
+  end_date   DateTime
+  days_count Int
+
+  reason String?
+  status String  @default("PENDING") // APPROVED, REJECTED
+
+  is_lwp Boolean @default(false) // Leave Without Pay (Impacts SalarySlip)
+
+  created_at DateTime @default(now())
+}
+
+// ==========================================
+// Enums
+// ==========================================
+
+enum EmploymentStatus {
+  ACTIVE
+  PROBATION
+  SUSPENDED
+  TERMINATED
+  RESIGNED
+  RETIRED
+  DECEASED
+}
+
+enum PaymentStatus {
+  PENDING // Generated but not approved
+  PROCESSED // Sent to bank
+  PAID // Confirmed
+  FAILED // Bank reject
+  HELD // Administrative hold
+}
+
+enum RevisionType {
+  JOINING
+  ANNUAL_INCREMENT // July/Jan standard increment
+  MACP // Modified Assured Career Progression
+  PROMOTION // Functional promotion
+  DA_HIKE // Dearness Allowance adjustment
+  PAY_COMMISSION // e.g., 7th to 8th CPC
+  CORRECTION // Fix clerical error
+}
+
+enum Month {
+  JANUARY
+  FEBRUARY
+  MARCH
+  APRIL
+  MAY
+  JUNE
+  JULY
+  AUGUST
+  SEPTEMBER
+  OCTOBER
+  NOVEMBER
+  DECEMBER
+}
+
 enum Role {
   SUPER_ADMIN
   ADMIN
   USER
+}
+
+enum CityClass {
+  X // Metro (High HRA)
+  Y // Urban
+  Z // Rural
 }

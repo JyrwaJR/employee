@@ -1,13 +1,12 @@
-import { fetch as sslFetch } from 'react-native-ssl-pinning';
+import axios, { AxiosResponse } from 'axios';
 import { TIMEOUT } from './config';
 import { HeadersMap, HttpMethod, InternalResponse } from '@/src/types/http';
-import { withTimeout } from './helper';
 
 interface FetcherParams {
   url: string;
   method: HttpMethod;
   headers: HeadersMap;
-  body?: string;
+  body?: any; // Axios handles objects/strings automatically
 }
 
 export async function executeNetworkRequest({
@@ -16,52 +15,34 @@ export async function executeNetworkRequest({
   headers,
   body,
 }: FetcherParams): Promise<InternalResponse> {
-  // --- 1. Standard Fetch (Dev Mode) ---
-  if (__DEV__) {
-    const raw = await withTimeout(
-      fetch(url, {
-        method,
-        headers,
-        body,
-      }),
-      TIMEOUT
-    );
-
-    const text = await raw.text();
-
-    // Normalize headers
-    const responseHeaders: HeadersMap = {};
-    raw.headers.forEach((value, key) => {
-      responseHeaders[key] = value;
+  try {
+    const response: AxiosResponse = await axios({
+      url,
+      method,
+      headers,
+      data: body,
+      timeout: TIMEOUT,
     });
 
     return {
-      status: raw.status,
-      body: text,
-      headers: responseHeaders,
+      status: response.status,
+      body: typeof response.data === 'string' ? response.data : JSON.stringify(response.data),
+      headers: response.headers as unknown as HeadersMap,
     };
-  }
-
-  // --- 2. SSL Pinning Fetch (Production) ---
-  else {
-    const raw = await withTimeout(
-      sslFetch(url, {
-        method,
-        timeoutInterval: TIMEOUT,
-        sslPinning: { certs: ['api_cert'] },
-        headers,
-        body,
-      }),
-      TIMEOUT
-    );
+  } catch (error: any) {
+    // If SSL Pinning fails, Axios will throw a Network Error here
+    if (error.message === 'Network Error') {
+      return {
+        status: 500,
+        body: "Pinning failed. Please check your device's security settings.",
+        headers: {},
+      };
+    }
 
     return {
-      status: raw.status,
-      body:
-        (raw as any).bodyString ||
-        // @ts-ignore
-        (typeof raw.body === 'string' ? raw.body : JSON.stringify(raw.json())),
-      headers: raw.headers,
+      status: error.response?.status || 500,
+      body: error.response?.data || error.message,
+      headers: error.response?.headers || {},
     };
   }
 }

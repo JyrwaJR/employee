@@ -22,10 +22,8 @@ export async function request<T>(
       console.log(`[HTTP] ${method} => ${path}`);
     }
 
-    // 1. Get Token
     const token = await TokenStoreManager.getToken();
 
-    // 2. Prepare Request
     const headers: HeadersMap = {
       'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
@@ -38,7 +36,6 @@ export async function request<T>(
       return buildError<T>('Invalid URL');
     }
 
-    // 3. Execute Request (via Fetcher Adapter)
     let internalResponse;
 
     try {
@@ -52,13 +49,18 @@ export async function request<T>(
       return buildError<T>(error.message || 'Request timeout');
     }
 
-    // 4. Parse Response
     const json = parseJsonSafe<any>(internalResponse.body);
 
-    // 5. Handle HTTP Errors (4xx, 5xx)
-    if (internalResponse.status === 401) {
-      // SAFETY CHECK: Prevent Infinite Loops
-      // If the request failing IS the refresh endpoint, do not try to refresh again.
+    const refreshToken = await TokenStoreManager.getRefreshToken();
+
+    const shouldRefreshToken =
+      internalResponse.status === 401 &&
+      path !== AUTH_ENDPOINTS.POST_LOGOUT &&
+      path !== AUTH_ENDPOINTS.POST_SIGN_IN &&
+      path !== AUTH_ENDPOINTS.POST_SIGN_UP &&
+      refreshToken;
+
+    if (shouldRefreshToken) {
       if (!path.includes(AUTH_ENDPOINTS.POST_REFRESH)) {
         return handleRefreshTokenAndRetry<T>(method, path, data, extraHeaders);
       }
@@ -67,7 +69,6 @@ export async function request<T>(
       return buildError<T>(json?.message ?? 'Request failed', json?.error ?? json);
     }
 
-    // 6. Return Success
     return {
       success: json?.success ?? true,
       message: json?.message ?? 'Request successful',

@@ -16,16 +16,12 @@ export type MenuItemsT = {
   herf: Route;
 };
 
-const menuItems: MenuItemsT[] = [
-  { id: 1, title: 'Home', herf: '/' },
-  { id: 2, title: 'Employees', herf: '/employees' },
-  { id: 3, title: 'Employee', herf: `/employees/${1}` },
-];
+const menuItems: MenuItemsT[] = [{ id: 1, title: 'Home', herf: '/' }];
 
 const adminDrawerMenuItems: MenuItemsT[] = [
   { id: 1, title: 'Home', herf: '/' },
   { id: 2, title: 'Employees', herf: '/employees' },
-  { id: 2, title: 'Statements', herf: '/statement' },
+  { id: 3, title: 'Statements', herf: '/statement' },
 ];
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
@@ -47,7 +43,6 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         </Text>
       </View>
 
-      <DrawerItemList {...props} />
       <View className="p-x-5 flex-1 flex-col gap-2">
         {items.map((item) => {
           return (
