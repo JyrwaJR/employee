@@ -1,5 +1,4 @@
 import { TokenStoreManager } from '@/src/libs/stores/auth';
-import { BASE_URL } from './config';
 import { executeNetworkRequest } from './fetcher';
 import { ApiResponse, HeadersMap, HttpMethod } from '@/src/types/http';
 import {
@@ -30,7 +29,7 @@ export async function request<T>(
       ...extraHeaders,
     };
 
-    const url = `${BASE_URL}${path}`;
+    const url = path;
 
     if (!isValidUrl(url)) {
       return buildError<T>('Invalid URL');
