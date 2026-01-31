@@ -6,6 +6,7 @@ import { AuthServices } from "@services/auth";
 import { BcryptService } from "@src/libs/auth/bcrypt";
 import { TokenServices } from "@src/services/tokens";
 import { JWT } from "@src/libs/auth/jwt";
+import { logger } from "@src/utils/logger";
 
 export async function POST(req: NextRequest) {
   try {
@@ -44,6 +45,7 @@ export async function POST(req: NextRequest) {
       message: "Successfully logged in",
     });
   } catch (error) {
+    logger.log("Signing in error", error);
     return handleApiErrors(error);
   }
 }
