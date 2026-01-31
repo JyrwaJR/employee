@@ -63,7 +63,7 @@ employee-mobile/expo-env.d.ts
 employee-backend/.next/
 employee-backend/out/
 employee-backend/node_modules/
-next-env.d.ts
+employee-backend/next-env.d.ts
 
 # Per-app local overrides (optional, create these too)
 employee-mobile/.gitignore
