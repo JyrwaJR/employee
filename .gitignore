@@ -49,19 +49,19 @@ tmp/
 __temp__
 
 # iOS/Android specific (employee-mobile)
-apps/employee-mobile/.expo/
-apps/employee-mobile/ios/build/
-apps/employee-mobile/android/app/build/
-apps/employee-mobile/android/.gradle/
-apps/employee-mobile/android/app/build/
-apps/employee-mobile/node_modules/
-apps/employee-mobile/android/*
-apps/employee-mobile/ios/*
+employee-mobile/.expo/
+employee-mobile/ios/build/
+employee-mobile/android/app/build/
+employee-mobile/android/.gradle/
+employee-mobile/android/app/build/
+employee-mobile/node_modules/
+employee-mobile/android/
+employee-mobile/ios/
 
 # Next.js specific (employee-backend)  
-apps/employee-backend/.next/
-apps/employee-backend/out/
-apps/employee-backend/node_modules/
+employee-backend/.next/
+employee-backend/out/
+employee-backend/node_modules/
 
 # Per-app local overrides (optional, create these too)
 employee-mobile/.gitignore
