@@ -1,4 +1,6 @@
-import axios, { AxiosResponse } from 'axios';
+
+import { AxiosResponse } from 'axios';
+import axiosInstance from '../api';
 import { TIMEOUT } from './config';
 import { HeadersMap, HttpMethod, InternalResponse } from '@/src/types/http';
 
@@ -16,7 +18,7 @@ export async function executeNetworkRequest({
   body,
 }: FetcherParams): Promise<InternalResponse> {
   try {
-    const response: AxiosResponse = await axios({
+    const response: AxiosResponse = await axiosInstance({
       url,
       method,
       headers,
