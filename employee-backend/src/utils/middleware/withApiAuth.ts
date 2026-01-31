@@ -7,6 +7,7 @@ const routeWithOutAuth = [
   "/api/auth/sign-in",
   "/api/auth/sign-up",
   "/api/auth/refresh",
+  "/api/auth/[id]",
 ];
 
 export const withApiAuth: MiddlewareFactory = (next) => {
