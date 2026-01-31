@@ -10,6 +10,7 @@ import { LoadingScreen } from '../../common/LoadingScreen';
 import { http } from '@/src/utils/http';
 import { SalarySlip } from '@/src/types/employee';
 import { SALARY_ENDPOINTS } from '@/src/libs/endpoints/salary';
+import { ModernButton } from '../../ui/button';
 
 // --- Utility ---
 function cn(...inputs: ClassValue[]) {
@@ -101,7 +102,7 @@ export const StatementScreen = ({ idx, isTab }: Props) => {
   const id = idx ? idx : user?.employee_id || '';
 
   const { data, isFetching } = useQuery({
-    queryKey: ['employee salary', id],
+    queryKey: ['employee salary', id, isTab],
     queryFn: () => http.get<SalarySlip[]>(SALARY_ENDPOINTS.GET_EMPLOYEEE_SALARY.replace(':id', id)),
     select: (data) => data.data,
     enabled: !!id,

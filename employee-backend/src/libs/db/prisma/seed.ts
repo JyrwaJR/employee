@@ -127,6 +127,15 @@ async function main() {
     });
 
     const empId = user.employee!.id;
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        employee_id: empId,
+        employee: {
+          connect: { id: empId },
+        },
+      },
+    });
     let currentDA = 0;
 
     for (let year = 2016; year <= 2025; year++) {

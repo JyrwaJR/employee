@@ -6,12 +6,23 @@ import { AuthContextProvider } from './auth';
 import { AuthRedirect } from '../common/AuthRedirect';
 import { StatusBar, View } from 'react-native';
 import { SSLPinning } from './ssl';
+import React, { useEffect } from 'react';
+import { LoadingScreen } from '../common/LoadingScreen';
 
 type Props = {
   children: React.ReactNode;
 };
 
 export const ProviderWrapper = ({ children }: Props) => {
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <LoadingScreen />;
+  }
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider className="flex-1 bg-white">

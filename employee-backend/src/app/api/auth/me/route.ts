@@ -6,7 +6,6 @@ import { NextRequest } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     const auth = await requireAuth(req);
-
     const data = {
       id: auth.user_id,
       employee_id: auth.user.employee_id,

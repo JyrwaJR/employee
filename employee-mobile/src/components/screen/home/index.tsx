@@ -26,6 +26,7 @@ export const HomeScreen = () => {
     queryKey: ['employees'],
     queryFn: () => http.get<EmployeeT[]>(EMPLOYEE_ENDPOINTS.GET_EMPLOYEES),
     select: (data) => data.data || [],
+    enabled: !!user,
   });
 
   if (isFetching) return <LoadingScreen />;
