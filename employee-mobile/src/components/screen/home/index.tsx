@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, StatusBar, FlatList } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StatusBar, FlatList } from 'react-native';
 import { Container } from '../../common/Container';
 import { StatBox } from '../../common/StatsBox';
 import { useAuth } from '@/src/hooks/auth/useAuth';

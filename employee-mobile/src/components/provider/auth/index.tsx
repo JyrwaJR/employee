@@ -148,5 +148,6 @@ export const AuthContextProvider = ({ children }: Props) => {
   if (isInitializing || isFetchingUser) {
     return <LoadingScreen />;
   }
+
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

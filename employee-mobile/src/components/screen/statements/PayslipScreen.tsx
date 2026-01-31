@@ -120,13 +120,6 @@ export const PayslipScreen = ({ salaryId }: Props) => {
 
   return (
     <Container className="flex-1">
-      <Stack.Screen
-        options={{
-          title: 'Payslip',
-          headerShown: true,
-          headerBackButtonDisplayMode: 'generic',
-        }}
-      />
       <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
         {/* Government Header Block */}
         <View className="mb-8 items-center">

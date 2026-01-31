@@ -57,6 +57,7 @@ employee-mobile/android/app/build/
 employee-mobile/node_modules/
 employee-mobile/android/
 employee-mobile/ios/
+employee-mobile/expo-env.d.ts
 
 # Next.js specific (employee-backend)  
 employee-backend/.next/

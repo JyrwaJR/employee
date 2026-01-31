@@ -1,14 +1,9 @@
 import { TokenStoreManager } from '@/src/libs/stores/auth';
 import { executeNetworkRequest } from './fetcher';
 import { ApiResponse, HeadersMap, HttpMethod } from '@/src/types/http';
-import {
-  buildError,
-  handleHttpError,
-  handleRefreshTokenAndRetry,
-  isValidUrl,
-  parseJsonSafe,
-} from './helper';
+import { buildError, handleHttpError, isValidUrl, parseJsonSafe } from './helper';
 import { AUTH_ENDPOINTS } from '@/src/libs/endpoints/auth';
+import { BASE_URL } from './config';
 
 export async function request<T>(
   method: HttpMethod,
@@ -29,7 +24,7 @@ export async function request<T>(
       ...extraHeaders,
     };
 
-    const url = path;
+    const url = `${BASE_URL}${path}`;
 
     if (!isValidUrl(url)) {
       return buildError<T>('Invalid URL');
@@ -61,7 +56,7 @@ export async function request<T>(
 
     if (shouldRefreshToken) {
       if (!path.includes(AUTH_ENDPOINTS.POST_REFRESH)) {
-        return handleRefreshTokenAndRetry<T>(method, path, data, extraHeaders);
+        return handleRefreshAndRetry<T>(method, path, data, extraHeaders);
       }
     }
     if (internalResponse.status >= 400) {
@@ -76,5 +71,42 @@ export async function request<T>(
     };
   } catch (error) {
     return handleHttpError(error);
+  }
+}
+
+async function handleRefreshAndRetry<T>(
+  originalMethod: HttpMethod,
+  originalPath: string,
+  originalData: unknown,
+  originalHeaders: HeadersMap | undefined
+): Promise<ApiResponse<T>> {
+  try {
+    const refreshToken = await TokenStoreManager.getRefreshToken();
+    if (!refreshToken) {
+      return buildError<T>('Session expired. Please login again.');
+    }
+    const refreshUrl = `${BASE_URL}${AUTH_ENDPOINTS.POST_REFRESH}`;
+    const refreshResponseRaw = await executeNetworkRequest({
+      url: refreshUrl,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    });
+    const refreshJson = parseJsonSafe<any>(refreshResponseRaw.body);
+    if (refreshResponseRaw.status >= 400 || !refreshJson?.success) {
+      await TokenStoreManager.removeToken();
+      await TokenStoreManager.removeRefreshToken();
+      return buildError<T>('Session expired. Please login again.');
+    }
+    const { access_token, refresh_token: new_refresh_token } = refreshJson.data;
+    await TokenStoreManager.addToken(access_token);
+    if (new_refresh_token) {
+      await TokenStoreManager.addRefreshToken(new_refresh_token);
+    }
+    return request<T>(originalMethod, originalPath, originalData, originalHeaders);
+  } catch {
+    await TokenStoreManager.removeToken();
+    await TokenStoreManager.removeRefreshToken();
+    return buildError<T>('Session expired.');
   }
 }
