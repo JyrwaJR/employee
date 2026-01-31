@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "employee-mobile",
-    "slug": "employee-mobile",
+    "slug": "employee",
     "version": "1.0.0",
     "scheme": "employee-mobile",
     "platforms": [
@@ -41,6 +41,13 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.jyrwaboys.employeemobile"
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "14849a6b-819c-4e05-9b59-022a381d8999"
+      }
+    },
+    "owner": "pixel-thread"
   }
 }

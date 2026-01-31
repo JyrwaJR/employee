@@ -55,6 +55,8 @@ apps/employee-mobile/android/app/build/
 apps/employee-mobile/android/.gradle/
 apps/employee-mobile/android/app/build/
 apps/employee-mobile/node_modules/
+apps/employee-mobile/android/
+apps/employee-mobile/ios/
 
 # Next.js specific (employee-backend)  
 apps/employee-backend/.next/
