@@ -9,7 +9,7 @@ const middlewares = [
   withCORS,
   withRateLimiting,
   withSecurityHeaders,
-  // withApiAuth,
+  withApiAuth,
   withLogging,
 ];
 

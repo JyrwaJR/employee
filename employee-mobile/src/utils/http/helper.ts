@@ -52,19 +52,13 @@ export async function handleRefreshTokenAndRetry<T>(
   originalData: unknown,
   originalHeaders: HeadersMap | undefined
 ): Promise<ApiResponse<T>> {
-  console.log('🔄 401 Detected. Attempting token refresh...');
-
   try {
     // 1. Get the Refresh Token
     const refreshToken = await TokenStoreManager.getRefreshToken();
     if (!refreshToken) {
-      console.warn('⚠️ No refresh token found. Cannot retry.');
       return buildError<T>('Session expired. Please login again.');
     }
 
-    // 2. Call the Refresh Endpoint
-    // CRITICAL: We use 'executeNetworkRequest' directly here to avoid
-    // triggering the 'request' interceptor recursively if this fails.
     const refreshUrl = `${BASE_URL}${AUTH_ENDPOINTS.POST_REFRESH}`;
 
     const refreshResponseRaw = await executeNetworkRequest({
@@ -76,16 +70,12 @@ export async function handleRefreshTokenAndRetry<T>(
 
     const refreshJson = parseJsonSafe<any>(refreshResponseRaw.body);
 
-    // 3. Check if Refresh Failed
     if (refreshResponseRaw.status >= 400 || !refreshJson?.success) {
-      console.warn('❌ Refresh failed (Token expired/revoked). Clearing storage.');
       await TokenStoreManager.removeToken();
       await TokenStoreManager.removeRefreshToken();
       return buildError<T>('Session expired. Please login again.');
     }
 
-    // 4. Save the NEW tokens
-    // Adjust these keys based on your actual API response structure
     const { access_token, refresh_token: new_refresh_token } = refreshJson.data;
 
     await TokenStoreManager.addToken(access_token);
@@ -93,14 +83,9 @@ export async function handleRefreshTokenAndRetry<T>(
       await TokenStoreManager.addRefreshToken(new_refresh_token);
     }
 
-    console.log('✅ Token refreshed successfully. Retrying original request...');
-
-    // 5. RE-RUN the Original Request
-    // We recursively call the main 'request' function.
     // Since we just updated the store, it will pick up the new token automatically.
     return request<T>(originalMethod, originalPath, originalData, originalHeaders);
   } catch (error) {
-    console.error('❌ Error during retry flow:', error);
     await TokenStoreManager.removeToken();
     await TokenStoreManager.removeRefreshToken();
     return buildError<T>('Session expired.');

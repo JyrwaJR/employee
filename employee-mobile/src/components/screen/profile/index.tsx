@@ -199,15 +199,11 @@ export const ProfileScreen = () => {
               }
             />
 
-            <MenuRow
-              icon="🔒"
-              label="Change Password"
-              onPress={() => console.log('Change Password')}
-            />
+            <MenuRow icon="🔒" label="Change Password" onPress={() => {}} />
 
-            <MenuRow icon="📄" label="Terms & Privacy" onPress={() => console.log('Terms')} />
+            <MenuRow icon="📄" label="Terms & Privacy" onPress={() => {}} />
 
-            <MenuRow icon="🛡️" label="Support" onPress={() => console.log('Support')} />
+            <MenuRow icon="🛡️" label="Support" onPress={() => {}} />
 
             <MenuRow
               icon="🚪"

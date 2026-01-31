@@ -21,7 +21,6 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   // --- 1. Helper: Clear everything and kick user out ---
   const logout = useCallback(async () => {
-    console.log('🔒 Logging out & clearing storage...');
     await TokenStoreManager.removeToken();
     await TokenStoreManager.removeRefreshToken();
 
@@ -51,7 +50,6 @@ export const AuthContextProvider = ({ children }: Props) => {
       );
 
       if (res.success && res.data) {
-        console.log('✅ Background refresh successful');
         const { access_token, refresh_token: new_refresh_token } = res.data;
 
         // Update storage with fresh tokens
@@ -62,10 +60,8 @@ export const AuthContextProvider = ({ children }: Props) => {
         return true;
       }
 
-      console.warn('⚠️ Refresh failed - invalid token');
       return false;
     } catch (error) {
-      console.error('❌ Error during silent refresh:', error);
       return false;
     }
   }, []);
@@ -88,8 +84,6 @@ export const AuthContextProvider = ({ children }: Props) => {
           if (mounted) setIsTokenSet(refreshed);
         }
       } catch (e) {
-        // Fallback: If anything crashes, assume logged out
-        console.error('Bootstrap error', e);
       } finally {
         if (mounted) setIsInitializing(false);
       }
@@ -108,11 +102,9 @@ export const AuthContextProvider = ({ children }: Props) => {
     if (!isTokenSet) return;
 
     const validateSessionOnce = async () => {
-      console.log('🔄 Running one-time session validation on load...');
       const isValid = await attemptSilentRefresh();
 
       if (!isValid) {
-        console.warn('⛔ Session expired on load. Kicking user out.');
         await logout();
       }
     };

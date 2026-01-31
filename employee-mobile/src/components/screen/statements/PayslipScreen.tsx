@@ -69,7 +69,6 @@ export const PayslipScreen = ({ salaryId }: Props) => {
     select: (res) => res.data,
     enabled: !!salaryId,
   });
-  console.log(JSON.stringify(data, null, 2));
   const { earningsList, deductionsList, totalEarnings, totalDeductions, netPay } = useMemo(() => {
     if (!data) {
       return {
