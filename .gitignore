@@ -70,3 +70,4 @@ employee-mobile/.gitignore
 employee-backend/.gitignore
 generated
 .vercel
+employee-backend/next-env.d.ts
