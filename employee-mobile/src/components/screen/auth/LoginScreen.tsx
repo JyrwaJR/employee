@@ -32,6 +32,7 @@ type LoginResT = {
   role: string;
   updated_at: string;
 };
+
 export const LoginScreen = () => {
   const { refresh } = useAuth();
 

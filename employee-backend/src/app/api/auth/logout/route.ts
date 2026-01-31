@@ -7,7 +7,7 @@ import { TokenSchema } from "@src/utils/validation/token";
 
 export const POST = withValidation({ body: TokenSchema }, async ({ body }) => {
   try {
-    const refreshToken = body.refresh_token;
+    const { refresh_token: refreshToken } = body;
 
     if (!refreshToken) throw new UnauthorizedError("Unauthorized");
 

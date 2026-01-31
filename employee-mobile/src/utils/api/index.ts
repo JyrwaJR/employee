@@ -1,3 +1,4 @@
+import { TokenStoreManager } from '@/src/libs/stores/auth';
 import axios from 'axios';
 // import https from 'https';
 
@@ -13,7 +14,13 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(
-  async (config) => config,
+  async (config) => {
+    const accessToken = await TokenStoreManager.getToken();
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
+  },
   (error) => Promise.reject(error)
 );
 

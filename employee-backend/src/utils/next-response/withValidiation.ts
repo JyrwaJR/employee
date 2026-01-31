@@ -1,83 +1,106 @@
 import { z, ZodError } from "zod";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { ErrorResponse } from "./errorResponse";
 
+/* -------------------------------------------------- */
+/* Types */
+/* -------------------------------------------------- */
+
+type InferOrUndefined<T extends z.ZodTypeAny | undefined> =
+  T extends z.ZodTypeAny ? z.infer<T> : undefined;
+
 type Schemas<
-  P extends z.ZodTypeAny,
-  Q extends z.ZodTypeAny,
-  B extends z.ZodTypeAny,
+  P extends z.ZodTypeAny | undefined,
+  Q extends z.ZodTypeAny | undefined,
+  B extends z.ZodTypeAny | undefined,
 > = {
   params?: P;
   query?: Q;
   body?: B;
 };
 
+/* -------------------------------------------------- */
+/* Helpers */
+/* -------------------------------------------------- */
+
+// Prevents req.json() crashes
+async function safeJson(req: NextRequest) {
+  try {
+    return await req.json();
+  } catch {
+    return undefined;
+  }
+}
+
+/* -------------------------------------------------- */
+/* Main wrapper */
+/* -------------------------------------------------- */
+
 export function withValidation<
-  P extends z.ZodTypeAny = z.ZodTypeAny,
-  Q extends z.ZodTypeAny = z.ZodTypeAny,
-  B extends z.ZodTypeAny = z.ZodTypeAny,
+  P extends z.ZodTypeAny | undefined = undefined,
+  Q extends z.ZodTypeAny | undefined = undefined,
+  B extends z.ZodTypeAny | undefined = undefined,
 >(
   schemas: Schemas<P, Q, B>,
   handler: (
     data: {
-      params: P extends z.ZodTypeAny ? z.infer<P> : undefined;
-      query: Q extends z.ZodTypeAny ? z.infer<Q> : undefined;
-      body: B extends z.ZodTypeAny ? z.infer<B> : undefined;
+      params: InferOrUndefined<P>;
+      query: InferOrUndefined<Q>;
+      body: InferOrUndefined<B>;
     },
     req: NextRequest,
-  ) => Promise<Response>,
+  ) => Promise<Response | NextResponse>,
 ) {
   return async (
     req: NextRequest,
-    // In Next.js 15, params is a Promise
     segmentData: { params: Promise<Record<string, string | string[]>> },
-  ): Promise<Response> => {
+  ): Promise<Response | NextResponse> => {
     try {
-      // 2. Extract Search Params from the URL
-      const { searchParams } = new URL(req.url);
-      const queryObj = Object.fromEntries(searchParams.entries());
-
-      // 3. Await and Validate Params
+      /* ---------------- params ---------------- */
       const resolvedParams = await segmentData.params;
 
       const validatedParams = schemas.params
         ? schemas.params.parse(resolvedParams)
         : undefined;
 
+      /* ---------------- query ---------------- */
+      const { searchParams } = new URL(req.url);
+      const queryObj = Object.fromEntries(searchParams.entries());
+
       const validatedQuery = schemas.query
         ? schemas.query.parse(queryObj)
         : undefined;
 
-      // 3. Await and Validate body
-      const validatedBody = schemas.body
-        ? schemas.body.parse(await req.json())
-        : undefined;
+      /* ---------------- body ---------------- */
+      let validatedBody: InferOrUndefined<B>;
 
-      return await handler(
+      if (schemas.body) {
+        const rawBody = await safeJson(req);
+        validatedBody = schemas.body.parse(rawBody) as InferOrUndefined<B>;
+      } else {
+        validatedBody = undefined as InferOrUndefined<B>;
+      }
+
+      /* ---------------- handler ---------------- */
+      return handler(
         {
-          params: validatedParams as P extends z.ZodTypeAny
-            ? z.infer<P>
-            : undefined,
-          query: validatedQuery as Q extends z.ZodTypeAny
-            ? z.infer<Q>
-            : undefined,
-          body: validatedBody as B extends z.ZodTypeAny
-            ? z.infer<B>
-            : undefined,
+          params: validatedParams as InferOrUndefined<P>,
+          query: validatedQuery as InferOrUndefined<Q>,
+          body: validatedBody,
         },
         req,
       );
     } catch (error) {
       if (error instanceof ZodError) {
         return ErrorResponse({
-          message: "Validiation failed",
-          error: error.issues,
+          message: "Request validation failed",
           status: 400,
+          error: error.issues,
         });
       }
 
       return ErrorResponse({
-        message: "URL validiation failed",
+        message: "Unexpected request error",
         status: 400,
         error,
       });
