@@ -2,12 +2,11 @@ import { TokenServices } from "@src/services/tokens";
 import { handleApiErrors } from "@src/utils/errors/handleApiErrors";
 import { UnauthorizedError } from "@src/utils/errors/unAuthError";
 import { SuccessResponse } from "@src/utils/next-response";
+import { withValidation } from "@src/utils/next-response/withValidiation";
 import { TokenSchema } from "@src/utils/validation/token";
-import { NextRequest } from "next/server";
 
-export async function POST(req: NextRequest) {
+export const POST = withValidation({ body: TokenSchema }, async ({ body }) => {
   try {
-    const body = TokenSchema.parse(await req.json());
     const refreshToken = body.refresh_token;
 
     if (!refreshToken) throw new UnauthorizedError("Unauthorized");
@@ -32,4 +31,4 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return handleApiErrors(error);
   }
-}
+});

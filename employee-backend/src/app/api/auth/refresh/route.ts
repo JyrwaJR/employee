@@ -1,14 +1,14 @@
-import { NextRequest } from "next/server";
 import { handleApiErrors } from "@src/utils/errors/handleApiErrors";
 import { UnauthorizedError } from "@src/utils/errors/unAuthError";
 import { TokenServices } from "@src/services/tokens";
 import { JWT } from "@src/libs/auth/jwt";
 import { SuccessResponse } from "@src/utils/next-response";
 import { TokenSchema } from "@src/utils/validation/token";
+import { withValidation } from "@src/utils/next-response/withValidiation";
 
-export async function POST(req: NextRequest) {
+export const POST = withValidation({ body: TokenSchema }, async ({ body }) => {
   try {
-    const { refresh_token } = TokenSchema.parse(await req.json());
+    const { refresh_token } = body;
 
     if (!refresh_token) {
       throw new UnauthorizedError("Refresh token required");
@@ -65,4 +65,4 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return handleApiErrors(error);
   }
-}
+});

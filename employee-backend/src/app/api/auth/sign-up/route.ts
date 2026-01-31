@@ -1,14 +1,11 @@
 import { AuthServices } from "@services/auth";
+import { withValidation } from "@src/utils/next-response/withValidiation";
 import { handleApiErrors } from "@utils/errors/handleApiErrors";
 import { ErrorResponse, SuccessResponse } from "@utils/next-response";
 import { SignUpSchema } from "@utils/validation/auth";
-import { NextRequest } from "next/server";
 
-export async function POST(req: NextRequest) {
+export const POST = withValidation({ body: SignUpSchema }, async ({ body }) => {
   try {
-    // validate user using zod
-    const body = SignUpSchema.parse(await req.json());
-    // extract email from body
     const email = body.email;
     // check if user already exists under the same email address
     const user = await AuthServices.getUnique({ where: { email } });
@@ -31,4 +28,4 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     return handleApiErrors(error);
   }
-}
+});

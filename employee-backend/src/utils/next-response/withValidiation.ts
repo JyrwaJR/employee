@@ -2,20 +2,27 @@ import { z, ZodError } from "zod";
 import { NextRequest } from "next/server";
 import { ErrorResponse } from "./errorResponse";
 
-type Schemas<P extends z.ZodTypeAny, Q extends z.ZodTypeAny> = {
+type Schemas<
+  P extends z.ZodTypeAny,
+  Q extends z.ZodTypeAny,
+  B extends z.ZodTypeAny,
+> = {
   params?: P;
   query?: Q;
+  body?: B;
 };
 
 export function withValidation<
   P extends z.ZodTypeAny = z.ZodTypeAny,
   Q extends z.ZodTypeAny = z.ZodTypeAny,
+  B extends z.ZodTypeAny = z.ZodTypeAny,
 >(
-  schemas: Schemas<P, Q>,
+  schemas: Schemas<P, Q, B>,
   handler: (
     data: {
       params: P extends z.ZodTypeAny ? z.infer<P> : undefined;
       query: Q extends z.ZodTypeAny ? z.infer<Q> : undefined;
+      body: B extends z.ZodTypeAny ? z.infer<B> : undefined;
     },
     req: NextRequest,
   ) => Promise<Response>,
@@ -40,6 +47,12 @@ export function withValidation<
       const validatedQuery = schemas.query
         ? schemas.query.parse(queryObj)
         : undefined;
+
+      // 3. Await and Validate body
+      const validatedBody = schemas.body
+        ? schemas.body.parse(await req.json())
+        : undefined;
+
       return await handler(
         {
           params: validatedParams as P extends z.ZodTypeAny
@@ -48,13 +61,16 @@ export function withValidation<
           query: validatedQuery as Q extends z.ZodTypeAny
             ? z.infer<Q>
             : undefined,
+          body: validatedBody as B extends z.ZodTypeAny
+            ? z.infer<B>
+            : undefined,
         },
         req,
       );
     } catch (error) {
       if (error instanceof ZodError) {
         return ErrorResponse({
-          message: "URL validiation failed",
+          message: "Validiation failed",
           error: error.issues,
           status: 400,
         });

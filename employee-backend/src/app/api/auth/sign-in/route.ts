@@ -1,18 +1,18 @@
 import { handleApiErrors } from "@utils/errors/handleApiErrors";
 import { ErrorResponse, SuccessResponse } from "@utils/next-response";
 import { LoginSchema } from "@utils/validation/auth";
-import { NextRequest } from "next/server";
 import { AuthServices } from "@services/auth";
 import { BcryptService } from "@src/libs/auth/bcrypt";
 import { TokenServices } from "@src/services/tokens";
 import { JWT } from "@src/libs/auth/jwt";
 import { logger } from "@src/utils/logger";
+import { withValidation } from "@src/utils/next-response/withValidiation";
 
-export async function POST(req: NextRequest) {
+export const POST = withValidation({ body: LoginSchema }, async ({ body }) => {
   try {
-    const body = LoginSchema.parse(await req.json());
-
-    const auth = await AuthServices.getUnique({ where: { email: body.email } });
+    const auth = await AuthServices.getUnique({
+      where: { email: body.email },
+    });
 
     if (
       !auth ||
@@ -21,10 +21,11 @@ export async function POST(req: NextRequest) {
       return ErrorResponse({ message: "Invalid credentials", status: 401 });
     }
 
-    // Generate tokens
     const accessToken = await JWT.signAccessToken({ userId: auth.user_id });
 
-    const hashedRefresh = await JWT.signRefreshToken({ userId: auth.user_id }); // Fix ID
+    const hashedRefresh = await JWT.signRefreshToken({
+      userId: auth.user_id,
+    });
 
     // Store hashed refresh in DB
     await TokenServices.createToken({
@@ -32,9 +33,6 @@ export async function POST(req: NextRequest) {
       hash: hashedRefresh,
       auth_id: auth.id,
     });
-
-    // set cookies currently working for the web as of now it is not working for mobile
-    // setAuthCookies(accessToken, hashedRefresh);
 
     return SuccessResponse({
       token: accessToken,
@@ -48,4 +46,4 @@ export async function POST(req: NextRequest) {
     logger.log("Signing in error", error);
     return handleApiErrors(error);
   }
-}
+});
