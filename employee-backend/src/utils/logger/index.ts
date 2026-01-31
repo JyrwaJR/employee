@@ -1,9 +1,7 @@
-// import { addLogsToDB } from "@services/logs/addLogsToDB";
 import http from "../http";
 
 type ErrorType = "ERROR" | "INFO" | "WARN" | "LOG";
 
-// Send logs to server for frontend usage
 export const sendLogToServer = async <T>(type: ErrorType, data: T) => {
   const logEntry = {
     type,
@@ -12,7 +10,7 @@ export const sendLogToServer = async <T>(type: ErrorType, data: T) => {
   };
 
   try {
-    await http.post("/logs", logEntry); // send object; HTTP client converts to JSON
+    await http.post("/logs", logEntry);
   } catch (error) {
     console.error("Failed to send logs to server", error);
   }
@@ -59,9 +57,10 @@ const logMethod = async (type: ErrorType, ...args: any[]): Promise<void> => {
 
       if (type !== "LOG") {
         // Logging to server
+        console.log(content);
       }
     } catch (error) {
-      console.error("Failed to save logs to database");
+      console.error("Failed to save logs to database", error);
     }
   }
 };
