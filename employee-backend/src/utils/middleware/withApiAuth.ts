@@ -35,7 +35,7 @@ export const withApiAuth: MiddlewareFactory = (next) => {
     try {
       await JWT.verifyAccessToken(token);
     } catch (error) {
-      logger.log("withAuthApi: Invalid token", error);
+      logger.log("withAuthApi: Invalid token");
       return ErrorResponse({
         message: "Unauthorized: Invalid token",
         status: 401,
