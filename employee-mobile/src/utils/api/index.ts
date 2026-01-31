@@ -9,11 +9,7 @@ const httpsAgent = new https.Agent({
 
 const axiosInstance = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
-  timeout: 10000,
   httpsAgent,
-  headers: {
-    Connection: 'keep-alive',
-  },
 });
 
 axiosInstance.interceptors.request.use(
