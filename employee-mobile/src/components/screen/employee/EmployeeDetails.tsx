@@ -18,6 +18,7 @@ import { AUTH_ENDPOINTS } from '@/src/libs/endpoints/auth';
 import { EMPLOYEE_ENDPOINTS } from '@/src/libs/endpoints/employee';
 import { EmployeeT } from '@/src/types/employee';
 import { LoadingScreen } from '../../common/LoadingScreen';
+import { useAuth } from '@/src/hooks/auth/useAuth';
 
 // --- Utils ---
 function cn(...inputs: ClassValue[]) {
@@ -70,6 +71,7 @@ const ActionButton = ({
 export default function EmployeeDetailScreen() {
   const { id } = useLocalSearchParams();
   const idx = id.toString() || '';
+  const auth = useAuth();
 
   const { data, isFetching } = useQuery({
     queryKey: ['employee', id],
@@ -141,16 +143,18 @@ export default function EmployeeDetailScreen() {
               <Text className="font-medium text-gray-600">Basic Pay</Text>
               <Text className="font-bold text-gray-900">{currentSalary?.basic_pay}</Text>
             </View>
-            <TouchableOpacity
-              onPress={() => router.push(`/employees/${data?.id}/salary`)}
-              className="mt-4 flex-row items-center justify-center">
-              <Text className="text-sm font-semibold text-blue-600">View Salary History →</Text>
-            </TouchableOpacity>
+            {auth.user?.role === 'SUPER_ADMIN' && (
+              <TouchableOpacity
+                onPress={() => router.push(`/employees/${data?.id}/salary`)}
+                className="mt-4 flex-row items-center justify-center">
+                <Text className="text-sm font-semibold text-blue-600">View Salary History →</Text>
+              </TouchableOpacity>
+            )}
           </SectionCard>
 
           <SectionCard title="Contact Information">
-            <InfoRow label="Mobile" value={user?.phone || ''} icon="📱" />
-            <InfoRow label="Email" value={user?.email || ''} icon="📧" />
+            <InfoRow label="Mobile" value={user?.phone || '-'} icon="📱" />
+            <InfoRow label="Email" value={user?.auth.email || '-'} icon="📧" />
           </SectionCard>
         </View>
       </ScrollView>

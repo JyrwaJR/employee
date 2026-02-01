@@ -9,6 +9,12 @@ export type UserT = {
   phone: string;
   department: string;
   employee_id: string;
+  auth: Auth;
+};
+
+type Auth = {
+  id: number;
+  email: string;
 };
 
 export type AuthContextT = {
