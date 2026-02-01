@@ -1,7 +1,3 @@
-Here is an updated `README.md` structured for your full-stack employee management system. It separates the concerns for the Next.js backend and the Expo mobile app while highlighting the shared security features we've implemented.
-
----
-
 # Employee Management System
 
 A full-stack solution for managing employee data and salary structures, featuring a secure Next.js backend and a high-performance Expo mobile application.
@@ -29,9 +25,16 @@ The backend handles data persistence, salary calculations, and security middlewa
 Create a `.env` file in the `employee-backend` folder:
 
 ```bash
-DATABASE_URL="your_database_connection_string"
-NEXTAUTH_SECRET="your_secret_key"
-
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+DATABASE_URL=
+DIRECT_URL=
+JWT_ACCESS_SECRET=
+JWT_REFRESH_SECRET=
+SALT=
+ACCESS_TOKEN_TTL=
+REFRESH_TOKEN_TTL=
+NODE_ENV=
 ```
 
 **Installation & Run:**
@@ -55,8 +58,9 @@ The mobile app is built with Expo and features advanced security like SSL Pinnin
 Create a `.env` file in the `employee-mobile` folder:
 
 ```bash
-EXPO_PUBLIC_API_URL="https://employee-nic.vercel.app"
-EXPO_PUBLIC_CURRENT_LEAF_HASH="your_openssl_generated_hash"
+EXPO_PUBLIC_API_URL=
+EXPO_PUBLIC_CURRENT_LEAF_HASH=Your current leaf hash ssl pinning
+EXPO_PUBLIC_NEXT_LEAF_HASH=
 
 ```
 
@@ -67,7 +71,6 @@ cd employee-mobile
 npm install
 npx expo prebuild       # Required for native SSL pinning modules
 npx expo run:android    # Or run:ios
-
 ```
 
 ---
