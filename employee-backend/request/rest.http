@@ -22,9 +22,9 @@ Content-Type: application/json
 {
   "first_name":"Harrison",
     "last_name":"jurwa",
-    "email": "1f6w0e@example.com",
-    "password": "password2C@",
-    "confirm_password": "password2C@"
+    "email": "one@gmail.com",
+    "password": "123Clashofclan@",
+    "confirm_password": "123Clashofclan@"
 }
 
 ### 
