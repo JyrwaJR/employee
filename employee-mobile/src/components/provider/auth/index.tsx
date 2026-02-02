@@ -143,6 +143,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     isSignedIn,
     refresh: refetch,
     isLoading: isInitializing || isFetchingUser,
+    role: user?.role || 'USER',
   } satisfies AuthContextT;
 
   if (isInitializing || isFetchingUser) {

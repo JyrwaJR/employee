@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Container } from '../../common/Container';
 import { cn } from '@/src/libs/cn';
 import { Stack } from 'expo-router';
@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/utils/http';
 import { LoadingScreen } from '../../common/LoadingScreen';
 import { SalarySlip } from '@/src/types/employee';
+import { Text } from '../../ui/text';
 
 const parseAmount = (value?: string | null): number => {
   return parseFloat(value || '0');
@@ -15,8 +16,8 @@ const parseAmount = (value?: string | null): number => {
 
 const DetailRow = ({ label, value }: { label: string; value: string }) => (
   <View className="mb-2 flex-row justify-between">
-    <Text className="text-sm font-medium text-gray-500">{label}</Text>
-    <Text className="text-sm font-semibold text-gray-900">{value}</Text>
+    <Text variant="subtext" className="text-sm font-medium">{label}</Text>
+    <Text className="text-sm font-semibold text-gray-900 dark:text-white">{value}</Text>
   </View>
 );
 
@@ -30,18 +31,18 @@ type MoneyRowProps = {
 const MoneyRow = ({ label, value, isBold = false, isDeduction = false }: MoneyRowProps) => (
   <View
     className={cn(
-      'flex-row justify-between border-b border-gray-50 py-3 last:border-0',
-      isBold && 'border-t border-gray-100 pt-4'
+      'flex-row justify-between border-b border-gray-100 dark:border-gray-800 py-3 last:border-0',
+      isBold && 'border-t border-gray-200 dark:border-gray-700 pt-4'
     )}>
     <Text
-      className={cn('text-sm', isBold ? 'font-bold text-gray-900' : 'font-medium text-gray-600')}>
+      className={cn('text-sm', isBold ? 'font-bold text-gray-900 dark:text-white' : 'font-medium text-gray-600 dark:text-gray-300')}>
       {label}
     </Text>
     <Text
       className={cn(
         'text-sm font-medium tabular-nums',
-        isBold ? 'text-base font-bold' : 'text-gray-900',
-        isDeduction && !isBold && 'text-red-600'
+        isBold ? 'text-base font-bold text-gray-900 dark:text-white' : 'text-gray-900 dark:text-white',
+        isDeduction && !isBold && 'text-red-500'
       )}>
       {isDeduction && !isBold ? '-' : ''}₹
       {value.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
@@ -51,10 +52,10 @@ const MoneyRow = ({ label, value, isBold = false, isDeduction = false }: MoneyRo
 
 const SectionHeader = ({ title, icon }: { title: string; icon: string }) => (
   <View className="mb-4 flex-row items-center">
-    <View className="mr-3 h-8 w-8 items-center justify-center rounded-full bg-blue-50">
-      <Text className="text-xs text-blue-600">{icon}</Text>
+    <View className="mr-3 h-8 w-8 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900/20">
+      <Text className="text-xs text-blue-600 dark:text-blue-400">{icon}</Text>
     </View>
-    <Text className="text-lg font-bold text-gray-900">{title}</Text>
+    <Text variant="heading" size="lg" className="text-gray-900 dark:text-white">{title}</Text>
   </View>
 );
 
@@ -129,38 +130,38 @@ export const PayslipScreen = ({ salaryId }: Props) => {
           <Text className="mb-1 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">
             Government of India
           </Text>
-          <Text className="text-center text-lg font-bold text-gray-900">
+          <Text variant="heading" size="lg" className="text-center text-gray-900 dark:text-white">
             {/* Fallback to generic if department is missing */}
             {data?.employee?.department || 'Central Government Department'}
           </Text>
-          <Text className="text-center text-sm text-gray-500">
+          <Text variant="subtext" className="text-center text-sm">
             {data?.employee?.office_location || 'New Delhi'}
           </Text>
-          <View className="mt-4 rounded-full bg-gray-200 px-4 py-1">
-            <Text className="text-xs font-bold uppercase text-gray-600">
+          <View className="mt-4 rounded-full bg-gray-200 dark:bg-gray-800 px-4 py-1">
+            <Text className="text-xs font-bold uppercase text-gray-600 dark:text-gray-300">
               {data?.month} {data?.year}
             </Text>
           </View>
         </View>
 
         {/* Net Pay Hero Card */}
-        <View className="mb-6 rounded-3xl bg-gray-900 p-6 shadow-xl shadow-blue-900/20">
-          <Text className="mb-1 text-sm font-medium text-gray-400">Net Pay Disbursed</Text>
+        <View className="mb-6 rounded-3xl bg-blue-600 dark:bg-blue-700 p-6 shadow-xl shadow-blue-900/20">
+          <Text className="mb-1 text-sm font-medium text-blue-100">Net Pay Disbursed</Text>
           <Text className="mb-6 text-4xl font-bold text-white">
             ₹{netPay.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
           </Text>
 
-          <View className="mb-4 h-[1px] w-full bg-gray-700" />
+          <View className="mb-4 h-[1px] w-full bg-blue-500/50" />
 
           <View className="flex-row justify-between">
             <View>
-              <Text className="mb-1 text-xs text-gray-400">Pay Level</Text>
+              <Text className="mb-1 text-xs text-blue-200">Pay Level</Text>
               <Text className="font-semibold text-white">
                 {data?.employee?.pay_level ? `L-${data.employee.pay_level}` : '-'}
               </Text>
             </View>
             <View>
-              <Text className="mb-1 text-xs text-gray-400">Bank Acct</Text>
+              <Text className="mb-1 text-xs text-blue-200">Bank Acct</Text>
               <Text className="font-semibold text-white">
                 {data?.employee?.bank_account_no
                   ? `•••• ${data.employee.bank_account_no.slice(-4)}`
@@ -168,14 +169,14 @@ export const PayslipScreen = ({ salaryId }: Props) => {
               </Text>
             </View>
             <View>
-              <Text className="mb-1 text-xs text-gray-400">Status</Text>
+              <Text className="mb-1 text-xs text-blue-200">Status</Text>
               <Text className="font-semibold uppercase text-white">{data?.status || 'PAID'}</Text>
             </View>
           </View>
         </View>
 
         {/* Employee Details Grid */}
-        <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+        <View className="mb-6 rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm">
           <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-gray-400">
             Employee Particulars
           </Text>
@@ -191,7 +192,7 @@ export const PayslipScreen = ({ salaryId }: Props) => {
         </View>
 
         {/* Earnings Section */}
-        <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+        <View className="mb-6 rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm">
           <SectionHeader title="Earnings" icon="💰" />
           {earningsList.map((item, index) => (
             <MoneyRow key={index} label={item.label} value={item.value} />
@@ -200,7 +201,7 @@ export const PayslipScreen = ({ salaryId }: Props) => {
         </View>
 
         {/* Deductions Section */}
-        <View className="mb-8 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
+        <View className="mb-8 rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm">
           <SectionHeader title="Deductions" icon="📉" />
           {deductionsList.map((item, index) => (
             <MoneyRow key={index} label={item.label} value={item.value} isDeduction />
@@ -209,7 +210,7 @@ export const PayslipScreen = ({ salaryId }: Props) => {
         </View>
 
         {/* Footer Note */}
-        <Text className="mb-10 px-8 text-center text-xs leading-5 text-gray-400">
+        <Text variant="subtext" className="mb-10 px-8 text-center text-xs leading-5">
           This is a computer-generated payslip. No signature is required. Generated via NIC e-HRMS.
         </Text>
       </ScrollView>

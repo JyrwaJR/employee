@@ -26,7 +26,7 @@ export const ModernButton = ({
       activeOpacity={0.9}
       className={cn(
         'flex-row items-center justify-center rounded-2xl py-4 shadow-sm',
-        isGoogle ? 'border border-gray-200 bg-white' : 'bg-gray-900',
+        isGoogle ? 'border border-gray-200 bg-white' : 'bg-blue-600',
         isLoading && 'opacity-70',
         className
       )}>

@@ -8,11 +8,11 @@ import {
   Platform,
 } from 'react-native';
 import { Link } from 'expo-router';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
-import { ModernInput } from '../../ui/input';
+import { Input } from '../../ui/input';
 import { ModernButton } from '../../ui/button';
 import { LoginSchema } from '@utils/validiation/auth';
 import { AUTH_ENDPOINTS } from '@/src/libs/endpoints/auth';
@@ -83,19 +83,47 @@ export const LoginScreen = () => {
 
         {/* Form Section */}
         <View className="w-full">
-          <ModernInput
-            control={control}
-            name="email"
-            label="Email"
-            placeholder="name@company.com"
-          />
-          <ModernInput
-            control={control}
-            name="password"
-            label="Password"
-            placeholder="••••••••"
-            secureTextEntry
-          />
+          <View className="mb-4">
+            <Text variant="label" className="mb-1.5 ml-1">Email</Text>
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+                <>
+                  <Input
+                    placeholder="name@company.com"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    autoCapitalize="none"
+                    error={!!error}
+                  />
+                  {error && <Text variant="error" size="sm" className="ml-1 mt-1">{error.message}</Text>}
+                </>
+              )}
+            />
+          </View>
+
+          <View className="mb-4">
+            <Text variant="label" className="mb-1.5 ml-1">Password</Text>
+            <Controller
+              control={control}
+              name="password"
+              render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+                <>
+                  <Input
+                    placeholder="••••••••"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    secureTextEntry
+                    error={!!error}
+                  />
+                  {error && <Text variant="error" size="sm" className="ml-1 mt-1">{error.message}</Text>}
+                </>
+              )}
+            />
+          </View>
 
           <TouchableOpacity className="mb-8 items-end">
             <Text variant={'link'}>Forgot password?</Text>

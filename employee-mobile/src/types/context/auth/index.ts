@@ -1,9 +1,10 @@
+export type RoleT = 'SUPER_ADMIN' | 'ADMIN' | 'USER';
 export type UserT = {
   id: number;
   email: string;
   first_name: string;
   last_name: string;
-  role: 'SUPER_ADMIN' | 'ADMIN' | 'USER';
+  role: RoleT;
   avatar: string;
   location: string;
   phone: string;
@@ -21,5 +22,6 @@ export type AuthContextT = {
   isLoading: boolean;
   user: UserT | null | undefined;
   isSignedIn: boolean;
+  role: RoleT;
   refresh: () => void;
 };

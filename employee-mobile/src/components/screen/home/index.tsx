@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StatusBar, FlatList } from 'react-native';
+import { View, TextInput, TouchableOpacity, StatusBar, FlatList } from 'react-native';
 import { Container } from '../../common/Container';
 import { StatBox } from '../../common/StatsBox';
 import { useAuth } from '@/src/hooks/auth/useAuth';
@@ -11,16 +11,19 @@ import { http } from '@/src/utils/http';
 import { EmployeeT } from '@/src/types/employee';
 import { EMPLOYEE_ENDPOINTS } from '@/src/libs/endpoints/employee';
 import { router } from 'expo-router';
+import { Text } from '../../ui/text';
+import { useThemeStore } from '@/src/store/theme';
 
 const STATS = [
-  { label: 'Total Staff', value: '42', color: 'bg-blue-50 text-blue-600' },
-  { label: 'Active Now', value: '38', color: 'bg-green-50 text-green-600' },
-  { label: 'On Leave', value: '4', color: 'bg-orange-50 text-orange-600' },
+  { label: 'Total Staff', value: '42', color: 'text-blue-600 dark:text-blue-400' },
+  { label: 'Active Now', value: '38', color: 'text-green-600 dark:text-green-400' },
+  { label: 'On Leave', value: '4', color: 'text-orange-600 dark:text-orange-400' },
 ];
 
 export const HomeScreen = () => {
   const [search, setSearch] = useState('');
   const { user } = useAuth();
+  const { theme } = useThemeStore();
 
   const { data: EMPLOYEES, isFetching } = useQuery({
     queryKey: ['employees'],
@@ -32,31 +35,31 @@ export const HomeScreen = () => {
   if (isFetching) return <LoadingScreen />;
 
   return (
-    <Container className="flex-1 bg-gray-50">
-      <StatusBar barStyle="dark-content" />
+    <Container className="flex-1">
+      <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} />
       {/* Top Header Section */}
-      <View className="z-10 rounded-b-[32px] bg-white px-6 pb-6 pt-4 shadow-sm">
+      <View className="z-10 rounded-b-[32px] bg-white dark:bg-gray-900 px-6 pb-6 pt-4 shadow-sm border-b border-gray-100 dark:border-gray-800">
         {/* Nav Bar */}
         <View className="mb-6 flex-row items-center justify-between">
           <View>
-            <Text className="text-sm font-medium text-gray-400">Good Morning,</Text>
-            <Text className="text-2xl font-bold text-gray-900">
+            <Text variant="subtext" className="text-sm font-medium">Good Morning,</Text>
+            <Text variant="heading" size="2xl" className="text-gray-900 dark:text-white">
               {user?.first_name + ' ' + user?.last_name}
             </Text>
           </View>
-          <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100">
-            <MaterialCommunityIcons name="bell" size={24} color="black" />
+          <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+            <MaterialCommunityIcons name="bell" size={24} color={theme === 'dark' ? 'white' : 'black'} />
           </TouchableOpacity>
         </View>
 
         {/* Search Bar */}
-        <View className="flex-row items-center rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3">
+        <View className="flex-row items-center rounded-2xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 px-4 py-3">
           <Text className="mr-2 text-gray-400">🔍</Text>
           <TextInput
             placeholder="Search employees..."
             value={search}
             onChangeText={setSearch}
-            className="flex-1 text-base text-gray-900"
+            className="flex-1 text-base text-gray-900 dark:text-white"
             placeholderTextColor="#9CA3AF"
           />
         </View>
@@ -73,9 +76,9 @@ export const HomeScreen = () => {
 
         {/* List Header */}
         <View className="mb-4 flex-row items-end justify-between">
-          <Text className="text-lg font-bold text-gray-900">All Employees</Text>
+          <Text variant="heading" size="lg" className="text-gray-900 dark:text-white">All Employees</Text>
           <TouchableOpacity>
-            <Text className="text-sm font-semibold text-blue-600">View All</Text>
+            <Text variant="link" className="text-sm font-semibold">View All</Text>
           </TouchableOpacity>
         </View>
 

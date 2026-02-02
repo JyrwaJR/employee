@@ -8,6 +8,7 @@ import { StatusBar, View } from 'react-native';
 import { SSLPinning } from './ssl';
 import React, { useEffect } from 'react';
 import { LoadingScreen } from '../common/LoadingScreen';
+import { ThemeProvider } from './theme';
 
 type Props = {
   children: React.ReactNode;
@@ -23,21 +24,25 @@ export const ProviderWrapper = ({ children }: Props) => {
   if (!isMounted) {
     return <LoadingScreen />;
   }
+
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider className="flex-1 bg-white">
-        <SSLPinning>
-          <TQueryProvider>
-            <AuthContextProvider>
-              <AuthRedirect>
-                <StatusBar barStyle="dark-content" />
-                <View className="flex-1">{children}</View>
-                <Toaster />
-              </AuthRedirect>
-            </AuthContextProvider>
-          </TQueryProvider>
-        </SSLPinning>
-      </SafeAreaProvider>
-    </GestureHandlerRootView>
+    <ThemeProvider>
+      <GestureHandlerRootView style={{ flex: 1 }}
+      >
+        <SafeAreaProvider className="flex-1">
+          <SSLPinning>
+            <TQueryProvider>
+              <AuthContextProvider>
+                <AuthRedirect>
+                  <StatusBar barStyle="default" />
+                  <View className="flex-1">{children}</View>
+                  <Toaster />
+                </AuthRedirect>
+              </AuthContextProvider>
+            </TQueryProvider>
+          </SSLPinning>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
+    </ThemeProvider>
   );
 };

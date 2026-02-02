@@ -1,7 +1,6 @@
 import React from 'react';
 import {
   View,
-  Text,
   Image,
   TouchableOpacity,
   ScrollView,
@@ -18,6 +17,8 @@ import { TokenStoreManager } from '@/src/libs/stores/auth';
 import { toast } from 'sonner-native';
 import { useAuth } from '@/src/hooks/auth/useAuth';
 import { StatBox } from '../../common/StatsBox';
+import { Text } from '../../ui/text';
+import { useThemeStore } from '@/src/store/theme';
 
 /**
  * A reusable row for settings options (e.g., "Change Password")
@@ -42,19 +43,19 @@ const MenuRow = ({
   <TouchableOpacity
     activeOpacity={0.7}
     onPress={onPress}
-    className="flex-row items-center justify-between border-b border-gray-50 py-4 last:border-0">
+    className="flex-row items-center justify-between border-b border-gray-100 dark:border-gray-800 py-4 last:border-0">
     <View className="flex-row items-center">
       <View
         className={cn(
           'mr-4 h-10 w-10 items-center justify-center rounded-full',
-          isDestructive ? 'bg-red-50' : 'bg-gray-50'
+          isDestructive ? 'bg-red-50 dark:bg-red-900/20' : 'bg-gray-50 dark:bg-gray-800'
         )}>
-        <Text className={cn('text-lg', isDestructive ? 'text-red-500' : 'text-gray-600')}>
+        <Text className={cn('text-lg', isDestructive ? 'text-red-500' : 'text-gray-600 dark:text-gray-300')}>
           {icon}
         </Text>
       </View>
       <Text
-        className={cn('text-base font-medium', isDestructive ? 'text-red-600' : 'text-gray-900')}>
+        className={cn('text-base font-medium', isDestructive ? 'text-red-600' : 'text-gray-900 dark:text-white')}>
         {label}
       </Text>
     </View>
@@ -77,6 +78,7 @@ export const ProfileScreen = () => {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
   const { user } = useAuth();
   const { refresh } = useAuth();
+  const { theme } = useThemeStore();
 
   const { mutate } = useMutation({
     mutationFn: (refresh_token: string) => http.post(AUTH_ENDPOINTS.POST_LOGOUT, { refresh_token }),
@@ -107,35 +109,35 @@ export const ProfileScreen = () => {
 
   return (
     <Container className="flex-1">
-      <StatusBar barStyle="dark-content" />
+      <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} />
 
       {/* --- 1. Header Section (Sticky-ish look) --- */}
-      <View className="z-10 rounded-b-[32px] bg-white px-6 pb-8 pt-5 shadow-sm">
+      <View className="z-10 rounded-b-[32px] bg-white dark:bg-gray-900 px-6 pb-8 pt-5 shadow-sm border-b border-gray-100 dark:border-gray-800">
         <View className="items-center">
           <View className="relative">
             <Image
               source={{ uri: user?.avatar }}
-              className="mb-4 h-24 w-24 rounded-full border-4 border-gray-50"
+              className="mb-4 h-24 w-24 rounded-full border-4 border-gray-50 dark:border-gray-800"
             />
-            <TouchableOpacity className="absolute bottom-4 right-0 h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-gray-900">
+            <TouchableOpacity className="absolute bottom-4 right-0 h-8 w-8 items-center justify-center rounded-full border-2 border-white dark:border-gray-900 bg-blue-600">
               <Text className="text-xs text-white">✎</Text>
             </TouchableOpacity>
           </View>
 
-          <Text className="text-center text-2xl font-bold tracking-tight text-gray-900">
+          <Text variant="heading" size="2xl" className="text-center tracking-tight text-gray-900 dark:text-white">
             {user?.first_name}
           </Text>
           <Text className="mb-1 text-sm font-medium text-blue-600">{user?.role}</Text>
-          <View className="mt-2 rounded-full bg-gray-100 px-3 py-1">
-            <Text className="text-xs font-medium text-gray-500">ID: {user?.id}</Text>
+          <View className="mt-2 rounded-full bg-gray-100 dark:bg-gray-800 px-3 py-1">
+            <Text variant="subtext" className="text-xs font-medium">ID: {user?.id}</Text>
           </View>
         </View>
 
         {/* Quick Stats Row */}
         <View className="mt-8 flex-row">
-          <StatBox label="Leaves Left" value="12" color="text-green-600" />
-          <StatBox label="Attendance" value="98%" color="text-blue-600" />
-          <StatBox label="Late Days" value="2" color="text-orange-500" />
+          <StatBox label="Leaves Left" value="12" color="text-green-600 dark:text-green-400" />
+          <StatBox label="Attendance" value="98%" color="text-blue-600 dark:text-blue-400" />
+          <StatBox label="Late Days" value="2" color="text-orange-500 dark:text-orange-400" />
         </View>
       </View>
 
@@ -145,32 +147,32 @@ export const ProfileScreen = () => {
           <Text className="mb-3 ml-1 text-sm font-bold uppercase tracking-wider text-gray-400">
             Contact Details
           </Text>
-          <View className="rounded-2xl border border-gray-100 bg-white p-4 shadow-sm">
+          <View className="rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
             <View className="mb-4 flex-row items-center">
-              <View className="mr-3 h-8 w-8 items-center justify-center rounded-full bg-blue-50">
+              <View className="mr-3 h-8 w-8 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900/20">
                 <Text>📧</Text>
               </View>
               <View>
-                <Text className="text-xs text-gray-400">Official Email</Text>
-                <Text className="text-sm font-medium text-gray-900">{user?.email}</Text>
+                <Text variant="subtext" className="text-xs">Official Email</Text>
+                <Text className="text-sm font-medium text-gray-900 dark:text-white">{user?.email}</Text>
               </View>
             </View>
             <View className="mb-4 flex-row items-center">
-              <View className="mr-3 h-8 w-8 items-center justify-center rounded-full bg-green-50">
+              <View className="mr-3 h-8 w-8 items-center justify-center rounded-full bg-green-50 dark:bg-green-900/20">
                 <Text>📞</Text>
               </View>
               <View>
-                <Text className="text-xs text-gray-400">Phone</Text>
-                <Text className="text-sm font-medium text-gray-900">{user?.phone}</Text>
+                <Text variant="subtext" className="text-xs">Phone</Text>
+                <Text className="text-sm font-medium text-gray-900 dark:text-white">{user?.phone}</Text>
               </View>
             </View>
             <View className="flex-row items-center">
-              <View className="mr-3 h-8 w-8 items-center justify-center rounded-full bg-purple-50">
+              <View className="mr-3 h-8 w-8 items-center justify-center rounded-full bg-purple-50 dark:bg-purple-900/20">
                 <Text>🏢</Text>
               </View>
               <View>
-                <Text className="text-xs text-gray-400">Department</Text>
-                <Text className="text-sm font-medium text-gray-900">{user?.department}</Text>
+                <Text variant="subtext" className="text-xs">Department</Text>
+                <Text className="text-sm font-medium text-gray-900 dark:text-white">{user?.department}</Text>
               </View>
             </View>
           </View>
@@ -181,7 +183,7 @@ export const ProfileScreen = () => {
           <Text className="mb-3 ml-1 text-sm font-bold uppercase tracking-wider text-gray-400">
             Settings
           </Text>
-          <View className="rounded-2xl border border-gray-100 bg-white px-4 shadow-sm">
+          <View className="rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 shadow-sm">
             {/* Toggle Row */}
             <MenuRow
               icon="🔔"
@@ -192,18 +194,18 @@ export const ProfileScreen = () => {
                 <Switch
                   value={notificationsEnabled}
                   onValueChange={setNotificationsEnabled}
-                  trackColor={{ false: '#E5E7EB', true: '#2563EB' }}
+                  trackColor={{ false: '#E5E7EB', true: '#2563EB' }} // Blue 600
                   thumbColor={'#FFFFFF'}
                   ios_backgroundColor="#E5E7EB"
                 />
               }
             />
 
-            <MenuRow icon="🔒" label="Change Password" onPress={() => {}} />
+            <MenuRow icon="🔒" label="Change Password" onPress={() => { }} />
 
-            <MenuRow icon="📄" label="Terms & Privacy" onPress={() => {}} />
+            <MenuRow icon="📄" label="Terms & Privacy" onPress={() => { }} />
 
-            <MenuRow icon="🛡️" label="Support" onPress={() => {}} />
+            <MenuRow icon="🛡️" label="Support" onPress={() => { }} />
 
             <MenuRow
               icon="🚪"

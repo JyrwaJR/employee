@@ -9,16 +9,16 @@ datasource db {
 }
 
 model Auth {
-  id            String    @id @default(uuid())
-  email         String    @unique
-  hash_password String // store hashed password
-  last_login_at DateTime?
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @updatedAt
-
-  user_id String  @unique
-  user    User    @relation(fields: [user_id], references: [id])
-  tokens  Token[]
+  id               String    @id @default(uuid())
+  email            String    @unique
+  hash_password    String // store hashed password
+  last_login_at    DateTime?
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+  isFirstTimeLogin Boolean   @default(true)
+  user_id          String    @unique
+  user             User      @relation(fields: [user_id], references: [id])
+  tokens           Token[]
 
   @@index([user_id])
   @@index([email])

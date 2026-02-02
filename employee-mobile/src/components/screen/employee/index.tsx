@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList, StatusBar } from 'react-native';
+import { View, TextInput, TouchableOpacity, FlatList, StatusBar } from 'react-native';
 import { Container } from '../../common/Container';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/utils/http';
@@ -9,6 +9,7 @@ import { EmployeeListItem } from './EmployeeListItem';
 import { router } from 'expo-router';
 import { LoadingScreen } from '../../common/LoadingScreen';
 import { FilterChip } from '../../common/FilterChip';
+import { Text } from '../../ui/text';
 
 // --- Screen ---
 export default function EmployeeListScreen() {
@@ -26,21 +27,21 @@ export default function EmployeeListScreen() {
   if (isFetching) return <LoadingScreen />;
 
   return (
-    <Container className="flex-1 bg-gray-50">
+    <Container className="flex-1">
       <StatusBar barStyle="dark-content" />
 
       {/* Header */}
-      <View className="z-10 rounded-b-[32px] bg-white px-6 pb-4 pt-4 shadow-sm">
-        <Text className="mb-4 text-2xl font-bold text-gray-900">Staff Directory</Text>
+      <View className="z-10 rounded-b-[32px] bg-white dark:bg-gray-900 px-6 pb-4 pt-4 shadow-sm border-b border-gray-100 dark:border-gray-800">
+        <Text variant="heading" size="2xl" className="mb-4 text-gray-900 dark:text-white">Staff Directory</Text>
 
         {/* Search */}
-        <View className="mb-4 flex-row items-center rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3">
+        <View className="mb-4 flex-row items-center rounded-2xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 px-4 py-3">
           <Text className="mr-2 text-gray-400">🔍</Text>
           <TextInput
             placeholder="Search by name or role..."
             value={search}
             onChangeText={setSearch}
-            className="flex-1 text-base text-gray-900"
+            className="flex-1 text-base text-gray-900 dark:text-white"
             placeholderTextColor="#9CA3AF"
           />
         </View>
@@ -72,7 +73,7 @@ export default function EmployeeListScreen() {
       {/* FAB */}
       <TouchableOpacity
         activeOpacity={0.9}
-        className="absolute bottom-8 right-6 h-14 w-14 items-center justify-center rounded-full bg-gray-900 shadow-lg">
+        className="absolute bottom-8 right-6 h-14 w-14 items-center justify-center rounded-full bg-blue-600 shadow-lg shadow-blue-600/30">
         <Text className="text-2xl font-light text-white">+</Text>
       </TouchableOpacity>
     </Container>
