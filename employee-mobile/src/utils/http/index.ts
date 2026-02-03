@@ -5,6 +5,7 @@ import { logger } from '../logger';
 import axiosInstance from '../api';
 
 import { MetaT } from '../../types/meta';
+import z from 'zod';
 
 export interface ApiResponse<T> {
   success: boolean;
@@ -53,9 +54,18 @@ const handleResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiResponse
   };
 };
 
+const isValidUrl = (url: string) => {
+  const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
+  const fullUrl = BASE_URL + url;
+  return z.url().safeParse(fullUrl).success;
+};
+
 export const http = {
   get: async <T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
     try {
+      if (!isValidUrl(url)) {
+        throw new Error('Invalid URL');
+      }
       logger.log({ method: 'GET =>', path: url });
       const response = await axiosInstance.get(url, config);
       return handleResponse<T>(response);
@@ -70,6 +80,9 @@ export const http = {
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> => {
     try {
+      if (!isValidUrl(url)) {
+        throw new Error('Invalid URL');
+      }
       logger.log({ method: 'POST =>', path: url, data });
       const response = await axiosInstance.post(url, data, config);
       return handleResponse<T>(response);
@@ -84,6 +97,9 @@ export const http = {
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> => {
     try {
+      if (!isValidUrl(url)) {
+        throw new Error('Invalid URL');
+      }
       logger.log({ method: 'PUT =>', path: url });
       const response = await axiosInstance.put(url, data, config);
       return handleResponse<T>(response);
@@ -94,6 +110,9 @@ export const http = {
 
   delete: async <T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
     try {
+      if (!isValidUrl(url)) {
+        throw new Error('Invalid URL');
+      }
       logger.log({ method: 'DELETE =>', path: url });
       const response = await axiosInstance.delete(url, config);
       return handleResponse<T>(response);
