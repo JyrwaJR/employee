@@ -9,19 +9,7 @@ import { Header } from './Header';
 import { useAuth } from '@/src/hooks/auth/useAuth';
 import { useEffect } from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-const ThemeToggle = () => {
-  const { theme, toggleTheme } = useThemeStore();
-  return (
-    <TouchableOpacity onPress={toggleTheme}>
-      <Ionicons
-        name={theme === 'dark' ? 'moon' : 'sunny'}
-        size={24}
-        color={theme === 'dark' ? '#FFFFFF' : '#000000'}
-      />
-    </TouchableOpacity>
-  );
-};
+import { ThemeToggle } from './ThemeToggle';
 
 const TabIcon = ({
   name,
@@ -77,18 +65,16 @@ const TabLayout = () => {
   const { role } = useAuth();
   const theme = useTheme();
   const pathname = usePathname();
+  // TODO: Add NPS check form backend as user profile
+  const isNPS = false;
   const insets = useSafeAreaInsets();
 
-  // Mapping current path to title for Header
   const getTitle = () => {
     if (pathname.includes('/statement')) return 'Statements';
     if (pathname.includes('/profile')) return 'Profile';
+    if (pathname.includes('/pension')) return isNPS ? 'NPS' : 'Pension';
     return 'Home';
   };
-
-  const activeColor = '#2563EB'; // blue-600
-
-  const inactiveColor = theme === 'dark' ? '#9CA3AF' : '#6B7280';
 
   return (
     <Tabs asChild>
@@ -96,12 +82,11 @@ const TabLayout = () => {
         <Header
           title={getTitle()}
           leftIcon={<DrawerToggleButton tintColor={theme === 'dark' ? 'white' : 'black'} />}
-          showBackButton={false}
           rightIcon={<ThemeToggle />}
         />
         <TabSlot />
         <TabList
-          className="flex-row items-center justify-around border-t border-gray-200 bg-white px-4 py-2 shadow-sm dark:border-gray-800 dark:bg-slate-950"
+          className="flex-row items-center justify-center gap-0 border-t border-gray-200 bg-white px-4 py-2 shadow-sm dark:border-gray-800 dark:bg-slate-950"
           style={{ paddingBottom: insets.bottom + 8 }}>
           <TabTrigger name="index" href={role === 'SUPER_ADMIN' ? '/' : '/profile'} asChild>
             <Pressable className="items-center justify-center p-2">
@@ -119,6 +104,16 @@ const TabLayout = () => {
                 name="statement"
                 label="Statements"
                 icon={(props) => <MaterialIcons name="receipt" {...props} />}
+              />
+            </Pressable>
+          </TabTrigger>
+
+          <TabTrigger name="pension" href="/pension" asChild>
+            <Pressable className="items-center justify-center p-2">
+              <TabIcon
+                name="pension"
+                label={isNPS ? 'NPS' : 'Pension'}
+                icon={(props) => <MaterialIcons name="tag" {...props} />}
               />
             </Pressable>
           </TabTrigger>
