@@ -93,9 +93,57 @@ model EmployeeProfile {
   salary_slips      SalarySlip[] // The history of PAST months
   revisions         SalaryRevision[] // History of increments/promotions
   leaves            LeaveRecord[]
+  pension           PensionProfile?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model PensionProfile {
+  id          String          @id @default(uuid())
+  employee_id String          @unique
+  employee    EmployeeProfile @relation(fields: [employee_id], references: [id])
+
+  scheme_type PensionScheme @default(NPS)
+  pran_number String?       @unique // Permanent Retirement Account Number (for NPS/UPS)
+  ppo_number  String?       @unique // Pension Payment Order (for OPS/Retired)
+
+  // --- NPS / UPS Specifics ---
+  tier_1_active Boolean @default(true)
+  tier_2_active Boolean @default(false)
+
+  // Contribution Rates (Overrides if they deviate from standard govt rules)
+  employee_rate Decimal @default(10.00) @db.Decimal(5, 2) // Typically 10% of (Basic + DA)
+  employer_rate Decimal @default(14.00) @db.Decimal(5, 2) // Govt usually pays 14% (NPS) or 18.5% (UPS)
+
+  // --- OPS Specifics ---
+  gpf_number       String?  @unique // General Provident Fund (Only for OPS)
+  gpf_subscription Decimal? @db.Decimal(10, 2) // Monthly fixed deduction for GPF
+
+  // History and Tracking
+  contributions PensionContribution[]
+  created_at    DateTime              @default(now())
+  updated_at    DateTime              @updatedAt
+}
+
+model PensionContribution {
+  id                 String         @id @default(uuid())
+  pension_profile_id String
+  pension_profile    PensionProfile @relation(fields: [pension_profile_id], references: [id])
+
+  month Month
+  year  Int
+
+  employee_share  Decimal @db.Decimal(10, 2)
+  employer_share  Decimal @db.Decimal(10, 2)
+  total_deposited Decimal @db.Decimal(10, 2)
+
+  // To link exactly which salary slip generated this contribution
+  salary_slip_id String? @unique
+
+  created_at DateTime @default(now())
+
+  @@unique([pension_profile_id, month, year])
 }
 
 model SalaryStructure {
@@ -266,4 +314,10 @@ enum CityClass {
   X // Metro (High HRA)
   Y // Urban
   Z // Rural
+}
+
+enum PensionScheme {
+  OPS // Old Pension Scheme (Defined Benefit - Pre 2004)
+  NPS // National Pension System (Defined Contribution - Post 2004)
+  UPS // Unified Pension Scheme (Assured Pension - 2024/25 onwards)
 }

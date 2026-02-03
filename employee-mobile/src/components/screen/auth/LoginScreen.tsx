@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  TouchableOpacity,
-  Alert,
-  SafeAreaView,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import { View, TouchableOpacity, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { Link } from 'expo-router';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,7 +13,6 @@ import { toast } from 'sonner-native';
 import { TokenStoreManager } from '@/src/libs/stores/auth';
 import { useAuth } from '@/src/hooks/auth/useAuth';
 import { http } from '@/src/utils/http';
-import { useThemeStore } from '@/src/store/theme';
 import { Text } from '@/src/components/ui/text';
 import { Container } from '../../common/Container';
 
@@ -37,7 +29,6 @@ type LoginResT = {
 
 export const LoginScreen = () => {
   const { refresh } = useAuth();
-  const { theme, toggleTheme } = useThemeStore();
 
   const loginMutation = useMutation({
     mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(AUTH_ENDPOINTS.POST_SIGN_IN, data),
@@ -71,20 +62,22 @@ export const LoginScreen = () => {
         {/* Header Section */}
         <View className="mb-10 items-center">
           <View className="mb-6 h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 dark:bg-blue-600">
-            {/* Logo Placeholder */}
-            <Text variant={'heading'} className='text-white' size={'2xl'}>✨
+            <Text variant={'heading'} className="text-white" size={'2xl'}>
+              ✨
             </Text>
           </View>
-          <Text variant={'heading'} size={'2xl'} weight={'semibold'}>Welcome back</Text>
-          <Text variant={'subtext'}>
-            Please enter your details to sign in.
+          <Text variant={'heading'} size={'2xl'} weight={'semibold'}>
+            Welcome back
           </Text>
+          <Text variant={'subtext'}>Please enter your details to sign in.</Text>
         </View>
 
         {/* Form Section */}
         <View className="w-full">
           <View className="mb-4">
-            <Text variant="label" className="mb-1.5 ml-1">Email</Text>
+            <Text variant="label" className="mb-1.5 ml-1">
+              Email
+            </Text>
             <Controller
               control={control}
               name="email"
@@ -98,14 +91,20 @@ export const LoginScreen = () => {
                     autoCapitalize="none"
                     error={!!error}
                   />
-                  {error && <Text variant="error" size="sm" className="ml-1 mt-1">{error.message}</Text>}
+                  {error && (
+                    <Text variant="error" size="sm" className="ml-1 mt-1">
+                      {error.message}
+                    </Text>
+                  )}
                 </>
               )}
             />
           </View>
 
           <View className="mb-4">
-            <Text variant="label" className="mb-1.5 ml-1">Password</Text>
+            <Text variant="label" className="mb-1.5 ml-1">
+              Password
+            </Text>
             <Controller
               control={control}
               name="password"
@@ -119,7 +118,11 @@ export const LoginScreen = () => {
                     secureTextEntry
                     error={!!error}
                   />
-                  {error && <Text variant="error" size="sm" className="ml-1 mt-1">{error.message}</Text>}
+                  {error && (
+                    <Text variant="error" size="sm" className="ml-1 mt-1">
+                      {error.message}
+                    </Text>
+                  )}
                 </>
               )}
             />
@@ -135,11 +138,9 @@ export const LoginScreen = () => {
             isLoading={loginMutation.isPending}
           />
 
-          <View className="my-8 flex-row gap-x-2 items-center">
+          <View className="my-8 flex-row items-center gap-x-2">
             <View className="h-[1px] flex-1 bg-gray-200" />
-            <Text variant={'subtext'}>
-              Or continue with
-            </Text>
+            <Text variant={'subtext'}>Or continue with</Text>
             <View className="h-[1px] flex-1 bg-gray-200" />
           </View>
 

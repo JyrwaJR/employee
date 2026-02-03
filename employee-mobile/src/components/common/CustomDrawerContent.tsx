@@ -1,58 +1,75 @@
 import { useAuth } from '@/src/hooks/auth/useAuth';
-import {
-  DrawerContentComponentProps,
-  DrawerContentScrollView,
-  DrawerItemList,
-} from '@react-navigation/drawer';
-import { Route, useRouter } from 'expo-router';
+
+import colors from 'tailwindcss/colors';
+
+import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
+import { Link, Route, usePathname, useRouter } from 'expo-router';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ModernButton } from '../ui/button';
-import { Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
+import { useTheme } from '@/src/store/theme';
 
 export type MenuItemsT = {
   id: number;
   title: string;
-  herf: Route;
+  href: Route;
 };
 
 const menuItems: MenuItemsT[] = [
-  { id: 1, title: 'Home', herf: '/' },
-  { id: 2, title: 'Settings', herf: '/settings' },
+  { id: 1, title: 'Home', href: '/' },
+  { id: 2, title: 'Settings', href: '/settings' },
 ];
 
 const adminDrawerMenuItems: MenuItemsT[] = [
-  { id: 1, title: 'Home', herf: '/' },
-  { id: 2, title: 'Employees', herf: '/employees' },
-  { id: 3, title: 'Statements', herf: '/statement' },
-  { id: 4, title: 'Settings', herf: '/settings' },
+  { id: 1, title: 'Home', href: '/' },
+  { id: 2, title: 'Employees', href: '/employees' },
+  { id: 4, title: 'Settings', href: '/settings' },
 ];
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const { user } = useAuth();
-  const router = useRouter();
+  const theme = useTheme();
+  const isDark = theme === 'dark';
+  const pathname = usePathname();
   const insets = useSafeAreaInsets();
+  const bgColor = isDark ? colors.slate[900] : colors.white;
+
   const isAdmin = user?.role === 'SUPER_ADMIN' || user?.role === 'ADMIN';
+
   let items: MenuItemsT[] = isAdmin ? adminDrawerMenuItems : menuItems;
+
   return (
     <DrawerContentScrollView
       {...props}
       contentContainerStyle={{
         paddingTop: insets.top,
         flex: 1,
+        backgroundColor: bgColor,
       }}>
-      <View className="mb-4 flex-row items-center justify-center">
-        <Text className="text-center text-2xl font-bold text-gray-900">
+      <View className="mb-6 flex-row items-center justify-center pt-4">
+        <Text className="text-center text-2xl font-bold text-gray-900 dark:text-white">
           {process.env.EXPO_PUBLIC_APP_NAME}
         </Text>
       </View>
 
-      <View className="p-x-5 flex-1 flex-col gap-2">
+      <View className="flex-1 flex-col gap-2 px-3">
         {items.map((item) => {
+          const isActive = pathname === item.href;
           return (
-            <View key={item.id} className="relative gap-2">
-              <ModernButton title={item.title} onPress={() => router.push(item.herf)} />
-            </View>
+            <Link key={item.id} href={item.href} asChild>
+              <Pressable
+                className={`flex-row items-center rounded-xl p-4 ${isActive ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-transparent'
+                  }`}>
+                <Text
+                  className={`text-base font-medium ${isActive
+                      ? 'text-blue-700 dark:text-blue-400'
+                      : 'text-slate-600 dark:text-slate-400'
+                    }`}>
+                  {item.title}
+                </Text>
+              </Pressable>
+            </Link>
           );
         })}
       </View>

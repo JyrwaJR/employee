@@ -1,5 +1,5 @@
-import { UnderDevelopment } from '@/src/components/common/UnderDevelopment';
+import PensionScreen from '@/src/components/screen/pension';
 
 export default function page() {
-  return <UnderDevelopment />;
+  return <PensionScreen />;
 }

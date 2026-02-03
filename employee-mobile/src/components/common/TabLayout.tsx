@@ -1,8 +1,8 @@
 import { Tabs, TabList, TabTrigger, TabSlot } from 'expo-router/ui';
 import { usePathname } from 'expo-router';
-import { useTheme, useThemeStore } from '@/src/store/theme';
-import { View, TouchableOpacity, Pressable, Text } from 'react-native';
-import { Ionicons, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
+import { useTheme } from '@/src/store/theme';
+import { View, Pressable, Text } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
 import { DrawerToggleButton } from '@react-navigation/drawer';
 import { Header } from './Header';
@@ -73,6 +73,7 @@ const TabLayout = () => {
     if (pathname.includes('/statement')) return 'Statements';
     if (pathname.includes('/profile')) return 'Profile';
     if (pathname.includes('/pension')) return isNPS ? 'NPS' : 'Pension';
+    if (pathname.includes('/leave')) return 'Leave';
     return 'Home';
   };
 
@@ -83,6 +84,7 @@ const TabLayout = () => {
           title={getTitle()}
           leftIcon={<DrawerToggleButton tintColor={theme === 'dark' ? 'white' : 'black'} />}
           rightIcon={<ThemeToggle />}
+          showBackButton={false}
         />
         <TabSlot />
         <TabList
@@ -108,6 +110,15 @@ const TabLayout = () => {
             </Pressable>
           </TabTrigger>
 
+          <TabTrigger name="leave" href="/leave" asChild>
+            <Pressable className="items-center justify-center p-2">
+              <TabIcon
+                name="leave"
+                label="Leaves"
+                icon={(props) => <MaterialIcons name="air" {...props} />}
+              />
+            </Pressable>
+          </TabTrigger>
           <TabTrigger name="pension" href="/pension" asChild>
             <Pressable className="items-center justify-center p-2">
               <TabIcon

@@ -1,7 +1,7 @@
 import EmployeeDetailScreen from '@/src/components/screen/employee/EmployeeDetails';
-import { Stack } from 'expo-router';
 import { useAuth } from '@/src/hooks/auth/useAuth';
 import { NotFoundScreen } from '@/src/components/common/NotFoundScreen';
+import { HeaderStack } from '@/src/components/common/Header';
 
 export default function Page() {
   const { user } = useAuth();
@@ -11,13 +11,7 @@ export default function Page() {
   }
   return (
     <>
-      <Stack.Screen
-        options={{
-          headerShown: true,
-          title: 'Employee Details',
-          headerBackButtonDisplayMode: 'generic',
-        }}
-      />
+      <HeaderStack title="Employee Details" />
       <EmployeeDetailScreen />
     </>
   );

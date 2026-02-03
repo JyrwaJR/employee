@@ -10,8 +10,8 @@ export const passwordValidation = z
 
 export const LoginSchema = z
   .object({
-    email: z.email('Invalid email address').min(1, 'Email is required').default('admin@gov.in'),
-    password: passwordValidation.default('123Clashofclan@'),
+    email: z.email('Invalid email address').min(1, 'Email is required'),
+    password: passwordValidation,
   })
   .strict();
 

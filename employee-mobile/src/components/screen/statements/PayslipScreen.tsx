@@ -1,63 +1,20 @@
 import React, { useMemo } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { Container } from '../../common/Container';
-import { cn } from '@/src/libs/cn';
-import { Stack } from 'expo-router';
 import { SALARY_ENDPOINTS } from '@/src/libs/endpoints/salary';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/utils/http';
 import { LoadingScreen } from '../../common/LoadingScreen';
 import { SalarySlip } from '@/src/types/employee';
 import { Text } from '../../ui/text';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { DetailRow } from '../../common/DetailRow';
+import { SectionHeader } from '../../common/SectionHeader';
+import { MoneyRow } from '../../common/MoneyRow';
 
 const parseAmount = (value?: string | null): number => {
   return parseFloat(value || '0');
 };
-
-const DetailRow = ({ label, value }: { label: string; value: string }) => (
-  <View className="mb-2 flex-row justify-between">
-    <Text variant="subtext" className="text-sm font-medium">{label}</Text>
-    <Text className="text-sm font-semibold text-gray-900 dark:text-white">{value}</Text>
-  </View>
-);
-
-type MoneyRowProps = {
-  label: string;
-  value: number;
-  isBold?: boolean;
-  isDeduction?: boolean;
-};
-
-const MoneyRow = ({ label, value, isBold = false, isDeduction = false }: MoneyRowProps) => (
-  <View
-    className={cn(
-      'flex-row justify-between border-b border-gray-100 dark:border-gray-800 py-3 last:border-0',
-      isBold && 'border-t border-gray-200 dark:border-gray-700 pt-4'
-    )}>
-    <Text
-      className={cn('text-sm', isBold ? 'font-bold text-gray-900 dark:text-white' : 'font-medium text-gray-600 dark:text-gray-300')}>
-      {label}
-    </Text>
-    <Text
-      className={cn(
-        'text-sm font-medium tabular-nums',
-        isBold ? 'text-base font-bold text-gray-900 dark:text-white' : 'text-gray-900 dark:text-white',
-        isDeduction && !isBold && 'text-red-500'
-      )}>
-      {isDeduction && !isBold ? '-' : ''}₹
-      {value.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
-    </Text>
-  </View>
-);
-
-const SectionHeader = ({ title, icon }: { title: string; icon: string }) => (
-  <View className="mb-4 flex-row items-center">
-    <View className="mr-3 h-8 w-8 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900/20">
-      <Text className="text-xs text-blue-600 dark:text-blue-400">{icon}</Text>
-    </View>
-    <Text variant="heading" size="lg" className="text-gray-900 dark:text-white">{title}</Text>
-  </View>
-);
 
 type Props = { salaryId: string };
 
@@ -137,7 +94,7 @@ export const PayslipScreen = ({ salaryId }: Props) => {
           <Text variant="subtext" className="text-center text-sm">
             {data?.employee?.office_location || 'New Delhi'}
           </Text>
-          <View className="mt-4 rounded-full bg-gray-200 dark:bg-gray-800 px-4 py-1">
+          <View className="mt-4 rounded-full bg-gray-200 px-4 py-1 dark:bg-gray-800">
             <Text className="text-xs font-bold uppercase text-gray-600 dark:text-gray-300">
               {data?.month} {data?.year}
             </Text>
@@ -145,7 +102,7 @@ export const PayslipScreen = ({ salaryId }: Props) => {
         </View>
 
         {/* Net Pay Hero Card */}
-        <View className="mb-6 rounded-3xl bg-blue-600 dark:bg-blue-700 p-6 shadow-xl shadow-blue-900/20">
+        <View className="mb-6 rounded-3xl bg-blue-600 p-6 shadow-xl shadow-blue-900/20 dark:bg-blue-700">
           <Text className="mb-1 text-sm font-medium text-blue-100">Net Pay Disbursed</Text>
           <Text className="mb-6 text-4xl font-bold text-white">
             ₹{netPay.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
@@ -176,7 +133,7 @@ export const PayslipScreen = ({ salaryId }: Props) => {
         </View>
 
         {/* Employee Details Grid */}
-        <View className="mb-6 rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm">
+        <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-gray-400">
             Employee Particulars
           </Text>
@@ -192,7 +149,7 @@ export const PayslipScreen = ({ salaryId }: Props) => {
         </View>
 
         {/* Earnings Section */}
-        <View className="mb-6 rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm">
+        <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <SectionHeader title="Earnings" icon="💰" />
           {earningsList.map((item, index) => (
             <MoneyRow key={index} label={item.label} value={item.value} />
@@ -201,12 +158,20 @@ export const PayslipScreen = ({ salaryId }: Props) => {
         </View>
 
         {/* Deductions Section */}
-        <View className="mb-8 rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 shadow-sm">
+        <View className="mb-8 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <SectionHeader title="Deductions" icon="📉" />
           {deductionsList.map((item, index) => (
             <MoneyRow key={index} label={item.label} value={item.value} isDeduction />
           ))}
           <MoneyRow label="Total Deductions" value={totalDeductions} isBold isDeduction />
+        </View>
+
+        {/* Actions */}
+        <View className="mb-10 flex-row gap-4">
+          <TouchableOpacity className="flex-1 flex-row items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white p-4 dark:border-gray-700 dark:bg-slate-800">
+            <MaterialCommunityIcons name="download-outline" size={20} color="#3B82F6" />
+            <Text className="font-semibold text-blue-600 dark:text-blue-400">Download PDF</Text>
+          </TouchableOpacity>
         </View>
 
         {/* Footer Note */}

@@ -8,13 +8,12 @@ import { EmployeeT } from '@/src/types/employee';
 import { EmployeeListItem } from './EmployeeListItem';
 import { router } from 'expo-router';
 import { LoadingScreen } from '../../common/LoadingScreen';
-import { FilterChip } from '../../common/FilterChip';
 import { Text } from '../../ui/text';
+import { FilterCard } from '../../common/FilterCard';
 
 // --- Screen ---
 export default function EmployeeListScreen() {
   const [search, setSearch] = useState('');
-  const [filter, setFilter] = useState('All');
 
   const { data: EMPLOYEES, isFetching } = useQuery({
     queryKey: ['employees'],
@@ -31,11 +30,13 @@ export default function EmployeeListScreen() {
       <StatusBar barStyle="dark-content" />
 
       {/* Header */}
-      <View className="z-10 rounded-b-[32px] bg-white dark:bg-gray-900 px-6 pb-4 pt-4 shadow-sm border-b border-gray-100 dark:border-gray-800">
-        <Text variant="heading" size="2xl" className="mb-4 text-gray-900 dark:text-white">Staff Directory</Text>
+      <View className="z-10 rounded-b-[32px] border-b border-gray-100 bg-white px-6 pb-4 pt-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <Text variant="heading" size="2xl" className="mb-4 text-gray-900 dark:text-white">
+          Staff Directory
+        </Text>
 
         {/* Search */}
-        <View className="mb-4 flex-row items-center rounded-2xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800 px-4 py-3">
+        <View className="mb-4 flex-row items-center rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3 dark:border-gray-800 dark:bg-gray-800">
           <Text className="mr-2 text-gray-400">🔍</Text>
           <TextInput
             placeholder="Search by name or role..."
@@ -47,11 +48,7 @@ export default function EmployeeListScreen() {
         </View>
 
         {/* Filters */}
-        <View className="flex-row">
-          {['All', 'Active', 'On Leave', 'Probation'].map((f) => (
-            <FilterChip key={f} label={f} active={filter === f} onPress={() => setFilter(f)} />
-          ))}
-        </View>
+        <FilterCard />
       </View>
 
       {/* List */}
