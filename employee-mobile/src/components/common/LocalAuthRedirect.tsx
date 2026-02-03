@@ -1,34 +1,37 @@
+import { useAuth } from '@/src/hooks/auth/useAuth';
 import { useLocalAuth } from '@/src/hooks/auth/useLocalAuth';
 import { useLocalAuthStore } from '@/src/store/auth/useLocalAuthStore';
-import { useRouter } from 'expo-router';
 import { useCallback, useEffect } from 'react';
+import { Forbidden } from './Forbidden';
+import Constants from 'expo-constants';
+
+const isExpoGo = Constants.appOwnership === 'expo';
+
 
 export const LocalAuthRedirect = ({ children }: { children: React.ReactNode }) => {
   const { authenticate, isAuthenticated, isSupported } = useLocalAuth();
   const { isEnabled } = useLocalAuthStore();
-  const router = useRouter();
+  const { user } = useAuth();
 
   const handleSensitiveAction = useCallback(async () => {
-    if (!isEnabled) return;
+    if (!user || !isEnabled) return;
 
-    const success = await authenticate();
-
-    if (success) {
-      router.replace('/');
-    } else {
-      router.replace('/forbidden');
+    if (!isAuthenticated) {
+      await authenticate();
     }
-  }, [authenticate, router, isEnabled]);
+  }, [authenticate, isEnabled, user, isAuthenticated]);
 
-  useEffect(() => {
-    if (isEnabled && !isAuthenticated) {
-      router.replace('/forbidden');
-    }
-  }, [isEnabled, isAuthenticated, router]);
+  const handleTryAgain = async () => {
+    await authenticate();
+  };
 
   useEffect(() => {
     handleSensitiveAction();
-  }, [isSupported, isEnabled]);
+  }, [isSupported, isEnabled, user]);
+
+  if (isEnabled && !isExpoGo && user && !isAuthenticated) {
+    return <Forbidden onPressTryAgain={() => handleTryAgain()} />;
+  }
 
   return <>{children}</>;
 };
