@@ -36,8 +36,8 @@ const PensionScreen = () => {
 
   return (
     <>
-      <Container className="flex-1 bg-gray-50 dark:bg-slate-950">
-        <View className="mt-4 px-4">
+      <Container className="flex-1">
+        <View className="mt-4 p-4">
           <FilterCard
             year={selectedYear}
             years={years}
