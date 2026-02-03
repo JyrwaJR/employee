@@ -29,6 +29,7 @@ const PensionScreen = () => {
     queryKey: ['pension', selectedYear, selectedMonth, status],
     queryFn: () => http.get<SalarySlip[]>(PENSION_ENDPOINTS.GET_PENSIONS.replace(':id', empId)),
     select: (data) => data.data,
+    enabled: !!empId,
   });
 
   if (isFetching) return <LoadingScreen />;
