@@ -16,12 +16,16 @@ export type MenuItemsT = {
   herf: Route;
 };
 
-const menuItems: MenuItemsT[] = [{ id: 1, title: 'Home', herf: '/' }];
+const menuItems: MenuItemsT[] = [
+  { id: 1, title: 'Home', herf: '/' },
+  { id: 2, title: 'Settings', herf: '/settings' },
+];
 
 const adminDrawerMenuItems: MenuItemsT[] = [
   { id: 1, title: 'Home', herf: '/' },
   { id: 2, title: 'Employees', herf: '/employees' },
   { id: 3, title: 'Statements', herf: '/statement' },
+  { id: 4, title: 'Settings', herf: '/settings' },
 ];
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
