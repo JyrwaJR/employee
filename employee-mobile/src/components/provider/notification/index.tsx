@@ -87,11 +87,5 @@ export const NotificationProvider = ({ children }: Props) => {
     };
   }, [user]);
 
-  logger.log('NotificationProvider', {
-    token: expoPushToken,
-    channel: channels,
-    notificaitons: notification,
-  });
-
   return <React.Fragment>{children}</React.Fragment>;
 };
