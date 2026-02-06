@@ -13,10 +13,11 @@ type Props = {
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldPlaySound: false,
-    shouldSetBadge: false,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
     shouldShowBanner: true,
     shouldShowList: true,
+    shouldShowWhenLocked: true,
   }),
 });
 
