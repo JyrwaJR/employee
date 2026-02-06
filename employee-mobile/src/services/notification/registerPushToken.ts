@@ -6,8 +6,16 @@ import { logger } from '@/src/utils/logger';
 import { http } from '@/src/utils/http';
 import { NOTIFICATION_ENDPOINTS } from '@/src/libs/endpoints/notification';
 
-export async function registerForPushNotificationsAsync() {
+type Props = {
+  userId: string;
+};
+
+export async function registerForPushNotificationsAsync({ userId }: Props) {
   try {
+    if (!userId) {
+      logger.info('No user id found to register push token');
+      return;
+    }
     let token;
 
     if (Platform.OS === 'android') {
@@ -52,7 +60,10 @@ export async function registerForPushNotificationsAsync() {
       logger.error('Must use physical device for Push Notifications');
     }
     if (token) {
-      const res = await http.post(NOTIFICATION_ENDPOINTS.POST_REG_PUSH_TOKEN, { token });
+      const res = await http.post(NOTIFICATION_ENDPOINTS.POST_REG_PUSH_TOKEN, {
+        token,
+        user_id: userId,
+      });
       if (res.success) {
         logger.info('Push token Registered', res.data);
       }

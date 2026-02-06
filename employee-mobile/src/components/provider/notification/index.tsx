@@ -35,7 +35,7 @@ export const NotificationProvider = ({ children }: Props) => {
     // Register for push token
     const register = async () => {
       try {
-        const token = await NotificationService.regPushToken({ userId: '' });
+        const token = await NotificationService.regPushToken({ userId: user?.id.toString() ?? '' });
         if (isMounted && token) {
           setExpoPushToken(token);
         }
