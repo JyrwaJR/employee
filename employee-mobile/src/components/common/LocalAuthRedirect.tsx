@@ -3,10 +3,7 @@ import { useLocalAuth } from '@/src/hooks/auth/useLocalAuth';
 import { useLocalAuthStore } from '@/src/store/auth/useLocalAuthStore';
 import { useCallback, useEffect } from 'react';
 import { Forbidden } from './Forbidden';
-import Constants from 'expo-constants';
-
-const isExpoGo = Constants.appOwnership === 'expo';
-
+import { isExpoGo } from '@/src/libs/constant';
 
 export const LocalAuthRedirect = ({ children }: { children: React.ReactNode }) => {
   const { authenticate, isAuthenticated, isSupported } = useLocalAuth();
