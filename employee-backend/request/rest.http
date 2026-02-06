@@ -97,3 +97,16 @@ Authorization: Bearer {{ACCESS_TOKEN}}
 GET http://localhost:3000/api/employees/{{employeeId}}/leave
 Content-Type: application/json
 Authorization: Bearer {{ACCESS_TOKEN}}
+
+### 
+
+# @name register push token
+
+POST http://localhost:3000/api/notification/register
+Content-Type: application/json
+Authorization: Bearer {{ACCESS_TOKEN}}
+
+{
+      "token": "ExponentPushToken[o-FbhOHTwI4wCykP9axgir]",
+      "user_id": "f8119f49-179f-43b9-b9e3-a2ff2b4ba642"
+   }

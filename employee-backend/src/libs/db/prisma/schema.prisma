@@ -9,16 +9,17 @@ datasource db {
 }
 
 model Auth {
-  id               String    @id @default(uuid())
-  email            String    @unique
+  id               String      @id @default(uuid())
+  email            String      @unique
   hash_password    String // store hashed password
   last_login_at    DateTime?
-  created_at       DateTime  @default(now())
-  updated_at       DateTime  @updatedAt
-  isFirstTimeLogin Boolean   @default(true)
-  user_id          String    @unique
-  user             User      @relation(fields: [user_id], references: [id])
+  created_at       DateTime    @default(now())
+  updated_at       DateTime    @updatedAt
+  isFirstTimeLogin Boolean     @default(true)
+  user_id          String      @unique
+  user             User        @relation(fields: [user_id], references: [id])
   tokens           Token[]
+  expo_tokens      ExpoToken[]
 
   @@index([user_id])
   @@index([email])
@@ -37,12 +38,26 @@ model User {
   updated_at  DateTime         @updatedAt
   employee_id String?
   employee    EmployeeProfile?
+  expo_tokens ExpoToken[]
 
   @@index([role])
   @@index([id])
   @@index([auth_id])
   @@index([first_name])
   @@index([last_name])
+}
+
+model ExpoToken {
+  id         String   @id @default(uuid())
+  token      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  auth_id String? @unique
+  auth    Auth?   @relation(fields: [auth_id], references: [id])
+
+  user_id String? @unique
+  user    User?   @relation(fields: [user_id], references: [id])
 }
 
 model Token {
