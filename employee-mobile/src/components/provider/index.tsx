@@ -11,6 +11,7 @@ import React, { useEffect } from 'react';
 import { LoadingScreen } from '../common/LoadingScreen';
 import { ThemeProvider } from './theme';
 import { LocalAuthRedirect } from '../common/LocalAuthRedirect';
+import { NotificationProvider } from './notification';
 
 type Props = {
   children: React.ReactNode;
@@ -34,15 +35,17 @@ export const ProviderWrapper = ({ children }: Props) => {
           <SSLPinning>
             <TQueryProvider>
               <AuthContextProvider>
-                <LocalAuthProvider>
-                  <LocalAuthRedirect>
-                    <AuthRedirect>
-                      <StatusBar barStyle="default" />
-                      <View className="flex-1">{children}</View>
-                      <Toaster />
-                    </AuthRedirect>
-                  </LocalAuthRedirect>
-                </LocalAuthProvider>
+                <NotificationProvider>
+                  <LocalAuthProvider>
+                    <LocalAuthRedirect>
+                      <AuthRedirect>
+                        <StatusBar barStyle="default" />
+                        <View className="flex-1">{children}</View>
+                        <Toaster />
+                      </AuthRedirect>
+                    </LocalAuthRedirect>
+                  </LocalAuthProvider>
+                </NotificationProvider>
               </AuthContextProvider>
             </TQueryProvider>
           </SSLPinning>
