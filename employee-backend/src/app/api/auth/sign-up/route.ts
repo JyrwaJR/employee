@@ -19,7 +19,6 @@ export const POST = withValidation({ body: SignUpSchema }, async ({ body }) => {
       last_name: body.last_name,
       password: body.password,
     });
-
     return SuccessResponse({
       data: newUser,
       message: "User created successfully. Please login",

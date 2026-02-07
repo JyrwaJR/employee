@@ -9,20 +9,48 @@ datasource db {
 }
 
 model Auth {
-  id               String      @id @default(uuid())
-  email            String      @unique
+  id               String    @id @default(uuid())
+  email            String    @unique
+  phone_no         String    @unique
   hash_password    String // store hashed password
   last_login_at    DateTime?
-  created_at       DateTime    @default(now())
-  updated_at       DateTime    @updatedAt
-  isFirstTimeLogin Boolean     @default(true)
-  user_id          String      @unique
-  user             User        @relation(fields: [user_id], references: [id])
-  tokens           Token[]
-  expo_tokens      ExpoToken[]
+  created_at       DateTime  @default(now())
+  updated_at       DateTime  @updatedAt
+  isFirstTimeLogin Boolean   @default(true)
+
+  user_id String @unique
+  user    User   @relation(fields: [user_id], references: [id])
+
+  tokens       Token[]
+  expo_tokens  ExpoToken[]
+  use_password UsePassword[]
+  otps         otp[]
 
   @@index([user_id])
   @@index([email])
+}
+
+model UsePassword {
+  id            String   @id @default(uuid())
+  hash_password String // store hashed password
+  is_primary    Boolean  @default(false)
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+
+  auth_id String
+  auth    Auth   @relation(fields: [auth_id], references: [id])
+}
+
+model otp {
+  id         String  @id @default(uuid())
+  otp        String
+  is_revoked Boolean @default(false)
+
+  auth_id String?
+  auth    Auth?   @relation(fields: [auth_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 }
 
 model User {

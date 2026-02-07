@@ -4,17 +4,25 @@ import { ErrorResponse } from "../next-response";
 import { logger } from "../logger";
 import { JWT } from "@src/libs/auth/jwt";
 
-const routeWithOutAuth = [
-  "/api/auth/sign-in",
-  "/api/auth/sign-up",
-  "/api/auth/refresh",
-];
+const routeWithOutAuth = ["/api/auth/**"];
+
+// check if /auth/** return true for all the route
+const checkIsPublicRoute = (path: string) => {
+  return routeWithOutAuth.some((pattern) => {
+    if (pattern.endsWith("/**")) {
+      const base = pattern.replace("/**", "");
+      return path === base || path.startsWith(base + "/");
+    }
+    return path === pattern;
+  });
+};
 
 export const withApiAuth: MiddlewareFactory = (next) => {
   return async (request: NextRequest, _next) => {
     const path = request.nextUrl.pathname;
-    const isPublicRoute = routeWithOutAuth.includes(path);
     const isRefreshRoute = path === "/api/auth/refresh";
+
+    const isPublicRoute = checkIsPublicRoute(path);
 
     if (isPublicRoute || isRefreshRoute) {
       return next(request, _next);

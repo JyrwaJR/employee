@@ -8,8 +8,8 @@ POST {{NEXT_PUBLIC_API_URL}}/auth/sign-in HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "one@gmail.com",
-    "password": "123Clashofclan@"
+  "phone_no": "8787572702",
+      "password": "123Clashofclan@"
 }
 
 ### 
@@ -22,7 +22,7 @@ Content-Type: application/json
 {
   "first_name":"Harrison",
     "last_name":"jurwa",
-    "email": "one@gmail.com",
+    "email": "one3@gmail.com",
     "password": "123Clashofclan@",
     "confirm_password": "123Clashofclan@"
 }
@@ -110,3 +110,28 @@ Authorization: Bearer {{ACCESS_TOKEN}}
       "token": "ExponentPushToken[o-FbhOHTwI4wCykP9axgir]",
       "user_id": "f8119f49-179f-43b9-b9e3-a2ff2b4ba642"
    }
+
+### 
+
+# @name request otp
+
+POST http://localhost:3000/api/auth/init
+Content-Type: application/json
+
+{
+      "phone_no": "8787572702"
+  }
+
+### 
+
+# @name change password
+
+POST http://localhost:3000/api/auth/forgot-password
+Content-Type: application/json
+
+{
+      "otp": "461389",
+      "phone_no":"8787572702",
+      "password": "123Clashofclan@123ss3s",
+      "confirm_password": "123Clashofclan@123ss3s"
+  }

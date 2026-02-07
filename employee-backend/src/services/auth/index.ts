@@ -1,6 +1,7 @@
 import { prisma } from "@libs/db/prisma";
 import { Prisma, $Enums } from "@libs/db/prisma/generated/prisma";
 import { BcryptService } from "../../libs/auth/bcrypt";
+import { UsePasswordServices } from "./usePassword";
 
 type UniqueAuthProps = {
   where: Prisma.AuthWhereUniqueInput;
@@ -18,7 +19,34 @@ type CreateUserT = {
   role?: $Enums.Role;
 };
 
+type UpdateUnique = {
+  authId: string;
+  password: string;
+};
+
 export const AuthServices = {
+  async updateUnique({ password, authId }: UpdateUnique) {
+    const hashPassword = await BcryptService.hash(password);
+
+    return await prisma.$transaction(async (tx) => {
+      await tx.auth.update({
+        where: { id: authId },
+        data: {
+          hash_password: hashPassword,
+          isFirstTimeLogin: false,
+        },
+      });
+
+      await tx.usePassword.create({
+        data: {
+          auth: { connect: { id: authId } },
+          hash_password: hashPassword,
+          is_primary: true,
+        },
+      });
+    });
+  },
+
   async getUnique({ where }: UniqueAuthProps) {
     return await prisma.auth.findUnique({
       where,
@@ -39,6 +67,7 @@ export const AuthServices = {
   async create(data: CreateUserT) {
     const password = data.password;
     const hashPassword = await BcryptService.hash(password);
+
     return await prisma.$transaction(async (tx) => {
       const user = await tx.user.create({
         data: {
@@ -54,6 +83,14 @@ export const AuthServices = {
           hash_password: hashPassword,
           email: data.email,
           user: { connect: { id: user.id } },
+        },
+      });
+
+      await tx.usePassword.create({
+        data: {
+          auth_id: auth.id,
+          hash_password: hashPassword,
+          is_primary: true,
         },
       });
 

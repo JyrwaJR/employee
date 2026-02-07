@@ -17,6 +17,7 @@ async function main() {
     update: {},
     create: {
       email: "admin@gov.in",
+      phone_no: "8787572702",
       hash_password: commonPasswordHash,
       user: {
         create: {
@@ -58,6 +59,7 @@ async function main() {
           create: {
             email: `user${i + 1}@gov.in`,
             hash_password: commonPasswordHash,
+            phone_no: `1234567890${i + 1}`,
           },
         },
         employee: {
