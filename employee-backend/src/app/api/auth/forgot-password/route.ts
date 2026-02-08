@@ -1,9 +1,6 @@
-import { BcryptService } from "@src/libs/auth/bcrypt";
 import { AuthServices } from "@src/services/auth";
 import { OtpServices } from "@src/services/auth/otp";
-import { UsePasswordServices } from "@src/services/auth/usePassword";
 import { handleApiErrors } from "@src/utils/errors/handleApiErrors";
-import { logger } from "@src/utils/logger";
 import { ErrorResponse, SuccessResponse } from "@src/utils/next-response";
 import { withValidation } from "@src/utils/next-response/withValidiation";
 import { ForgotPasswordSchema } from "@src/utils/validation/auth";
@@ -23,11 +20,6 @@ const isOtpExpired = (data: Date) => {
 export const POST = withValidation(
   { body: ForgotPasswordSchema },
   async ({ body }) => {
-    // TODO: implement forgot password
-    // should check if otp is valid or is not expired
-    // should update user is first time login
-    // should check for the password if its not use in our system
-    // should add the new password to usepassword model
     try {
       const { otp, phone_no, password } = body;
       const user = await AuthServices.getUnique({ where: { phone_no } });
