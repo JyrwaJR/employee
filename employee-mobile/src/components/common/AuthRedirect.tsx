@@ -11,7 +11,8 @@ export const AuthRedirect = ({ children }: Props) => {
   const user = useAuth();
   const pathName = usePathname();
   const isSignedIn = user.isSignedIn;
-  const isOnPublicPage = pathName === '/auth' || pathName === '/auth/sign-up';
+  const isOnPublicPage =
+    pathName === '/auth' || pathName === '/auth/sign-up' || pathName === '/auth/forgot-password';
   const router = useRouter();
 
   useEffect(() => {

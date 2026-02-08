@@ -128,9 +128,11 @@ export const LoginScreen = () => {
             />
           </View>
 
-          <TouchableOpacity className="mb-8 items-end">
-            <Text variant={'link'}>Forgot password?</Text>
-          </TouchableOpacity>
+          <Link href={'/auth/forgot-password'} asChild>
+            <TouchableOpacity className="mb-8 items-end">
+              <Text variant={'link'}>Forgot password?</Text>
+            </TouchableOpacity>
+          </Link>
 
           <ModernButton
             title="Sign in"

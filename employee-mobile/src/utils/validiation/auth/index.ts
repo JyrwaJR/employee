@@ -16,6 +16,7 @@ export const LoginSchema = z
   .strict();
 
 export const SignUpSchema = LoginSchema.extend({
+  phone_no: z.string('Phone number is required').length(10, 'Phone number must be 10 digits'),
   first_name: z
     .string('First name is required')
     .min(1, 'First name is required')
@@ -36,3 +37,19 @@ export const SignUpSchema = LoginSchema.extend({
     }
   })
   .strict();
+
+export const ForgotPasswordSchema = z.object({
+  phone_no: z
+    .string('Phone number is required')
+    .min(10, 'Phone number must be at least 10 digits')
+    .max(15, 'Phone number must be less than 15 digits')
+    .regex(/^\+?[0-9]+$/, 'Invalid phone number format'),
+});
+
+export const OTPSchema = z.object({
+  phone_no: z.string('Phone number is required'),
+  otp: z
+    .string('OTP is required')
+    .length(6, 'OTP must be exactly 6 digits')
+    .regex(/^[0-9]+$/, 'OTP must only contain numbers'),
+});

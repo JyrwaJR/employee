@@ -1,21 +1,10 @@
 import { AuthServices } from "@src/services/auth";
 import { OtpServices } from "@src/services/auth/otp";
 import { handleApiErrors } from "@src/utils/errors/handleApiErrors";
+import { isOtpExpired } from "@src/utils/helper/isOtpExpired";
 import { ErrorResponse, SuccessResponse } from "@src/utils/next-response";
 import { withValidation } from "@src/utils/next-response/withValidiation";
 import { ForgotPasswordSchema } from "@src/utils/validation/auth";
-
-const OTP_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes
-
-const isOtpExpired = (data: Date) => {
-  const createdAt = new Date(data).getTime();
-
-  if (Number.isNaN(createdAt)) {
-    throw new Error("Invalid date format for OTP");
-  }
-
-  return Date.now() - createdAt > OTP_EXPIRY_MS;
-};
 
 export const POST = withValidation(
   { body: ForgotPasswordSchema },

@@ -1,6 +1,7 @@
 import { z, ZodError } from "zod";
 import { NextRequest, NextResponse } from "next/server";
 import { ErrorResponse } from "./errorResponse";
+import { logger } from "../logger";
 
 /* -------------------------------------------------- */
 /* Types */
@@ -92,6 +93,7 @@ export function withValidation<
       );
     } catch (error) {
       if (error instanceof ZodError) {
+        logger.log(error);
         return ErrorResponse({
           message: "Request validation failed",
           status: 400,
