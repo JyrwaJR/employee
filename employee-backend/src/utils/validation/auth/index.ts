@@ -21,6 +21,7 @@ export const SignUpSchema = LoginSchema.extend({
     .string()
     .min(1, "Last name is required")
     .regex(/^[a-zA-Z]+$/, "Last name must only contain letters"),
+  password: passwordValidation,
   confirm_password: passwordValidation,
   role: z
     .enum([$Enums.Role.USER, $Enums.Role.ADMIN, $Enums.Role.SUPER_ADMIN])
