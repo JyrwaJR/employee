@@ -1,18 +1,7 @@
 import { $Enums } from "@src/libs/db/prisma/generated/prisma";
 import { z } from "zod";
-import { otpValidiation, phoneValidiation } from "..";
 
-export const passwordValidation = z
-  .string()
-  .min(8, "Password must be at least 8 characters")
-  .max(64, "Password must be less than 64 characters")
-  .regex(/[a-z]/, "Must contain a lowercase letter")
-  .regex(/[A-Z]/, "Must contain an uppercase letter")
-  .regex(/\d/, "Must contain a number")
-  .regex(
-    /[!@#$%^&*(),.?":{}|<>_\-\\[\]`~+=;/]/,
-    "Must contain a special character",
-  );
+import { otpValidiation, passwordValidation, phoneValidiation } from "..";
 
 export const LoginSchema = z
   .object({
