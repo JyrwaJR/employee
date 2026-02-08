@@ -13,7 +13,6 @@ import { http } from '@/src/utils/http';
 import { AUTH_ENDPOINTS } from '@/src/libs/endpoints/auth';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { useRouter } from 'expo-router';
-import { Ternary } from '@/src/components/common/Ternary';
 
 // Schema for Step 1: New Password & Confirm Password
 const NewPasswordSchema = z
