@@ -10,7 +10,7 @@ export const passwordValidation = z
 
 export const LoginSchema = z
   .object({
-    email: z.email('Invalid email address').min(1, 'Email is required'),
+    phone_no: z.string('Phone number is required').length(10, 'Phone number must be 10 digits'),
     password: passwordValidation,
   })
   .strict();

@@ -76,11 +76,11 @@ export const LoginScreen = () => {
         <View className="w-full">
           <View className="mb-4">
             <Text variant="label" className="mb-1.5 ml-1">
-              Email
+              Phone No.
             </Text>
             <Controller
               control={control}
-              name="email"
+              name="phone_no"
               render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
                 <>
                   <Input
