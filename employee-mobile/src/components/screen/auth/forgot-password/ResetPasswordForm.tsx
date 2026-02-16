@@ -132,6 +132,32 @@ export const ResetPasswordForm = () => {
         <>
           <View className="mb-4">
             <Text variant="label" className="mb-1.5 ml-1">
+              New Password
+            </Text>
+            <Controller
+              control={passwordForm.control}
+              name="password"
+              render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+                <>
+                  <Input
+                    placeholder="••••••••"
+                    onBlur={onBlur}
+                    onChangeText={onChange}
+                    value={value}
+                    secureTextEntry
+                    error={!!error}
+                  />
+                  {error && (
+                    <Text variant="error" size="sm" className="ml-1 mt-1">
+                      {error.message}
+                    </Text>
+                  )}
+                </>
+              )}
+            />
+          </View>
+          <View className="mb-4">
+            <Text variant="label" className="mb-1.5 ml-1">
               Confirm Password
             </Text>
             <Controller

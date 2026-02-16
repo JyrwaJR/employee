@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Link } from 'expo-router';
 import { Text } from '@/src/components/ui/text';
@@ -6,20 +6,14 @@ import { Container } from '@components/common/Container';
 import { Ionicons } from '@expo/vector-icons';
 import { PhoneForm } from './PhoneForm';
 import { VerifyOtpForm } from './VerifyOtpForm';
-import { logger } from '@/src/utils/logger';
 import { Ternary } from '@/src/components/common/Ternary';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { ResetPasswordForm } from './ResetPasswordForm';
-
-type Step = 'PHONE' | 'OTP' | 'RESET';
 
 export const ForgotPassword = () => {
   const search = useSearchParams();
 
   const currentStep = search?.get('step') || 'PHONE';
-  const phone = search?.get('phone_no') || '';
-
-  const onValueChange = (value: { value: Step; phone_no: string }) => {};
 
   return (
     <Container>
