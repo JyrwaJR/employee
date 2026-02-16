@@ -7,6 +7,7 @@ import { AuthContextT, UserT } from '@/src/types/context/auth';
 import { http } from '@/src/utils/http';
 import { LoadingScreen } from '../../common/LoadingScreen';
 import { useRouter } from 'expo-router';
+import { logger } from '@/src/utils/logger';
 
 type Props = {
   children: React.ReactNode;
@@ -15,11 +16,9 @@ type Props = {
 export const AuthContextProvider = ({ children }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  // State
   const [isInitializing, setIsInitializing] = useState(true); // App startup loading state
   const [isTokenSet, setIsTokenSet] = useState(false); // Do we have a token to fetch user?
 
-  // --- 1. Helper: Clear everything and kick user out ---
   const logout = useCallback(async () => {
     await TokenStoreManager.removeToken();
     await TokenStoreManager.removeRefreshToken();
@@ -62,6 +61,7 @@ export const AuthContextProvider = ({ children }: Props) => {
 
       return false;
     } catch (error) {
+      logger.error('Silent Refresh Error', error);
       return false;
     }
   }, []);
@@ -84,6 +84,7 @@ export const AuthContextProvider = ({ children }: Props) => {
           if (mounted) setIsTokenSet(refreshed);
         }
       } catch (e) {
+        logger.error('App Startup Error', e);
       } finally {
         if (mounted) setIsInitializing(false);
       }

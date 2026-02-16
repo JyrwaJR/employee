@@ -27,7 +27,6 @@ export const LocalAuthProvider = ({ children }: { children: React.ReactNode }) =
         promptMessage: 'Authentication Required',
         fallbackLabel: 'Enter Password',
       });
-      console.log('Here');
       if (result.success) {
         setIsAuthenticated(true);
         return true;

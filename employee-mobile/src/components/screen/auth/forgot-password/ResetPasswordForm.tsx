@@ -115,7 +115,7 @@ export const ResetPasswordForm = () => {
 
   const onOtpSubmit = (data: OtpInputs) => {
     if (!passwordData || !phone_no) {
-      toast.error('Missing data for reset.');
+      toast.error('Missing data for reset.', { id: 'reset-password' });
       return;
     }
     resetPasswordMutation.mutate({
