@@ -7,7 +7,8 @@ import { TokenServices } from "@src/services/tokens";
 import { JWT } from "@src/libs/auth/jwt";
 import { logger } from "@src/utils/logger";
 import { withValidation } from "@src/utils/next-response/withValidiation";
-import { UsePasswordServices } from "@src/services/auth/usePassword";
+import { OtpServices } from "@src/services/auth/otp";
+import { isOtpExpired } from "@src/utils/helper/isOtpExpired";
 
 const checkIfDateIsThreeMonth = (date: Date) => {
   return Date.now() - date.getTime() > 3 * 30 * 24 * 60 * 60 * 1000; // 3 months
@@ -25,6 +26,28 @@ export const POST = withValidation({ body: LoginSchema }, async ({ body }) => {
         status: 401,
       });
     }
+
+    const isOtpExist = await OtpServices.findFirst({
+      where: { auth_id: auth?.id, is_revoked: false },
+    });
+
+    if (!isOtpExist)
+      return ErrorResponse({ message: "Invalid otp", status: 404 });
+
+    if (isOtpExpired(isOtpExist.created_at))
+      return ErrorResponse({
+        message: "Otp expired, please try again",
+        status: 404,
+      });
+
+    if (isOtpExist.otp !== body.otp)
+      return ErrorResponse({ message: "Invalid otp", status: 404 });
+
+    await OtpServices.update({
+      where: { id: isOtpExist.id },
+      data: { is_revoked: true },
+    });
+
     const isInvalidCredentail =
       !auth ||
       !(await BcryptService.compare(body.password, auth.hash_password));

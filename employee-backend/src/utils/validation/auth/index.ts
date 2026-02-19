@@ -7,6 +7,7 @@ export const LoginSchema = z
   .object({
     phone_no: phoneValidiation,
     password: passwordValidation,
+    otp: otpValidiation,
   })
   .strict();
 
