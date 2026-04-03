@@ -16,6 +16,7 @@ import { Text } from '@/src/shared/components/ui/text';
 import { Ionicons } from '@expo/vector-icons';
 import { Container } from '@/src/shared/components/layout/Container';
 import { LoginSchema } from '../schema/login.schema';
+import { HeaderStack } from '@/src/shared/components/layout/Header';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
@@ -32,23 +33,6 @@ export const LoginScreen = () => {
   const { refresh } = useAuth();
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const initMutate = useMutation({
-    mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(AUTH_ENDPOINTS.POST_GET_OTP, data),
-    onSuccess: async (data) => {
-      if (data.success) {
-        const response = data.data;
-
-        if (data.token && response?.refresh_token) {
-          await TokenStoreManager.addToken(data.token);
-          await TokenStoreManager.addRefreshToken(response?.refresh_token);
-        }
-        toast.success('Signed in successfully.');
-        refresh();
-        return data;
-      }
-      toast.error(data.message);
-    },
-  });
   const loginMutation = useMutation({
     mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(AUTH_ENDPOINTS.POST_SIGN_IN, data),
     onSuccess: async (data) => {

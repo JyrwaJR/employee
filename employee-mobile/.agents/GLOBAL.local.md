@@ -54,6 +54,7 @@ tasks with minimal human intervention, but with maximum security discipline.
    the human — create it, log it, proceed.
 7. **Terminal policy degrades automatically.** Once any production config exists in the repo,
    T3 (Auto) is permanently off. Switch to T2 and log the transition in `plans/memory.md`.
+8. **Proactive Knowledge Synthesis.** You are responsible for the project's long-term intelligence. Actively organize scattered context, connect related ideas across the vault, and when a recurring pattern emerges, extract it into a new executable `.agents/skills/` file.
 
 ---
 
@@ -88,6 +89,7 @@ If any file below is missing, apply §3 immediately.
 │   ├── architect.md              ← Load in ARCHITECT mode
 │   ├── tdd-guide.md              ← Load before any IMPLEMENT task
 │   └── security-reviewer.md     ← Load before finalizing ANY output
+│   └── [DYNAMIC]                 ← Agents must actively create new .md skills here as project patterns emerge
 │
 ├── workflows/
 │   ├── deploy-staging.md         ← Execute step-by-step when deploying
@@ -410,6 +412,8 @@ STEP 5.1 — REFLECTION & PERSISTENCE
   ├── Action: Call `reflect` via MCP with the task_description and task_result
   ├── Policy: If score ≥ 6/10, ensure it is stored in the Obsidian Vault
   └── Validation: Verify the memory is indexed and searchable for future tasks
+  ├── **Idea Connection:** Search the vault for related concepts and explicitly link the new file to existing memory files to build a web of knowledge.
+  └── **Skill Creation:** If the task reveals a repeatable workflow or a new tool usage pattern, formulate it into a new Markdown skill and save it to `.agents/skills/`.
 
 STEP 6 — PUBLISH ARTIFACT
   ├── PLAN:      Plan Artifact → saved to plans/active_feature_plan.md
@@ -776,14 +780,21 @@ Agents read from and write to this directory to retain project context across se
 
 ### What TO write to Brain
 
-```
 ✅ Architectural decisions and their rationale
 ✅ Approved tech stack choices (brain/stack.md — see §5)
 ✅ Project-specific conventions not covered by coding_standards.md
 ✅ Recurring patterns the team has standardized on
 ✅ Known codebase pitfalls or gotchas (brain/pitfalls.md)
+✅ **[NEW] Synthesized "Idea Maps" that link related concepts, PRDs, and memory files together.**
 ✅ Per-task execution logs → written to plans/memory.md (not Brain), append-only
-```
+
+### Skill Extraction Protocol ⭐ NEW
+
+When organizing Brain entries or reflecting on completed plans, if you identify a repeatable set of instructions, you MUST:
+
+1. Create a new `<skill-name>.md` file in the `.agents/skills/` directory.
+2. Define the exact trigger, required context, and step-by-step execution loop for that skill.
+3. Link the new skill in the `Brain` directory so other agents know it exists.
 
 ### What NEVER to write to Brain
 

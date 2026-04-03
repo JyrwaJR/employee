@@ -2,15 +2,5 @@ import { CustomDrawerContent } from '@/src/shared/components/layout/CustomDrawer
 import { Drawer } from 'expo-router/drawer';
 
 export default function Layout() {
-  return (
-    <Drawer drawerContent={CustomDrawerContent}>
-      <Drawer.Screen
-        name="(tabs)"
-        options={{
-          title: 'Home',
-          headerShown: false,
-        }}
-      />
-    </Drawer>
-  );
+  return <Drawer drawerContent={CustomDrawerContent} screenOptions={{ headerShown: false }} />;
 }

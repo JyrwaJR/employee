@@ -1,46 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, Switch, ScrollView, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Text, Switch, ScrollView } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useThemeStore } from '@/src/shared/store/theme.store';
 import { useTheme } from '@/src/shared/hooks/use-theme';
-import { Header } from '@/src/shared/components/layout/Header';
 import { Container } from '@/src/shared/components/layout/Container';
 import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
 import { useLocalAuthStore } from '@/src/features/auth/store/useLocalAuthStore';
 
-interface NotificationSetting {
-  id: string;
-  label: string;
-  icon: keyof typeof MaterialCommunityIcons.glyphMap;
-  description: string;
-}
 
-const NOTIFICATION_SETTINGS: NotificationSetting[] = [
-  {
-    id: 'email',
-    label: 'Email Notifications',
-    icon: 'email-outline',
-    description: 'Receive updates via email',
-  },
-  {
-    id: 'push',
-    label: 'Push Notifications',
-    icon: 'bell-outline',
-    description: 'Get alerts on your device',
-  },
-  {
-    id: 'marketing',
-    label: 'Marketing Updates',
-    icon: 'bullhorn-outline',
-    description: 'News about products and features',
-  },
-  {
-    id: 'security',
-    label: 'Security Alerts',
-    icon: 'shield-check-outline',
-    description: 'Important account security notices',
-  },
-];
 
 const SettingItem = ({
   icon,
