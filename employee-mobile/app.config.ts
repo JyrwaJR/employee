@@ -1,8 +1,25 @@
 import { ExpoConfig, ConfigContext } from 'expo/config';
 
+const APP_VARIANT = process.env.APP_VARIANT;
+
+const isDev = APP_VARIANT === 'development';
+const isPreview = APP_VARIANT === 'preview';
+
+const getAppName = (baseName: string) => {
+  if (isDev) return `${baseName} (Dev)`;
+  if (isPreview) return `${baseName} (Preview)`;
+  return baseName;
+};
+
+const getIdentifier = (baseIdentifier: string) => {
+  if (isDev) return `${baseIdentifier}.dev`;
+  if (isPreview) return `${baseIdentifier}.preview`;
+  return baseIdentifier;
+};
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: 'employee-mobile',
+  name: getAppName('employee-mobile'),
   slug: 'employee',
   version: '1.0.0',
   scheme: 'employee-mobile',
@@ -45,7 +62,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   assetBundlePatterns: ['**/*'],
   ios: {
     supportsTablet: true,
-    bundleIdentifier: 'com.jyrwaboys.employeemobile',
+    bundleIdentifier: getIdentifier('com.jyrwaboys.employeemobile'),
   },
   android: {
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
@@ -53,7 +70,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: './src/assets/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
-    package: 'com.jyrwaboys.employeemobile',
+    package: getIdentifier('com.jyrwaboys.employeemobile'),
   },
   extra: {
     router: {},
