@@ -97,8 +97,6 @@ export const Header = memo(
     const navigation = useNavigation();
     const theme = useTheme();
     const insets = useSafeAreaInsets();
-    const isDarkMode = theme === 'dark';
-    const bgColor = isDarkMode ? colors.slate[900] : colors.white;
     const canGoBack = navigation.canGoBack();
     const shouldShowBack = showBackButton ?? canGoBack;
 
@@ -114,17 +112,16 @@ export const Header = memo(
       () => [
         {
           paddingTop: insets.top,
-          backgroundColor: bgColor || undefined,
         },
         containerStyle,
       ],
-      [insets.top, bgColor, containerStyle]
+      [insets.top, containerStyle]
     );
 
     return (
       <View
         className={cn(
-          'bg-black dark:bg-slate-950',
+          'bg-white dark:bg-slate-950',
           !hideBottomBorder && 'border-b border-gray-200 dark:border-gray-800',
           className
         )}
