@@ -1,4 +1,4 @@
-import { UserT } from '../context/auth';
+import { UserT } from '../../auth/types';
 
 export type CityClass = 'X' | 'Y' | 'Z';
 

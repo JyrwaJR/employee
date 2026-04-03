@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { View, FlatList, TouchableOpacity, StatusBar } from 'react-native';
-import { Container } from '@/src/shared/components/common/Container';
+import { Container } from '@/src/shared/components/layout/Container';
 import { router } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
-import { LoadingScreen } from '@/src/shared/components/common/LoadingScreen';
+import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { http } from '@/src/shared/utils/http';
-import { Month, SalarySlip, SalarySlipStatus } from '@/src/shared/types/employee';
+import { Month, SalarySlip, SalarySlipStatus } from '@/src/features/employee/types';
 import { SALARY_ENDPOINTS } from '@/src/features/salary/services/salary.service';
 import { Text } from '@/src/shared/components/ui/text';
-import { HistoryCard } from '@/src/shared/components/common/HistoryCard';
-import { HeaderStack } from '@/src/shared/components/common/Header';
-import { FilterCard } from '@/src/shared/components/common/FilterCard';
+import { HistoryCard } from '@/src/shared/components/display/HistoryCard';
+import { HeaderStack } from '@/src/shared/components/layout/Header';
+import { FilterCard } from '@/src/shared/components/display/FilterCard';
 import { months, years } from '@/src/shared/utils/helper/years';
 
 type Props = {

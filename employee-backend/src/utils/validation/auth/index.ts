@@ -7,13 +7,11 @@ export const LoginSchema = z
   .object({
     phone_no: phoneValidiation,
     password: passwordValidation,
-    otp: otpValidiation,
   })
   .strict();
 
 export const SignUpSchema = LoginSchema.extend({
-  phone_number: phoneValidiation,
-  email: z.email("Email is required"),
+  email: z.string().email("Email is required"),
   first_name: z
     .string()
     .min(1, "First name is required")

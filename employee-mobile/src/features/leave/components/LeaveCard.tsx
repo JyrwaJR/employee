@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { cn } from '@/src/shared/utils/cn';
 import { Text } from '@/src/shared/components/ui/text';
-import { LeaveT } from '@/src/shared/types/leave';
+import { LeaveT } from '@/src/features/leave/types';
 
 const getStatusColor = (status: string) => {
   switch (status) {

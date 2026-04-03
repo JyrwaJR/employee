@@ -2,11 +2,11 @@ import React from 'react';
 import { View, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Link } from 'expo-router';
 import { Text } from '@/src/shared/components/ui/text';
-import { Container } from '@/src/shared/components/common/Container';
+import { Container } from '@/src/shared/components/layout/Container';
 import { Ionicons } from '@expo/vector-icons';
 import { PhoneForm } from '../components/PhoneForm';
 import { VerifyOtpForm } from '../components/VerifyOtpForm';
-import { Ternary } from '@/src/shared/components/common/Ternary';
+import { Ternary } from '@/src/shared/components/base/Ternary';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { ResetPasswordForm } from '../components/ResetPasswordForm';
 

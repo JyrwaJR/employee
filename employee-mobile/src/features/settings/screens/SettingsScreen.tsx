@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, Switch, ScrollView, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useThemeStore, useTheme } from '@/src/features/settings/store/theme.store';
-import { Header } from '@/src/shared/components/common/Header';
-import { Container } from '@/src/shared/components/common/Container';
-import { SectionHeader } from '@/src/shared/components/common/SectionHeader';
+import { useThemeStore } from '@/src/shared/store/theme.store';
+import { useTheme } from '@/src/shared/hooks/use-theme';
+import { Header } from '@/src/shared/components/layout/Header';
+import { Container } from '@/src/shared/components/layout/Container';
+import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
 import { useLocalAuthStore } from '@/src/features/auth/store/useLocalAuthStore';
 
 interface NotificationSetting {

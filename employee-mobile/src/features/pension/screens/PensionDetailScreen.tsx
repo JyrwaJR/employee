@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Container } from '@/src/shared/components/common/Container';
-import { Header } from '@/src/shared/components/common/Header';
+import { Container } from '@/src/shared/components/layout/Container';
+import { Header } from '@/src/shared/components/layout/Header';
 import { Text } from '@/src/shared/components/ui/text';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MoneyRow } from '@/src/shared/components/common/MoneyRow';
-import { SectionHeader } from '@/src/shared/components/common/SectionHeader';
-import { DetailRow } from '@/src/shared/components/common/DetailRow';
+import { MoneyRow } from '@/src/shared/components/display/MoneyRow';
+import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
+import { DetailRow } from '@/src/shared/components/display/DetailRow';
 
 export const PensionDetailScreen = () => {
   const { id } = useLocalSearchParams();

@@ -1,7 +1,7 @@
 import EmployeeListScreen from '@/src/features/employee/screens/EmployeeListScreen';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
-import { NotFoundScreen } from '@/src/shared/components/common/NotFoundScreen';
-import { HeaderStack } from '@/src/shared/components/common/Header';
+import { NotFoundScreen } from '@/src/shared/components/screens/NotFoundScreen';
+import { HeaderStack } from '@/src/shared/components/layout/Header';
 
 export default function Page() {
   const { user } = useAuth();

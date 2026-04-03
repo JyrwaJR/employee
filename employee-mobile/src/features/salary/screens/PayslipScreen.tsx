@@ -1,16 +1,16 @@
 import React, { useMemo } from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
-import { Container } from '@/src/shared/components/common/Container';
+import { Container } from '@/src/shared/components/layout/Container';
 import { SALARY_ENDPOINTS } from '@/src/features/salary/services/salary.service';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
-import { LoadingScreen } from '@/src/shared/components/common/LoadingScreen';
-import { SalarySlip } from '@/src/shared/types/employee';
+import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
+import { SalarySlip } from '@/src/features/employee/types';
 import { Text } from '@/src/shared/components/ui/text';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { DetailRow } from '@/src/shared/components/common/DetailRow';
-import { SectionHeader } from '@/src/shared/components/common/SectionHeader';
-import { MoneyRow } from '@/src/shared/components/common/MoneyRow';
+import { DetailRow } from '@/src/shared/components/display/DetailRow';
+import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
+import { MoneyRow } from '@/src/shared/components/display/MoneyRow';
 
 const parseAmount = (value?: string | null): number => {
   return parseFloat(value || '0');

@@ -7,12 +7,12 @@ import { useMutation } from '@tanstack/react-query';
 import { Input } from '@/src/shared/components/ui/input';
 import { ModernButton } from '@/src/shared/components/ui/button';
 import { Text } from '@/src/shared/components/ui/text';
-import { OTPSchema } from '@/src/shared/utils/validiation/auth';
 import { toast } from 'sonner-native';
 import { http } from '@/src/shared/utils/http';
-import { AUTH_ENDPOINTS } from '@/src/features/auth/services/auth.service';
+import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
 import { router } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
+import { OTPSchema } from '../schema/otp.schema';
 
 type OTPInputs = z.infer<typeof OTPSchema>;
 

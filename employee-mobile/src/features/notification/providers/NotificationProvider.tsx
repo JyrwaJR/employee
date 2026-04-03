@@ -4,7 +4,7 @@ import * as Notifications from 'expo-notifications';
 import { Route, router } from 'expo-router';
 import { NotificationService } from '@/src/features/notification/services';
 import { logger } from '@/src/shared/utils/logger';
-import { isExpoGo } from '@/src/shared/utils/constant';
+import { isExpoGo } from '@/src/shared/constants';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
 
 type Props = {

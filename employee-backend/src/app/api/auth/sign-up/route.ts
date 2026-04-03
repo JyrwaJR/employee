@@ -15,6 +15,7 @@ export const POST = withValidation({ body: SignUpSchema }, async ({ body }) => {
 
     const newUser = await AuthServices.create({
       email: body.email,
+      phone_no: body.phone_no,
       first_name: body.first_name,
       last_name: body.last_name,
       password: body.password,

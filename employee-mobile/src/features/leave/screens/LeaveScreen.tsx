@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, FlatList, TouchableOpacity } from 'react-native';
-import { Container } from '@/src/shared/components/common/Container';
+import { Container } from '@/src/shared/components/layout/Container';
 import { Text } from '@/src/shared/components/ui/text';
-import { FilterCard } from '@/src/shared/components/common/FilterCard';
+import { FilterCard } from '@/src/shared/components/display/FilterCard';
 import { years } from '@/src/shared/utils/helper/years';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
 import { LEAVE_ENDPOINTS } from '@/src/features/leave/services/leave.service';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
-import { LoadingScreen } from '@/src/shared/components/common/LoadingScreen';
+import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { LeaveT } from '../types';
 import { LeaveCard } from '../components/LeaveCard';
 

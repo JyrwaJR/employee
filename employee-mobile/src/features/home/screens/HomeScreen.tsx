@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, StatusBar, FlatList } from 'react-native';
-import { Container } from '@/src/shared/components/common/Container';
-import { StatBox } from '@/src/shared/components/common/StatsBox';
+import { Container } from '@/src/shared/components/layout/Container';
+import { StatBox } from '@/src/shared/components/display/StatsBox';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
-import { LoadingScreen } from '@/src/shared/components/common/LoadingScreen';
+import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { http } from '@/src/shared/utils/http';
 import { EMPLOYEE_ENDPOINTS } from '@/src/features/employee/services/employee.service';
 import { router } from 'expo-router';
 import { Text } from '@/src/shared/components/ui/text';
-import { useThemeStore } from '@/src/features/settings/store/theme.store';
+import { useThemeStore } from '@/src/shared/store/theme.store';
 import { EmployeeT } from '../../employee/types';
 import { EmployeeListItem } from '../../employee/components/EmployeeListItem';
 

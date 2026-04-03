@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, ScrollView, StatusBar, Switch, Alert } from 'react-native';
-import { Container } from '@/src/shared/components/common/Container';
+import { Container } from '@/src/shared/components/layout/Container';
 import { cn } from '@/src/shared/utils/cn';
 import { useMutation } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
-import { AUTH_ENDPOINTS } from '@/src/features/auth/services/auth.service';
-import { TokenStoreManager } from '@/src/features/auth/store/token.store';
+import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
+import { TokenStoreManager } from '@/src/shared/store/token.store';
 import { toast } from 'sonner-native';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { Text } from '@/src/shared/components/ui/text';
-import { useThemeStore } from '@/src/features/settings/store/theme.store';
+import { useThemeStore } from '@/src/shared/store/theme.store';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 /**

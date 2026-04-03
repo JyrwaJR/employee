@@ -7,15 +7,15 @@ import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { Input } from '@/src/shared/components/ui/input';
 import { ModernButton } from '@/src/shared/components/ui/button';
-import { LoginSchema } from '@/src/shared/utils/validiation/auth';
-import { AUTH_ENDPOINTS } from '@/src/features/auth/services/auth.service';
+import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
 import { toast } from 'sonner-native';
-import { TokenStoreManager } from '@/src/features/auth/store/token.store';
+import { TokenStoreManager } from '@/src/shared/store/token.store';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { http } from '@/src/shared/utils/http';
 import { Text } from '@/src/shared/components/ui/text';
 import { Ionicons } from '@expo/vector-icons';
-import { Container } from '@/src/shared/components/common/Container';
+import { Container } from '@/src/shared/components/layout/Container';
+import { LoginSchema } from '../schema/login.schema';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
@@ -32,6 +32,23 @@ export const LoginScreen = () => {
   const { refresh } = useAuth();
   const [showPassword, setShowPassword] = React.useState(false);
 
+  const initMutate = useMutation({
+    mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(AUTH_ENDPOINTS.POST_GET_OTP, data),
+    onSuccess: async (data) => {
+      if (data.success) {
+        const response = data.data;
+
+        if (data.token && response?.refresh_token) {
+          await TokenStoreManager.addToken(data.token);
+          await TokenStoreManager.addRefreshToken(response?.refresh_token);
+        }
+        toast.success('Signed in successfully.');
+        refresh();
+        return data;
+      }
+      toast.error(data.message);
+    },
+  });
   const loginMutation = useMutation({
     mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(AUTH_ENDPOINTS.POST_SIGN_IN, data),
     onSuccess: async (data) => {

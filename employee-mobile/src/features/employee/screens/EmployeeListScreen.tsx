@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, FlatList, StatusBar } from 'react-native';
-import { Container } from '@/src/shared/components/common/Container';
+import { Container } from '@/src/shared/components/layout/Container';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
 import { EMPLOYEE_ENDPOINTS } from '@/src/features/employee/services/employee.service';
 import { EmployeeT } from '@/src/features/employee/types';
 import { EmployeeListItem } from '../components/EmployeeListItem';
 import { router } from 'expo-router';
-import { LoadingScreen } from '@/src/shared/components/common/LoadingScreen';
+import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { Text } from '@/src/shared/components/ui/text';
-import { FilterCard } from '@/src/shared/components/common/FilterCard';
+import { FilterCard } from '@/src/shared/components/display/FilterCard';
 
 // --- Screen ---
 export default function EmployeeListScreen() {

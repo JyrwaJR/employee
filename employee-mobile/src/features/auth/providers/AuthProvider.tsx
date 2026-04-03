@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AuthContext } from '@/src/features/auth/context/auth.context';
-import { AUTH_ENDPOINTS } from '@/src/features/auth/services/auth.service';
-import { TokenStoreManager } from '@/src/features/auth/store/token.store';
+import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
+import { TokenStoreManager } from '@/src/shared/store/token.store';
 import { AuthContextT, UserT } from '@/src/features/auth/types';
 import { http } from '@/src/shared/utils/http';
 import { useRouter } from 'expo-router';

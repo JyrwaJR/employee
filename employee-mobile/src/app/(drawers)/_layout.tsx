@@ -1,4 +1,4 @@
-import { CustomDrawerContent } from '@/src/shared/components/common/CustomDrawerContent';
+import { CustomDrawerContent } from '@/src/shared/components/layout/CustomDrawerContent';
 import { Drawer } from 'expo-router/drawer';
 
 export default function Layout() {

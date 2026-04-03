@@ -1,4 +1,4 @@
-import { useTheme } from '@/src/features/settings/store/theme.store';
+import { useTheme } from '@/src/shared/hooks/use-theme';
 import { useColorScheme } from 'nativewind';
 import { ReactNode, useEffect } from 'react';
 

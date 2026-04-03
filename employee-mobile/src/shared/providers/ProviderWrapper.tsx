@@ -4,13 +4,13 @@ import { TQueryProvider } from './QueryProvider';
 import { Toaster } from 'sonner-native';
 import { AuthContextProvider } from '@/src/features/auth/providers/AuthProvider';
 import { LocalAuthProvider } from '@/src/features/auth/providers/LocalAuthProvider';
-import { AuthRedirect } from '@/src/shared/components/common/AuthRedirect';
+import { AuthRedirect } from '@/src/shared/components/auth/AuthRedirect';
 import { StatusBar, View } from 'react-native';
 import { SSLPinning } from './SSLPinningProvider';
 import React, { useEffect } from 'react';
-import { LoadingScreen } from '@/src/shared/components/common/LoadingScreen';
+import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { ThemeProvider } from './ThemeProvider';
-import { LocalAuthRedirect } from '@/src/shared/components/common/LocalAuthRedirect';
+import { LocalAuthRedirect } from '@/src/shared/components/auth/LocalAuthRedirect';
 import { NotificationProvider } from '@/src/features/notification/providers/NotificationProvider';
 
 type Props = {

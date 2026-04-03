@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, FlatList, TouchableOpacity } from 'react-native';
-import { Container } from '@/src/shared/components/common/Container';
+import { Container } from '@/src/shared/components/layout/Container';
 import { Text } from '@/src/shared/components/ui/text';
-import { HistoryCard } from '@/src/shared/components/common/HistoryCard';
-import { SalarySlip } from '@/src/shared/types/employee';
-import { FilterCard } from '@/src/shared/components/common/FilterCard';
+import { HistoryCard } from '@/src/shared/components/display/HistoryCard';
+import { SalarySlip } from '@/src/features/employee/types';
+import { FilterCard } from '@/src/shared/components/display/FilterCard';
 import { months, years } from '@/src/shared/utils/helper/years';
 import { useQuery } from '@tanstack/react-query';
 import { PENSION_ENDPOINTS } from '@/src/features/pension/services/pension.service';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { http } from '@/src/shared/utils/http';
-import { LoadingScreen } from '@/src/shared/components/common/LoadingScreen';
+import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 
 const statusOptions = [
   { label: 'Paid', value: 'PAID' },

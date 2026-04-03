@@ -1,4 +1,5 @@
 export type RoleT = 'SUPER_ADMIN' | 'ADMIN' | 'USER';
+
 export type UserT = {
   id: number;
   email: string;

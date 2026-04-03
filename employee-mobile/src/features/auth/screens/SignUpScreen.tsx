@@ -2,18 +2,17 @@ import React from 'react';
 import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Text } from '@/src/shared/components/ui/text';
 import { Link, useRouter } from 'expo-router';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
-import { SignUpSchema } from '@/src/shared/utils/validiation/auth';
 import { ModernButton } from '@/src/shared/components/ui/button';
 import { Input } from '@/src/shared/components/ui/input';
-import { Controller } from 'react-hook-form';
 import { http } from '@/src/shared/utils/http';
-import { AUTH_ENDPOINTS } from '@/src/features/auth/services/auth.service';
+import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
 import { toast } from 'sonner-native';
-import { Container } from '@/src/shared/components/common/Container';
+import { Container } from '@/src/shared/components/layout/Container';
+import { SignUpSchema } from '../schema/signup.schema';
 
 // --- 2. Zod Validation Schema (Updated) ---
 type SignUpFormInputs = z.infer<typeof SignUpSchema>;
@@ -34,7 +33,7 @@ export const SignUpScreen = () => {
     },
   });
 
-  const { control, handleSubmit } = useForm<SignUpFormInputs>({
+  const { control, handleSubmit } = useForm({
     resolver: zodResolver(SignUpSchema),
   });
 
@@ -53,19 +52,23 @@ export const SignUpScreen = () => {
           <View className="mb-8 mt-4 items-center">
             {/* Small animated entry icon or logo */}
             <View className="mb-4 h-12 w-12 items-center justify-center rounded-xl bg-blue-50">
-              <Text variant={'heading'} size={'2xl'}>🚀</Text>
+              <Text variant={'heading'} size={'2xl'}>
+                🚀
+              </Text>
             </View>
-            <Text variant={'heading'} size={'3xl'} weight={'semibold'}>Create account</Text>
-            <Text variant={'subtext'}>
-              Provide your details to register.
+            <Text variant={'heading'} size={'3xl'} weight={'semibold'}>
+              Create account
             </Text>
+            <Text variant={'subtext'}>Provide your details to register.</Text>
           </View>
 
           {/* Form */}
           <View className="w-full">
-            <View className="flex-row justify-between gap-x-2 mb-4">
+            <View className="mb-4 flex-row justify-between gap-x-2">
               <View className="flex-1">
-                <Text variant="label" className="mb-1.5 ml-1">First name</Text>
+                <Text variant="label" className="mb-1.5 ml-1">
+                  First name
+                </Text>
                 <Controller
                   control={control}
                   name="first_name"
@@ -78,13 +81,19 @@ export const SignUpScreen = () => {
                         value={value}
                         error={!!error}
                       />
-                      {error && <Text variant="error" size="sm" className="ml-1 mt-1">{error.message}</Text>}
+                      {error && (
+                        <Text variant="error" size="sm" className="ml-1 mt-1">
+                          {error.message}
+                        </Text>
+                      )}
                     </>
                   )}
                 />
               </View>
               <View className="flex-1">
-                <Text variant="label" className="mb-1.5 ml-1">Last name</Text>
+                <Text variant="label" className="mb-1.5 ml-1">
+                  Last name
+                </Text>
                 <Controller
                   control={control}
                   name="last_name"
@@ -97,7 +106,11 @@ export const SignUpScreen = () => {
                         value={value}
                         error={!!error}
                       />
-                      {error && <Text variant="error" size="sm" className="ml-1 mt-1">{error.message}</Text>}
+                      {error && (
+                        <Text variant="error" size="sm" className="ml-1 mt-1">
+                          {error.message}
+                        </Text>
+                      )}
                     </>
                   )}
                 />
@@ -105,28 +118,36 @@ export const SignUpScreen = () => {
             </View>
 
             <View className="mb-4">
-              <Text variant="label" className="mb-1.5 ml-1">Email</Text>
+              <Text variant="label" className="mb-1.5 ml-1">
+                Phone Number
+              </Text>
               <Controller
                 control={control}
-                name="email"
+                name="phone_no"
                 render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
                   <>
                     <Input
-                      placeholder="name@company.com"
+                      placeholder="9876543210"
                       onBlur={onBlur}
                       onChangeText={onChange}
                       value={value}
-                      autoCapitalize="none"
+                      keyboardType="phone-pad"
                       error={!!error}
                     />
-                    {error && <Text variant="error" size="sm" className="ml-1 mt-1">{error.message}</Text>}
+                    {error && (
+                      <Text variant="error" size="sm" className="ml-1 mt-1">
+                        {error.message}
+                      </Text>
+                    )}
                   </>
                 )}
               />
             </View>
 
             <View className="mb-4">
-              <Text variant="label" className="mb-1.5 ml-1">Password</Text>
+              <Text variant="label" className="mb-1.5 ml-1">
+                Password
+              </Text>
               <Controller
                 control={control}
                 name="password"
@@ -140,14 +161,20 @@ export const SignUpScreen = () => {
                       secureTextEntry
                       error={!!error}
                     />
-                    {error && <Text variant="error" size="sm" className="ml-1 mt-1">{error.message}</Text>}
+                    {error && (
+                      <Text variant="error" size="sm" className="ml-1 mt-1">
+                        {error.message}
+                      </Text>
+                    )}
                   </>
                 )}
               />
             </View>
 
             <View className="mb-4">
-              <Text variant="label" className="mb-1.5 ml-1">Confirm Password</Text>
+              <Text variant="label" className="mb-1.5 ml-1">
+                Confirm Password
+              </Text>
               <Controller
                 control={control}
                 name="confirm_password"
@@ -161,18 +188,21 @@ export const SignUpScreen = () => {
                       secureTextEntry
                       error={!!error}
                     />
-                    {error && <Text variant="error" size="sm" className="ml-1 mt-1">{error.message}</Text>}
+                    {error && (
+                      <Text variant="error" size="sm" className="ml-1 mt-1">
+                        {error.message}
+                      </Text>
+                    )}
                   </>
                 )}
               />
             </View>
 
             {/* Terms Text */}
-            <View className='mb-6'>
-              <Text >
-                By creating an account, you agree to our{' '}
-                <Text >Terms of Service</Text> and{' '}
-                <Text >Privacy Policy</Text>.
+            <View className="mb-6">
+              <Text>
+                By creating an account, you agree to our <Text>Terms of Service</Text> and{' '}
+                <Text>Privacy Policy</Text>.
               </Text>
             </View>
 
@@ -182,27 +212,30 @@ export const SignUpScreen = () => {
               isLoading={signUpMutation.isPending}
             />
 
-            <View className="my-6 flex-row gap-x-4 items-center">
+            <View className="my-6 flex-row items-center gap-x-4">
               <View className="h-[1px] flex-1 bg-gray-200" />
-              <Text variant={'subtext'} weight={'medium'}
-              >Or</Text>
+              <Text variant={'subtext'} weight={'medium'}>
+                Or
+              </Text>
               <View className="h-[1px] flex-1 bg-gray-200" />
             </View>
 
-            <ModernButton
-
-              title="Sign up with Google" variant="google" onPress={() => { }} />
+            <ModernButton title="Sign up with Google" variant="google" onPress={() => {}} />
           </View>
 
           {/* Footer */}
           <View className="my-8 flex-row justify-center">
-            <Text variant={'subtext'} weight={'medium'}>Already have an account? </Text>
+            <Text variant={'subtext'} weight={'medium'}>
+              Already have an account?{' '}
+            </Text>
             <Link href="/auth">
-              <Text variant={'link'} weight={'semibold'}>Sign in</Text>
+              <Text variant={'link'} weight={'semibold'}>
+                Sign in
+              </Text>
             </Link>
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
-    </Container >
+    </Container>
   );
 };

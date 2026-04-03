@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ProviderWrapper } from '@/src/shared/providers/ProviderWrapper';
 import './global.css';
 import { Stack } from 'expo-router';

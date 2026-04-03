@@ -13,6 +13,7 @@ type AuthProps = {
 
 type CreateUserT = {
   email: string;
+  phone_no: string;
   password: string;
   first_name: string;
   last_name: string;
@@ -52,6 +53,9 @@ export const AuthServices = {
       where,
       include: {
         user: {
+          include: {
+            employee: true,
+          },
           omit: {
             auth_id: true,
           },
@@ -82,6 +86,7 @@ export const AuthServices = {
         data: {
           hash_password: hashPassword,
           email: data.email,
+          phone_no: data.phone_no,
           user: { connect: { id: user.id } },
         },
       });
