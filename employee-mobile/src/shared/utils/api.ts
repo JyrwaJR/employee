@@ -12,10 +12,10 @@ const axiosInstance = axios.create({
 /* -------------------------------------------------- */
 
 let isRefreshing = false;
-let pendingQueue: Array<{
+let pendingQueue: {
   resolve: (token: string) => void;
   reject: (err: any) => void;
-}> = [];
+}[] = [];
 
 const processQueue = (error: any, token: string | null = null) => {
   pendingQueue.forEach((prom) => {
