@@ -5,7 +5,6 @@ import { AUTH_ENDPOINTS } from '@/src/features/auth/services/auth.service';
 import { TokenStoreManager } from '@/src/features/auth/store/token.store';
 import { AuthContextT, UserT } from '@/src/features/auth/types';
 import { http } from '@/src/shared/utils/http';
-import { LoadingScreen } from '@/src/shared/components/common/LoadingScreen';
 import { useRouter } from 'expo-router';
 import { logger } from '@/src/shared/utils/logger';
 
@@ -146,10 +145,6 @@ export const AuthContextProvider = ({ children }: Props) => {
     isLoading: isInitializing || isFetchingUser,
     role: user?.role || 'USER',
   } satisfies AuthContextT;
-
-  if (isInitializing || isFetchingUser) {
-    return <LoadingScreen />;
-  }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

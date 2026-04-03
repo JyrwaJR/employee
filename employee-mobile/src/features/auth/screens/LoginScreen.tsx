@@ -14,6 +14,7 @@ import { TokenStoreManager } from '@/src/features/auth/store/token.store';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { http } from '@/src/shared/utils/http';
 import { Text } from '@/src/shared/components/ui/text';
+import { Ionicons } from '@expo/vector-icons';
 import { Container } from '@/src/shared/components/common/Container';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
@@ -29,6 +30,7 @@ type LoginResT = {
 
 export const LoginScreen = () => {
   const { refresh } = useAuth();
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const loginMutation = useMutation({
     mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(AUTH_ENDPOINTS.POST_SIGN_IN, data),
@@ -84,7 +86,7 @@ export const LoginScreen = () => {
               render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
                 <>
                   <Input
-                    placeholder="name@company.com"
+                    placeholder="9876543210"
                     onBlur={onBlur}
                     onChangeText={onChange}
                     value={value}
@@ -110,14 +112,27 @@ export const LoginScreen = () => {
               name="password"
               render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
                 <>
-                  <Input
-                    placeholder="••••••••"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    secureTextEntry
-                    error={!!error}
-                  />
+                  <View className="relative">
+                    <Input
+                      placeholder="••••••••"
+                      onBlur={onBlur}
+                      onChangeText={onChange}
+                      value={value}
+                      secureTextEntry={!showPassword}
+                      error={!!error}
+                      className="pr-12"
+                    />
+                    <TouchableOpacity
+                      onPress={() => setShowPassword(!showPassword)}
+                      className="absolute bottom-1 right-1 top-1 w-10 items-center justify-center rounded-r-2xl"
+                      activeOpacity={0.7}>
+                      <Ionicons
+                        name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                        size={22}
+                        color="#9CA3AF"
+                      />
+                    </TouchableOpacity>
+                  </View>
                   {error && (
                     <Text variant="error" size="sm" className="ml-1 mt-1">
                       {error.message}

@@ -1,4 +1,4 @@
-import { http } from '../http';
+import axiosInstance from '../api';
 
 type ErrorType = 'ERROR' | 'INFO' | 'WARN' | 'LOG';
 
@@ -11,7 +11,7 @@ const sendLogToServer = async (type: ErrorType, message: string, content: string
   };
 
   try {
-    await http.post('/logs', logEntry);
+    await axiosInstance.post('/logs', logEntry);
   } catch (error) {
     console.error('Failed to send logs to server', error);
   }
