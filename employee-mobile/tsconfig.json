@@ -7,29 +7,23 @@
       "@/*": [
         "*"
       ],
-      "@hooks/*": [
-        "./src/hooks/*"
+      "@features/*": [
+        "./src/features/*"
+      ],
+      "@shared/*": [
+        "./src/shared/*"
       ],
       "@assets/*": [
         "./src/assets/*"
       ],
       "@components/*": [
-        "./src/components/*"
-      ],
-      "@libs/*": [
-        "./src/libs/*"
-      ],
-      "@store/*": [
-        "./src/store/*"
-      ],
-      "@styles/*": [
-        "./src/styles/*"
-      ],
-      "@types/*": [
-        "./src/types/*"
+        "./src/shared/components/*"
       ],
       "@utils/*": [
-        "./src/utils/*"
+        "./src/shared/utils/*"
+      ],
+      "@types/*": [
+        "./src/shared/types/*"
       ]
     }
   },

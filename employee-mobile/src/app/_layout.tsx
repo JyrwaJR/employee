@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { ProviderWrapper } from '../components/provider';
+import { ProviderWrapper } from '@/src/shared/providers/ProviderWrapper';
 import './global.css';
 import { Stack } from 'expo-router';
 

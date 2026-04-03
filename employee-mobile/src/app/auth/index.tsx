@@ -1,4 +1,4 @@
-import { LoginScreen } from '@/src/components/screen/auth/LoginScreen';
+import { LoginScreen } from '@/src/features/auth/screens/LoginScreen';
 
 export default function page() {
   return <LoginScreen />;
