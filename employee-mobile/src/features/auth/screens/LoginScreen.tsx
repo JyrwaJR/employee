@@ -87,6 +87,7 @@ export const LoginScreen = () => {
               render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
                 <>
                   <Input
+                    testID="PHONE_INPUT"
                     placeholder="9876543210"
                     onBlur={onBlur}
                     onChangeText={onChange}
@@ -115,6 +116,7 @@ export const LoginScreen = () => {
                 <>
                   <View className="relative">
                     <Input
+                      testID="PASSWORD_INPUT"
                       placeholder="••••••••"
                       onBlur={onBlur}
                       onChangeText={onChange}
@@ -151,6 +153,7 @@ export const LoginScreen = () => {
           </Link>
 
           <ModernButton
+            testID="SIGN_IN_BUTTON"
             title="Sign in"
             onPress={handleSubmit(onSubmit)}
             isLoading={loginMutation.isPending}

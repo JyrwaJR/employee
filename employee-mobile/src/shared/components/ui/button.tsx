@@ -8,6 +8,7 @@ interface ButtonProps {
   variant?: 'primary' | 'google';
   isLoading?: boolean;
   className?: string;
+  testID?: string;
 }
 
 export const ModernButton = ({
@@ -16,11 +17,13 @@ export const ModernButton = ({
   title,
   variant = 'primary',
   isLoading,
+  testID,
 }: ButtonProps) => {
   const isGoogle = variant === 'google';
 
   return (
     <TouchableOpacity
+      testID={testID}
       onPress={onPress}
       disabled={isLoading}
       activeOpacity={0.9}

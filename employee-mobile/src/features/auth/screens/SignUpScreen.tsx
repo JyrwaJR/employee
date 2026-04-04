@@ -75,6 +75,7 @@ export const SignUpScreen = () => {
                   render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
                     <>
                       <Input
+                        testID="FIRST_NAME_INPUT"
                         placeholder="John"
                         onBlur={onBlur}
                         onChangeText={onChange}
@@ -100,6 +101,7 @@ export const SignUpScreen = () => {
                   render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
                     <>
                       <Input
+                        testID="LAST_NAME_INPUT"
                         placeholder="Doe"
                         onBlur={onBlur}
                         onChangeText={onChange}
@@ -127,6 +129,7 @@ export const SignUpScreen = () => {
                 render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
                   <>
                     <Input
+                      testID="PHONE_NUMBER_INPUT"
                       placeholder="9876543210"
                       onBlur={onBlur}
                       onChangeText={onChange}
@@ -154,6 +157,7 @@ export const SignUpScreen = () => {
                 render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
                   <>
                     <Input
+                      testID="PASSWORD_INPUT"
                       placeholder="Create a password"
                       onBlur={onBlur}
                       onChangeText={onChange}
@@ -181,6 +185,7 @@ export const SignUpScreen = () => {
                 render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
                   <>
                     <Input
+                      testID="CONFIRM_PASSWORD_INPUT"
                       placeholder="Create a password"
                       onBlur={onBlur}
                       onChangeText={onChange}
@@ -207,6 +212,7 @@ export const SignUpScreen = () => {
             </View>
 
             <ModernButton
+              testID="CREATE_ACCOUNT_BUTTON"
               title="Create account"
               onPress={handleSubmit(onSubmit)}
               isLoading={signUpMutation.isPending}

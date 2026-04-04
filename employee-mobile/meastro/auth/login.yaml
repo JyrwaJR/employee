@@ -1,0 +1,26 @@
+appId: ${APP_ID}
+env:
+  APP_ID: com.jyrwaboys.employeemobile.dev
+---
+- launchApp
+- assertVisible: "Welcome back"
+
+# 1. Validation Test (Empty Fields)
+- tapOn: { id: "SIGN_IN_BUTTON" }
+- assertVisible: "Phone number is required"
+- assertVisible: "Password is required"
+
+# 2. Validation Test (Invalid Phone)
+- tapOn: { id: "PHONE_INPUT" }
+- inputText: "123"
+- tapOn: { id: "SIGN_IN_BUTTON" }
+- assertVisible: "Phone number must be exactly 10 digits"
+
+# 3. Successful Login
+- tapOn: { id: "PHONE_INPUT" }
+- eraseText: 10
+- inputText: "9876543210"
+- tapOn: { id: "PASSWORD_INPUT" }
+- inputText: "Password@123"
+- tapOn: { id: "SIGN_IN_BUTTON" }
+- assertVisible: "Good Morning"
