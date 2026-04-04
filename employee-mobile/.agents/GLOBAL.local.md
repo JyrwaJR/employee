@@ -1,6 +1,6 @@
 # 🚀 Global Agent Instructions — Google Antigravity
 
-**Version:** 2.0.0 | **Last Updated:** 2026-03-30
+**Version:** 2.0.1 | **Last Updated:** 2026-03-30
 
 ---
 
@@ -66,7 +66,7 @@ If any file below is missing, apply §3 immediately.
 
 ```
 .agents/
-├── GLOBAL.md                     ← THIS FILE. Loaded on every task, no exceptions.
+├── GLOBAL.local.md                     ← THIS FILE. Loaded on every task, no exceptions.
 │
 ├── prd/
 │   ├── core_prd.md               ← Read FIRST on every task. North-star product vision.
@@ -96,6 +96,8 @@ If any file below is missing, apply §3 immediately.
 │   └── generate-migrations.md   ← Execute step-by-step for DB schema changes
 │
 └── plans/
+    ├── implemenation_plan.md     ← Technical approach, patterns, and API contracts (Create If missing)
+    │── task_breakdown.md         ← Atomic, synced task list for all agents (create if missing)
     ├── active_feature_plan.md    ← Current execution blueprint. Check before coding.
     ├── memory.md                 ← Append-only task execution log. Updated after every task.
     └── completed/                ← Completed plans archived here. See §16.
@@ -362,6 +364,8 @@ STEP 0 — ORIENT
   ├── Check all files in §2 exist — invoke §3 for any that are missing
   ├── Read core_prd.md (context scan)
   ├── Read plans/active_feature_plan.md (if it exists)
+  ├── Read plans/implementation_plan.md (Sync technical strategy)
+  ├── Read plans/task_breakdown.md (Sync task queue)
   └── Identify MODE: PLAN / ARCHITECT / IMPLEMENT / REVIEW
 
 STEP 0.1 — INITIALIZE MEMORY
@@ -1047,6 +1051,45 @@ See: .gemini/antigravity/brain/stack.md
 ```
 
 ### `.gemini/antigravity/brain/stack.md` Template
+
+### `plans/implementation_plan.md` Template
+
+```markdown
+# Implementation Plan: <Feature Name>
+
+**Status:** DRAFT | APPROVED
+**Primary Architect:** [Agent ID]
+**Last Strategy Sync:** YYYY-MM-DD HH:MM
+
+## 🏗️ Technical Strategy
+
+- **Patterns:** [e.g., Client-side encryption, Server Actions]
+- **API Contracts:** [Define endpoints/methods here]
+- **Schema Changes:** [List Prisma/SQL updates required]
+
+## 🛠️ Shared Context
+
+- **Constants:** [Shared IDs or keys]
+- **Utility Paths:** [Shared helpers to use]
+```
+
+### `plans/task_breakdown.md` Template
+
+```markdown
+# Task Breakdown
+
+**Format:** [Status] [Type] [Task Name] ([Claimed By])
+
+## Queue
+
+- [ ] [SEC] Define security surfaces (Unclaimed)
+- [ ] [DESIGN] Architecture & Schema (Unclaimed)
+- [ ] [TEST] Unit & Integration tests (Unclaimed)
+- [ ] [IMPL] Feature implementation (Unclaimed)
+- [ ] [REVIEW] Security review gate (Unclaimed)
+
+**Note:** Agents must append their ID to the task upon starting to avoid duplicate work.
+```
 
 ```markdown
 # Approved Tech Stack

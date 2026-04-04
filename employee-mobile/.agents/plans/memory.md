@@ -6,3 +6,7 @@
 | 2026-04-03 09:45 | [FIX]    | IMPLEMENT | Fixed circular dependency between `http` and `logger`. Updated `logger` to use `axiosInstance` directly.                                                                                          | N/A                         | None              | COMPLETE |
 | 2026-04-03 09:54 | [IMPL]   | IMPLEMENT | Added "show password" toggle to `LoginScreen.tsx` with an eye icon from `@expo/vector-icons`.                                                                                                     | N/A                         | None              | COMPLETE |
 | 2026-04-04 00:00 | [IMPL]   | IMPLEMENT | Refactored `ProviderWrapper` to use `React.PropsWithChildren`. Updated `Header` component styles and removed `useSafeAreaInsets` hook.                                                            | N/A                         | None              | COMPLETE |
+
+2026-04-04 20:39 [FILE-SYNC] Synchronized AGENTS.md and .agents/GLOBAL.local.md to v2.0.1
+2026-04-04 20:41 [FILE-OPT] Optimized AGENTS.md for token/context efficiency (v2.0.2)
+2026-04-04 20:47 [FILE-SYNC] Updated AGENTS.md with review_findings protocol (v2.0.3)
