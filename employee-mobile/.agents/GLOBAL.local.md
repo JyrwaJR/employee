@@ -362,8 +362,6 @@ STEP 0 — ORIENT
   ├── Check all files in §2 exist — invoke §3 for any that are missing
   ├── Read core_prd.md (context scan)
   ├── Read plans/active_feature_plan.md (if it exists)
-  ├── Read brain/stack.md (tech stack confirmation)
-  ├── Read .gemini/antigravity/brain/ entries relevant to this task (advisory only — see §14)
   └── Identify MODE: PLAN / ARCHITECT / IMPLEMENT / REVIEW
 
 STEP 0.1 — INITIALIZE MEMORY

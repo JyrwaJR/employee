@@ -31,6 +31,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   plugins: [
     'expo-router',
+    'expo-splash-screen',
     [
       'expo-local-authentication',
       {
@@ -79,4 +80,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     },
   },
   owner: 'pixel-thread',
+  updates: {
+    url: 'https://u.expo.dev/14849a6b-819c-4e05-9b59-022a381d8999',
+  },
+  runtimeVersion: {
+    policy: 'appVersion',
+  },
 });

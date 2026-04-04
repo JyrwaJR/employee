@@ -12,6 +12,9 @@ import { ThemeProvider } from './ThemeProvider';
 import { LocalAuthRedirect } from '@shared/components/auth/LocalAuthRedirect';
 import { NotificationProvider } from '@features/notification/providers/NotificationProvider';
 
+import { UpdatesProvider } from './UpdatesProvider';
+import { UpdateModal } from '@shared/components/display/UpdateModal';
+
 type Props = {
   children: React.ReactNode;
 };
@@ -19,25 +22,30 @@ type Props = {
 export const ProviderWrapper = ({ children }: Props) => {
   return (
     <ThemeProvider>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <StatusBar barStyle="default" />
-        <Toaster />
-        <SafeAreaProvider className="flex-1">
-          <SSLPinning>
-            <TQueryProvider>
-              <AuthContextProvider>
-                <NotificationProvider>
-                  <LocalAuthProvider>
-                    <LocalAuthRedirect>
-                      <AuthRedirect>{children}</AuthRedirect>
-                    </LocalAuthRedirect>
-                  </LocalAuthProvider>
-                </NotificationProvider>
-              </AuthContextProvider>
-            </TQueryProvider>
-          </SSLPinning>
-        </SafeAreaProvider>
-      </GestureHandlerRootView>
+      <UpdatesProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <StatusBar barStyle="default" />
+          <Toaster />
+          <SafeAreaProvider className="flex-1">
+            <SSLPinning>
+              <TQueryProvider>
+                <AuthContextProvider>
+                  <NotificationProvider>
+                    <LocalAuthProvider>
+                      <LocalAuthRedirect>
+                        <AuthRedirect>
+                          {children}
+                          <UpdateModal />
+                        </AuthRedirect>
+                      </LocalAuthRedirect>
+                    </LocalAuthProvider>
+                  </NotificationProvider>
+                </AuthContextProvider>
+              </TQueryProvider>
+            </SSLPinning>
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
+      </UpdatesProvider>
     </ThemeProvider>
   );
 };
