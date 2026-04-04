@@ -71,3 +71,4 @@ employee-backend/.gitignore
 generated
 .vercel
 employee-backend/next-env.d.ts
+*.apk

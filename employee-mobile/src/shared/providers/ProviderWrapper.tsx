@@ -14,6 +14,7 @@ import { NotificationProvider } from '@features/notification/providers/Notificat
 
 import { UpdatesProvider } from './UpdatesProvider';
 import { UpdateModal } from '@shared/components/display/UpdateModal';
+import { GlobalErrorBoundary } from '@shared/components/feedback/GlobalErrorBoundary';
 
 type Props = {
   children: React.ReactNode;
@@ -21,31 +22,33 @@ type Props = {
 
 export const ProviderWrapper = ({ children }: Props) => {
   return (
-    <ThemeProvider>
-      <UpdatesProvider>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <StatusBar barStyle="default" />
-          <Toaster />
-          <SafeAreaProvider className="flex-1">
-            <SSLPinning>
-              <TQueryProvider>
-                <AuthContextProvider>
-                  <NotificationProvider>
-                    <LocalAuthProvider>
-                      <LocalAuthRedirect>
-                        <AuthRedirect>
-                          {children}
-                          <UpdateModal />
-                        </AuthRedirect>
-                      </LocalAuthRedirect>
-                    </LocalAuthProvider>
-                  </NotificationProvider>
-                </AuthContextProvider>
-              </TQueryProvider>
-            </SSLPinning>
-          </SafeAreaProvider>
-        </GestureHandlerRootView>
-      </UpdatesProvider>
-    </ThemeProvider>
+    <GlobalErrorBoundary>
+      <ThemeProvider>
+        <UpdatesProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <StatusBar barStyle="default" />
+            <Toaster />
+            <SafeAreaProvider className="flex-1">
+              <SSLPinning>
+                <TQueryProvider>
+                  <AuthContextProvider>
+                    <NotificationProvider>
+                      <LocalAuthProvider>
+                        <LocalAuthRedirect>
+                          <AuthRedirect>
+                            {children}
+                            <UpdateModal />
+                          </AuthRedirect>
+                        </LocalAuthRedirect>
+                      </LocalAuthProvider>
+                    </NotificationProvider>
+                  </AuthContextProvider>
+                </TQueryProvider>
+              </SSLPinning>
+            </SafeAreaProvider>
+          </GestureHandlerRootView>
+        </UpdatesProvider>
+      </ThemeProvider>
+    </GlobalErrorBoundary>
   );
 };

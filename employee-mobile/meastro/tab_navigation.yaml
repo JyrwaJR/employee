@@ -1,0 +1,14 @@
+appId: com.jyrwaboys.employeemobile
+---
+- launchApp
+# Skip login if handled by state persistence, or assuming first run state. 
+# Better to have a separate login script but here is navigation.
+- assertVisible: "Good Morning"
+- tapOn: "Leave"
+- assertVisible: "Leave Requests" # Expected text for Leave screen
+- tapOn: "Pension"
+- assertVisible: "Pension Fund" # Expected text for Pension screen
+- tapOn: "Profile"
+- assertVisible: "Personal Details" # Expected text for Profile screen
+- tapOn: "Home"
+- assertVisible: "All Employees"

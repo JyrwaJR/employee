@@ -1,0 +1,17 @@
+appId: com.jyrwaboys.employeemobile
+---
+- launchApp
+- tapOn: "Sign up"
+- assertVisible: "Create account"
+- tapOn: "John"
+- inputText: "John"
+- tapOn: "Doe"
+- inputText: "Doe"
+- tapOn: "9876543210"
+- inputText: "9876543210"
+- tapOn: "Create a password"
+- inputText: "password123"
+- tapOn: "Confirm Password" # Using label or index if needed, but text match is first try
+- inputText: "password123"
+- tapOn: "Create account"
+- assertVisible: "Signed in successfully."

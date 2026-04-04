@@ -1,0 +1,7 @@
+appId: com.jyrwaboys.employeemobile
+---
+- launchApp
+- tapOn: "Dark Mode"
+- assertVisible: "Dark Mode"
+- tapOn: "Enable Biometric"
+- assertVisible: "v1.0.0"
