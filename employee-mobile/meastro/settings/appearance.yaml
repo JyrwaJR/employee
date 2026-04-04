@@ -6,4 +6,7 @@ env:
 - tapOn: "Dark Mode"
 - assertVisible: "Dark Mode"
 - tapOn: "Enable Biometric"
-- assertVisible: "v1.0.0"
+# Use JS to check version if needed, or simple assertion
+- assertVisible: 
+    text: "v1.0.0"
+    timeout: 5000

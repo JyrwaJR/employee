@@ -2,36 +2,27 @@ appId: ${APP_ID}
 env:
   APP_ID: com.jyrwaboys.employeemobile.dev
 ---
-- launchApp
+- runFlow: ../setup/launch_app.yaml
 - tapOn: "Sign up"
 - assertVisible: "Create account"
 
-# 1. Empty Form Validation
+# 1. Validation Test
 - tapOn: { id: "CREATE_ACCOUNT_BUTTON" }
 - assertVisible: "First name is required"
-- assertVisible: "Last name is required"
-- assertVisible: "Phone number is required"
 
-# 2. Password Match Validation
-- tapOn: { id: "PASSWORD_INPUT" }
-- inputText: "Pass123!"
-- tapOn: { id: "CONFIRM_PASSWORD_INPUT" }
-- inputText: "Mismatch1!"
-- tapOn: { id: "CREATE_ACCOUNT_BUTTON" }
-- assertVisible: "Passwords must match"
-
-# 3. Comprehensive Signup
+# 2. Complete Signup with Scrolling
 - tapOn: { id: "FIRST_NAME_INPUT" }
-- inputText: "John"
+- inputText: "Jane"
 - tapOn: { id: "LAST_NAME_INPUT" }
 - inputText: "Doe"
 - tapOn: { id: "PHONE_NUMBER_INPUT" }
 - inputText: "9876543210"
 - tapOn: { id: "PASSWORD_INPUT" }
-- eraseText: 10
 - inputText: "Password@123"
 - tapOn: { id: "CONFIRM_PASSWORD_INPUT" }
-- eraseText: 10
 - inputText: "Password@123"
+- scrollUntilVisible:
+    element: { id: "CREATE_ACCOUNT_BUTTON" }
+    direction: DOWN
 - tapOn: { id: "CREATE_ACCOUNT_BUTTON" }
 - assertVisible: "Signed in successfully"

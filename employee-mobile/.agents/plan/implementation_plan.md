@@ -1,125 +1,65 @@
-# Implementation Plan: Expo OTA Updates Provider & Prompt
+# Implementation Plan: EAS Workflows for Master and UAT Branches
 
-**Status:** ACTIVE  
-**Goal:** Implement a production-ready Over-The-Air (OTA) update system using `expo-updates`. The system will proactively check for updates, manage download states, gracefully handle errors, and prompt the user with an "Update Now" or "Remind Me Later" modal.
+Create a robust CI/CD orchestration in the repository using Expo EAS Workflows. This setup will automate native binary creation based on branch activity and allow manual remote execution for testing.
 
----
+## User Review Required
 
-## Production Readiness Requirements
-
-To ensure this implementation is production-ready, it must adhere to the following standards:
-
-- **Environment Checks:** OTA update checks must be disabled in local development to prevent disruptions.
-- **Error Handling:** Robust try-catch blocks around all `expo-updates` API calls. Silent degradation if the update servers are unreachable.
-- **State Persistence:** The "Remind Me Later" selection should be persisted using `AsyncStorage` with a TTL (Time-to-Live) so the user is prompted again after a reasonable period (e.g., 24 hours) or upon next cold boot.
-- **Security:** Ensure update logs do not leak any PII or sensitive environment variables.
-- **UX/UI:** The modal must be non-blocking initially but clearly visible, matching the app's design system (NativeWind).
-- **Offline Behavior:** Fail silently and retry on next launch, preventing any blocking of the user.
-
----
+> [!IMPORTANT]
+> **Branch Names**: I am using `master` and `uat` as requested. Please ensure these match your actual Git branch names.
+> **Build Profiles**: The plan assumes `production` and `preview` profiles exist in your `eas.json` (which they do, confirmed by auditing ).
 
 ## Proposed Changes
 
-### 1. Core Logic: Updates Provider
+Create a new configuration directory `.eas/workflows/` and define the automated pipelines.
 
-Responsible for monitoring `expo-updates` events and managing global update state.
+### 1. [NEW] `production-build.yml` (`.eas/workflows/production-build.yml`)
+- **Trigger**: Automatically run when code is pushed to the `master` branch.
+- **Enhanced Dual-Flow Logic**:
+  - **Calculate Fingerprint**: Checks the Native UI/Native Plugin state.
+  - **Conditional EAS Update**: Sends a fast JS update if native code matches.
+  - **Mandatory Fresh Build**: Generates a new Android binary via `eas/build`.
+  - **Automated Submission**: If the build succeeds, a downstream job executes `eas/submit` to push the new APK/AAB to **Google Play Store**.
+- **Hardware**: Uses `linux-medium`.
 
-**File:** `src/shared/providers/UpdatesProvider.tsx`
-
-- **Logic:**
-  - Use `expo-updates` API (`Updates.checkForUpdateAsync`, `Updates.fetchUpdateAsync`)
-  - Manage state: `isUpdateAvailable`, `isDownloading`, `updateError`, `isUpdateReady`
-  - Provide context functions: `checkAndDownloadUpdate`, `runUpdate`, `postponeUpdate`
-  - **Resilience:** Handle network failures silently and gracefully (Offline Fallback)
-
----
-
-### 2. UI: Update Prompt Modal
-
-A polished, user-friendly modal using NativeWind.
-
-**File:** `src/shared/components/display/UpdateModal.tsx`
-
-- **Logic:**
-  - Consumes `UpdatesProvider` state
-  - Triggered when `isUpdateReady` is true and user hasn't opted to "Remind Later"
-  - Actions:
-    - "Update Now" → Calls `Updates.reloadAsync()`
-    - "Remind Later" → Sets postpone flag
-  - **Styling:** High-fidelity, smooth enter/exit animations
+### 2. [NEW] `preview-build.yml` (`.eas/workflows/preview-build.yml`)
+- **Trigger**: 
+  - Automatically run when code is pushed to the `uat` branch.
+  - Can be triggered manually via `eas workflow:run preview-build.yml`.
+- **Target Platform**: Android only.
+- **Conditional Trigger**:
+  - The build will only execute if the commit message contains the flag **`eas:build`** OR if triggered manually.
+  - Why: Prevents redundant binary builds for small documentation or non-functional changes.
 
 ---
 
-### 3. Integration
+## Implementation Steps
 
-**File:** `src/app/_layout.tsx`
+### Phase 1: Infrastructure Setup
+1. **Initialize Workflow Directory**
+   - Create the `.eas/workflows` directory at the project root.
+   - Why: This is the standard location where the EAS service looks for YAML definitions.
 
-- Wrap the root layout with `UpdatesProvider`
-- Inject the `UpdateModal` at the root level so it can overlay any screen
+### Phase 2: Workflow Definitions
+2. **Implement Production Workflow with Submission** (File: `.eas/workflows/production-build.yml`)
+   - Define `on: push: branches: [master]`.
+   - Add a `fingerprint` job.
+   - Add an `update` job that triggers only if `needs_build` is false.
+   - Add a `build` job that **always** runs to ensure a new binary is created.
+   - Add a `submit` job that `needs` the build job.
+   - Params: `platform: android`, `profile: production`.
+   - Why: Automates the entire release cycle from code push to store submission.
 
----
+3. **Implement Preview Workflow with Keyword Filter** (File: `.eas/workflows/preview-build.yml`)
+   - Define `on: push: branches: [uat]` and `on: manual: {}`.
+   - Add a global `if` condition to the jobs: `contains(github.event.head_commit.message, 'eas:build') || github.event_name == 'manual'`.
+   - Why: Ensures intentional CI/CD execution for internal testers.
 
-## Multi-Agent Execution Strategy
+## Testing Strategy
+- **Syntax Validation**: I will check the YAML against the stored `EAS Workflows YAML Syntax Reference`.
+- **CLI Verification**: I will use `eas workflow:list` locally (if authenticated) or simply verify the files are in the correct place.
 
-This feature will be executed by multiple specialized agents operating in parallel or sequence.
-
----
-
-### Agent 1: State & Monitoring Executor (`[IMPL]`)
-
-- **Focus:** `UpdatesProvider.tsx` implementation
-- **Responsibilities:**
-  - Implement `expo-updates` logic
-  - Event listeners
-  - State machine
-  - Persistence logic for "Remind Me Later" using `AsyncStorage`
-
----
-
-### Agent 2: UI & Interaction Executor (`[IMPL]`)
-
-- **Focus:** `UpdateModal.tsx` implementation
-- **Responsibilities:**
-  - Build modal UI using NativeWind
-  - Implement animations
-  - Bind to context state
-  - Integrate into `_layout.tsx`
-
----
-
-### Agent 3: Reviewer & QA Agent (`[REVIEW]`, `[TEST]`)
-
-- **Focus:** Logic verification and test coverage
-- **Responsibilities:**
-  - Write unit tests for provider state transitions
-  - Verify `reloadAsync` is called correctly
-  - Ensure no race conditions between downloading and prompting
-  - Test offline behavior (manual or mocked)
-
----
-
-### Agent 4: Security Architect (`[SEC]`, `[REVIEW]`)
-
-- **Focus:** Hardening and compliance
-- **Responsibilities:**
-  - Conduct security review
-  - Ensure no PII in logs
-  - Verify environment checks
-  - Ensure update process cannot be hijacked
-
----
-
-## Verification Plan
-
-### Automated Tests
-
-- Unit tests for `UpdatesProvider` state machine (mocking `expo-updates`)
-
----
-
-### Manual Verification
-
-- Trigger a published EAS update → verify modal appears
-- Test "Remind Later" persistence (close app, reopen, verify TTL behavior)
-- Test "Update Now" → triggers successful reload
-- Test offline behavior during update check
+## Success Criteria
+- [ ] `.eas/workflows/production-build.yml` exists with correct `master` push trigger.
+- [ ] `.eas/workflows/preview-build.yml` exists with both `uat` push and `manual` triggers.
+- [ ] Both workflows point to the correct profiles defined in `eas.json`.
+- [ ] Memory reflection is performed to document this new project-specific pattern.
