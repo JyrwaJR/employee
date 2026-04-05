@@ -60,7 +60,10 @@ export default function EmployeeListScreen() {
         contentContainerStyle={{ padding: 24, paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <EmployeeListItem item={item} onPress={() => router.push(routes.employees.details(item.id))} />
+          <EmployeeListItem
+            item={item}
+            onPress={() => router.push(routes.employees.details(item.id))}
+          />
         )}
         ListEmptyComponent={
           <View className="mt-20 items-center justify-center">

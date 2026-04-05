@@ -4,34 +4,14 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "*"
-      ],
-      "@features/*": [
-        "./src/features/*"
-      ],
-      "@shared/*": [
-        "./src/shared/*"
-      ],
-      "@assets/*": [
-        "./src/assets/*"
-      ],
-      "@components/*": [
-        "./src/shared/components/*"
-      ],
-      "@utils/*": [
-        "./src/shared/utils/*"
-      ],
-      "@types/*": [
-        "./src/shared/types/*"
-      ]
+      "@/*": ["*"],
+      "@features/*": ["./src/features/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@components/*": ["./src/shared/components/*"],
+      "@utils/*": ["./src/shared/utils/*"],
+      "@types/*": ["./src/shared/types/*"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "nativewind-env.d.ts"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"]
 }

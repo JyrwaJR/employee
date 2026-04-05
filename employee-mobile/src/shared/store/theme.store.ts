@@ -17,8 +17,7 @@ export const useThemeStore = create<UseThemeStore>()(
     (set) => ({
       theme: 'system',
       setTheme: (theme: ThemeType) => {
-        const targetTheme =
-          theme === 'system' ? Appearance.getColorScheme() || 'light' : theme;
+        const targetTheme = theme === 'system' ? Appearance.getColorScheme() || 'light' : theme;
         nativewindColorScheme.set(targetTheme);
         set({ theme });
       },
@@ -40,9 +39,7 @@ export const useThemeStore = create<UseThemeStore>()(
         // Sync NativeWind color scheme immediately after rehydration
         if (state) {
           const targetTheme =
-            state.theme === 'system'
-              ? Appearance.getColorScheme() || 'light'
-              : state.theme;
+            state.theme === 'system' ? Appearance.getColorScheme() || 'light' : state.theme;
           nativewindColorScheme.set(targetTheme);
         }
       },

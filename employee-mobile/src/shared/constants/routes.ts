@@ -1,7 +1,9 @@
+import { Route } from 'expo-router';
+
 /**
  * Shared Routes Factory
  * Centralizes all application navigation paths to ensure type safety and prevent broken links.
- * 
+ *
  * @example
  * // In a component or hook:
  * import { routes } from '@/src/shared/constants/routes';
@@ -25,7 +27,7 @@ export const routes = {
       if (phone) params.append('phone', phone);
       if (step) params.append('step', step);
       const query = params.toString();
-      return `/auth/forgot-password${query ? `?${query}` : ''}` as any;
+      return `/auth/forgot-password${query ? `?${query}` : ''}` as Route;
     },
   },
 
@@ -34,11 +36,11 @@ export const routes = {
     /** Main staff register/list */
     list: '/employees' as const,
     /** Individual employee profile view */
-    details: (id: string) => `/employees/${id}` as any,
+    details: (id: string) => `/employees/${id}` as Route,
     /** Employee-specific salary history */
-    salaryHistory: (id: string) => `/employees/${id}/salary` as any,
+    salaryHistory: (id: string) => `/employees/${id}/salary` as Route,
     /** Direct link to a specific salary payslip */
-    salaryPayslip: (id: string) => `/employees/salary/${id}` as any,
+    salaryPayslip: (id: string) => `/employees/salary/${id}` as Route,
   },
 
   /** Core feature sidebar/tab links */

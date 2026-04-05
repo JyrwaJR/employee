@@ -11,8 +11,10 @@ export const StatBox = ({
   value: string;
   color: string;
 }) => (
-  <View className="mx-1.5 flex-1 items-center rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
+  <View className="mx-1.5 flex-1 items-center rounded-2xl border border-gray-100 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     <Text className={cn('mb-1 text-xl font-bold', color)}>{value}</Text>
-    <Text variant="subtext" className="text-xs font-medium uppercase tracking-wider">{label}</Text>
+    <Text variant="subtext" className="text-xs font-medium uppercase tracking-wider">
+      {label}
+    </Text>
   </View>
 );

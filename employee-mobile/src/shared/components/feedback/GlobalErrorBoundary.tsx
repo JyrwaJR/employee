@@ -1,5 +1,5 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { View, Text, TouchableOpacity,  } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import * as Updates from 'expo-updates';
@@ -49,8 +49,7 @@ export class GlobalErrorBoundary extends Component<Props, State> {
             <BlurView
               intensity={40}
               tint="light"
-              className="w-full overflow-hidden rounded-3xl border border-white/40 bg-white/60 p-8 shadow-2xl"
-            >
+              className="w-full overflow-hidden rounded-3xl border border-white/40 bg-white/60 p-8 shadow-2xl">
               <View className="items-center">
                 <View className="mb-6 h-20 w-20 items-center justify-center rounded-full bg-red-100">
                   <Ionicons name="alert-circle-outline" size={48} color="#ef4444" />
@@ -75,20 +74,14 @@ export class GlobalErrorBoundary extends Component<Props, State> {
                 <TouchableOpacity
                   onPress={this.handleReset}
                   activeOpacity={0.8}
-                  className="w-full items-center justify-center rounded-2xl bg-gray-900 py-4 shadow-lg"
-                >
-                  <Text className="text-lg font-bold text-white">
-                    Try Again
-                  </Text>
+                  className="w-full items-center justify-center rounded-2xl bg-gray-900 py-4 shadow-lg">
+                  <Text className="text-lg font-bold text-white">Try Again</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={() => this.setState({ hasError: false, error: null })}
-                  className="mt-4"
-                >
-                  <Text className="text-sm font-medium text-gray-500 underline">
-                    Dismiss
-                  </Text>
+                  className="mt-4">
+                  <Text className="text-sm font-medium text-gray-500 underline">Dismiss</Text>
                 </TouchableOpacity>
               </View>
             </BlurView>

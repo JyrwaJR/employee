@@ -4,14 +4,14 @@ import { RoleT } from '@/src/features/auth/types';
 /**
  * useAccess hook
  * Centralizes role-based access control (RBAC) logic for UI elements.
- * 
+ *
  * @param allowedRoles - Optional role or array of roles that are allowed.
  * @returns { hasAccess, checkAccess, currentRole }
- * 
+ *
  * Usage:
- * const { hasAccess } = useAccess(['SUPER_ADMIN', 'ADMIN']); 
+ * const { hasAccess } = useAccess(['SUPER_ADMIN', 'ADMIN']);
  * if (hasAccess) return <AdminButton />;
- * 
+ *
  * Or:
  * const { checkAccess } = useAccess();
  * <Button disabled={!checkAccess('SUPER_ADMIN')} />

@@ -7,8 +7,6 @@ import { Container } from '@/src/shared/components/layout/Container';
 import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
 import { useLocalAuthStore } from '@/src/features/auth/store/useLocalAuthStore';
 
-
-
 const SettingItem = ({
   icon,
   label,

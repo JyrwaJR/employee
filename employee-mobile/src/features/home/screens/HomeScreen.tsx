@@ -99,7 +99,10 @@ export const HomeScreen = () => {
           data={EMPLOYEES}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-            <EmployeeListItem onPress={() => router.push(routes.employees.details(item.id))} item={item} />
+            <EmployeeListItem
+              onPress={() => router.push(routes.employees.details(item.id))}
+              item={item}
+            />
           )}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 100 }} // Space for FAB

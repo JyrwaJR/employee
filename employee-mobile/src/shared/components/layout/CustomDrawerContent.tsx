@@ -59,13 +59,15 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           return (
             <Link key={item.id} href={item.href} asChild>
               <Pressable
-                className={`flex-row items-center rounded-xl p-4 ${isActive ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-transparent'
-                  }`}>
+                className={`flex-row items-center rounded-xl p-4 ${
+                  isActive ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-transparent'
+                }`}>
                 <Text
-                  className={`text-base font-medium ${isActive
+                  className={`text-base font-medium ${
+                    isActive
                       ? 'text-blue-700 dark:text-blue-400'
                       : 'text-slate-600 dark:text-slate-400'
-                    }`}>
+                  }`}>
                   {item.title}
                 </Text>
               </Pressable>

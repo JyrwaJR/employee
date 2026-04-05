@@ -24,4 +24,5 @@ export const SSL_CONFIG = {
 /**
  * Base API URL Configuration
  */
-export const API_BASE_URL = process.env.EXPO_PUBLIC_API_URL || 'https://employee-nic.vercel.app/api';
+export const API_BASE_URL =
+  process.env.EXPO_PUBLIC_API_URL || 'https://employee-nic.vercel.app/api';

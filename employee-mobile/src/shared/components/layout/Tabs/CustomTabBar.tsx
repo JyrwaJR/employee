@@ -20,7 +20,8 @@ export const CustomTabBar = ({
 
         const config = tabConfig.find((t: TabRouteT) => t.name === route.name);
         const iconName = config?.icon || 'help';
-        const label = (options.tabBarLabel as string) || options.title || config?.title || route.name;
+        const label =
+          (options.tabBarLabel as string) || options.title || config?.title || route.name;
 
         const onPress = () => {
           const event = navigation.emit({

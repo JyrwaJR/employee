@@ -20,8 +20,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
 
     // 2. Ensure synchronization on component mount/theme change
     // (Though store handles direct changes, this ensures consistency)
-    const targetTheme =
-      theme === 'system' ? Appearance.getColorScheme() || 'light' : theme;
+    const targetTheme = theme === 'system' ? Appearance.getColorScheme() || 'light' : theme;
     nativewindColorScheme.set(targetTheme);
 
     return () => subscription.remove();
