@@ -1,9 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
-import { Input } from '@/src/shared/components/ui/input';
 import { Button } from '@/src/shared/components/ui/button';
 import { Text } from '@/src/shared/components/ui/text';
 import { notify } from '@/src/shared/utils/notify';
@@ -12,6 +11,7 @@ import { api } from '@/src/shared/api';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { useRouter } from 'expo-router';
 import { routes } from '@/src/shared/constants/routes';
+import { FieldInput } from '@/src/shared/components/ui/field-input';
 import {
   ResetPasswordSchema,
   ResetPasswordOtpSchema,
@@ -31,7 +31,7 @@ export const ResetPasswordForm = () => {
   // We need to store the password from step 1 to send it in step 2
   const [passwordData, setPasswordData] = React.useState<ResetPasswordInputs | null>(null);
 
-  const passwordForm = useForm<ResetPasswordInputs>({
+  const passwordMethods = useForm<ResetPasswordInputs>({
     resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
       password: '',
@@ -39,7 +39,7 @@ export const ResetPasswordForm = () => {
     },
   });
 
-  const otpForm = useForm<ResetPasswordOtpInputs>({
+  const otpMethods = useForm<ResetPasswordOtpInputs>({
     resolver: zodResolver(ResetPasswordOtpSchema),
     defaultValues: {
       otp: '',
@@ -101,109 +101,53 @@ export const ResetPasswordForm = () => {
   return (
     <View className="w-full">
       {status === 'INPUT_PASSWORD' && (
-        <>
-          <View className="mb-4">
-            <Text variant="label" className="mb-1.5 ml-1">
-              New Password
-            </Text>
-            <Controller
-              control={passwordForm.control}
-              name="password"
-              render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-                <>
-                  <Input
-                    placeholder="••••••••"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    secureTextEntry
-                    error={!!error}
-                  />
-                  {error && (
-                    <Text variant="error" size="sm" className="ml-1 mt-1">
-                      {error.message}
-                    </Text>
-                  )}
-                </>
-              )}
-            />
-          </View>
-          <View className="mb-4">
-            <Text variant="label" className="mb-1.5 ml-1">
-              Confirm Password
-            </Text>
-            <Controller
-              control={passwordForm.control}
-              name="confirm_password"
-              render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-                <>
-                  <Input
-                    placeholder="••••••••"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    secureTextEntry
-                    error={!!error}
-                  />
-                  {error && (
-                    <Text variant="error" size="sm" className="ml-1 mt-1">
-                      {error.message}
-                    </Text>
-                  )}
-                </>
-              )}
-            />
-          </View>
+        <FormProvider {...passwordMethods}>
+          <FieldInput
+            name="password"
+            label="New Password"
+            placeholder="••••••••"
+            secureTextEntry
+          />
+          <FieldInput
+            name="confirm_password"
+            label="Confirm Password"
+            placeholder="••••••••"
+            secureTextEntry
+          />
 
           <Button
             title="Send OTP"
-            onPress={passwordForm.handleSubmit(onPasswordSubmit)}
+            onPress={passwordMethods.handleSubmit(onPasswordSubmit)}
             isLoading={sendOtpMutation.isPending}
           />
-        </>
+        </FormProvider>
       )}
 
       {status === 'INPUT_OTP' && (
-        <>
+        <FormProvider {...otpMethods}>
           <View className="mb-4">
             <Text variant="subtext" className="mb-6 text-center">
               OTP sent to {phone_no}
             </Text>
-            <Text variant="label" className="mb-1.5 ml-1">
-              Enter OTP
-            </Text>
-            <Controller
-              control={otpForm.control}
+            
+            <FieldInput
               name="otp"
-              render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-                <>
-                  <Input
-                    placeholder="123456"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    keyboardType="number-pad"
-                    maxLength={6}
-                    error={!!error}
-                    className="text-center text-2xl tracking-widest"
-                  />
-                  {error && (
-                    <Text variant="error" size="sm" className="ml-1 mt-1">
-                      {error.message}
-                    </Text>
-                  )}
-                </>
-              )}
+              label="Enter OTP"
+              placeholder="123456"
+              keyboardType="number-pad"
+              maxLength={6}
+              className="text-center text-2xl tracking-widest"
             />
           </View>
 
           <Button
             title="Reset Password"
-            onPress={otpForm.handleSubmit(onOtpSubmit)}
+            onPress={otpMethods.handleSubmit(onOtpSubmit)}
             isLoading={resetPasswordMutation.isPending}
           />
-        </>
+        </FormProvider>
       )}
     </View>
   );
 };
+
