@@ -13,6 +13,7 @@ import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
 import { toast } from 'sonner-native';
 import { Container } from '@/src/shared/components/layout/Container';
 import { SignUpSchema } from '../schema/signup.schema';
+import { routes } from '@/src/shared/constants/routes';
 
 // --- 2. Zod Validation Schema (Updated) ---
 type SignUpFormInputs = z.infer<typeof SignUpSchema>;
@@ -24,7 +25,7 @@ export const SignUpScreen = () => {
     mutationFn: (data: SignUpFormInputs) => http.post(AUTH_ENDPOINTS.POST_SIGN_UP, data),
     onSuccess: (data) => {
       if (data.success) {
-        router.replace('/auth');
+        router.replace(routes.auth.login);
         toast.success(data.message);
         return data;
       }
@@ -234,7 +235,7 @@ export const SignUpScreen = () => {
             <Text variant={'subtext'} weight={'medium'}>
               Already have an account?{' '}
             </Text>
-            <Link href="/auth">
+            <Link href={routes.auth.login}>
               <Text variant={'link'} weight={'semibold'}>
                 Sign in
               </Text>

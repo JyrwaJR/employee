@@ -13,6 +13,7 @@ import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
 import { router } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { OTPSchema } from '../schema/otp.schema';
+import { routes } from '@/src/shared/constants/routes';
 
 type OTPInputs = z.infer<typeof OTPSchema>;
 
@@ -29,7 +30,7 @@ export const VerifyOtpForm = () => {
     onSuccess: (data) => {
       if (data.success) {
         toast.success(data.message);
-        router.push(`/auth/forgot-password?phone=${phone_no}&step=RESET`);
+        router.push(routes.auth.forgotPassword(phone_no, 'RESET'));
         return data;
       }
       toast.error(data.message);

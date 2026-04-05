@@ -2,6 +2,7 @@ import React from 'react';
 import { router } from 'expo-router';
 import { Text, View } from 'react-native';
 import { ModernButton } from '../ui/button';
+import { routes } from '@/src/shared/constants/routes';
 
 export const NotFoundScreen = ({
   title = '404 - Page Not Found',
@@ -20,7 +21,7 @@ export const NotFoundScreen = ({
 
       <View className="mt-4 w-full items-center justify-center gap-3">
         <ModernButton className="w-full" title="Go Back" onPress={() => router.back()} />
-        <ModernButton title="Go Home" className="w-full" onPress={() => router.push('/')} />
+        <ModernButton title="Go Home" className="w-full" onPress={() => router.push(routes.home)} />
       </View>
     </View>
   );

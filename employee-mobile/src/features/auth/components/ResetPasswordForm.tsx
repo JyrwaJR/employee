@@ -13,6 +13,7 @@ import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { useRouter } from 'expo-router';
 import { passwordValidation } from '@/src/shared/utils/validiation/common';
+import { routes } from '@/src/shared/constants/routes';
 
 // Schema for Step 1: New Password & Confirm Password
 const NewPasswordSchema = z
@@ -96,7 +97,7 @@ export const ResetPasswordForm = () => {
     onSuccess: (data: any) => {
       if (data.success) {
         toast.success(data.message || 'Password reset successfully');
-        router.replace('/auth'); // Or correct login route
+        router.replace(routes.auth.login); // Or correct login route
       } else {
         toast.error(data.message || 'Failed to reset password');
       }

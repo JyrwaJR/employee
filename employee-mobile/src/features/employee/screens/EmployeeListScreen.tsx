@@ -11,6 +11,7 @@ import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { Text } from '@/src/shared/components/ui/text';
 import { FilterCard } from '@/src/shared/components/display/FilterCard';
 import { queryKeys } from '@/src/shared/api/query-keys';
+import { routes } from '@/src/shared/constants/routes';
 
 // --- Screen ---
 export default function EmployeeListScreen() {
@@ -59,7 +60,7 @@ export default function EmployeeListScreen() {
         contentContainerStyle={{ padding: 24, paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
-          <EmployeeListItem item={item} onPress={() => router.push(`/employees/${item.id}`)} />
+          <EmployeeListItem item={item} onPress={() => router.push(routes.employees.details(item.id))} />
         )}
         ListEmptyComponent={
           <View className="mt-20 items-center justify-center">

@@ -12,6 +12,7 @@ import { http } from '@/src/shared/utils/http';
 import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
 import { useRouter } from 'expo-router';
 import { ForgotPasswordSchema } from '../schema/forgotPassword.schema';
+import { routes } from '@/src/shared/constants/routes';
 
 type ForgotPasswordInputs = z.infer<typeof ForgotPasswordSchema>;
 
@@ -29,7 +30,7 @@ export const PhoneForm = () => {
     onSuccess: (data) => {
       if (data.success) {
         toast.success(data.message);
-        router.push(`/auth/forgot-password?phone=${phone_no}&step=OTP`);
+        router.push(routes.auth.forgotPassword(phone_no, 'OTP'));
         return data;
       }
       toast.error(data.message);

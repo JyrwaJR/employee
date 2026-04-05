@@ -9,6 +9,7 @@ import { VerifyOtpForm } from '../components/VerifyOtpForm';
 import { Ternary } from '@/src/shared/components/base/Ternary';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { ResetPasswordForm } from '../components/ResetPasswordForm';
+import { routes } from '@/src/shared/constants/routes';
 
 export const ForgotPassword = () => {
   const search = useSearchParams();
@@ -59,7 +60,7 @@ export const ForgotPassword = () => {
 
           {/* Back to Login */}
           <View className="mt-8 flex-row justify-center">
-            <Link href="/auth" asChild>
+            <Link href={routes.auth.login} asChild>
               <TouchableOpacity className="flex-row items-center">
                 <Ionicons name="arrow-back" size={16} color="#4B5563" style={{ marginRight: 4 }} />
                 <Text variant="subtext">Back to log in</Text>

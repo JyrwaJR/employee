@@ -17,6 +17,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Container } from '@/src/shared/components/layout/Container';
 import { LoginSchema } from '../schema/login.schema';
 import { HeaderStack } from '@/src/shared/components/layout/Header';
+import { routes } from '@/src/shared/constants/routes';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
@@ -146,7 +147,7 @@ export const LoginScreen = () => {
             />
           </View>
 
-          <Link href={'/auth/forgot-password'} asChild>
+          <Link href={routes.auth.forgotPassword()} asChild>
             <TouchableOpacity className="mb-8 items-end">
               <Text variant={'link'}>Forgot password?</Text>
             </TouchableOpacity>
@@ -173,7 +174,7 @@ export const LoginScreen = () => {
         </View>
         <View className="mt-10 flex-row justify-center">
           <Text variant={'subtext'}>Don&apos;t have an account? </Text>
-          <Link href={'/auth/sign-up'}>
+          <Link href={routes.auth.signUp}>
             <Text variant={'link'}>Sign up</Text>
           </Link>
         </View>

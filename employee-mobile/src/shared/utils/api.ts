@@ -2,6 +2,7 @@ import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { TokenStoreManager } from '@/src/shared/store/token.store';
 import { router } from 'expo-router';
 import { queryClient } from './reactQuery';
+import { routes } from '@/src/shared/constants/routes';
 
 const axiosInstance = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
@@ -35,7 +36,7 @@ const handleUnauthorizedExit = async () => {
   await TokenStoreManager.removeToken();
   await TokenStoreManager.removeRefreshToken();
   queryClient.clear(); // Clear cache so no stale data remains
-  router.replace('/auth');
+  router.replace(routes.auth.login);
 };
 
 /* -------------------------------------------------- */

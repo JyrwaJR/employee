@@ -11,6 +11,7 @@ import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { Text } from '@/src/shared/components/ui/text';
 import { cn } from '@/src/shared/utils/cn';
 import { queryKeys } from '@/src/shared/api/query-keys';
+import { routes } from '@/src/shared/constants/routes';
 
 const InfoRow = ({ label, value, icon }: { label: string; value: string; icon: string }) => (
   <View className="flex-row items-center border-b border-gray-100 py-3 last:border-0 dark:border-gray-800">
@@ -147,7 +148,7 @@ export default function EmployeeDetailScreen() {
             </View>
             {auth.user?.role === 'SUPER_ADMIN' && (
               <TouchableOpacity
-                onPress={() => router.push(`/employees/${data?.id}/salary`)}
+                onPress={() => router.push(routes.employees.salaryHistory(data?.id as string))}
                 className="mt-4 flex-row items-center justify-center">
                 <Text className="text-sm font-semibold text-blue-600">View Salary History →</Text>
               </TouchableOpacity>
