@@ -41,6 +41,7 @@ export const getTabConfig = (role: RoleT): TabRouteT[] => {
     case 'SUPER_ADMIN':
       return SUPER_ADMIN_TABS;
     case 'USER':
+      return DEFAULT_USER_TABS;
     case 'ADMIN':
       return DEFAULT_USER_TABS;
     default:
