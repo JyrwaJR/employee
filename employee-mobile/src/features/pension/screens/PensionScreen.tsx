@@ -11,6 +11,7 @@ import { PENSION_ENDPOINTS } from '@/src/features/pension/services/pension.servi
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { http } from '@/src/shared/utils/http';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
+import { queryKeys } from '@/src/shared/api/query-keys';
 
 const statusOptions = [
   { label: 'Paid', value: 'PAID' },
@@ -26,7 +27,7 @@ const PensionScreen = () => {
   const empId = user?.employee_id || '';
 
   const { data: PENSION_DATA, isFetching } = useQuery({
-    queryKey: ['pension', selectedYear, selectedMonth, status],
+    queryKey: queryKeys.pension.list(selectedYear, selectedMonth, status),
     queryFn: () => http.get<SalarySlip[]>(PENSION_ENDPOINTS.GET_PENSIONS.replace(':id', empId)),
     select: (data) => data.data,
     enabled: !!empId,

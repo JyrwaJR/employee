@@ -11,6 +11,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DetailRow } from '@/src/shared/components/display/DetailRow';
 import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
 import { MoneyRow } from '@/src/shared/components/display/MoneyRow';
+import { queryKeys } from '@/src/shared/api/query-keys';
 
 const parseAmount = (value?: string | null): number => {
   return parseFloat(value || '0');
@@ -22,7 +23,7 @@ export const PayslipScreen = ({ salaryId }: Props) => {
   const url = SALARY_ENDPOINTS.GET_SALARY.replace(':salary_id', salaryId);
 
   const { data, isFetching } = useQuery({
-    queryKey: ['salary', salaryId],
+    queryKey: queryKeys.salary.payslip(salaryId),
     queryFn: () => http.get<SalarySlip>(url),
     select: (res) => res.data,
     enabled: !!salaryId,

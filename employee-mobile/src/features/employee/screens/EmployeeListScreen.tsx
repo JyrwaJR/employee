@@ -10,13 +10,14 @@ import { router } from 'expo-router';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { Text } from '@/src/shared/components/ui/text';
 import { FilterCard } from '@/src/shared/components/display/FilterCard';
+import { queryKeys } from '@/src/shared/api/query-keys';
 
 // --- Screen ---
 export default function EmployeeListScreen() {
   const [search, setSearch] = useState('');
 
   const { data: EMPLOYEES, isFetching } = useQuery({
-    queryKey: ['employees'],
+    queryKey: queryKeys.employees.list,
     queryFn: () => http.get<EmployeeT[]>(EMPLOYEE_ENDPOINTS.GET_EMPLOYEES),
     select: (data) => data.data || [],
   });

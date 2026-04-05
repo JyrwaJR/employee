@@ -7,6 +7,7 @@ import { AuthContextT, UserT } from '@/src/features/auth/types';
 import { http } from '@/src/shared/utils/http';
 import { useRouter } from 'expo-router';
 import { logger } from '@/src/shared/utils/logger';
+import { queryKeys } from '@/src/shared/api/query-keys';
 
 type Props = {
   children: React.ReactNode;
@@ -26,8 +27,8 @@ export const AuthContextProvider = ({ children }: Props) => {
     setIsTokenSet(false);
 
     // Clear React Query cache (removes User data)
-    queryClient.setQueryData(['me'], null);
-    queryClient.removeQueries({ queryKey: ['me'] });
+    queryClient.setQueryData(queryKeys.auth.me, null);
+    queryClient.removeQueries({ queryKey: queryKeys.auth.me });
     router.replace('/auth');
   }, [queryClient, router]);
 
@@ -121,7 +122,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     refetch,
     isError,
   } = useQuery({
-    queryKey: ['me'],
+    queryKey: queryKeys.auth.me,
     queryFn: async () => await http.get<UserT>(AUTH_ENDPOINTS.GET_ME),
     enabled: isTokenSet, // Only fetch if we have tokens
     retry: false, // If /me fails, don't retry endlessly, just fail

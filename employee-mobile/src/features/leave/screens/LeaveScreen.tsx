@@ -11,6 +11,7 @@ import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { LeaveT } from '../types';
 import { LeaveCard } from '../components/LeaveCard';
+import { queryKeys } from '@/src/shared/api/query-keys';
 
 const statusOptions = [
   { label: 'Approved', value: 'APPROVED' },
@@ -26,7 +27,7 @@ export const LeaveScreen = () => {
   const employeeId = user?.employee_id || '';
 
   const { data, isFetching } = useQuery({
-    queryKey: ['leaves', employeeId, selectedYear, status],
+    queryKey: queryKeys.leaves.list(employeeId, selectedYear, status),
     queryFn: () => http.get<LeaveT[]>(LEAVE_ENDPOINTS.GET_LEAVES.replace(':id', employeeId)),
     enabled: !!employeeId,
     select: (data) => data.data,

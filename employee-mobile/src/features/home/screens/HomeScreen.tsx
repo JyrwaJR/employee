@@ -13,6 +13,7 @@ import { Text } from '@/src/shared/components/ui/text';
 import { useThemeStore } from '@/src/shared/store/theme.store';
 import { EmployeeT } from '../../employee/types';
 import { EmployeeListItem } from '../../employee/components/EmployeeListItem';
+import { queryKeys } from '@/src/shared/api/query-keys';
 
 const STATS = [
   { label: 'Total Staff', value: '42', color: 'text-blue-600 dark:text-blue-400' },
@@ -26,7 +27,7 @@ export const HomeScreen = () => {
   const { theme } = useThemeStore();
 
   const { data: EMPLOYEES, isFetching } = useQuery({
-    queryKey: ['employees'],
+    queryKey: queryKeys.employees.list,
     queryFn: () => http.get<EmployeeT[]>(EMPLOYEE_ENDPOINTS.GET_EMPLOYEES),
     select: (data) => data.data || [],
     enabled: !!user,

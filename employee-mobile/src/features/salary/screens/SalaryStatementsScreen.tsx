@@ -13,6 +13,7 @@ import { HistoryCard } from '@/src/shared/components/display/HistoryCard';
 import { HeaderStack } from '@/src/shared/components/layout/Header';
 import { FilterCard } from '@/src/shared/components/display/FilterCard';
 import { months, years } from '@/src/shared/utils/helper/years';
+import { queryKeys } from '@/src/shared/api/query-keys';
 
 type Props = {
   idx?: string;
@@ -42,7 +43,7 @@ export const StatementScreen = ({ idx, isTab }: Props) => {
   const id = idx ? idx : user?.employee_id || '';
 
   const { data, isFetching } = useQuery({
-    queryKey: ['employee salary', id, isTab],
+    queryKey: queryKeys.salary.statements(id, isTab),
     queryFn: () => http.get<SalarySlip[]>(SALARY_ENDPOINTS.GET_EMPLOYEEE_SALARY.replace(':id', id)),
     select: (data) => data.data,
     enabled: !!id,
