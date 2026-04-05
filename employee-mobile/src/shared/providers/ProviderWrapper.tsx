@@ -10,7 +10,7 @@ import { SSLPinning } from './SSLPinningProvider';
 import React from 'react';
 import { ThemeProvider } from './ThemeProvider';
 import { LocalAuthRedirect } from '@shared/components/auth/LocalAuthRedirect';
-import { PushNotificationProvider } from '@features/notification/providers/NotificationProvider';
+import { PushNotificationProvider } from '@/src/features/pushNotification/providers/PushNotificationProvider';
 
 import { UpdatesProvider } from './UpdatesProvider';
 import { UpdateModal } from '@shared/components/display/UpdateModal';
