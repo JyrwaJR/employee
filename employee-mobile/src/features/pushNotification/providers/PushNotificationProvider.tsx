@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Route, router } from 'expo-router';
-import { NotificationService } from '@/src/features/notification/services';
+import { PushNotificationService } from '@/src/features/pushNotification/services';
 import { logger } from '@/src/shared/utils/logger';
 import { isExpoGo } from '@/src/shared/constants';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
@@ -21,7 +21,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export const NotificationProvider = ({ children }: Props) => {
+export const PushNotificationProvider = ({ children }: Props) => {
   const { user } = useAuth();
   const [_expoPushToken, setExpoPushToken] = useState('');
   const [_channels, setChannels] = useState<Notifications.NotificationChannel[]>([]);
@@ -36,7 +36,9 @@ export const NotificationProvider = ({ children }: Props) => {
     // Register for push token
     const register = async () => {
       try {
-        const token = await NotificationService.regPushToken({ userId: user?.id.toString() ?? '' });
+        const token = await PushNotificationService.regPushToken({
+          userId: user?.id.toString() ?? '',
+        });
         if (isMounted && token) {
           setExpoPushToken(token);
         }

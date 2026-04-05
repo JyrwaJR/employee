@@ -10,7 +10,7 @@ import { SSLPinning } from './SSLPinningProvider';
 import React from 'react';
 import { ThemeProvider } from './ThemeProvider';
 import { LocalAuthRedirect } from '@shared/components/auth/LocalAuthRedirect';
-import { NotificationProvider } from '@features/notification/providers/NotificationProvider';
+import { PushNotificationProvider } from '@features/notification/providers/NotificationProvider';
 
 import { UpdatesProvider } from './UpdatesProvider';
 import { UpdateModal } from '@shared/components/display/UpdateModal';
@@ -32,7 +32,7 @@ export const ProviderWrapper = ({ children }: Props) => {
               <SSLPinning>
                 <TQueryProvider>
                   <AuthContextProvider>
-                    <NotificationProvider>
+                    <PushNotificationProvider>
                       <LocalAuthProvider>
                         <LocalAuthRedirect>
                           <AuthRedirect>
@@ -41,7 +41,7 @@ export const ProviderWrapper = ({ children }: Props) => {
                           </AuthRedirect>
                         </LocalAuthRedirect>
                       </LocalAuthProvider>
-                    </NotificationProvider>
+                    </PushNotificationProvider>
                   </AuthContextProvider>
                 </TQueryProvider>
               </SSLPinning>

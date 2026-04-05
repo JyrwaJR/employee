@@ -1,6 +1,6 @@
 import { registerForPushNotificationsAsync } from './registerPushToken';
 
-export const NotificationService = {
+export const PushNotificationService = {
   async getPushToken() {},
   async regPushToken({ userId }: { userId: string }): Promise<string | undefined> {
     const token = await registerForPushNotificationsAsync({ userId });

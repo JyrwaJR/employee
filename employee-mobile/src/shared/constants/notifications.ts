@@ -72,6 +72,12 @@ export const NOTIFY = {
     success_msg: 'Connected successfully',
     error_msg: 'Please check your internet connection.',
   },
+  PUSH_SYSTEM: {
+    success_title: 'New Notification',
+    error_title: 'Notice',
+    success_msg: 'A new update is available',
+    error_msg: 'An alert was received',
+  },
 } as const;
 
 export type NotificationKey = keyof typeof NOTIFY;
