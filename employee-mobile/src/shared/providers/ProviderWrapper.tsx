@@ -23,12 +23,10 @@ type Props = {
 export const ProviderWrapper = ({ children }: Props) => {
   return (
     <GlobalErrorBoundary>
-      <ThemeProvider>
-        <UpdatesProvider>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <StatusBar style="auto" animated translucent />
-            <Toaster />
-            <SafeAreaProvider className="flex-1">
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaProvider className="flex-1">
+          <UpdatesProvider>
+            <ThemeProvider>
               <SSLPinning>
                 <TQueryProvider>
                   <AuthContextProvider>
@@ -36,6 +34,8 @@ export const ProviderWrapper = ({ children }: Props) => {
                       <LocalAuthProvider>
                         <LocalAuthRedirect>
                           <AuthRedirect>
+                            <StatusBar style="auto" animated translucent />
+                            <Toaster />
                             {children}
                             <UpdateModal />
                           </AuthRedirect>
@@ -45,10 +45,10 @@ export const ProviderWrapper = ({ children }: Props) => {
                   </AuthContextProvider>
                 </TQueryProvider>
               </SSLPinning>
-            </SafeAreaProvider>
-          </GestureHandlerRootView>
-        </UpdatesProvider>
-      </ThemeProvider>
+            </ThemeProvider>
+          </UpdatesProvider>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
     </GlobalErrorBoundary>
   );
 };

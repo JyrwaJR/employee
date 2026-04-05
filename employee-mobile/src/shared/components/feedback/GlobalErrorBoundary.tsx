@@ -4,6 +4,7 @@ import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 import * as Updates from 'expo-updates';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { logger } from '@utils/logger';
 
 interface Props {
   children?: ReactNode;
@@ -25,7 +26,7 @@ export class GlobalErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('[GlobalErrorBoundary] caught error:', error, errorInfo);
+    logger.error('[GlobalErrorBoundary] caught error:', error, errorInfo);
   }
 
   private handleReset = async () => {

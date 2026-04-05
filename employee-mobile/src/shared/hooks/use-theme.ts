@@ -4,5 +4,6 @@ import { useThemeStore } from '@/src/shared/store/theme.store';
 export const useTheme = () => {
   const { theme } = useThemeStore();
   const colorScheme = useColorScheme();
-  return theme === 'system' ? colorScheme : theme;
+  const isColorSchemeDark = colorScheme !== null && colorScheme === 'dark';
+  return theme === 'system' ? (isColorSchemeDark ? 'dark' : 'light') : theme;
 };
