@@ -10,67 +10,85 @@ type Props = {
   userId: string;
 };
 
-export async function registerForPushNotificationsAsync({ userId }: Props) {
+/**
+ * Result of the registration attempt.
+ */
+export type RegistrationResult = {
+  success: boolean;
+  token?: string;
+  errorType?: 'PERMISSION_DENIED' | 'NOT_A_DEVICE' | 'CONFIG_ERROR' | 'NETWORK_ERROR';
+};
+
+/**
+ * Registers the device for push notifications and syncs the token with the backend.
+ * Throws errors for transient failures to enable retry logic.
+ */
+export async function registerForPushNotificationsAsync({ userId }: Props): Promise<RegistrationResult> {
+  if (!userId) {
+    logger.info('PushRegister: No user id found');
+    return { success: false, errorType: 'CONFIG_ERROR' };
+  }
+
+  if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'Default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  if (!Device.isDevice) {
+    logger.warn('PushRegister: Must use physical device');
+    return { success: false, errorType: 'NOT_A_DEVICE' };
+  }
+
+  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  let finalStatus = existingStatus;
+
+  if (existingStatus !== 'granted') {
+    const { status } = await Notifications.requestPermissionsAsync();
+    finalStatus = status;
+  }
+
+  if (finalStatus !== 'granted') {
+    logger.warn('PushRegister: Permission not granted');
+    return { success: false, errorType: 'PERMISSION_DENIED' };
+  }
+
+  // Identify Project ID (Required for Expo Push Service)
+  const projectId =
+    Constants?.default.easConfig?.projectId ??
+    Constants?.default.expoConfig?.extra?.eas?.projectId;
+
+  if (!projectId) {
+    logger.error('PushRegister: Project ID not found in config');
+    return { success: false, errorType: 'CONFIG_ERROR' };
+  }
+
   try {
-    if (!userId) {
-      logger.info('No user id found to register push token');
-      return;
+    // 1. Obtain Token from Expo
+    const tokenResponse = await Notifications.getExpoPushTokenAsync({ projectId });
+    const token = tokenResponse.data;
+
+    // 2. Register with Backend
+    const res = await http.post(api.notification.register, {
+      token,
+      user_id: userId,
+    });
+
+    if (res.success) {
+      logger.info('PushRegister: Success', { token });
+      return { success: true, token };
     }
-    let token;
 
-    if (Platform.OS === 'android') {
-      await Notifications.setNotificationChannelAsync('default', {
-        name: 'A channel is needed for the permissions prompt to appear',
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
-      });
-    }
+    // Backend returned failure - throw so we can retry
+    throw new Error(res.message || 'Backend registration failed');
 
-    if (Device.isDevice) {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-
-      if (finalStatus !== 'granted') {
-        logger.log('Permission not granted to get push token for push notification!');
-        return;
-      }
-
-      try {
-        const projectId =
-          Constants?.default.easConfig?.projectId ??
-          Constants?.default.expoConfig?.extra?.eas?.projectId;
-
-        if (!projectId) {
-          throw new Error('Project ID not found');
-        }
-
-        token = (await Notifications.getExpoPushTokenAsync({ projectId })).data;
-      } catch (e) {
-        logger.error('Error getting a push token', e);
-        // Don't throw, just return undefined so the app doesn't crash on token failure
-        return undefined;
-      }
-    } else {
-      logger.error('Must use physical device for Push Notifications');
-    }
-    if (token) {
-      const res = await http.post(api.notification.register, {
-        token,
-        user_id: userId,
-      });
-      if (res.success) {
-        logger.info('Push token Registered', res.data);
-      }
-    }
-    return token;
   } catch (error) {
-    logger.error('Error in registerForPushNotificationsAsync', error);
-    return undefined;
+    logger.error('PushRegister: Technical failure during registration', error);
+    // Re-throw so withRetry can handle exponential backoff
+    throw error;
   }
 }
+
