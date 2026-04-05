@@ -16,7 +16,6 @@ import { Text } from '@/src/shared/components/ui/text';
 import { Ionicons } from '@expo/vector-icons';
 import { Container } from '@/src/shared/components/layout/Container';
 import { LoginSchema } from '../schema/login.schema';
-import { HeaderStack } from '@/src/shared/components/layout/Header';
 import { routes } from '@/src/shared/constants/routes';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;

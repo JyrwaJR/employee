@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList, TouchableOpacity } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
 import { Text } from '@/src/shared/components/ui/text';
 import { HistoryCard } from '@/src/shared/components/display/HistoryCard';

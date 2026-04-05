@@ -23,9 +23,9 @@ Notifications.setNotificationHandler({
 
 export const NotificationProvider = ({ children }: Props) => {
   const { user } = useAuth();
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [channels, setChannels] = useState<Notifications.NotificationChannel[]>([]);
-  const [notification, setNotification] = useState<Notifications.Notification | undefined>(
+  const [_expoPushToken, setExpoPushToken] = useState('');
+  const [_channels, setChannels] = useState<Notifications.NotificationChannel[]>([]);
+  const [_notification, setNotification] = useState<Notifications.Notification | undefined>(
     undefined
   );
 

@@ -1,4 +1,3 @@
-import { logger } from '@/src/shared/utils/logger';
 import { registerForPushNotificationsAsync } from './registerPushToken';
 
 export const NotificationService = {
@@ -8,5 +7,5 @@ export const NotificationService = {
     return token;
   },
 
-  async unregPushToken(token: string): Promise<void> {},
+  async unregPushToken(_token: string): Promise<void> {},
 };

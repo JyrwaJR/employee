@@ -10,8 +10,8 @@ import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
 import { DetailRow } from '@/src/shared/components/display/DetailRow';
 
 export const PensionDetailScreen = () => {
-  const { id } = useLocalSearchParams();
-  const router = useRouter();
+  const { id: _id } = useLocalSearchParams();
+  const _router = useRouter();
 
   // In a real app, fetch data based on ID. Using Mock Data for now corresponding to ID 1
   const data = {

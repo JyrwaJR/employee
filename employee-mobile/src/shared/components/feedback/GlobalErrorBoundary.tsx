@@ -36,7 +36,7 @@ export class GlobalErrorBoundary extends Component<Props, State> {
       } else {
         await Updates.reloadAsync();
       }
-    } catch (e) {
+    } catch {
       this.setState({ hasError: false, error: null });
     }
   };

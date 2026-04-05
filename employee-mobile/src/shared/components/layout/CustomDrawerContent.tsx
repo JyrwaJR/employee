@@ -3,10 +3,9 @@ import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import colors from 'tailwindcss/colors';
 
 import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
-import { Link, Route, usePathname, useRouter } from 'expo-router';
+import { Link, Route, usePathname } from 'expo-router';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { ModernButton } from '../ui/button';
 import { Pressable, Text, View } from 'react-native';
 import { useTheme } from '@/src/shared/hooks/use-theme';
 

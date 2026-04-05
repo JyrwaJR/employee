@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, FlatList, TouchableOpacity, StatusBar } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
 import { router } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { http } from '@/src/shared/utils/http';
-import { Month, SalarySlip, SalarySlipStatus } from '@/src/features/employee/types';
+import { SalarySlip } from '@/src/features/employee/types';
 import { SALARY_ENDPOINTS } from '@/src/features/salary/services/salary.service';
 import { Text } from '@/src/shared/components/ui/text';
 import { HistoryCard } from '@/src/shared/components/display/HistoryCard';
