@@ -80,11 +80,6 @@ function startCLI() {
 
     features.forEach(createFeature);
 
-    // shared validators (ensure exists)
-    const sharedValidators = path.join(process.cwd(), 'src', 'shared', 'validators');
-    ensureDir(sharedValidators);
-    createKeepFile(sharedValidators);
-
     console.log('🎉 Done!');
     rl.close();
   });
