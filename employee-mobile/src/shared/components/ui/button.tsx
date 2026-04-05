@@ -1,14 +1,38 @@
 import { cn } from '@/src/shared/utils/cn';
 import React from 'react';
-import { Text, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Text, TouchableOpacity, ActivityIndicator, TouchableOpacityProps } from 'react-native';
+import { useDelay } from '@/src/shared/hooks/use-delay';
+import { cva, type VariantProps } from 'class-variance-authority';
 
-interface ButtonProps {
+const buttonVariants = cva('flex-row items-center justify-center rounded-2xl shadow-sm', {
+  variants: {
+    variant: {
+      primary: 'bg-blue-600',
+      secondary: 'bg-slate-100 dark:bg-slate-800',
+      outline: 'border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950',
+      ghost: 'bg-transparent',
+      google: 'border border-gray-200 bg-white',
+      destructive: 'bg-red-500',
+    },
+    size: {
+      default: 'py-4 px-4',
+      sm: 'py-2 px-3',
+      lg: 'py-5 px-8',
+      icon: 'h-12 w-12',
+    },
+  },
+  defaultVariants: {
+    variant: 'primary',
+    size: 'default',
+  },
+});
+
+interface ButtonProps extends TouchableOpacityProps, VariantProps<typeof buttonVariants> {
   onPress: () => void;
-  title: string;
-  variant?: 'primary' | 'google';
+  title?: string;
   isLoading?: boolean;
-  className?: string;
-  testID?: string;
+  loadingDelay?: number;
+  children?: React.ReactNode;
 }
 
 export const ModernButton = ({
@@ -16,35 +40,47 @@ export const ModernButton = ({
   className,
   title,
   variant = 'primary',
+  size = 'default',
   isLoading,
   testID,
+  loadingDelay = 2000,
+  children,
+  ...props
 }: ButtonProps) => {
+  const { trigger, isDelayed } = useDelay(loadingDelay);
   const isGoogle = variant === 'google';
+
+  const isDisabled = isDelayed || isLoading || props.disabled;
 
   return (
     <TouchableOpacity
       testID={testID}
-      onPress={onPress}
-      disabled={isLoading}
-      activeOpacity={0.9}
-      className={cn(
-        'flex-row items-center justify-center rounded-2xl py-4 shadow-sm',
-        isGoogle ? 'border border-gray-200 bg-white' : 'bg-blue-600',
-        isLoading && 'opacity-70',
-        className
-      )}>
+      onPress={() => {
+        trigger();
+        onPress();
+      }}
+      disabled={isDisabled}
+      activeOpacity={0.7}
+      className={cn(buttonVariants({ variant, size, className }), isLoading && 'opacity-70')}
+      {...props}>
       {isLoading ? (
-        <ActivityIndicator color={isGoogle ? '#000' : '#FFF'} />
+        <ActivityIndicator
+          color={isGoogle || variant === 'outline' || variant === 'ghost' ? '#000' : '#FFF'}
+        />
       ) : (
         <>
-          {isGoogle && (
-            // Replace this Text with an <SVG /> or <Image /> of the Google Logo
-            <Text className="mr-3 text-lg font-bold text-red-500">G</Text>
+          {isGoogle && <Text className="mr-3 text-lg font-bold text-red-500">G</Text>}
+          {children || (
+            <Text
+              className={cn(
+                'text-base font-semibold',
+                isGoogle || variant === 'outline' || variant === 'ghost' || variant === 'secondary'
+                  ? 'text-slate-900 dark:text-slate-50'
+                  : 'text-white'
+              )}>
+              {title}
+            </Text>
           )}
-          <Text
-            className={cn('text-base font-semibold', isGoogle ? 'text-gray-700' : 'text-white')}>
-            {title}
-          </Text>
         </>
       )}
     </TouchableOpacity>

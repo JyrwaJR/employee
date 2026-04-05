@@ -55,7 +55,9 @@ export const LoginScreen = () => {
     resolver: zodResolver(LoginSchema),
   });
 
-  const onSubmit = (data: LoginFormInputs) => loginMutation.mutate(data);
+  const onSubmit = (data: LoginFormInputs) => {
+    loginMutation.mutate(data);
+  };
 
   return (
     <Container>

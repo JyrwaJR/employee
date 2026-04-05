@@ -25,9 +25,8 @@ const SettingItem = ({
   const theme = useTheme();
   return (
     <View
-      className={`flex-row items-center justify-between bg-white px-4 py-4 dark:bg-slate-900 ${
-        showBorder ? 'border-b border-gray-100 dark:border-gray-800' : ''
-      }`}>
+      className={`flex-row items-center justify-between bg-white px-4 py-4 dark:bg-slate-900 ${showBorder ? 'border-b border-gray-100 dark:border-gray-800' : ''
+        }`}>
       <View className="flex-row items-center gap-4">
         <View className="items-center justify-center rounded-full bg-gray-100 p-2 dark:bg-slate-800">
           <MaterialCommunityIcons
