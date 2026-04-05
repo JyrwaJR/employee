@@ -5,7 +5,7 @@ import { Toaster } from 'sonner-native';
 import { AuthContextProvider } from '@features/auth/providers/AuthProvider';
 import { LocalAuthProvider } from '@features/auth/providers/LocalAuthProvider';
 import { AuthRedirect } from '@shared/components/auth/AuthRedirect';
-import { StatusBar } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import { SSLPinning } from './SSLPinningProvider';
 import React from 'react';
 import { ThemeProvider } from './ThemeProvider';
@@ -26,7 +26,7 @@ export const ProviderWrapper = ({ children }: Props) => {
       <ThemeProvider>
         <UpdatesProvider>
           <GestureHandlerRootView style={{ flex: 1 }}>
-            <StatusBar barStyle="default" />
+            <StatusBar style="auto" animated translucent />
             <Toaster />
             <SafeAreaProvider className="flex-1">
               <SSLPinning>
