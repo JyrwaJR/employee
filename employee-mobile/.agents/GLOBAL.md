@@ -43,7 +43,7 @@ Every `write_file` operation and Plan Artifact must comply with these protocols:
 
 1. **Strict Mode Gate**: [MANDATORY] Any task tagged `[SEC]` or `[RELEASE]` must use **Strict Mode**. This requires a `request_feedback = true` flag on all implementation plans and security review artifacts.
 2. **Zero-Knowledge Principle**: No PII in logs; use `expo-secure-store` for tokens.
-3. **Network Security**: Enforce HTTPS and SSL Pinning for `employee-nic.vercel.app`.
+3. **Network Security**: Enforce HTTPS and **Public Key Pinning (SPKI)** for `employee-nic.vercel.app`. Use stable SPKI hashes in `src/shared/api/` to survive 90-day certificate rotations.
 4. **Validation**: All API and User Input must be wrapped in **Zod** schemas in `validators/`.
 5. **Architecture Integrity**: No cross-feature imports except via the feature's `index.ts` gateway.
 
