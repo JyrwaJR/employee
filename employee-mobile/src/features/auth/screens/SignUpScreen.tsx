@@ -6,7 +6,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
-import { ModernButton } from '@/src/shared/components/ui/button';
+import { Button } from '@/src/shared/components/ui/button';
 import { Input } from '@/src/shared/components/ui/input';
 import { http } from '@/src/shared/utils/http';
 import { api } from '@/src/shared/api';
@@ -210,7 +210,7 @@ export const SignUpScreen = () => {
               </Text>
             </View>
 
-            <ModernButton
+            <Button
               testID="CREATE_ACCOUNT_BUTTON"
               title="Create account"
               onPress={handleSubmit(onSubmit)}
@@ -225,7 +225,7 @@ export const SignUpScreen = () => {
               <View className="h-[1px] flex-1 bg-gray-200" />
             </View>
 
-            <ModernButton title="Sign up with Google" variant="google" onPress={() => {}} />
+            <Button title="Sign up with Google" variant="google" onPress={() => {}} />
           </View>
 
           {/* Footer */}

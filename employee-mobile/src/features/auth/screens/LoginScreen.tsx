@@ -1,12 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity, Alert, KeyboardAvoidingView, Platform } from 'react-native';
 import { Link } from 'expo-router';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
-import { Input } from '@/src/shared/components/ui/input';
-import { ModernButton } from '@/src/shared/components/ui/button';
 import { api } from '@/src/shared/api';
 import { notify } from '@/src/shared/utils/notify';
 import { TokenStoreManager } from '@/src/shared/store/token.store';
@@ -17,6 +15,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { Container } from '@/src/shared/components/layout/Container';
 import { LoginSchema } from '../validators/login.schema';
 import { routes } from '@/src/shared/constants/routes';
+import { FieldInput } from '@/src/shared/components/ui/field-input';
+import { Button } from '@/src/shared/components/ui/button';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
@@ -51,8 +51,12 @@ export const LoginScreen = () => {
     },
   });
 
-  const { control, handleSubmit } = useForm<LoginFormInputs>({
+  const methods = useForm<LoginFormInputs>({
     resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      phone_no: '',
+      password: '',
+    },
   });
 
   const onSubmit = (data: LoginFormInputs) => {
@@ -78,101 +82,49 @@ export const LoginScreen = () => {
         </View>
 
         {/* Form Section */}
-        <View className="w-full">
-          <View className="mb-4">
-            <Text variant="label" className="mb-1.5 ml-1">
-              Phone No.
-            </Text>
-            <Controller
-              control={control}
+        <FormProvider {...methods}>
+          <View className="w-full">
+            <FieldInput
               name="phone_no"
-              render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-                <>
-                  <Input
-                    testID="PHONE_INPUT"
-                    placeholder="9876543210"
-                    onBlur={onBlur}
-                    onChangeText={onChange}
-                    value={value}
-                    autoCapitalize="none"
-                    error={!!error}
-                  />
-                  {error && (
-                    <Text variant="error" size="sm" className="ml-1 mt-1">
-                      {error.message}
-                    </Text>
-                  )}
-                </>
-              )}
+              label="Phone No."
+              placeholder="e.g. 07XXXXXXXX"
+              keyboardType="phone-pad"
             />
-          </View>
 
-          <View className="mb-4">
-            <Text variant="label" className="mb-1.5 ml-1">
-              Password
-            </Text>
-            <Controller
-              control={control}
+            <FieldInput
               name="password"
-              render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-                <>
-                  <View className="relative">
-                    <Input
-                      testID="PASSWORD_INPUT"
-                      placeholder="••••••••"
-                      onBlur={onBlur}
-                      onChangeText={onChange}
-                      value={value}
-                      secureTextEntry={!showPassword}
-                      error={!!error}
-                      className="pr-12"
-                    />
-                    <TouchableOpacity
-                      onPress={() => setShowPassword(!showPassword)}
-                      className="absolute bottom-1 right-1 top-1 w-10 items-center justify-center rounded-r-2xl"
-                      activeOpacity={0.7}>
-                      <Ionicons
-                        name={showPassword ? 'eye-off-outline' : 'eye-outline'}
-                        size={22}
-                        color="#9CA3AF"
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  {error && (
-                    <Text variant="error" size="sm" className="ml-1 mt-1">
-                      {error.message}
-                    </Text>
-                  )}
-                </>
-              )}
+              label="Password"
+              placeholder="••••••••"
+              secureTextEntry={!showPassword}
+            />
+
+            <Link href={routes.auth.forgotPassword()} asChild>
+              <TouchableOpacity className="mb-8 items-end">
+                <Text variant={'link'}>Forgot password?</Text>
+              </TouchableOpacity>
+            </Link>
+
+            <Button
+              testID="SIGN_IN_BUTTON"
+              title="Sign in"
+              onPress={methods.handleSubmit(onSubmit)}
+              isLoading={loginMutation.isPending}
+            />
+
+            <View className="my-8 flex-row items-center gap-x-2">
+              <View className="h-[1px] flex-1 bg-gray-200" />
+              <Text variant={'subtext'}>Or continue with</Text>
+              <View className="h-[1px] flex-1 bg-gray-200" />
+            </View>
+
+            <Button
+              title="Google"
+              variant="google"
+              onPress={() => Alert.alert('Google Auth')}
             />
           </View>
+        </FormProvider>
 
-          <Link href={routes.auth.forgotPassword()} asChild>
-            <TouchableOpacity className="mb-8 items-end">
-              <Text variant={'link'}>Forgot password?</Text>
-            </TouchableOpacity>
-          </Link>
-
-          <ModernButton
-            testID="SIGN_IN_BUTTON"
-            title="Sign in"
-            onPress={handleSubmit(onSubmit)}
-            isLoading={loginMutation.isPending}
-          />
-
-          <View className="my-8 flex-row items-center gap-x-2">
-            <View className="h-[1px] flex-1 bg-gray-200" />
-            <Text variant={'subtext'}>Or continue with</Text>
-            <View className="h-[1px] flex-1 bg-gray-200" />
-          </View>
-
-          <ModernButton
-            title="Google"
-            variant="google"
-            onPress={() => Alert.alert('Google Auth')}
-          />
-        </View>
         <View className="mt-10 flex-row justify-center">
           <Text variant={'subtext'}>Don&apos;t have an account? </Text>
           <Link href={routes.auth.signUp}>

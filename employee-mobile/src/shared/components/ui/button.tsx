@@ -35,7 +35,7 @@ interface ButtonProps extends TouchableOpacityProps, VariantProps<typeof buttonV
   children?: React.ReactNode;
 }
 
-export const ModernButton = ({
+export const Button = ({
   onPress,
   className,
   title,
@@ -86,3 +86,6 @@ export const ModernButton = ({
     </TouchableOpacity>
   );
 };
+
+Button.displayName = 'Button';
+

@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { Input } from '@/src/shared/components/ui/input';
-import { ModernButton } from '@/src/shared/components/ui/button';
+import { Button } from '@/src/shared/components/ui/button';
 import { Text } from '@/src/shared/components/ui/text';
 import { notify } from '@/src/shared/utils/notify';
 import { http } from '@/src/shared/utils/http';
@@ -69,7 +69,7 @@ export const VerifyOtpForm = () => {
         />
       </View>
 
-      <ModernButton
+      <Button
         title="Verify"
         onPress={phoneForm.handleSubmit(onPhoneSubmit)}
         isLoading={sendOtpMutation.isPending}
