@@ -1,3 +1,7 @@
+---
+description: Refactor a feature
+---
+
 # ♻️ Workflow: Refactor Feature
 
 ## Trigger

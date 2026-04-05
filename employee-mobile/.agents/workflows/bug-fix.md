@@ -1,3 +1,7 @@
+---
+description: Fix a bug
+---
+
 # 🐛 Workflow: Bug Fix
 
 ## Trigger

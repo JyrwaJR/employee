@@ -1,3 +1,7 @@
+---
+description: Update Protocol
+---
+
 # /update-protocol
 
 1. Review the last 10 entries in `memory/evolution.md`.

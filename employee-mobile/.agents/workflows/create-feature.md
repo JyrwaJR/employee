@@ -1,3 +1,7 @@
+---
+description: Create a new feature
+---
+
 # 🚀 Workflow: Create Feature
 
 ## 🕹️ Trigger
