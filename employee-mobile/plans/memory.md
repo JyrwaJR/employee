@@ -21,3 +21,8 @@ This is an append-only, high-density audit trail of all agentic actions, decisio
 - **Action**: Scaffolded new feature directory `src/features/loaded/` using `scripts/generate-feature.js`.
 - **Structure**: Created `api`, `components`, `hooks`, `screens`, `services`, `store`, `types`, `utils`, `validators` with `.keep` files and `index.ts` gateway.
 - **Status**: COMPLETE
+
+## [MEMORY] 2026-04-05 20:26 | Task: Update Protocol
+- **Action**: Updated `GLOBAL.md` to specify **Public Key Pinning (SPKI)** as the network security standard.
+- **Rationale**: Automates the pattern identified during knowledge extraction to prevent certificate rotation failures (Let's Encrypt 90-day cycle).
+- **Status**: COMPLETE
