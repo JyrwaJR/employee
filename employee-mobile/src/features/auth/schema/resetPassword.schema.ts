@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { passwordValidation } from '@/src/shared/utils/validation/common';
+import { passwordValidation } from '@/src/shared/validation/common';
 
 /**
  * Schema for Reset Password Step 1: New Password & Confirm Password

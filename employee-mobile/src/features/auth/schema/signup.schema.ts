@@ -1,4 +1,4 @@
-import { passwordValidation, phoneValidation } from '@/src/shared/utils/validation/common';
+import { passwordValidation, phoneValidation } from '@/src/shared/validation/common';
 import { z } from 'zod';
 
 export const SignUpSchema = z

@@ -1,4 +1,4 @@
-import { phoneValidation } from '@/src/shared/utils/validation/common';
+import { phoneValidation } from '@/src/shared/validation/common';
 import { z } from 'zod';
 
 export const ForgotPasswordSchema = z.object({
