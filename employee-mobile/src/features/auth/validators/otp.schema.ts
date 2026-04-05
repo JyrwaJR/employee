@@ -1,4 +1,4 @@
-import { phoneValidation } from '@/src/shared/validation/common';
+import { phoneValidation } from '@/src/shared/validators/common';
 import { z } from 'zod';
 
 export const OTPSchema = z.object({

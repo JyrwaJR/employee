@@ -12,7 +12,7 @@ import { http } from '@/src/shared/utils/http';
 import { api } from '@/src/shared/api';
 import { notify } from '@/src/shared/utils/notify';
 import { Container } from '@/src/shared/components/layout/Container';
-import { SignUpSchema } from '../schema/signup.schema';
+import { SignUpSchema } from '../validators/signup.schema';
 import { routes } from '@/src/shared/constants/routes';
 
 // --- 2. Zod Validation Schema (Updated) ---

@@ -11,7 +11,7 @@ import { notify } from '@/src/shared/utils/notify';
 import { http } from '@/src/shared/utils/http';
 import { api } from '@/src/shared/api';
 import { useRouter } from 'expo-router';
-import { ForgotPasswordSchema } from '../schema/forgotPassword.schema';
+import { ForgotPasswordSchema } from '../validators/forgotPassword.schema';
 import { routes } from '@/src/shared/constants/routes';
 
 type ForgotPasswordInputs = z.infer<typeof ForgotPasswordSchema>;

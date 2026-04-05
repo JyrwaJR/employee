@@ -17,8 +17,7 @@ import {
   ResetPasswordOtpSchema,
   ResetPasswordInputs,
   ResetPasswordOtpInputs,
-} from '../schema/resetPassword.schema';
-
+} from '../validators/resetPassword.schema';
 
 export const ResetPasswordForm = () => {
   const router = useRouter();

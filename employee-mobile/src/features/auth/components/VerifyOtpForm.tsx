@@ -12,7 +12,7 @@ import { http } from '@/src/shared/utils/http';
 import { api } from '@/src/shared/api';
 import { router } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
-import { OTPSchema } from '../schema/otp.schema';
+import { OTPSchema } from '../validators/otp.schema';
 import { routes } from '@/src/shared/constants/routes';
 
 type OTPInputs = z.infer<typeof OTPSchema>;
