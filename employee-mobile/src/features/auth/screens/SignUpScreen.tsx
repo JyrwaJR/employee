@@ -68,8 +68,8 @@ export const SignUpScreen = () => {
 
           {/* Form */}
           <FormProvider {...methods}>
-            <View className="w-full">
-              <View className="mb-4 flex-row justify-between gap-x-2">
+            <View className="w-full gap-y-2">
+              <View className="flex-row justify-between gap-x-2">
                 <View className="flex-1">
                   <FieldInput
                     name="first_name"
@@ -113,7 +113,7 @@ export const SignUpScreen = () => {
               />
 
               {/* Terms Text */}
-              <View className="mb-6">
+              <View className="p-2">
                 <Text variant="subtext" size="xs">
                   By creating an account, you agree to our{' '}
                   <Text variant="link" size="xs">
@@ -134,15 +134,13 @@ export const SignUpScreen = () => {
                 isLoading={signUpMutation.isPending}
               />
 
-              <View className="my-6 flex-row items-center gap-x-4">
+              <View className="my-4 flex-row items-center gap-x-4">
                 <View className="h-[1px] flex-1 bg-gray-200" />
                 <Text variant={'subtext'} weight={'medium'}>
                   Or
                 </Text>
                 <View className="h-[1px] flex-1 bg-gray-200" />
               </View>
-
-              <Button title="Sign up with Google" variant="google" onPress={() => {}} />
             </View>
           </FormProvider>
 
@@ -162,4 +160,3 @@ export const SignUpScreen = () => {
     </Container>
   );
 };
-
