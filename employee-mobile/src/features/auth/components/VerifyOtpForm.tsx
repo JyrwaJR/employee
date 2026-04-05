@@ -9,7 +9,7 @@ import { ModernButton } from '@/src/shared/components/ui/button';
 import { Text } from '@/src/shared/components/ui/text';
 import { toast } from 'sonner-native';
 import { http } from '@/src/shared/utils/http';
-import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
+import { api } from '@/src/shared/api';
 import { router } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { OTPSchema } from '../schema/otp.schema';
@@ -26,7 +26,7 @@ export const VerifyOtpForm = () => {
   });
 
   const sendOtpMutation = useMutation({
-    mutationFn: async (data: OTPInputs) => http.post(AUTH_ENDPOINTS.POST_OTP_VERIFY, data),
+    mutationFn: async (data: OTPInputs) => http.post(api.auth.verifyOtp, data),
     onSuccess: (data) => {
       if (data.success) {
         toast.success(data.message);

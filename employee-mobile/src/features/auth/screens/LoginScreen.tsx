@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { Input } from '@/src/shared/components/ui/input';
 import { ModernButton } from '@/src/shared/components/ui/button';
-import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
+import { api } from '@/src/shared/api';
 import { toast } from 'sonner-native';
 import { TokenStoreManager } from '@/src/shared/store/token.store';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
@@ -34,7 +34,7 @@ export const LoginScreen = () => {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const loginMutation = useMutation({
-    mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(AUTH_ENDPOINTS.POST_SIGN_IN, data),
+    mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(api.auth.login, data),
     onSuccess: async (data) => {
       if (data.success) {
         const response = data.data;

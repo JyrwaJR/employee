@@ -4,7 +4,7 @@ import { Container } from '@/src/shared/components/layout/Container';
 import { cn } from '@/src/shared/utils/cn';
 import { useMutation } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
-import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
+import { api } from '@/src/shared/api';
 import { TokenStoreManager } from '@/src/shared/store/token.store';
 import { toast } from 'sonner-native';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
@@ -62,7 +62,7 @@ export const ProfileScreen = () => {
   const { theme } = useThemeStore();
 
   const { mutate } = useMutation({
-    mutationFn: (refresh_token: string) => http.post(AUTH_ENDPOINTS.POST_LOGOUT, { refresh_token }),
+    mutationFn: (refresh_token: string) => http.post(api.auth.logout, { refresh_token }),
     onSuccess: async (data) => {
       if (data.success) {
         await TokenStoreManager.removeToken();

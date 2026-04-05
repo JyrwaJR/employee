@@ -4,7 +4,7 @@ import * as Notifications from 'expo-notifications';
 import * as Constants from 'expo-constants';
 import { logger } from '@/src/shared/utils/logger';
 import { http } from '@/src/shared/utils/http';
-import { NOTIFICATION_ENDPOINTS } from '@/src/features/notification/services/notification.service';
+import { api } from '@/src/shared/api';
 
 type Props = {
   userId: string;
@@ -60,7 +60,7 @@ export async function registerForPushNotificationsAsync({ userId }: Props) {
       logger.error('Must use physical device for Push Notifications');
     }
     if (token) {
-      const res = await http.post(NOTIFICATION_ENDPOINTS.POST_REG_PUSH_TOKEN, {
+      const res = await http.post(api.notification.register, {
         token,
         user_id: userId,
       });

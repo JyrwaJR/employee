@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
-import { SALARY_ENDPOINTS } from '@/src/features/salary/services/salary.service';
+import { api } from '@/src/shared/api';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
@@ -20,11 +20,9 @@ const parseAmount = (value?: string | null): number => {
 type Props = { salaryId: string };
 
 export const PayslipScreen = ({ salaryId }: Props) => {
-  const url = SALARY_ENDPOINTS.GET_SALARY.replace(':salary_id', salaryId);
-
   const { data, isFetching } = useQuery({
     queryKey: queryKeys.salary.payslip(salaryId),
-    queryFn: () => http.get<SalarySlip>(url),
+    queryFn: () => http.get<SalarySlip>(api.salary.details(salaryId)),
     select: (res) => res.data,
     enabled: !!salaryId,
   });

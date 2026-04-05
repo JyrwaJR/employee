@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { AuthContext } from '@/src/features/auth/context/auth.context';
-import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
+import { api } from '@/src/shared/api';
 import { TokenStoreManager } from '@/src/shared/store/token.store';
 import { AuthContextT, UserT } from '@/src/features/auth/types';
 import { http } from '@/src/shared/utils/http';
@@ -45,7 +45,7 @@ export const AuthContextProvider = ({ children }: Props) => {
 
       // Call your API to refresh
       const res = await http.post<{ refresh_token: string; access_token: string }>(
-        AUTH_ENDPOINTS.POST_REFRESH, // <--- Make sure this is your refresh endpoint
+        api.auth.refresh, // <--- Make sure this is your refresh endpoint
         { refresh_token: refreshToken }
       );
 
@@ -124,7 +124,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     isError,
   } = useQuery({
     queryKey: queryKeys.auth.me,
-    queryFn: async () => await http.get<UserT>(AUTH_ENDPOINTS.GET_ME),
+    queryFn: async () => await http.get<UserT>(api.auth.me),
     enabled: isTokenSet, // Only fetch if we have tokens
     retry: false, // If /me fails, don't retry endlessly, just fail
     select: (data) => data.data,

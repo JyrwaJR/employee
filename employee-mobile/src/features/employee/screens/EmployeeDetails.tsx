@@ -4,7 +4,7 @@ import { Container } from '@/src/shared/components/layout/Container';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
-import { EMPLOYEE_ENDPOINTS } from '@/src/features/employee/services/employee.service';
+import { api } from '@/src/shared/api';
 import { EmployeeT } from '@/src/features/employee/types';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
@@ -68,7 +68,7 @@ export default function EmployeeDetailScreen() {
 
   const { data, isFetching } = useQuery({
     queryKey: queryKeys.employees.details(idx),
-    queryFn: () => http.get<EmployeeT>(EMPLOYEE_ENDPOINTS.GET_EMPLOYEEE.replace(':id', idx!)),
+    queryFn: () => http.get<EmployeeT>(api.employees.details(idx)),
     select: (data) => data.data,
     enabled: !!id,
   });

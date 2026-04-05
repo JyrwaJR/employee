@@ -7,7 +7,7 @@ import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { http } from '@/src/shared/utils/http';
 import { SalarySlip } from '@/src/features/employee/types';
-import { SALARY_ENDPOINTS } from '@/src/features/salary/services/salary.service';
+import { api } from '@/src/shared/api';
 import { Text } from '@/src/shared/components/ui/text';
 import { HistoryCard } from '@/src/shared/components/display/HistoryCard';
 import { HeaderStack } from '@/src/shared/components/layout/Header';
@@ -45,7 +45,7 @@ export const StatementScreen = ({ idx, isTab }: Props) => {
 
   const { data, isFetching } = useQuery({
     queryKey: queryKeys.salary.statements(id, isTab),
-    queryFn: () => http.get<SalarySlip[]>(SALARY_ENDPOINTS.GET_EMPLOYEEE_SALARY.replace(':id', id)),
+    queryFn: () => http.get<SalarySlip[]>(api.salary.list(id)),
     select: (data) => data.data,
     enabled: !!id,
   });

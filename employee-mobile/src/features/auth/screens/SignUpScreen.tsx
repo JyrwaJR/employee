@@ -9,7 +9,7 @@ import { useMutation } from '@tanstack/react-query';
 import { ModernButton } from '@/src/shared/components/ui/button';
 import { Input } from '@/src/shared/components/ui/input';
 import { http } from '@/src/shared/utils/http';
-import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
+import { api } from '@/src/shared/api';
 import { toast } from 'sonner-native';
 import { Container } from '@/src/shared/components/layout/Container';
 import { SignUpSchema } from '../schema/signup.schema';
@@ -22,7 +22,7 @@ export const SignUpScreen = () => {
   const router = useRouter();
 
   const signUpMutation = useMutation({
-    mutationFn: (data: SignUpFormInputs) => http.post(AUTH_ENDPOINTS.POST_SIGN_UP, data),
+    mutationFn: (data: SignUpFormInputs) => http.post(api.auth.signUp, data),
     onSuccess: (data) => {
       if (data.success) {
         router.replace(routes.auth.login);

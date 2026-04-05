@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { http } from '@/src/shared/utils/http';
-import { EMPLOYEE_ENDPOINTS } from '@/src/features/employee/services/employee.service';
+import { api } from '@/src/shared/api';
 import { router } from 'expo-router';
 import { Text } from '@/src/shared/components/ui/text';
 import { useThemeStore } from '@/src/shared/store/theme.store';
@@ -29,7 +29,7 @@ export const HomeScreen = () => {
 
   const { data: EMPLOYEES, isFetching } = useQuery({
     queryKey: queryKeys.employees.list,
-    queryFn: () => http.get<EmployeeT[]>(EMPLOYEE_ENDPOINTS.GET_EMPLOYEES),
+    queryFn: () => http.get<EmployeeT[]>(api.employees.list),
     select: (data) => data.data || [],
     enabled: !!user,
   });

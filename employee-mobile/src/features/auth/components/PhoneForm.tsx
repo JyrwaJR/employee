@@ -9,7 +9,7 @@ import { ModernButton } from '@/src/shared/components/ui/button';
 import { Text } from '@/src/shared/components/ui/text';
 import { toast } from 'sonner-native';
 import { http } from '@/src/shared/utils/http';
-import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
+import { api } from '@/src/shared/api';
 import { useRouter } from 'expo-router';
 import { ForgotPasswordSchema } from '../schema/forgotPassword.schema';
 import { routes } from '@/src/shared/constants/routes';
@@ -26,7 +26,7 @@ export const PhoneForm = () => {
   const phone_no = phoneForm.watch('phone_no');
 
   const sendOtpMutation = useMutation({
-    mutationFn: async (data: ForgotPasswordInputs) => http.post(AUTH_ENDPOINTS.POST_GET_OTP, data),
+    mutationFn: async (data: ForgotPasswordInputs) => http.post(api.auth.getOtp, data),
     onSuccess: (data) => {
       if (data.success) {
         toast.success(data.message);

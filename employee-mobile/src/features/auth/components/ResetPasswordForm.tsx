@@ -2,46 +2,23 @@ import React from 'react';
 import { View } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { Input } from '@/src/shared/components/ui/input';
 import { ModernButton } from '@/src/shared/components/ui/button';
 import { Text } from '@/src/shared/components/ui/text';
 import { toast } from 'sonner-native';
 import { http } from '@/src/shared/utils/http';
-import { AUTH_ENDPOINTS } from '@/src/features/auth/constants/auth.endpoints';
+import { api } from '@/src/shared/api';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { useRouter } from 'expo-router';
-import { passwordValidation } from '@/src/shared/utils/validiation/common';
 import { routes } from '@/src/shared/constants/routes';
+import {
+  ResetPasswordSchema,
+  ResetPasswordOtpSchema,
+  ResetPasswordInputs,
+  ResetPasswordOtpInputs,
+} from '../schema/resetPassword.schema';
 
-// Schema for Step 1: New Password & Confirm Password
-const NewPasswordSchema = z
-  .object({
-    password: passwordValidation,
-    confirm_password: passwordValidation,
-  })
-  .superRefine(({ password, confirm_password }, ctx) => {
-    if (password !== confirm_password) {
-      ctx.addIssue({
-        code: 'custom',
-        message: 'Passwords do not match',
-        path: ['confirm_password'],
-      });
-    }
-  });
-
-// Schema for Step 2: OTP
-const OtpSchema = z.object({
-  otp: z
-    .string('OTP is required')
-    .length(6, 'OTP must be exactly 6 digits')
-    .regex(/^[0-9]+$/, 'OTP must only contain numbers'),
-});
-
-type NewPasswordInputs = z.infer<typeof NewPasswordSchema>;
-
-type OtpInputs = z.infer<typeof OtpSchema>;
 
 export const ResetPasswordForm = () => {
   const router = useRouter();
@@ -53,18 +30,18 @@ export const ResetPasswordForm = () => {
   const [status, setStatus] = React.useState<'INPUT_PASSWORD' | 'INPUT_OTP'>('INPUT_PASSWORD');
 
   // We need to store the password from step 1 to send it in step 2
-  const [passwordData, setPasswordData] = React.useState<NewPasswordInputs | null>(null);
+  const [passwordData, setPasswordData] = React.useState<ResetPasswordInputs | null>(null);
 
-  const passwordForm = useForm<NewPasswordInputs>({
-    resolver: zodResolver(NewPasswordSchema),
+  const passwordForm = useForm<ResetPasswordInputs>({
+    resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
       password: '',
       confirm_password: '',
     },
   });
 
-  const otpForm = useForm<OtpInputs>({
-    resolver: zodResolver(OtpSchema),
+  const otpForm = useForm<ResetPasswordOtpInputs>({
+    resolver: zodResolver(ResetPasswordOtpSchema),
     defaultValues: {
       otp: '',
     },
@@ -72,7 +49,7 @@ export const ResetPasswordForm = () => {
 
   // 1. Send OTP Mutation (Triggered after password validation)
   const sendOtpMutation = useMutation({
-    mutationFn: async (data: { phone_no: string }) => http.post(AUTH_ENDPOINTS.POST_GET_OTP, data),
+    mutationFn: async (data: { phone_no: string }) => http.post(api.auth.getOtp, data),
     onSuccess: (data: any) => {
       // Assuming generic response format
       if (data.success) {
@@ -92,7 +69,7 @@ export const ResetPasswordForm = () => {
       password: string;
       confirm_password: string;
     }) => {
-      return http.post(AUTH_ENDPOINTS.POST_FORGOT_PASSWORD, data);
+      return http.post(api.auth.forgotPassword, data);
     },
     onSuccess: (data: any) => {
       if (data.success) {
@@ -104,7 +81,7 @@ export const ResetPasswordForm = () => {
     },
   });
 
-  const onPasswordSubmit = (data: NewPasswordInputs) => {
+  const onPasswordSubmit = (data: ResetPasswordInputs) => {
     if (!phone_no) {
       toast.error('Phone number missing!');
       return;
@@ -114,7 +91,7 @@ export const ResetPasswordForm = () => {
     sendOtpMutation.mutate({ phone_no });
   };
 
-  const onOtpSubmit = (data: OtpInputs) => {
+  const onOtpSubmit = (data: ResetPasswordOtpInputs) => {
     if (!passwordData || !phone_no) {
       toast.error('Missing data for reset.', { id: 'reset-password' });
       return;

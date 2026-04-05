@@ -3,7 +3,7 @@ import { View, TextInput, TouchableOpacity, FlatList, StatusBar } from 'react-na
 import { Container } from '@/src/shared/components/layout/Container';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
-import { EMPLOYEE_ENDPOINTS } from '@/src/features/employee/services/employee.service';
+import { api } from '@/src/shared/api';
 import { EmployeeT } from '@/src/features/employee/types';
 import { EmployeeListItem } from '../components/EmployeeListItem';
 import { router } from 'expo-router';
@@ -19,7 +19,7 @@ export default function EmployeeListScreen() {
 
   const { data: EMPLOYEES, isFetching } = useQuery({
     queryKey: queryKeys.employees.list,
-    queryFn: () => http.get<EmployeeT[]>(EMPLOYEE_ENDPOINTS.GET_EMPLOYEES),
+    queryFn: () => http.get<EmployeeT[]>(api.employees.list),
     select: (data) => data.data || [],
   });
 
