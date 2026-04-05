@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
 import { api } from '@/src/shared/api';
 import { TokenStoreManager } from '@/src/shared/store/token.store';
-import { toast } from 'sonner-native';
+import { notify } from '@/src/shared/utils/notify';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { Text } from '@/src/shared/components/ui/text';
 import { useThemeStore } from '@/src/shared/store/theme.store';
@@ -68,9 +68,9 @@ export const ProfileScreen = () => {
         await TokenStoreManager.removeToken();
         await TokenStoreManager.removeRefreshToken();
         refresh();
-        return data;
       }
-      toast.error(data.message);
+      notify(data, 'AUTH_LOGOUT');
+      return data;
     },
   });
 

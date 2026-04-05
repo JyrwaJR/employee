@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Input } from '@/src/shared/components/ui/input';
 import { ModernButton } from '@/src/shared/components/ui/button';
 import { Text } from '@/src/shared/components/ui/text';
-import { toast } from 'sonner-native';
+import { notify } from '@/src/shared/utils/notify';
 import { http } from '@/src/shared/utils/http';
 import { api } from '@/src/shared/api';
 import { router } from 'expo-router';
@@ -29,11 +29,9 @@ export const VerifyOtpForm = () => {
     mutationFn: async (data: OTPInputs) => http.post(api.auth.verifyOtp, data),
     onSuccess: (data) => {
       if (data.success) {
-        toast.success(data.message);
         router.push(routes.auth.forgotPassword(phone_no, 'RESET'));
-        return data;
       }
-      toast.error(data.message);
+      notify(data, 'AUTH_VERIFY');
       return data;
     },
   });

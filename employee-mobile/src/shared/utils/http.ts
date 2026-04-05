@@ -1,17 +1,8 @@
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { logger } from './logger';
 import axiosInstance from './api';
-import { MetaT } from '../types/meta';
+import { ApiResponse } from '../types/api';
 import { z } from 'zod';
-
-export interface ApiResponse<T> {
-  success: boolean;
-  message: string;
-  data: T | null;
-  meta?: MetaT;
-  token?: string;
-  error?: string | Record<string, unknown>;
-}
 
 export const handleAxiosError = <T>(error: unknown): ApiResponse<T> => {
   let errorMessage = 'Something went wrong. Please try again.';
@@ -25,7 +16,7 @@ export const handleAxiosError = <T>(error: unknown): ApiResponse<T> => {
         error.response.data ||
         '';
     } else if (error.request) {
-      errorMessage = 'No response from server. Please check your connection.';
+      errorMessage = 'Please check your internet connection.';
     } else {
       errorMessage = error.message;
     }

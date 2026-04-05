@@ -8,7 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Input } from '@/src/shared/components/ui/input';
 import { ModernButton } from '@/src/shared/components/ui/button';
 import { api } from '@/src/shared/api';
-import { toast } from 'sonner-native';
+import { notify } from '@/src/shared/utils/notify';
 import { TokenStoreManager } from '@/src/shared/store/token.store';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { http } from '@/src/shared/utils/http';
@@ -43,11 +43,11 @@ export const LoginScreen = () => {
           await TokenStoreManager.addToken(data.token);
           await TokenStoreManager.addRefreshToken(response?.refresh_token);
         }
-        toast.success('Signed in successfully.');
+        notify(data, 'AUTH_LOGIN');
         refresh();
         return data;
       }
-      toast.error(data.message);
+      notify(data, 'AUTH_LOGIN');
     },
   });
 

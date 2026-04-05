@@ -12,6 +12,7 @@ import { DetailRow } from '@/src/shared/components/display/DetailRow';
 import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
 import { MoneyRow } from '@/src/shared/components/display/MoneyRow';
 import { queryKeys } from '@/src/shared/api/query-keys';
+import { notify } from '@/src/shared/utils/notify';
 
 const parseAmount = (value?: string | null): number => {
   return parseFloat(value || '0');
@@ -20,12 +21,19 @@ const parseAmount = (value?: string | null): number => {
 type Props = { salaryId: string };
 
 export const PayslipScreen = ({ salaryId }: Props) => {
-  const { data, isFetching } = useQuery({
+  const { data, isFetching, isError, error } = useQuery({
     queryKey: queryKeys.salary.payslip(salaryId),
     queryFn: () => http.get<SalarySlip>(api.salary.details(salaryId)),
     select: (res) => res.data,
     enabled: !!salaryId,
   });
+
+  // Handle Query Error
+  React.useEffect(() => {
+    if (isError) {
+      notify(error, 'SALARY_FETCH');
+    }
+  }, [isError, error]);
   const { earningsList, deductionsList, totalEarnings, totalDeductions, netPay } = useMemo(() => {
     if (!data) {
       return {

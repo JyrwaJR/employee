@@ -10,6 +10,7 @@ import { router } from 'expo-router';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { Text } from '@/src/shared/components/ui/text';
 import { FilterCard } from '@/src/shared/components/display/FilterCard';
+import { notify } from '@/src/shared/utils/notify';
 import { queryKeys } from '@/src/shared/api/query-keys';
 import { routes } from '@/src/shared/constants/routes';
 
@@ -17,11 +18,19 @@ import { routes } from '@/src/shared/constants/routes';
 export default function EmployeeListScreen() {
   const [search, setSearch] = useState('');
 
-  const { data: EMPLOYEES, isFetching } = useQuery({
+  const { data: EMPLOYEES, isFetching, isError, error } = useQuery({
     queryKey: queryKeys.employees.list,
     queryFn: () => http.get<EmployeeT[]>(api.employees.list),
     select: (data) => data.data || [],
+    placeholderData: (prev) => prev,
   });
+
+  // Handle Query Error
+  React.useEffect(() => {
+    if (isError) {
+      notify(error, 'EMPLOYEE_UPDATE');
+    }
+  }, [isError, error]);
 
   const filteredData = EMPLOYEES;
 

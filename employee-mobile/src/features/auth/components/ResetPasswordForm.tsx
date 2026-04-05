@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Input } from '@/src/shared/components/ui/input';
 import { ModernButton } from '@/src/shared/components/ui/button';
 import { Text } from '@/src/shared/components/ui/text';
-import { toast } from 'sonner-native';
+import { notify } from '@/src/shared/utils/notify';
 import { http } from '@/src/shared/utils/http';
 import { api } from '@/src/shared/api';
 import { useSearchParams } from 'expo-router/build/hooks';
@@ -51,13 +51,10 @@ export const ResetPasswordForm = () => {
   const sendOtpMutation = useMutation({
     mutationFn: async (data: { phone_no: string }) => http.post(api.auth.getOtp, data),
     onSuccess: (data: any) => {
-      // Assuming generic response format
       if (data.success) {
-        toast.success(data.message || 'OTP sent successfully');
         setStatus('INPUT_OTP');
-      } else {
-        toast.error(data.message || 'Failed to send OTP');
       }
+      notify(data, 'AUTH_OTP');
     },
   });
 
@@ -73,17 +70,15 @@ export const ResetPasswordForm = () => {
     },
     onSuccess: (data: any) => {
       if (data.success) {
-        toast.success(data.message || 'Password reset successfully');
-        router.replace(routes.auth.login); // Or correct login route
-      } else {
-        toast.error(data.message || 'Failed to reset password');
+        router.replace(routes.auth.login);
       }
+      notify(data, 'AUTH_RESET');
     },
   });
 
   const onPasswordSubmit = (data: ResetPasswordInputs) => {
     if (!phone_no) {
-      toast.error('Phone number missing!');
+      notify({ success: false, message: 'Phone number missing!' }, 'AUTH_RESET');
       return;
     }
     setPasswordData(data);
@@ -93,7 +88,7 @@ export const ResetPasswordForm = () => {
 
   const onOtpSubmit = (data: ResetPasswordOtpInputs) => {
     if (!passwordData || !phone_no) {
-      toast.error('Missing data for reset.', { id: 'reset-password' });
+      notify({ success: false, message: 'Missing data for reset.' }, 'AUTH_RESET');
       return;
     }
     resetPasswordMutation.mutate({

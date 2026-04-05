@@ -15,6 +15,7 @@ import { FilterCard } from '@/src/shared/components/display/FilterCard';
 import { months, years } from '@/src/shared/utils/helper/years';
 import { queryKeys } from '@/src/shared/api/query-keys';
 import { routes } from '@/src/shared/constants/routes';
+import { notify } from '@/src/shared/utils/notify';
 
 type Props = {
   idx?: string;
@@ -43,12 +44,19 @@ export const StatementScreen = ({ idx, isTab }: Props) => {
 
   const id = idx ? idx : user?.employee_id || '';
 
-  const { data, isFetching } = useQuery({
+  const { data, isFetching, isError, error } = useQuery({
     queryKey: queryKeys.salary.statements(id, isTab),
     queryFn: () => http.get<SalarySlip[]>(api.salary.list(id)),
     select: (data) => data.data,
     enabled: !!id,
   });
+
+  // Handle Query Error
+  React.useEffect(() => {
+    if (isError) {
+      notify(error, 'SALARY_FETCH');
+    }
+  }, [isError, error]);
 
   const filteredData =
     data
