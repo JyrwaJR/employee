@@ -39,12 +39,13 @@ The agent MUST follow this map for all file creation. Forbidden to deviate witho
 
 ## 🛡️ Security & Quality Mandates
 
-Every `write_file` operation must comply with these protocols:
+Every `write_file` operation and Plan Artifact must comply with these protocols:
 
-1. **Zero-Knowledge Principle**: No PII in logs; use `expo-secure-store` for tokens.
-2. **Network Security**: Enforce HTTPS and SSL Pinning for `employee-nic.vercel.app`.
-3. **Validation**: All API and User Input must be wrapped in **Zod** schemas in `validators/`.
-4. **Architecture Integrity**: No cross-feature imports except via the feature's `index.ts` gateway.
+1. **Strict Mode Gate**: [MANDATORY] Any task tagged `[SEC]` or `[RELEASE]` must use **Strict Mode**. This requires a `request_feedback = true` flag on all implementation plans and security review artifacts.
+2. **Zero-Knowledge Principle**: No PII in logs; use `expo-secure-store` for tokens.
+3. **Network Security**: Enforce HTTPS and SSL Pinning for `employee-nic.vercel.app`.
+4. **Validation**: All API and User Input must be wrapped in **Zod** schemas in `validators/`.
+5. **Architecture Integrity**: No cross-feature imports except via the feature's `index.ts` gateway.
 
 ---
 
@@ -56,3 +57,4 @@ Every `write_file` operation must comply with these protocols:
 | `pnpm test`       | After major refactor | Run `tsc --noEmit` to verify type safety.            |
 | `/security-audit` | Manual / Weekly      | Scan for hardcoded keys and unencrypted storage.     |
 | `/sync-db`        | Schema change        | Run Prisma migrations and update the client.         |
+| `/strict-release` | Before EAS Build     | Activate **Strict Mode Gate** and run full audit.    |
