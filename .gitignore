@@ -74,3 +74,4 @@ employee-backend/next-env.d.ts
 *.apk
 employee-mobile/meastro/env.dev.yaml
 employee-mobile/.playwright-mcp
+employee-mobile/nativewind-env.d.ts
