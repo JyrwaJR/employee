@@ -4,70 +4,17 @@ import { Link } from 'expo-router';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useMutation } from '@tanstack/react-query';
-import { api } from '@/src/shared/api';
-import { notify } from '@/src/shared/utils/notify';
-import { TokenStoreManager } from '@/src/shared/store/token.store';
-import { useAuth } from '@/src/shared/hooks/useAuth';
-import { http } from '@/src/shared/utils/http';
 import { Text } from '@/src/shared/components/ui/text';
 import { Container } from '@/src/shared/components/layout/Container';
 import { LoginSchema } from '../validators/login.schema';
 import { routes } from '@/src/shared/constants/routes';
 import { FieldInput } from '@/src/shared/components/ui/field-input';
-import { logger } from '@/src/shared/utils/logger';
 import { Button } from '@components/ui/button';
+import { useLoginMutation } from '../hooks/useLoginMutation';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
-type LoginResT = {
-  created_at: string;
-  first_name: string;
-  last_name: string;
-  refresh_token: string;
-  role: string;
-  updated_at: string;
-};
-
 export const LoginScreen = () => {
-  const { refresh } = useAuth();
-
-  const loginMutation = useMutation({
-    mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(api.auth.login, data),
-    onSuccess: async (data: any) => {
-      if (data.success) {
-        const responseData = data.data;
-
-        // Robust token extraction (handles both 'token' top-level and 'access_token' in data)
-        const accessToken = data.token || responseData?.access_token || responseData?.token;
-        const refreshToken = responseData?.refresh_token;
-
-        if (accessToken && refreshToken) {
-          await TokenStoreManager.addToken(accessToken);
-          await TokenStoreManager.addRefreshToken(refreshToken);
-
-          notify(data, 'AUTH_LOGIN');
-          refresh(); // Trigger auth state update
-          return data;
-        } else {
-          // Failure to extract tokens after a successful response
-          const missing = !accessToken ? 'Access Token' : 'Refresh Token';
-          logger.error(`LoginScreen: Successful login but ${missing} is missing.`, {
-            hasAccess: !!accessToken,
-            hasRefresh: !!refreshToken,
-          });
-
-          notify(
-            { success: false, message: 'Auth synchronization failed. Please try again.' },
-            'AUTH_LOGIN'
-          );
-        }
-      } else {
-        notify(data, 'AUTH_LOGIN');
-      }
-    },
-  });
-
   const methods = useForm<LoginFormInputs>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -75,6 +22,8 @@ export const LoginScreen = () => {
       password: '',
     },
   });
+
+  const loginMutation = useLoginMutation();
 
   const onSubmit = (data: LoginFormInputs) => {
     loginMutation.mutate(data);

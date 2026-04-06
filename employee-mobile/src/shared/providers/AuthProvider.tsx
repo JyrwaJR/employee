@@ -16,7 +16,7 @@ type Props = {
 
 /**
  * Global Authentication Provider
- * 
+ *
  * Manages the core identity lifecycle:
  * 1. Bootstrap: Verifies existing tokens on app launch.
  * 2. Profile Sync: Fetches and caches the current user profile.
@@ -85,7 +85,10 @@ export const AuthContextProvider = ({ children }: Props) => {
     };
 
     bootstrapAsync();
-    return () => { mounted = false; };
+
+    return () => {
+      mounted = false;
+    };
   }, [attemptSilentRefresh]);
 
   // Session validation loop
@@ -125,10 +128,10 @@ export const AuthContextProvider = ({ children }: Props) => {
   const value: AuthContextT = {
     user: user || null,
     isSignedIn,
-    refresh: refetch,
+    refresh: () => refetch(),
     isLoading: isInitializing || isFetchingUser,
     role: user?.role || 'USER',
-  };
+  } satisfies AuthContextT;
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
