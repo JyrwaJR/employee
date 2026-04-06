@@ -23,7 +23,9 @@ export type RegistrationResult = {
  * Registers the device for push notifications and syncs the token with the backend.
  * Throws errors for transient failures to enable retry logic.
  */
-export async function registerForPushNotificationsAsync({ userId }: Props): Promise<RegistrationResult> {
+export async function registerForPushNotificationsAsync({
+  userId,
+}: Props): Promise<RegistrationResult> {
   if (!userId) {
     logger.info('PushRegister: No user id found');
     return { success: false, errorType: 'CONFIG_ERROR' };
@@ -35,6 +37,8 @@ export async function registerForPushNotificationsAsync({ userId }: Props): Prom
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
       lightColor: '#FF231F7C',
+      description: 'Default channel for notifications',
+      enableLights: true,
     });
   }
 
@@ -58,8 +62,7 @@ export async function registerForPushNotificationsAsync({ userId }: Props): Prom
 
   // Identify Project ID (Required for Expo Push Service)
   const projectId =
-    Constants?.default.easConfig?.projectId ??
-    Constants?.default.expoConfig?.extra?.eas?.projectId;
+    Constants?.default.easConfig?.projectId ?? Constants?.default.expoConfig?.extra?.eas?.projectId;
 
   if (!projectId) {
     logger.error('PushRegister: Project ID not found in config');
@@ -84,11 +87,9 @@ export async function registerForPushNotificationsAsync({ userId }: Props): Prom
 
     // Backend returned failure - throw so we can retry
     throw new Error(res.message || 'Backend registration failed');
-
   } catch (error) {
     logger.error('PushRegister: Technical failure during registration', error);
     // Re-throw so withRetry can handle exponential backoff
     throw error;
   }
 }
-
