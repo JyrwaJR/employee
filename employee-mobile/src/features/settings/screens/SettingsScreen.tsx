@@ -5,7 +5,7 @@ import { useThemeStore } from '@/src/shared/store/theme.store';
 import { useTheme } from '@/src/shared/hooks/use-theme';
 import { Container } from '@/src/shared/components/layout/Container';
 import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
-import { useLocalAuthStore } from '@/src/features/auth/store/useLocalAuthStore';
+import { useLocalAuthStore } from '@/src/shared/store/local-auth.store';
 
 const SettingItem = ({
   icon,
