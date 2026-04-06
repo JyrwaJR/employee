@@ -56,5 +56,4 @@ Every `write_file` operation and Plan Artifact must comply with these protocols:
 | `pnpm lint`       | After `write_file`   | Fix all linting/formatting errors before completion. |
 | `pnpm test`       | After major refactor | Run `tsc --noEmit` to verify type safety.            |
 | `/security-audit` | Manual / Weekly      | Scan for hardcoded keys and unencrypted storage.     |
-| `/sync-db`        | Schema change        | Run Prisma migrations and update the client.         |
 | `/strict-release` | Before EAS Build     | Activate **Strict Mode Gate** and run full audit.    |
