@@ -13,6 +13,7 @@ const axiosInstance = axios.create({
 /* -------------------------------------------------- */
 
 let isRefreshing = false;
+let isExiting = false; // Flag to prevent multiple concurrent logout redirects
 let pendingQueue: {
   resolve: (token: string) => void;
   reject: (err: any) => void;
@@ -33,10 +34,20 @@ const shouldSkipRefresh = (url?: string) => {
 };
 
 const handleUnauthorizedExit = async () => {
-  await TokenStoreManager.removeToken();
-  await TokenStoreManager.removeRefreshToken();
-  queryClient.clear(); // Clear cache so no stale data remains
-  router.replace(routes.auth.login);
+  if (isExiting) return;
+  isExiting = true;
+
+  try {
+    await TokenStoreManager.removeToken();
+    await TokenStoreManager.removeRefreshToken();
+    queryClient.clear(); // Clear cache so no stale data remains
+    router.replace(routes.auth.login);
+  } finally {
+    // Reset after a delay to allow navigation to complete
+    setTimeout(() => {
+      isExiting = false;
+    }, 2000);
+  }
 };
 
 /* -------------------------------------------------- */
@@ -93,14 +104,22 @@ axiosInstance.interceptors.response.use(
     try {
       const refreshToken = await TokenStoreManager.getRefreshToken();
 
+      // Guard: If no refresh token exists, we can't refresh. Log out immediately.
+      if (!refreshToken) {
+        throw new Error('MISSING_REFRESH_TOKEN');
+      }
+
       // Use standard axios instance for the refresh call
       const res = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/auth/refresh`, {
         refresh_token: refreshToken,
       });
 
       const payload: any = res.data;
+
       const access_token = payload?.data?.access_token ?? payload?.access_token;
+
       const new_refresh_token = payload?.data?.refresh_token ?? payload?.refresh_token;
+
       if (!access_token) {
         throw new Error('Invalid refresh response');
       }
@@ -118,9 +137,15 @@ axiosInstance.interceptors.response.use(
 
       originalRequest.headers.Authorization = `Bearer ${access_token}`;
       return axiosInstance(originalRequest);
-    } catch (refreshError) {
+    } catch (refreshError: any) {
+      // Clear queue early to prevent stale attempts
       processQueue(refreshError, null);
-      await handleUnauthorizedExit();
+      
+      const status = refreshError?.response?.status;
+      if (status === 400 || status === 401 || refreshError.message === 'MISSING_REFRESH_TOKEN') {
+        await handleUnauthorizedExit();
+      }
+      
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;

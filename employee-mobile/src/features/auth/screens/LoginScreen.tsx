@@ -11,12 +11,12 @@ import { TokenStoreManager } from '@/src/shared/store/token.store';
 import { useAuth } from '@/src/features/auth/hooks/useAuth';
 import { http } from '@/src/shared/utils/http';
 import { Text } from '@/src/shared/components/ui/text';
-import { Ionicons } from '@expo/vector-icons';
 import { Container } from '@/src/shared/components/layout/Container';
 import { LoginSchema } from '../validators/login.schema';
 import { routes } from '@/src/shared/constants/routes';
 import { FieldInput } from '@/src/shared/components/ui/field-input';
-import { Button } from '@/src/shared/components/ui/button';
+import { logger } from '@/src/shared/utils/logger';
+import { Button } from '@components/ui/button';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
@@ -31,23 +31,40 @@ type LoginResT = {
 
 export const LoginScreen = () => {
   const { refresh } = useAuth();
-  const [showPassword, setShowPassword] = React.useState(false);
 
   const loginMutation = useMutation({
     mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(api.auth.login, data),
-    onSuccess: async (data) => {
+    onSuccess: async (data: any) => {
       if (data.success) {
-        const response = data.data;
+        const responseData = data.data;
 
-        if (data.token && response?.refresh_token) {
-          await TokenStoreManager.addToken(data.token);
-          await TokenStoreManager.addRefreshToken(response?.refresh_token);
+        // Robust token extraction (handles both 'token' top-level and 'access_token' in data)
+        const accessToken = data.token || responseData?.access_token || responseData?.token;
+        const refreshToken = responseData?.refresh_token;
+
+        if (accessToken && refreshToken) {
+          await TokenStoreManager.addToken(accessToken);
+          await TokenStoreManager.addRefreshToken(refreshToken);
+
+          notify(data, 'AUTH_LOGIN');
+          refresh(); // Trigger auth state update
+          return data;
+        } else {
+          // Failure to extract tokens after a successful response
+          const missing = !accessToken ? 'Access Token' : 'Refresh Token';
+          logger.error(`LoginScreen: Successful login but ${missing} is missing.`, {
+            hasAccess: !!accessToken,
+            hasRefresh: !!refreshToken,
+          });
+
+          notify(
+            { success: false, message: 'Auth synchronization failed. Please try again.' },
+            'AUTH_LOGIN'
+          );
         }
+      } else {
         notify(data, 'AUTH_LOGIN');
-        refresh();
-        return data;
       }
-      notify(data, 'AUTH_LOGIN');
     },
   });
 
@@ -91,12 +108,7 @@ export const LoginScreen = () => {
               keyboardType="phone-pad"
             />
 
-            <FieldInput
-              name="password"
-              label="Password"
-              placeholder="••••••••"
-              secureTextEntry={!showPassword}
-            />
+            <FieldInput name="password" label="Password" placeholder="••••••••" />
 
             <Link href={routes.auth.forgotPassword()} asChild>
               <TouchableOpacity className="mb-8 items-end">
@@ -117,11 +129,7 @@ export const LoginScreen = () => {
               <View className="h-[1px] flex-1 bg-gray-200" />
             </View>
 
-            <Button
-              title="Google"
-              variant="google"
-              onPress={() => Alert.alert('Google Auth')}
-            />
+            <Button title="Google" variant="google" onPress={() => Alert.alert('Google Auth')} />
           </View>
         </FormProvider>
 

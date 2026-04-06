@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Route, router } from 'expo-router';
@@ -31,13 +31,27 @@ export const usePushNotifications = () => {
     undefined
   );
   const lastResponse = Notifications.useLastNotificationResponse();
+  
+  // Elite Pattern: Track the last processed notification ID to prevent duplicate navigations.
+  // This occurs because both the hook and the listener can fire for the same event.
+  const processedResponseId = useRef<string | null>(null);
 
   // Secure navigation helper with fallback
-  const handleNavigation = (url: string) => {
+  const handleNavigation = (url: string, responseId: string | null = null) => {
+    // 1. De-duplication check
+    if (responseId && processedResponseId.current === responseId) {
+      return;
+    }
+    
+    // 2. Mark as processed
+    if (responseId) {
+      processedResponseId.current = responseId;
+    }
+
     const isAllowed = ALLOWED_PUSH_ROUTES.some((route) => url.startsWith(route));
 
     if (isAllowed) {
-      logger.info(`PushNotificationHook: Navigating to ${url}`);
+      logger.info(`PushNotificationHook: Navigating to ${url}`, { responseId });
       router.push(url as Route);
     } else {
       logger.warn(
@@ -48,12 +62,14 @@ export const usePushNotifications = () => {
     }
   };
 
-  // Handle Response/Launch from lastResponse hook
+  // Handle Response/Launch from lastResponse hook (Cold Starts)
   useEffect(() => {
     if (lastResponse?.notification) {
       const url = lastResponse.notification.request.content.data?.url;
+      const id = lastResponse.notification.request.identifier;
+      
       if (typeof url === 'string') {
-        handleNavigation(url);
+        handleNavigation(url, id);
       }
     }
   }, [lastResponse]);
@@ -118,15 +134,22 @@ export const usePushNotifications = () => {
 
     // 2. Handle Notification Interaction (App in background/tray tap)
     const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
-      // Telemetry
-      logger.info('PushNotificationHook: [NOTIF_OPENED] User tapped on notification', {
-        id: response.notification.request.identifier,
-        action: response.actionIdentifier,
-      });
-
       const url = response.notification.request.content.data?.url;
-      if (typeof url === 'string') {
-        handleNavigation(url);
+      const id = response.notification.request.identifier;
+
+      // Logic: Only treat as an "Opened" event if there's an ID or an actionable URL.
+      // This filters out phantom "DEFAULT" events triggered on some Android launches via the icon.
+      if (id || url) {
+        // Telemetry
+        logger.info('PushNotificationHook: [NOTIF_OPENED] User tapped on notification', {
+          id: id,
+          action: response.actionIdentifier,
+          hasUrl: !!url,
+        });
+
+        if (typeof url === 'string') {
+          handleNavigation(url, id);
+        }
       }
     });
 
