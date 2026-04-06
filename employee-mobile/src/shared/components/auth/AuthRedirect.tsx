@@ -1,4 +1,4 @@
-import { useAuth } from '@/src/features/auth/hooks/useAuth';
+import { useAuth } from '@/src/shared/hooks/useAuth';
 import { usePathname, useRouter, useLocalSearchParams, Route } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { LoadingScreen } from '../screens/LoadingScreen';

@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { AuthContext } from '@/src/features/auth/context/auth.context';
+import { AuthContext } from '@/src/shared/context/auth.context';
 import { api } from '@/src/shared/api';
 import { TokenStoreManager } from '@/src/shared/store/token.store';
-import { AuthContextT, UserT } from '@/src/features/auth/types';
+import { AuthContextT, UserT } from '@/src/shared/types/auth'; // Updated to Shared Types
 import { http } from '@/src/shared/utils/http';
 import { useRouter } from 'expo-router';
 import { logger } from '@/src/shared/utils/logger';
@@ -14,109 +14,93 @@ type Props = {
   children: React.ReactNode;
 };
 
+/**
+ * Global Authentication Provider
+ * 
+ * Manages the core identity lifecycle:
+ * 1. Bootstrap: Verifies existing tokens on app launch.
+ * 2. Profile Sync: Fetches and caches the current user profile.
+ * 3. Silent Refresh: Automatically handles session renewal.
+ * 4. Error Recovery: Redirects to login on terminal session failure.
+ */
 export const AuthContextProvider = ({ children }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const [isInitializing, setIsInitializing] = useState(true); // App startup loading state
-  const [isTokenSet, setIsTokenSet] = useState(false); // Do we have a token to fetch user?
+  const [isInitializing, setIsInitializing] = useState(true);
+  const [isTokenSet, setIsTokenSet] = useState(false);
 
   const logout = useCallback(async () => {
+    logger.info('AuthProvider: Initiating global logout');
     await TokenStoreManager.removeToken();
     await TokenStoreManager.removeRefreshToken();
-
-    // Reset internal state
     setIsTokenSet(false);
 
-    // Clear React Query cache (removes User data)
     queryClient.setQueryData(queryKeys.auth.me, null);
     queryClient.removeQueries({ queryKey: queryKeys.auth.me });
     router.replace(routes.auth.login);
   }, [queryClient, router]);
 
-  // --- 2. Helper: Attempt Silent Refresh ---
-  // Returns true if session is valid/renewed, false if invalid
   const attemptSilentRefresh = useCallback(async (): Promise<boolean> => {
     try {
-      // Assuming you have a specific REFRESH endpoint.
-      // Do NOT use logout endpoint here.
       const refreshToken = await TokenStoreManager.getRefreshToken();
-
       if (!refreshToken) return false;
 
-      // Call your API to refresh
       const res = await http.post<{ refresh_token: string; access_token: string }>(
-        api.auth.refresh, // <--- Make sure this is your refresh endpoint
+        api.auth.refresh,
         { refresh_token: refreshToken }
       );
 
       if (res.success && res.data) {
         const { access_token, refresh_token: new_refresh_token } = res.data;
-
-        // Update storage with fresh tokens
         await TokenStoreManager.addToken(access_token);
         if (new_refresh_token) {
           await TokenStoreManager.addRefreshToken(new_refresh_token);
         }
         return true;
       }
-
       return false;
     } catch (error) {
-      logger.error('Silent Refresh Error', error);
+      logger.error('AuthProvider: Silent Refresh Error', error);
       return false;
     }
   }, []);
 
-  // --- 3. Initial App Startup Check ---
+  // Bootstrap logic
   useEffect(() => {
     let mounted = true;
-
     const bootstrapAsync = async () => {
       try {
-        // First, do we have an access token?
         const accessToken = await TokenStoreManager.getToken();
-
         if (accessToken) {
-          // Yes -> Ready to fetch user
           if (mounted) setIsTokenSet(true);
         } else {
-          // No Access Token -> Try to use Refresh Token immediately
           const refreshed = await attemptSilentRefresh();
           if (mounted) setIsTokenSet(refreshed);
         }
       } catch (e) {
-        logger.error('App Startup Error', e);
+        logger.error('AuthProvider: Bootstrap Failure', e);
       } finally {
         if (mounted) setIsInitializing(false);
       }
     };
 
     bootstrapAsync();
-
-    return () => {
-      mounted = false;
-    };
+    return () => { mounted = false; };
   }, [attemptSilentRefresh]);
 
-  // --- 4. Background Validation Loop ---
+  // Session validation loop
   useEffect(() => {
-    // 1. Only run if the token is set (user is nominally logged in)
     if (!isTokenSet) return;
-
     const validateSessionOnce = async () => {
       const isValid = await attemptSilentRefresh();
-
       if (!isValid) {
         await logout();
       }
     };
-
-    // 2. Execute immediately
     validateSessionOnce();
-
-    // 3. No cleanup function returned because there is no interval to clear
   }, [isTokenSet, attemptSilentRefresh, logout]);
-  // --- 5. Fetch User Profile ---
+
+  // Profile Fetching
   const {
     data: user,
     isFetching: isFetchingUser,
@@ -125,19 +109,17 @@ export const AuthContextProvider = ({ children }: Props) => {
   } = useQuery({
     queryKey: queryKeys.auth.me,
     queryFn: async () => await http.get<UserT>(api.auth.me),
-    enabled: isTokenSet, // Only fetch if we have tokens
-    retry: false, // If /me fails, don't retry endlessly, just fail
+    enabled: isTokenSet,
+    retry: false,
     select: (data) => data.data,
   });
 
-  // If fetching /me fails (e.g., 401), we should also logout
   useEffect(() => {
     if (isError) {
       logout();
     }
   }, [isError, logout]);
 
-  // --- 6. Derived State & Context Value ---
   const isSignedIn = !!user;
 
   const value: AuthContextT = {
@@ -146,7 +128,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     refresh: refetch,
     isLoading: isInitializing || isFetchingUser,
     role: user?.role || 'USER',
-  } satisfies AuthContextT;
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

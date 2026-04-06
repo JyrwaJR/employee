@@ -3,7 +3,7 @@ import { useTheme } from '@/src/shared/hooks/use-theme';
 import { View } from 'react-native';
 import { DrawerToggleButton } from '@react-navigation/drawer';
 import { Header } from '../Header';
-import { useAuth } from '@/src/features/auth/hooks/useAuth';
+import { useAuth } from '@/src/shared/hooks/useAuth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemeToggle } from '../../base/ThemeToggle';
 import { CustomTabBar } from './CustomTabBar';

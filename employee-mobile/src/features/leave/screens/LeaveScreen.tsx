@@ -7,7 +7,7 @@ import { years } from '@/src/shared/utils/helper/years';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
 import { api } from '@/src/shared/api';
-import { useAuth } from '@/src/features/auth/hooks/useAuth';
+import { useAuth } from '@/src/shared/hooks/useAuth';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { LeaveT } from '../types';
 import { LeaveCard } from '../components/LeaveCard';

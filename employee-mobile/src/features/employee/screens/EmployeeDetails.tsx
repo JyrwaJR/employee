@@ -7,7 +7,7 @@ import { http } from '@/src/shared/utils/http';
 import { api } from '@/src/shared/api';
 import { EmployeeT } from '@/src/features/employee/types';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
-import { useAuth } from '@/src/features/auth/hooks/useAuth';
+import { useAuth } from '@/src/shared/hooks/useAuth';
 import { Text } from '@/src/shared/components/ui/text';
 import { cn } from '@/src/shared/utils/cn';
 import { queryKeys } from '@/src/shared/api/query-keys';

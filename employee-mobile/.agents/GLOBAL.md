@@ -8,6 +8,7 @@ The agent MUST follow this map for all file creation. Forbidden to deviate witho
 
 ### 🛠️ The Cognitive Layer (.agents/)
 
+- **docs/**: [Documentation] All documentation, brainstorm.
 - **prd/**: [Source of Truth] All feature requirements and core visions.
 - **rules/common/**: [Mandatory] Security, coding standards, and orchestration laws.
 - **plans/**: [Execution] Step-by-step implementation strategies and task logs.

@@ -7,7 +7,7 @@ import { http } from '@/src/shared/utils/http';
 import { api } from '@/src/shared/api';
 import { TokenStoreManager } from '@/src/shared/store/token.store';
 import { notify } from '@/src/shared/utils/notify';
-import { useAuth } from '@/src/features/auth/hooks/useAuth';
+import { useAuth } from '@/src/shared/hooks/useAuth';
 import { Text } from '@/src/shared/components/ui/text';
 import { useThemeStore } from '@/src/shared/store/theme.store';
 import { MaterialCommunityIcons } from '@expo/vector-icons';

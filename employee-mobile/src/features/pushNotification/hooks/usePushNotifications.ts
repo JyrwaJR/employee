@@ -5,7 +5,7 @@ import { Route, router } from 'expo-router';
 import { PushNotificationService } from '../services';
 import { logger } from '@/src/shared/utils/logger';
 import { isExpoGo } from '@/src/shared/constants';
-import { useAuth } from '@/src/features/auth/hooks/useAuth';
+import { useAuth } from '@/src/shared/hooks/useAuth';
 import { notify } from '@/src/shared/utils/notify';
 import { withRetry } from '@/src/shared/utils/retry';
 import { routes } from '@/src/shared/constants/routes';

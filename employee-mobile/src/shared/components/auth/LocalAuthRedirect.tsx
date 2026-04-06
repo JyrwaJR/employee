@@ -1,5 +1,5 @@
-import { useAuth } from '@/src/features/auth/hooks/useAuth';
-import { useLocalAuth } from '@/src/features/auth/hooks/useLocalAuth';
+import { useAuth } from '@/src/shared/hooks/useAuth';
+import { useLocalAuth } from '@/src/shared/hooks/useLocalAuth';
 import { useLocalAuthStore } from '@/src/features/auth/store/useLocalAuthStore';
 import { useCallback, useEffect } from 'react';
 import { Forbidden } from '../screens/Forbidden';

@@ -8,7 +8,7 @@ import { FilterCard } from '@/src/shared/components/display/FilterCard';
 import { months, years } from '@/src/shared/utils/helper/years';
 import { useQuery } from '@tanstack/react-query';
 import { api } from '@/src/shared/api';
-import { useAuth } from '@/src/features/auth/hooks/useAuth';
+import { useAuth } from '@/src/shared/hooks/useAuth';
 import { http } from '@/src/shared/utils/http';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { queryKeys } from '@/src/shared/api/query-keys';

@@ -8,7 +8,7 @@ import { useMutation } from '@tanstack/react-query';
 import { api } from '@/src/shared/api';
 import { notify } from '@/src/shared/utils/notify';
 import { TokenStoreManager } from '@/src/shared/store/token.store';
-import { useAuth } from '@/src/features/auth/hooks/useAuth';
+import { useAuth } from '@/src/shared/hooks/useAuth';
 import { http } from '@/src/shared/utils/http';
 import { Text } from '@/src/shared/components/ui/text';
 import { Container } from '@/src/shared/components/layout/Container';

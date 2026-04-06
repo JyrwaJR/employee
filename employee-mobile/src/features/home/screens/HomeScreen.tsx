@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, StatusBar, FlatList } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
 import { StatBox } from '@/src/shared/components/display/StatsBox';
-import { useAuth } from '@/src/features/auth/hooks/useAuth';
+import { useAuth } from '@/src/shared/hooks/useAuth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';

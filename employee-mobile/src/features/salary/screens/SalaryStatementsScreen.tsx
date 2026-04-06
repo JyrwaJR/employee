@@ -3,7 +3,7 @@ import { View, FlatList } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
 import { router } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
-import { useAuth } from '@/src/features/auth/hooks/useAuth';
+import { useAuth } from '@/src/shared/hooks/useAuth';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { http } from '@/src/shared/utils/http';
 import { SalarySlip } from '@/src/features/employee/types';

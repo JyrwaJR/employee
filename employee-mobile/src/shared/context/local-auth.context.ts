@@ -1,4 +1,4 @@
-import { LocalAuthContextType } from '@/src/features/auth/types/localAuth';
+import { LocalAuthContextType } from '@/src/shared/types/auth'; // Updated to Shared Types
 import { createContext } from 'react';
 
 export const LocalAuthContext = createContext<LocalAuthContextType>({
