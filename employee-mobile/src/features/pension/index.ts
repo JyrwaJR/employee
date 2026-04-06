@@ -6,7 +6,7 @@ export * from './api/pension.endpoints';
 
 // Screens
 export * from './screens/PensionDetailScreen';
-export * from './screens/PensionScreen';
+export { default as PensionScreen } from './screens/PensionScreen';
 // Services
 
 // Store
