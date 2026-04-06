@@ -41,7 +41,7 @@ export const LoginScreen = () => {
               ✨
             </Text>
           </View>
-          <Text variant={'heading'} size={'2xl'} weight={'semibold'}>
+          <Text variant={'heading'} size={'3xl'} weight={'semibold'}>
             Welcome back
           </Text>
           <Text variant={'subtext'}>Please enter your details to sign in.</Text>
@@ -55,9 +55,24 @@ export const LoginScreen = () => {
               label="Phone No."
               placeholder="e.g. 07XXXXXXXX"
               keyboardType="phone-pad"
+              testID="PHONE_INPUT"
+              onChangeText={(value) => {
+                // filter none numeric characters
+                const valueWithoutDashes = value.replace(/[-]/g, '');
+                const trimmedValue = valueWithoutDashes.replace(/[^0-9]/g, '');
+                if (trimmedValue.length <= 10) {
+                  methods.setValue('phone_no', trimmedValue);
+                }
+              }}
             />
 
-            <FieldInput name="password" label="Password" placeholder="••••••••" />
+            <FieldInput
+              name="password"
+              testID="PASSWORD_INPUT"
+              secureTextEntry
+              label="Password"
+              placeholder="••••••••"
+            />
 
             <Link href={routes.auth.forgotPassword()} asChild>
               <TouchableOpacity className="mb-8 items-end">
