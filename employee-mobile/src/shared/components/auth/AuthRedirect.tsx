@@ -74,7 +74,12 @@ export const AuthRedirect = ({ children }: Props) => {
     checkAccess,
   ]);
 
-  if (isLoading) {
+  if (isLoading || !isMounted) {
+    return <LoadingScreen />;
+  }
+
+  // Final check to prevent empty/stale renders if we are switching routes
+  if (isSignedIn && !role) {
     return <LoadingScreen />;
   }
 

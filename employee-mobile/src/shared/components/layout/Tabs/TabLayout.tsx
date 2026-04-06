@@ -34,6 +34,7 @@ const TabLayout = () => {
         showBackButton={false}
       />
       <Tabs
+        key={role}
         tabBar={(props) => <CustomTabBar {...props} insets={insets} tabConfig={tabConfig} />}
         screenOptions={{
           headerShown: false,

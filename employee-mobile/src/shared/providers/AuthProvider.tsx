@@ -131,6 +131,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     refresh: () => refetch(),
     isLoading: isInitializing || isFetchingUser,
     role: user?.role || 'USER',
+    setIsTokenSet, // Allow manual update for faster transitions
   } satisfies AuthContextT;
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
