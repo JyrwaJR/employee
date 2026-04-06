@@ -1,6 +1,7 @@
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { usePathname, useRouter, useLocalSearchParams, Route } from 'expo-router';
 import React, { useEffect, useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 import { LoadingScreen } from '../screens/LoadingScreen';
 import { ROUTE_ROLES, PUBLIC_ROUTES } from '@/src/shared/constants/auth';
 import { useAccess } from '@/src/shared/hooks/use-access';
@@ -74,14 +75,26 @@ export const AuthRedirect = ({ children }: Props) => {
     checkAccess,
   ]);
 
-  if (isLoading || !isMounted) {
-    return <LoadingScreen />;
-  }
-
-  // Final check to prevent empty/stale renders if we are switching routes
-  if (isSignedIn && !role) {
-    return <LoadingScreen />;
-  }
-
-  return <>{children}</>;
+  return (
+    <View style={styles.container}>
+      {children}
+      {/* 
+          Loading Overlay Rules:
+          1. Show during initial boot (!isMounted)
+          2. Show during session synchronization (isLoading || (isSignedIn && !role))
+          3. EXCEPT when on a Public Route (like Login) to avoid logout hangs.
+      */}
+      {((isLoading || !isMounted || (isSignedIn && !role)) && !isOnPublicPage) && (
+        <View style={StyleSheet.absoluteFill} className="bg-white dark:bg-slate-950">
+          <LoadingScreen />
+        </View>
+      )}
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

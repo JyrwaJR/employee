@@ -4,6 +4,7 @@ import { useLocalAuthStore } from '@/src/shared/store/local-auth.store';
 import { useCallback, useEffect } from 'react';
 import { Forbidden } from '../screens/Forbidden';
 import { isExpoGo } from '@/src/shared/constants';
+import { View, StyleSheet } from 'react-native';
 
 export const LocalAuthRedirect = ({ children }: { children: React.ReactNode }) => {
   const { authenticate, isAuthenticated, isSupported } = useLocalAuth();
@@ -26,9 +27,20 @@ export const LocalAuthRedirect = ({ children }: { children: React.ReactNode }) =
     handleSensitiveAction();
   }, [isSupported, isEnabled, user]);
 
-  if (isEnabled && !isExpoGo && user && !isAuthenticated) {
-    return <Forbidden onPressTryAgain={() => handleTryAgain()} />;
-  }
-
-  return <>{children}</>;
+  return (
+    <View style={styles.container}>
+      {children}
+      {isEnabled && !isExpoGo && user && !isAuthenticated && (
+        <View style={StyleSheet.absoluteFill} className="bg-white dark:bg-slate-950">
+          <Forbidden onPressTryAgain={() => handleTryAgain()} />
+        </View>
+      )}
+    </View>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});

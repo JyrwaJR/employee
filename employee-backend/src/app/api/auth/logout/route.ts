@@ -27,7 +27,7 @@ export const POST = withValidation({ body: TokenSchema }, async ({ body }) => {
       data: { is_revoked: true },
     });
 
-    return SuccessResponse({ message: "Logout successful" });
+    return SuccessResponse({ message: "Logout successfully" });
   } catch (error) {
     return handleApiErrors(error);
   }

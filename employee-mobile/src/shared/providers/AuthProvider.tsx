@@ -31,12 +31,19 @@ export const AuthContextProvider = ({ children }: Props) => {
 
   const logout = useCallback(async () => {
     logger.info('AuthProvider: Initiating global logout');
+    // 1. Cancel any active profile fetch before it can fail with 401
+    await queryClient.cancelQueries({ queryKey: queryKeys.auth.me });
+
+    // 2. Clear Session State
     await TokenStoreManager.removeToken();
     await TokenStoreManager.removeRefreshToken();
     setIsTokenSet(false);
 
+    // 3. Purge Cache
     queryClient.setQueryData(queryKeys.auth.me, null);
     queryClient.removeQueries({ queryKey: queryKeys.auth.me });
+
+    // 4. Navigate
     router.replace(routes.auth.login);
   }, [queryClient, router]);
 
