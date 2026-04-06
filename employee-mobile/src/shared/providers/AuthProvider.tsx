@@ -7,6 +7,7 @@ import { AuthContextT, UserT } from '@/src/shared/types/auth'; // Updated to Sha
 import { http } from '@/src/shared/utils/http';
 import { logger } from '@/src/shared/utils/logger';
 import { queryKeys } from '@/src/shared/api/query-keys';
+import { notify } from '../utils/notify';
 
 type Props = {
   children: React.ReactNode;
@@ -29,7 +30,7 @@ export const AuthContextProvider = ({ children }: Props) => {
   const logoutMutation = useMutation({
     mutationFn: ({ refresh_token }: { refresh_token: string }) =>
       http.post(api.auth.logout, { refresh_token }),
-    onSettled: async () => {
+    onSettled: async (data) => {
       // Fail-safe cleanup: Always clear local session even if API fails
       setIsInitializing(true);
       setIsTokenSet(false);
@@ -41,6 +42,7 @@ export const AuthContextProvider = ({ children }: Props) => {
 
       // 2. Purge Cache
       queryClient.setQueryData(queryKeys.auth.me, null);
+      notify(data, 'AUTH_LOGOUT');
 
       setIsInitializing(false);
     },
@@ -158,7 +160,8 @@ export const AuthContextProvider = ({ children }: Props) => {
       setIsTokenSet(true);
       refetch();
     },
-    isLoading: (isSignedIn ? isInitializing || isFetchingUser : isInitializing) || logoutMutation.isPending,
+    isLoading:
+      (isSignedIn ? isInitializing || isFetchingUser : isInitializing) || logoutMutation.isPending,
     role: user?.role || 'USER',
     logout: logout,
   } satisfies AuthContextT;

@@ -74,7 +74,7 @@ export const http = {
       if (!isValidUrl(url)) {
         throw new Error('Invalid URL');
       }
-      logger.log({ method: 'POST =>', path: url, data });
+      logger.log({ method: 'POST =>', path: url });
       const response = await axiosInstance.post(url, data, config);
       return handleResponse<T>(response);
     } catch (error) {
