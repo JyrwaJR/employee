@@ -13,7 +13,7 @@ export type UserT = {
   employee_id: string;
   auth: {
     id: number;
-    email: string;   
+    email: string;
   };
 };
 
@@ -23,6 +23,7 @@ export type AuthContextT = {
   isSignedIn: boolean;
   role: RoleT;
   refresh: () => void;
+  logout: () => void;
 };
 
 export interface LocalAuthContextType {

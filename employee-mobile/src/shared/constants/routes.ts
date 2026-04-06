@@ -15,8 +15,8 @@ export const routes = {
 
   /** Authentication related routes */
   auth: {
-    login: '/auth' as const,
-    signUp: '/auth/sign-up' as const,
+    login: '/auth' as Route,
+    signUp: '/auth/sign-up' as Route,
     /**
      * Helper for forgot password flow with query states.
      * @param phone - Optional phone number to pre-fill

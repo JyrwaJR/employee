@@ -76,25 +76,13 @@ export const AuthRedirect = ({ children }: Props) => {
   ]);
 
   return (
-    <View style={styles.container}>
-      {children}
-      {/* 
-          Loading Overlay Rules:
-          1. Show during initial boot (!isMounted)
-          2. Show during session synchronization (isLoading || (isSignedIn && !role))
-          3. EXCEPT when on a Public Route (like Login) to avoid logout hangs.
-      */}
-      {((isLoading || !isMounted || (isSignedIn && !role)) && !isOnPublicPage) && (
+    <View className="flex-1">
+      {(isLoading || !isMounted || (isSignedIn && !role)) && !isOnPublicPage && (
         <View style={StyleSheet.absoluteFill} className="bg-white dark:bg-slate-950">
           <LoadingScreen />
         </View>
       )}
+      {children}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

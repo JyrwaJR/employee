@@ -1,4 +1,4 @@
-import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosError, AxiosRequestConfig, isCancel, AxiosResponse } from 'axios';
 import { logger } from './logger';
 import axiosInstance from './api';
 import { ApiResponse } from '../types/api';
@@ -58,6 +58,9 @@ export const http = {
       const response = await axiosInstance.get(url, config);
       return handleResponse<T>(response);
     } catch (error) {
+      if (isCancel(error)) {
+        logger.warn(`GET Request to ${url} was cancelled.`);
+      }
       return handleAxiosError<T>(error);
     }
   },

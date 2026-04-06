@@ -2,11 +2,6 @@ import React from 'react';
 import { View, Image, TouchableOpacity, ScrollView, StatusBar, Switch, Alert } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
 import { cn } from '@/src/shared/utils/cn';
-import { useMutation } from '@tanstack/react-query';
-import { http } from '@/src/shared/utils/http';
-import { api } from '@/src/shared/api';
-import { TokenStoreManager } from '@/src/shared/store/token.store';
-import { notify } from '@/src/shared/utils/notify';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { Text } from '@/src/shared/components/ui/text';
 import { useThemeStore } from '@/src/shared/store/theme.store';
@@ -58,33 +53,13 @@ const MenuRow = ({ icon, label, isDestructive, onPress, rightElement }: MenuRowP
 
 export const ProfileScreen = () => {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
-  const { user, refresh } = useAuth();
+  const { user, logout } = useAuth();
   const { theme } = useThemeStore();
-
-  const { mutate } = useMutation({
-    mutationFn: (refresh_token: string) => http.post(api.auth.logout, { refresh_token }),
-    onSuccess: async (data) => {
-      if (data.success) {
-        await TokenStoreManager.removeToken();
-        await TokenStoreManager.removeRefreshToken();
-        refresh();
-      }
-      notify(data, 'AUTH_LOGOUT');
-      return data;
-    },
-  });
-
-  const onLogout = async () => {
-    const refreshToken = await TokenStoreManager.getRefreshToken();
-    if (refreshToken) {
-      mutate(refreshToken);
-    }
-  };
 
   const handleLogout = () => {
     Alert.alert('Log Out', 'Are you sure you want to log out?', [
       { text: 'Cancel', style: 'cancel' },
-      { text: 'Log Out', style: 'destructive', onPress: () => onLogout() },
+      { text: 'Log Out', style: 'destructive', onPress: () => logout() },
     ]);
   };
 
