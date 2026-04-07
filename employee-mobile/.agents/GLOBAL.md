@@ -50,8 +50,8 @@ The agent MUST follow this map for all file creation. Forbidden to deviate witho
 - **Open Discussion**: Every file and logic choice is open to question and debate to ensure the best possible technical outcome.
 - **Memory**: The agent must **always search the memory for information or clarifications** before proceeding with a task.
 - **Thinking Out Loud**: The agent must **always perform a sequencial thinking** out loud to ensure a clear understanding of the task.
-- **Plan Artifact**: The agent must **always produce a plan artifact** before proceeding with a task.
 - **Multi Agents**: Multiple agents can work on the same task concurrently on every task there should also include agent for review code and security check.
+- **Plan Artifact**: The agent must **always produce a plan artifact** before proceeding with a task.
 
 ### 🤝 Human-in-the-Loop (HITL) Gate
 
