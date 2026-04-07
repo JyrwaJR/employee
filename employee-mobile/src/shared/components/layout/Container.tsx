@@ -1,5 +1,5 @@
-import { cn } from '../ui/text';
 import { View } from 'react-native';
+import { cn } from '../../utils/cn';
 
 type Props = {
   children: React.ReactNode;
