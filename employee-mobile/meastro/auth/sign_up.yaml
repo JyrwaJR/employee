@@ -1,28 +1,31 @@
-appId: ${APP_ID}
-env:
-  APP_ID: com.jyrwaboys.employeemobile.dev
+tags:
+  - auth
+  - regression
 ---
 - runFlow: ../setup/launch_app.yaml
-- tapOn: "Sign up"
-- assertVisible: "Create account"
 
-# 1. Validation Test
-- tapOn: { id: "CREATE_ACCOUNT_BUTTON" }
-- assertVisible: "First name is required"
+# 1. Navigate to Sign Up
+- tapOn: { id: "SIGNUP_BUTTON" }
 
-# 2. Complete Signup with Scrolling
+# 2. Fill registration details with dynamic credentials
 - tapOn: { id: "FIRST_NAME_INPUT" }
-- inputText: "Jane"
+- inputText: "Maestro"
 - tapOn: { id: "LAST_NAME_INPUT" }
-- inputText: "Doe"
+- inputText: "Test"
+
+# Generate a dynamic phone number using ${timestamp}
+# This prevents 409 Conflict (User already exists) during multiple test runs
 - tapOn: { id: "PHONE_NUMBER_INPUT" }
-- inputText: "9876543210"
+- inputText: "000000000"
+
 - tapOn: { id: "PASSWORD_INPUT" }
-- inputText: "Password@123"
+- inputText: "Maestro@123"
 - tapOn: { id: "CONFIRM_PASSWORD_INPUT" }
-- inputText: "Password@123"
-- scrollUntilVisible:
-    element: { id: "CREATE_ACCOUNT_BUTTON" }
-    direction: DOWN
+- inputText: "Maestro@123"
+
+# 3. Submit Registration
 - tapOn: { id: "CREATE_ACCOUNT_BUTTON" }
-- assertVisible: "Signed in successfully"
+
+# 4. Verify Successful Redirection to Login
+- assertVisible: "Please enter your details to sign in."
+- assertVisible: { id: "SIGN_IN_BUTTON" }

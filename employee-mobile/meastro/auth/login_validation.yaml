@@ -1,0 +1,48 @@
+tags:
+  - auth
+  - regression
+---
+- runFlow: ../setup/launch_app.yaml
+
+- runFlow: ../setup/clear_form.yaml
+# 1. Required Fields & Empty Inputs
+- tapOn: { id: "SIGN_IN_BUTTON" }
+- assertVisible: "Phone number is required"
+- assertVisible: "Password is required"
+
+# 2. Phone Number Logic (Zod: length 10)
+- tapOn: { id: "PHONE_INPUT" }
+- inputText: "12345"
+- tapOn: { id: "SIGN_IN_BUTTON" }
+- assertVisible: "Phone number must be exactly 10 digits"
+
+# 3. Password Complexity (Zod: min 8, lower, upper, number, special)
+- tapOn: { id: "PASSWORD_INPUT" }
+- inputText: "short"
+- tapOn: { id: "SIGN_IN_BUTTON" }
+- assertVisible: "Password must be at least 8 characters"
+
+- eraseText: 5
+- inputText: "alllowercase"
+- tapOn: { id: "SIGN_IN_BUTTON" }
+- assertVisible: "Must contain an uppercase letter"
+
+- eraseText: 12
+- inputText: "AllLettersNoNumber"
+- tapOn: { id: "SIGN_IN_BUTTON" }
+- assertVisible: "Must contain a number"
+
+- eraseText: 18
+- inputText: "LettersNumber123"
+- tapOn: { id: "SIGN_IN_BUTTON" }
+- assertVisible: "Must contain a special character"
+
+# 4. Incorrect Credentials (API Error)
+- tapOn: { id: "PHONE_INPUT" }
+- eraseText: 5
+- inputText: "0000000000"
+- tapOn: { id: "PASSWORD_INPUT" }
+- eraseText: 16
+- inputText: "WrongPassword123@"
+- tapOn: { id: "SIGN_IN_BUTTON" }
+- assertVisible: "Invalid credentials"

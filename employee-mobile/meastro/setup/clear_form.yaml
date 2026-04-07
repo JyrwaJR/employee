@@ -1,0 +1,7 @@
+appId: ${APP_ID}
+---
+# Maestro: Clear Login Form Flow
+- tapOn: { id: "PHONE_INPUT" }
+- eraseText: 20
+- tapOn: { id: "PASSWORD_INPUT" }
+- eraseText: 64

@@ -1,11 +1,7 @@
-appId: ${APP_ID}
----
-- launchApp:
-    clearState: true
-- openLink: ${EXPO_URL}
-  when:
-    not:
-      equal: ${EXPO_URL} ""
+# For Expo Go development
+- openLink:
+    url: ${EXPO_URL}
+    arguments:
+      isMaestro: 'true'
 - assertVisible:
-    text: "Welcome"
-    timeout: 30000 # Expo Go takes longer to bundle and load
+    text: 'Welcome back'

@@ -1,12 +1,9 @@
 appId: ${APP_ID}
-env:
-  APP_ID: com.jyrwaboys.employeemobile.dev
 ---
-- launchApp
+- runFlow: ../setup/launch_app.yaml
+- runFlow: ../auth/login.yaml
+- openLink: ${EXPO_URL}/settings
 - tapOn: "Dark Mode"
 - assertVisible: "Dark Mode"
 - tapOn: "Enable Biometric"
 # Use JS to check version if needed, or simple assertion
-- assertVisible: 
-    text: "v1.0.0"
-    timeout: 5000

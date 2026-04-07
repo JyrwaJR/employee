@@ -1,30 +1,24 @@
-appId: ${APP_ID}
-env:
-  APP_ID: com.jyrwaboys.employeemobile.dev
+tags:
+  - auth
+  - smoke
+  - regression
 ---
 - runFlow: ../setup/launch_app.yaml
+- runFlow: ../setup/clear_form.yaml
 
-# 1. Validation Test (Empty Fields)
-- tapOn: { id: "SIGN_IN_BUTTON" }
-- assertVisible: "Phone number is required"
-- assertVisible: "Password is required"
-
-# 2. Validation Test (Invalid Phone)
+# Successful Login using Env Variables
 - tapOn: { id: "PHONE_INPUT" }
-- inputText: "123"
-- tapOn: { id: "SIGN_IN_BUTTON" }
-- assertVisible: "Phone number must be exactly 10 digits"
-
-# 3. Successful Login
-- tapOn: { id: "PHONE_INPUT" }
-- eraseText: 10
-- inputText: "9876543210"
+- inputText: ${TEST_PHONE}
 - tapOn: { id: "PASSWORD_INPUT" }
-- inputText: "Password@123"
+- inputText: ${TEST_PASSWORD}
+
+# Ensure form is scrolled before tap
 - scrollUntilVisible:
     element: { id: "SIGN_IN_BUTTON" }
     direction: DOWN
 - tapOn: { id: "SIGN_IN_BUTTON" }
-- assertVisible: 
-    text: "Good Morning"
-    timeout: 10000 # Allow 10s for API delay
+
+# 10s delay to allow for profile fetch and AuthRedirect
+- assertVisible: "Home"
+- killApp:
+    appId: ${APP_ID}

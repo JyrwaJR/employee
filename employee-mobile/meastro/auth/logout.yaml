@@ -1,0 +1,6 @@
+appId: ${APP_ID}
+---
+- runFlow: ../setup/launch_app.yaml
+- tapOn: "Profile"
+- assertVisible: "Personal Details" # Expected text for Profile screen
+- tapOn: "Log Out"
