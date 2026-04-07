@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { Text as RNText, TextProps as RNTextProps } from 'react-native';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+import { cn } from '../../utils/cn';
 
 const textVariants = cva('text-black dark:text-slate-50', {
   variants: {

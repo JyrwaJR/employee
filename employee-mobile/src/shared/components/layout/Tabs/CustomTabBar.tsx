@@ -40,6 +40,7 @@ export const CustomTabBar = ({
             key={route.key}
             onPress={onPress}
             activeOpacity={0.7}
+            testID={`TAB_${route.name.toUpperCase().replace('INDEX', 'HOME')}`}
             className="flex-1 items-center justify-center p-2">
             <MaterialIcons
               name={iconName}

@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, TouchableOpacity, Alert, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, TouchableOpacity, Alert } from 'react-native';
 import { Link } from 'expo-router';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Text } from '@/src/shared/components/ui/text';
-import { Container } from '@/src/shared/components/layout/Container';
+import { KeyboardSafeView } from '@/src/shared/components/layout';
 import { LoginSchema } from '../validators/login.schema';
 import { routes } from '@/src/shared/constants/routes';
 import { FieldInput } from '@/src/shared/components/ui/field-input';
@@ -30,80 +30,78 @@ export const LoginScreen = () => {
   };
 
   return (
-    <Container>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        className="flex-1 justify-center px-6">
-        {/* Header Section */}
-        <View className="mb-10 items-center">
-          <View className="mb-6 h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 dark:bg-blue-600">
-            <Text variant={'heading'} className="text-white" size={'2xl'}>
-              ✨
-            </Text>
-          </View>
-          <Text variant={'heading'} size={'3xl'} weight={'semibold'}>
-            Welcome back
+    <KeyboardSafeView contentContainerClassName="px-6 justify-center">
+      {/* Header Section */}
+      <View className="mb-10 items-center">
+        <View className="mb-6 h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 dark:bg-blue-600">
+          <Text variant={'heading'} className="text-white" size={'2xl'}>
+            ✨
           </Text>
-          <Text variant={'subtext'}>Please enter your details to sign in.</Text>
         </View>
+        <Text variant={'heading'} size={'3xl'} weight={'semibold'}>
+          Welcome back
+        </Text>
+        <Text variant={'subtext'}>Please enter your details to sign in.</Text>
+      </View>
 
-        {/* Form Section */}
-        <FormProvider {...methods}>
-          <View className="w-full">
-            <FieldInput
-              name="phone_no"
-              label="Phone No."
-              placeholder="e.g. 07XXXXXXXX"
-              keyboardType="phone-pad"
-              testID="PHONE_INPUT"
-              onChangeText={(value) => {
-                // filter none numeric characters
-                const valueWithoutDashes = value.replace(/[-]/g, '');
-                const trimmedValue = valueWithoutDashes.replace(/[^0-9]/g, '');
-                if (trimmedValue.length <= 10) {
-                  methods.setValue('phone_no', trimmedValue);
-                }
-              }}
-            />
+      {/* Form Section */}
+      <FormProvider {...methods}>
+        <View className="w-full">
+          <FieldInput
+            name="phone_no"
+            label="Phone No."
+            placeholder="e.g. 07XXXXXXXX"
+            keyboardType="phone-pad"
+            testID="PHONE_INPUT"
+            onChangeText={(value) => {
+              // filter none numeric characters
+              const valueWithoutDashes = value.replace(/[-]/g, '');
+              const trimmedValue = valueWithoutDashes.replace(/[^0-9]/g, '');
+              if (trimmedValue.length <= 10) {
+                methods.setValue('phone_no', trimmedValue);
+              }
+            }}
+          />
 
-            <FieldInput
-              name="password"
-              testID="PASSWORD_INPUT"
-              secureTextEntry
-              label="Password"
-              placeholder="••••••••"
-            />
+          <FieldInput
+            name="password"
+            testID="PASSWORD_INPUT"
+            secureTextEntry
+            label="Password"
+            placeholder="••••••••"
+          />
 
+          <View className="mb-8 items-end">
             <Link href={routes.auth.forgotPassword()} asChild>
-              <TouchableOpacity className="mb-8 items-end">
+              <TouchableOpacity>
                 <Text variant={'link'}>Forgot password?</Text>
               </TouchableOpacity>
             </Link>
-
-            <Button
-              testID="SIGN_IN_BUTTON"
-              title="Sign in"
-              onPress={methods.handleSubmit(onSubmit)}
-              isLoading={loginMutation.isPending}
-            />
-
-            <View className="my-8 flex-row items-center gap-x-2">
-              <View className="h-[1px] flex-1 bg-gray-200" />
-              <Text variant={'subtext'}>Or continue with</Text>
-              <View className="h-[1px] flex-1 bg-gray-200" />
-            </View>
-
-            <Button title="Google" variant="google" onPress={() => Alert.alert('Google Auth')} />
           </View>
-        </FormProvider>
 
-        <View className="mt-10 flex-row justify-center">
-          <Text variant={'subtext'}>Don&apos;t have an account? </Text>
-          <Link href={routes.auth.signUp}>
-            <Text variant={'link'}>Sign up</Text>
-          </Link>
+          <Button
+            testID="SIGN_IN_BUTTON"
+            title="Sign in"
+            onPress={methods.handleSubmit(onSubmit)}
+            isLoading={loginMutation.isPending}
+          />
+
+          <View className="my-8 flex-row items-center gap-x-2">
+            <View className="h-[1px] flex-1 bg-gray-200" />
+            <Text variant={'subtext'}>Or continue with</Text>
+            <View className="h-[1px] flex-1 bg-gray-200" />
+          </View>
+
+          <Button title="Google" variant="google" onPress={() => Alert.alert('Google Auth')} />
         </View>
-      </KeyboardAvoidingView>
-    </Container>
+      </FormProvider>
+
+      <View className="mt-10 flex-row justify-center">
+        <Text variant={'subtext'}>Don&apos;t have an account? </Text>
+        <Link testID={'SIGNUP_BUTTON'} href={routes.auth.signUp}>
+          <Text variant={'link'}>Sign up</Text>
+        </Link>
+      </View>
+    </KeyboardSafeView>
   );
 };
