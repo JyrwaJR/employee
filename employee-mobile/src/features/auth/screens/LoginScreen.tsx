@@ -102,6 +102,22 @@ export const LoginScreen = () => {
           <Text variant={'link'}>Sign up</Text>
         </Link>
       </View>
+
+      {/* Developer UI Laboratory Entrance */}
+      {__DEV__ && (
+        <View className="mt-12 items-center border-t border-gray-100 pt-8 dark:border-gray-800">
+          <Link href="/(dev)/ui-lab" asChild>
+            <TouchableOpacity className="flex-row items-center rounded-full bg-slate-100 px-4 py-2 dark:bg-slate-800">
+              <Text className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                🛠 Open UI Laboratory
+              </Text>
+            </TouchableOpacity>
+          </Link>
+          <Text variant="subtext" size="xs" className="mt-2">
+            Visible in Development only
+          </Text>
+        </View>
+      )}
     </KeyboardSafeView>
   );
 };

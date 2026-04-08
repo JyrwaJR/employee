@@ -7,7 +7,7 @@ export type RouteConfigT = {
   redirect?: string;
 };
 
-export const PUBLIC_ROUTES = ['/auth', '/auth/sign-up', '/auth/forgot-password'];
+export const PUBLIC_ROUTES = ['/auth', '/auth/sign-up', '/auth/forgot-password', '/ui-lab'];
 
 export const ROUTE_ROLES: RouteConfigT[] = [
   {

@@ -1,7 +1,5 @@
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { TQueryProvider } from './QueryProvider';
-import { Toaster } from 'sonner-native';
+import { Toaster } from '@shared/components/ui';
 import { AuthContextProvider } from './AuthProvider';
 import { LocalAuthProvider } from './LocalAuthProvider';
 import { AuthRedirect } from '@shared/components/auth/AuthRedirect';
@@ -11,7 +9,8 @@ import React from 'react';
 import { ThemeProvider } from './ThemeProvider';
 import { LocalAuthRedirect } from '@shared/components/auth/LocalAuthRedirect';
 import { PushNotificationProvider } from '@/src/features/pushNotification/providers/PushNotificationProvider';
-
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { UpdatesProvider } from './UpdatesProvider';
 import { UpdateModal } from '@shared/components/display/UpdateModal';
 import { GlobalErrorBoundary } from '@shared/components/feedback/GlobalErrorBoundary';
@@ -35,7 +34,6 @@ export const ProviderWrapper = ({ children }: Props) => {
                         <LocalAuthRedirect>
                           <AuthRedirect>
                             <StatusBar style="auto" animated translucent />
-                            <Toaster />
                             {children}
                             <UpdateModal />
                           </AuthRedirect>

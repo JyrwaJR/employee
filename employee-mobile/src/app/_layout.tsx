@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ProviderWrapper } from '@/src/shared/providers/ProviderWrapper';
+import { Toaster } from '@/src/shared/components/ui';
 import './global.css';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
@@ -50,6 +51,7 @@ export default function Layout() {
   return (
     <ProviderWrapper>
       <Stack screenOptions={{ headerShown: false }} />
+      <Toaster />
     </ProviderWrapper>
   );
 }
