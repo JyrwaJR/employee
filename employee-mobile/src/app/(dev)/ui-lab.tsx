@@ -27,7 +27,7 @@ import {
 } from '@/src/shared/components/ui';
 import { KeyboardSafeView, HeaderStack } from '@/src/shared/components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
-import { toast } from 'sonner-native';
+import { toast } from '@/src/shared/components/ui';
 import { useThemeStore } from '@/src/shared/store/theme.store';
 
 export default function UILabScreen() {
@@ -198,6 +198,19 @@ export default function UILabScreen() {
               variant="outline"
               className="flex-1"
               onPress={() => toast('Simple message')}
+            />
+          </View>
+          <View className="flex-row">
+            <Button
+              title="Long Description Toast"
+              variant="outline"
+              className="w-full"
+              onPress={() =>
+                toast.error('Long Error', {
+                  description:
+                    'This is a very long error message that should be truncated to prevent it from filling the entire screen and blocking other UI elements. It contains more than enough characters to trigger our safety caps. This is a very long error message that should be truncated to prevent it from filling the entire screen and blocking other UI elements.',
+                })
+              }
             />
           </View>
 

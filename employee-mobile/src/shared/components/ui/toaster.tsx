@@ -1,8 +1,9 @@
 import React from 'react';
-import { Toaster as SonnerToaster } from 'sonner-native';
+import { Toaster as SonnerToaster, toast as originalToast } from 'sonner-native';
 import { useThemeStore } from '@/src/shared/store/theme.store';
 import { Appearance, Platform } from 'react-native';
 import { cssInterop } from 'nativewind';
+import { truncateText } from '@/src/shared/utils/text';
 
 /**
  * Configure sonner-native to be tailwind-aware in v4
@@ -19,7 +20,6 @@ export const Toaster = () => {
   const { theme } = useThemeStore();
   
   // Resolve actual theme color scheme for sonner-native's internal logic
-  // Android specifically requires explicit theme passing to match system colors correctly
   const isDark = theme === 'system' 
     ? Appearance.getColorScheme() === 'dark' 
     : theme === 'dark';
@@ -30,14 +30,12 @@ export const Toaster = () => {
       theme={isDark ? 'dark' : 'light'}
       richColors={true}
       toastOptions={{
-        // Match shadcn design tokens
         style: {
-          borderRadius: 24, // Matches our rounded-2xl
+          borderRadius: 24, 
           padding: 16,
-          backgroundColor: isDark ? '#020617' : '#FFFFFF', // slate-950 or white
+          backgroundColor: isDark ? '#020617' : '#FFFFFF', 
           borderWidth: 1,
-          borderColor: isDark ? '#1e293b' : '#e2e8f0', // slate-800 or slate-200
-          // Android specific visibility fixes
+          borderColor: isDark ? '#1e293b' : '#e2e8f0', 
           ...Platform.select({
             android: {
               elevation: 100,
@@ -51,13 +49,51 @@ export const Toaster = () => {
         titleStyle: {
           fontSize: 14,
           fontWeight: '600',
-          color: isDark ? '#f8fafc' : '#0f172a', // slate-50 or slate-900
+          color: isDark ? '#f8fafc' : '#0f172a', 
         },
         descriptionStyle: {
           fontSize: 12,
-          color: isDark ? '#94a3b8' : '#64748b', // slate-400 or slate-500
+          color: isDark ? '#94a3b8' : '#64748b', 
         },
       }}
     />
   );
 };
+
+/**
+ * Proxy toast calls to apply global truncation
+ */
+export const toast = Object.assign(
+  (message: string, options?: any) => {
+    const description = options?.description 
+      ? truncateText({ text: options.description, maxLength: 120 }) 
+      : undefined;
+    return originalToast(message, { ...options, description });
+  },
+  {
+    success: (message: string, options?: any) => {
+      const description = options?.description 
+        ? truncateText({ text: options.description, maxLength: 120 }) 
+        : undefined;
+      return originalToast.success(message, { ...options, description });
+    },
+    error: (message: string, options?: any) => {
+      const description = options?.description 
+        ? truncateText({ text: options.description, maxLength: 120 }) 
+        : undefined;
+      return originalToast.error(message, { ...options, description });
+    },
+    info: (message: string, options?: any) => {
+      const description = options?.description 
+        ? truncateText({ text: options.description, maxLength: 120 }) 
+        : undefined;
+      return originalToast.info(message, { ...options, description });
+    },
+    warning: (message: string, options?: any) => {
+      const description = options?.description 
+        ? truncateText({ text: options.description, maxLength: 120 }) 
+        : undefined;
+      return originalToast.warning(message, { ...options, description });
+    },
+  }
+);
