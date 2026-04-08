@@ -72,10 +72,7 @@ export const KeyboardSafeView: React.FC<KeyboardSafeViewProps> = ({
   if (dismissKeyboardOnTap) {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <Container 
-          edges={safeAreaEdges} 
-          className="flex-1 bg-white dark:bg-slate-950"
-        >
+        <Container edges={safeAreaEdges} className="flex-1 bg-white dark:bg-slate-950">
           {content}
         </Container>
       </TouchableWithoutFeedback>
@@ -83,10 +80,7 @@ export const KeyboardSafeView: React.FC<KeyboardSafeViewProps> = ({
   }
 
   return (
-    <Container 
-      edges={safeAreaEdges} 
-      className="flex-1 bg-white dark:bg-slate-950"
-    >
+    <Container edges={safeAreaEdges} className="flex-1 bg-white dark:bg-slate-950">
       {content}
     </Container>
   );

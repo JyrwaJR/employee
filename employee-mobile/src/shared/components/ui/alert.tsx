@@ -4,20 +4,17 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { Text } from './text';
 import { cn } from '../../utils/cn';
 
-const alertVariants = cva(
-  'relative w-full rounded-2xl border p-4 flex-row items-start gap-x-3',
-  {
-    variants: {
-      variant: {
-        default: 'bg-slate-50 border-slate-200 dark:bg-slate-900 dark:border-slate-800',
-        destructive: 'bg-red-50 border-red-200 dark:bg-red-950/20 dark:border-red-900',
-      },
+const alertVariants = cva('relative w-full rounded-2xl border p-4 flex-row items-start gap-x-3', {
+  variants: {
+    variant: {
+      default: 'bg-slate-50 border-slate-200 dark:bg-slate-900 dark:border-slate-800',
+      destructive: 'bg-red-50 border-red-200 dark:bg-red-950/20 dark:border-red-900',
     },
-    defaultVariants: {
-      variant: 'default',
-    },
-  }
-);
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
 
 interface AlertProps extends ViewProps, VariantProps<typeof alertVariants> {
   icon?: React.ReactNode;
@@ -28,11 +25,7 @@ interface AlertProps extends ViewProps, VariantProps<typeof alertVariants> {
  */
 const Alert = React.forwardRef<View, AlertProps>(
   ({ className, variant, icon, children, ...props }, ref) => (
-    <View
-      ref={ref}
-      role="alert"
-      className={cn(alertVariants({ variant }), className)}
-      {...props}>
+    <View ref={ref} role="alert" className={cn(alertVariants({ variant }), className)} {...props}>
       {icon && <View className="mt-0.5">{icon}</View>}
       <View className="flex-1 gap-y-1">{children}</View>
     </View>
@@ -40,33 +33,28 @@ const Alert = React.forwardRef<View, AlertProps>(
 );
 Alert.displayName = 'Alert';
 
-const AlertTitle = React.forwardRef<View, React.ComponentPropsWithoutRef<typeof View> & { children?: React.ReactNode }>(
-  ({ className, children, ...props }, ref) => (
-    <View ref={ref} {...props}>
-      <Text 
-        variant="heading" 
-        size="sm" 
-        weight="semibold" 
-        className={cn('leading-tight', className)}>
-        {children}
-      </Text>
-    </View>
-  )
-);
+const AlertTitle = React.forwardRef<
+  View,
+  React.ComponentPropsWithoutRef<typeof View> & { children?: React.ReactNode }
+>(({ className, children, ...props }, ref) => (
+  <View ref={ref} {...props}>
+    <Text variant="heading" size="sm" weight="semibold" className={cn('leading-tight', className)}>
+      {children}
+    </Text>
+  </View>
+));
 AlertTitle.displayName = 'AlertTitle';
 
-const AlertDescription = React.forwardRef<View, React.ComponentPropsWithoutRef<typeof View> & { children?: React.ReactNode }>(
-  ({ className, children, ...props }, ref) => (
-    <View ref={ref} {...props}>
-      <Text 
-        variant="subtext" 
-        size="xs" 
-        className={cn('leading-relaxed opacity-90', className)}>
-        {children}
-      </Text>
-    </View>
-  )
-);
+const AlertDescription = React.forwardRef<
+  View,
+  React.ComponentPropsWithoutRef<typeof View> & { children?: React.ReactNode }
+>(({ className, children, ...props }, ref) => (
+  <View ref={ref} {...props}>
+    <Text variant="subtext" size="xs" className={cn('leading-relaxed opacity-90', className)}>
+      {children}
+    </Text>
+  </View>
+));
 AlertDescription.displayName = 'AlertDescription';
 
 export { Alert, AlertTitle, AlertDescription };

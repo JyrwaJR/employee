@@ -4,7 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 
 /**
  * Global Local Authentication Store
- * 
+ *
  * Manages the user's preference for biometric authentication.
  * Persists the 'isEnabled' state securely using expo-secure-store.
  */

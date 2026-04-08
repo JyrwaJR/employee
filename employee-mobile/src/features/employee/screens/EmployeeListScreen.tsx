@@ -18,9 +18,14 @@ import { routes } from '@/src/shared/constants/routes';
 export default function EmployeeListScreen() {
   const [search, setSearch] = useState('');
 
-  const { data: EMPLOYEES, isFetching, isError, error } = useQuery({
+  const {
+    data: EMPLOYEES,
+    isFetching,
+    isError,
+    error,
+  } = useQuery({
     queryKey: queryKeys.employees.list,
-    queryFn: () => http.get<EmployeeT[]>(api.employees.list),
+    queryFn: () => http.get<EmployeeT[]>(api.employees.list()),
     select: (data) => data.data || [],
     placeholderData: (prev) => prev,
   });

@@ -5,7 +5,7 @@ import { logger } from '@/src/shared/utils/logger';
 
 /**
  * Global Local Authentication Provider
- * 
+ *
  * Manages biometric hardware interaction:
  * 1. Hardware Check: Verifies if the device supports biometric auth.
  * 2. Enrollment Sync: Tracks if the user has fingerprints/face enrolled.

@@ -52,7 +52,7 @@ export const PhoneForm = () => {
           keyboardType="phone-pad"
           autoComplete="tel"
         />
-        
+
         <Button
           title="Send OTP"
           onPress={methods.handleSubmit(onPhoneSubmit)}
@@ -63,4 +63,3 @@ export const PhoneForm = () => {
     </FormProvider>
   );
 };
-

@@ -102,12 +102,7 @@ export const ResetPasswordForm = () => {
     <View className="w-full">
       {status === 'INPUT_PASSWORD' && (
         <FormProvider {...passwordMethods}>
-          <FieldInput
-            name="password"
-            label="New Password"
-            placeholder="••••••••"
-            secureTextEntry
-          />
+          <FieldInput name="password" label="New Password" placeholder="••••••••" secureTextEntry />
           <FieldInput
             name="confirm_password"
             label="Confirm Password"
@@ -129,7 +124,7 @@ export const ResetPasswordForm = () => {
             <Text variant="subtext" className="mb-6 text-center">
               OTP sent to {phone_no}
             </Text>
-            
+
             <FieldInput
               name="otp"
               label="Enter OTP"
@@ -150,4 +145,3 @@ export const ResetPasswordForm = () => {
     </View>
   );
 };
-

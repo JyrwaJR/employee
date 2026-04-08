@@ -140,12 +140,12 @@ axiosInstance.interceptors.response.use(
     } catch (refreshError: any) {
       // Clear queue early to prevent stale attempts
       processQueue(refreshError, null);
-      
+
       const status = refreshError?.response?.status;
       if (status === 400 || status === 401 || refreshError.message === 'MISSING_REFRESH_TOKEN') {
         await handleUnauthorizedExit();
       }
-      
+
       return Promise.reject(refreshError);
     } finally {
       isRefreshing = false;

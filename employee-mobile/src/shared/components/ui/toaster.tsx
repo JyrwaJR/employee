@@ -18,11 +18,9 @@ cssInterop(SonnerToaster, {
  */
 export const Toaster = () => {
   const { theme } = useThemeStore();
-  
+
   // Resolve actual theme color scheme for sonner-native's internal logic
-  const isDark = theme === 'system' 
-    ? Appearance.getColorScheme() === 'dark' 
-    : theme === 'dark';
+  const isDark = theme === 'system' ? Appearance.getColorScheme() === 'dark' : theme === 'dark';
 
   return (
     <SonnerToaster
@@ -31,11 +29,11 @@ export const Toaster = () => {
       richColors={true}
       toastOptions={{
         style: {
-          borderRadius: 24, 
+          borderRadius: 24,
           padding: 16,
-          backgroundColor: isDark ? '#020617' : '#FFFFFF', 
+          backgroundColor: isDark ? '#020617' : '#FFFFFF',
           borderWidth: 1,
-          borderColor: isDark ? '#1e293b' : '#e2e8f0', 
+          borderColor: isDark ? '#1e293b' : '#e2e8f0',
           ...Platform.select({
             android: {
               elevation: 100,
@@ -43,17 +41,17 @@ export const Toaster = () => {
             },
             ios: {
               zIndex: 9999,
-            }
-          })
+            },
+          }),
         },
         titleStyle: {
           fontSize: 14,
           fontWeight: '600',
-          color: isDark ? '#f8fafc' : '#0f172a', 
+          color: isDark ? '#f8fafc' : '#0f172a',
         },
         descriptionStyle: {
           fontSize: 12,
-          color: isDark ? '#94a3b8' : '#64748b', 
+          color: isDark ? '#94a3b8' : '#64748b',
         },
       }}
     />
@@ -65,33 +63,33 @@ export const Toaster = () => {
  */
 export const toast = Object.assign(
   (message: string, options?: any) => {
-    const description = options?.description 
-      ? truncateText({ text: options.description, maxLength: 120 }) 
+    const description = options?.description
+      ? truncateText({ text: options.description, maxLength: 120 })
       : undefined;
     return originalToast(message, { ...options, description });
   },
   {
     success: (message: string, options?: any) => {
-      const description = options?.description 
-        ? truncateText({ text: options.description, maxLength: 120 }) 
+      const description = options?.description
+        ? truncateText({ text: options.description, maxLength: 120 })
         : undefined;
       return originalToast.success(message, { ...options, description });
     },
     error: (message: string, options?: any) => {
-      const description = options?.description 
-        ? truncateText({ text: options.description, maxLength: 120 }) 
+      const description = options?.description
+        ? truncateText({ text: options.description, maxLength: 120 })
         : undefined;
       return originalToast.error(message, { ...options, description });
     },
     info: (message: string, options?: any) => {
-      const description = options?.description 
-        ? truncateText({ text: options.description, maxLength: 120 }) 
+      const description = options?.description
+        ? truncateText({ text: options.description, maxLength: 120 })
         : undefined;
       return originalToast.info(message, { ...options, description });
     },
     warning: (message: string, options?: any) => {
-      const description = options?.description 
-        ? truncateText({ text: options.description, maxLength: 120 }) 
+      const description = options?.description
+        ? truncateText({ text: options.description, maxLength: 120 })
         : undefined;
       return originalToast.warning(message, { ...options, description });
     },

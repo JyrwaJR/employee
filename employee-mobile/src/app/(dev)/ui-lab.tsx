@@ -24,10 +24,9 @@ import {
   AlertDialogFooter,
   AlertDialogAction,
   AlertDialogCancel,
-} from '@/src/shared/components/ui';
+ toast } from '@/src/shared/components/ui';
 import { KeyboardSafeView, HeaderStack } from '@/src/shared/components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
-import { toast } from '@/src/shared/components/ui';
 import { useThemeStore } from '@/src/shared/store/theme.store';
 
 export default function UILabScreen() {

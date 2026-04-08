@@ -33,10 +33,10 @@ interface DialogContentProps extends ViewProps {
  */
 export const DialogContent = ({ children, className, onClose, ...props }: DialogContentProps) => {
   return (
-    <Pressable 
+    <Pressable
       onPress={onClose}
       className="flex-1 items-center justify-center bg-black/60 px-4 dark:bg-slate-950/80">
-      <Pressable 
+      <Pressable
         onPress={(e) => e.stopPropagation()} // Prevent closing when clicking inside
         className={cn(
           'w-full max-w-sm rounded-3xl bg-white p-6 shadow-xl dark:bg-slate-900',

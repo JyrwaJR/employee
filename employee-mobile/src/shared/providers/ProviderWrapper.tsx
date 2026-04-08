@@ -1,5 +1,4 @@
 import { TQueryProvider } from './QueryProvider';
-import { Toaster } from '@shared/components/ui';
 import { AuthContextProvider } from './AuthProvider';
 import { LocalAuthProvider } from './LocalAuthProvider';
 import { AuthRedirect } from '@shared/components/auth/AuthRedirect';

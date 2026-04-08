@@ -8,7 +8,7 @@ type Props = {
 
 /**
  * Global Notification Configuration
- * Initialized once at the provider level to manage 
+ * Initialized once at the provider level to manage
  * sound, banners, and foreground behavior.
  */
 configureNotificationHandler();

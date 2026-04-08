@@ -31,7 +31,7 @@ export const usePushNotifications = () => {
     undefined
   );
   const lastResponse = Notifications.useLastNotificationResponse();
-  
+
   // Elite Pattern: Track the last processed notification ID to prevent duplicate navigations.
   // This occurs because both the hook and the listener can fire for the same event.
   const processedResponseId = useRef<string | null>(null);
@@ -42,7 +42,7 @@ export const usePushNotifications = () => {
     if (responseId && processedResponseId.current === responseId) {
       return;
     }
-    
+
     // 2. Mark as processed
     if (responseId) {
       processedResponseId.current = responseId;
@@ -67,7 +67,7 @@ export const usePushNotifications = () => {
     if (lastResponse?.notification) {
       const url = lastResponse.notification.request.content.data?.url;
       const id = lastResponse.notification.request.identifier;
-      
+
       if (typeof url === 'string') {
         handleNavigation(url, id);
       }

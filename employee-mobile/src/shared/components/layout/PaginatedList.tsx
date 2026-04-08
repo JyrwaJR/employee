@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  FlatList,
-  FlatListProps,
-  RefreshControl,
-  View,
-  ActivityIndicator,
-} from 'react-native';
+import { FlatList, FlatListProps, RefreshControl, View, ActivityIndicator } from 'react-native';
 import { Skeleton } from '../ui/skeleton';
 import { Text } from '../ui/text';
 import { cn } from '../../utils/cn';
@@ -50,7 +44,7 @@ interface PaginatedListProps<T> extends Omit<FlatListProps<T>, 'data'> {
 }
 
 /**
- * A production-ready List wrapper that standardizes loading, 
+ * A production-ready List wrapper that standardizes loading,
  * refreshing, and infinite scrolling states.
  */
 export function PaginatedList<T>({
@@ -67,13 +61,16 @@ export function PaginatedList<T>({
   className,
   ...props
 }: PaginatedListProps<T>) {
-  
   // Render Skeletons for the initial loading state
   if (isLoading && !data?.length) {
     return (
-      <View className="flex-1 p-4 gap-y-4">
+      <View className="flex-1 gap-y-4 p-4">
         {Array.from({ length: skeletonCount }).map((_, index) => (
-          <Skeleton key={index} className={cn('w-full rounded-2xl', className)} style={{ height: skeletonHeight }} />
+          <Skeleton
+            key={index}
+            className={cn('w-full rounded-2xl', className)}
+            style={{ height: skeletonHeight }}
+          />
         ))}
       </View>
     );
@@ -90,7 +87,7 @@ export function PaginatedList<T>({
   const renderFooter = () => {
     if (!isFetchingNextPage) return null;
     return (
-      <View className="py-6 items-center">
+      <View className="items-center py-6">
         <ActivityIndicator size="small" color="#3b82f6" />
       </View>
     );

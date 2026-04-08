@@ -8,7 +8,7 @@ import { useContext } from 'react';
  */
 export const useLocalAuth = () => {
   const context = useContext(LocalAuthContext);
-  
+
   if (!context) {
     throw new Error('useLocalAuth must be used within a LocalAuthProvider');
   }

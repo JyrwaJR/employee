@@ -30,10 +30,7 @@ export function Skeleton({ className, animate = true }: SkeletonProps) {
   useEffect(() => {
     if (animate) {
       opacity.value = withRepeat(
-        withSequence(
-          withTiming(0.4, { duration: 800 }),
-          withTiming(1, { duration: 800 })
-        ),
+        withSequence(withTiming(0.4, { duration: 800 }), withTiming(1, { duration: 800 })),
         -1, // Infinite loop
         true // Reverse each loop
       );
