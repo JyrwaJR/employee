@@ -1,0 +1,122 @@
+import React from 'react';
+import {
+  FlatList,
+  FlatListProps,
+  RefreshControl,
+  View,
+  ActivityIndicator,
+} from 'react-native';
+import { Skeleton } from '../ui/skeleton';
+import { Text } from '../ui/text';
+import { cn } from '../../utils/cn';
+
+interface PaginatedListProps<T> extends Omit<FlatListProps<T>, 'data'> {
+  /**
+   * Data to be rendered (compatible with TanStack Query's page results)
+   */
+  data: T[] | undefined;
+  /**
+   * Whether the initial page is loading
+   */
+  isLoading?: boolean;
+  /**
+   * Whether a refresh is in progress
+   */
+  isRefreshing?: boolean;
+  /**
+   * Whether the next page is being fetched
+   */
+  isFetchingNextPage?: boolean;
+  /**
+   * Function to trigger when pulling to refresh
+   */
+  onRefresh?: () => void;
+  /**
+   * Function to trigger when reaching the end of the list
+   */
+  onEndReached?: () => void;
+  /**
+   * Optional custom component for empty state
+   */
+  ListEmptyComponent?: React.ReactElement;
+  /**
+   * Number of skeleton items to show during initial load
+   */
+  skeletonCount?: number;
+  /**
+   * Height of each skeleton item
+   */
+  skeletonHeight?: number;
+}
+
+/**
+ * A production-ready List wrapper that standardizes loading, 
+ * refreshing, and infinite scrolling states.
+ */
+export function PaginatedList<T>({
+  data,
+  isLoading,
+  isRefreshing,
+  isFetchingNextPage,
+  onRefresh,
+  onEndReached,
+  ListEmptyComponent,
+  skeletonCount = 6,
+  skeletonHeight = 100,
+  contentContainerStyle,
+  className,
+  ...props
+}: PaginatedListProps<T>) {
+  
+  // Render Skeletons for the initial loading state
+  if (isLoading && !data?.length) {
+    return (
+      <View className="flex-1 p-4 gap-y-4">
+        {Array.from({ length: skeletonCount }).map((_, index) => (
+          <Skeleton key={index} className={cn('w-full rounded-2xl', className)} style={{ height: skeletonHeight }} />
+        ))}
+      </View>
+    );
+  }
+
+  const defaultEmptyComponent = (
+    <View className="flex-1 items-center justify-center py-20">
+      <Text variant="subtext" className="text-center">
+        No items found.
+      </Text>
+    </View>
+  );
+
+  const renderFooter = () => {
+    if (!isFetchingNextPage) return null;
+    return (
+      <View className="py-6 items-center">
+        <ActivityIndicator size="small" color="#3b82f6" />
+      </View>
+    );
+  };
+
+  return (
+    <FlatList
+      data={data}
+      keyExtractor={(item, index) => (item as any)?.id?.toString() || index.toString()}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.5}
+      refreshControl={
+        onRefresh ? (
+          <RefreshControl
+            refreshing={!!isRefreshing}
+            onRefresh={onRefresh}
+            tintColor="#3b82f6"
+            colors={['#3b82f6']}
+          />
+        ) : undefined
+      }
+      ListEmptyComponent={ListEmptyComponent || defaultEmptyComponent}
+      ListFooterComponent={renderFooter}
+      contentContainerStyle={[{ flexGrow: 1 }, contentContainerStyle]}
+      showsVerticalScrollIndicator={false}
+      {...props}
+    />
+  );
+}
