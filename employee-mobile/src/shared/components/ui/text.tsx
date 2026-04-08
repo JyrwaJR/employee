@@ -1,17 +1,17 @@
 import * as React from 'react';
 import { Text as RNText, TextProps as RNTextProps } from 'react-native';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils/cn';
 
-const textVariants = cva('text-black dark:text-slate-50', {
+const textVariants = cva('text-slate-900 dark:text-slate-50', {
   variants: {
     variant: {
       default: 'text-base',
       heading: 'font-bold',
-      subtext: 'text-gray-500 dark:text-slate-400',
-      error: 'text-red-500 dark:text-red-500',
-      link: 'text-blue-600',
-      label: 'text-sm font-medium text-gray-700',
+      subtext: 'text-slate-500 dark:text-slate-400',
+      error: 'text-red-500 dark:text-red-400',
+      link: 'text-blue-600 dark:text-blue-400',
+      label: 'text-sm font-medium text-slate-700 dark:text-slate-300',
     },
     size: {
       default: 'text-base',

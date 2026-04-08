@@ -33,7 +33,7 @@ export const LoginScreen = () => {
     <KeyboardSafeView contentContainerClassName="px-6 justify-center">
       {/* Header Section */}
       <View className="mb-10 items-center">
-        <View className="mb-6 h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 dark:bg-blue-600">
+        <View className="mb-6 h-16 w-16 items-center justify-center rounded-2xl bg-blue-600">
           <Text variant={'heading'} className="text-white" size={'2xl'}>
             ✨
           </Text>
@@ -87,9 +87,9 @@ export const LoginScreen = () => {
           />
 
           <View className="my-8 flex-row items-center gap-x-2">
-            <View className="h-[1px] flex-1 bg-gray-200" />
+            <View className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-800" />
             <Text variant={'subtext'}>Or continue with</Text>
-            <View className="h-[1px] flex-1 bg-gray-200" />
+            <View className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-800" />
           </View>
 
           <Button title="Google" variant="google" onPress={() => Alert.alert('Google Auth')} />
@@ -105,7 +105,7 @@ export const LoginScreen = () => {
 
       {/* Developer UI Laboratory Entrance */}
       {__DEV__ && (
-        <View className="mt-12 items-center border-t border-gray-100 pt-8 dark:border-gray-800">
+        <View className="mt-12 items-center border-t border-slate-100 pt-8 dark:border-slate-800">
           <Link href="/(dev)/ui-lab" asChild>
             <TouchableOpacity className="flex-row items-center rounded-full bg-slate-100 px-4 py-2 dark:bg-slate-800">
               <Text className="text-sm font-medium text-slate-600 dark:text-slate-400">

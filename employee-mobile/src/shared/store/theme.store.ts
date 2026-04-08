@@ -12,13 +12,19 @@ type UseThemeStore = {
   toggleTheme: () => void;
 };
 
+const getTargetTheme = (theme: ThemeType) => {
+  if (theme === 'system') {
+    return Appearance.getColorScheme() || 'light';
+  }
+  return theme;
+};
+
 export const useThemeStore = create<UseThemeStore>()(
   persist(
     (set) => ({
       theme: 'system',
       setTheme: (theme: ThemeType) => {
-        const targetTheme = theme === 'system' ? Appearance.getColorScheme() || 'light' : theme;
-        nativewindColorScheme.set(targetTheme);
+        nativewindColorScheme.set(getTargetTheme(theme));
         set({ theme });
       },
       toggleTheme: () =>
@@ -36,11 +42,8 @@ export const useThemeStore = create<UseThemeStore>()(
         removeItem: SecureStore.deleteItemAsync,
       })),
       onRehydrateStorage: () => (state) => {
-        // Sync NativeWind color scheme immediately after rehydration
         if (state) {
-          const targetTheme =
-            state.theme === 'system' ? Appearance.getColorScheme() || 'light' : state.theme;
-          nativewindColorScheme.set(targetTheme);
+          nativewindColorScheme.set(getTargetTheme(state.theme));
         }
       },
     }

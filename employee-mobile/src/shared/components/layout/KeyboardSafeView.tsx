@@ -19,7 +19,7 @@ interface KeyboardSafeViewProps {
    */
   useSafeArea?: boolean;
   /**
-   * Edges to be handled by SafeAreaView. Defaults to ['top', 'bottom', 'left', 'right'].
+   * Edges to be handled by SafeAreaView. Defaults to ['bottom', 'left', 'right'].
    */
   safeAreaEdges?: Edge[];
   /**
@@ -72,7 +72,10 @@ export const KeyboardSafeView: React.FC<KeyboardSafeViewProps> = ({
   if (dismissKeyboardOnTap) {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-        <Container edges={safeAreaEdges} className="flex-1">
+        <Container 
+          edges={safeAreaEdges} 
+          className="flex-1 bg-white dark:bg-slate-950"
+        >
           {content}
         </Container>
       </TouchableWithoutFeedback>
@@ -80,7 +83,10 @@ export const KeyboardSafeView: React.FC<KeyboardSafeViewProps> = ({
   }
 
   return (
-    <Container edges={safeAreaEdges} className="flex-1">
+    <Container 
+      edges={safeAreaEdges} 
+      className="flex-1 bg-white dark:bg-slate-950"
+    >
       {content}
     </Container>
   );

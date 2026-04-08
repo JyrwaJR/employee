@@ -40,52 +40,33 @@ const Alert = React.forwardRef<View, AlertProps>(
 );
 Alert.displayName = 'Alert';
 
-const AlertTitle = React.forwardRef<View, React.ComponentPropsWithoutRef<typeof View>>(
-  ({ className, ...props }, ref) => (
+const AlertTitle = React.forwardRef<View, React.ComponentPropsWithoutRef<typeof View> & { children?: React.ReactNode }>(
+  ({ className, children, ...props }, ref) => (
     <View ref={ref} {...props}>
       <Text 
         variant="heading" 
         size="sm" 
         weight="semibold" 
-        className={cn('leading-tight', className)} 
-      />
+        className={cn('leading-tight', className)}>
+        {children}
+      </Text>
     </View>
   )
 );
 AlertTitle.displayName = 'AlertTitle';
 
-// Simplified Title helper for direct text use
-const AlertTitleText = ({ className, children }: { className?: string, children: React.ReactNode }) => (
-  <Text 
-    variant="heading" 
-    size="sm" 
-    weight="semibold" 
-    className={cn('leading-none tracking-tight mb-1', className)}>
-    {children}
-  </Text>
-);
-
-const AlertDescription = React.forwardRef<View, React.ComponentPropsWithoutRef<typeof View>>(
-  ({ className, ...props }, ref) => (
+const AlertDescription = React.forwardRef<View, React.ComponentPropsWithoutRef<typeof View> & { children?: React.ReactNode }>(
+  ({ className, children, ...props }, ref) => (
     <View ref={ref} {...props}>
       <Text 
         variant="subtext" 
         size="xs" 
-        className={cn('leading-relaxed opacity-90', className)} 
-      />
+        className={cn('leading-relaxed opacity-90', className)}>
+        {children}
+      </Text>
     </View>
   )
 );
 AlertDescription.displayName = 'AlertDescription';
 
-// Simplified Description helper for direct text use
-const AlertDescriptionText = ({ className, children }: { className?: string, children: React.ReactNode }) => (
-  <Text 
-    variant="subtext" 
-    size="xs" 
-    className={cn('leading-normal', className)}>
-    {children}
-  </Text>
-);
-
-export { Alert, AlertTitleText as AlertTitle, AlertDescriptionText as AlertDescription };
+export { Alert, AlertTitle, AlertDescription };

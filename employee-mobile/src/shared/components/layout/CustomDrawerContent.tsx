@@ -7,7 +7,7 @@ import { Link, Route, usePathname } from 'expo-router';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Pressable, Text, View } from 'react-native';
-import { useTheme } from '@/src/shared/hooks/use-theme';
+import { useThemeStore } from '@shared/store/theme.store';
 
 export type MenuItemsT = {
   id: number;
@@ -28,10 +28,11 @@ const adminDrawerMenuItems: MenuItemsT[] = [
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
   const { user } = useAuth();
-  const theme = useTheme();
+  const { theme } = useThemeStore();
   const isDark = theme === 'dark';
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
+
   const bgColor = isDark ? colors.slate[900] : colors.white;
 
   const isAdmin = user?.role === 'SUPER_ADMIN' || user?.role === 'ADMIN';
@@ -58,13 +59,15 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           return (
             <Link key={item.id} href={item.href} asChild>
               <Pressable
-                className={`flex-row items-center rounded-xl p-4 ${isActive ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-transparent'
-                  }`}>
+                className={`flex-row items-center rounded-xl p-4 ${
+                  isActive ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-transparent'
+                }`}>
                 <Text
-                  className={`text-base font-medium ${isActive
+                  className={`text-base font-medium ${
+                    isActive
                       ? 'text-blue-700 dark:text-blue-400'
                       : 'text-slate-600 dark:text-slate-400'
-                    }`}>
+                  }`}>
                   {item.title}
                 </Text>
               </Pressable>
