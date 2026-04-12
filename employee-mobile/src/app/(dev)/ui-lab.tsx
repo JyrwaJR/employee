@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, ScrollView, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {
   Button,
@@ -49,7 +49,6 @@ export default function UILabScreen() {
   const [showDialog, setShowDialog] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [isSkeletonTrigger, setIsSkeletonTrigger] = useState(false);
-  const [isAnimationReplaying, setIsAnimationReplaying] = useState(true);
   const [accordionValue, setAccordionValue] = useState('item-1');
   const { theme, setTheme, toggleTheme } = useThemeStore();
   const methods = useForm({
@@ -91,7 +90,7 @@ export default function UILabScreen() {
           }
         />
 
-      {/* Theme Section */}
+        {/* Theme Section */}
         {/* Theme Section */}
         <Section title="Theme Management">
           <View className="flex-row gap-x-2">
@@ -154,8 +153,8 @@ export default function UILabScreen() {
               <AccordionTrigger>Is it accessible?</AccordionTrigger>
               <AccordionContent>
                 <Text variant="subtext">
-                  Yes. It adheres to the WAI-ARIA design pattern and supports keyboard navigation 
-                  on platforms where applicable.
+                  Yes. It adheres to the WAI-ARIA design pattern and supports keyboard navigation on
+                  platforms where applicable.
                 </Text>
               </AccordionContent>
             </AccordionItem>
@@ -163,7 +162,7 @@ export default function UILabScreen() {
               <AccordionTrigger>Is it animated?</AccordionTrigger>
               <AccordionContent>
                 <Text variant="subtext">
-                  Yes. It uses native LayoutAnimations for the expansion and Reanimated for the 
+                  Yes. It uses native LayoutAnimations for the expansion and Reanimated for the
                   state-driven chevron rotation.
                 </Text>
               </AccordionContent>
@@ -180,11 +179,11 @@ export default function UILabScreen() {
             </CardHeader>
             <CardContent>
               <Text>
-                The primary UI infrastructure is now complete. We have implemented 
-                Shadcn-inspired patterns for layout, navigation, and animations.
+                The primary UI infrastructure is now complete. We have implemented Shadcn-inspired
+                patterns for layout, navigation, and animations.
               </Text>
               <View className="h-4" />
-              <Image 
+              <Image
                 source={{ uri: 'https://picsum.photos/400/200' }}
                 containerClassName="h-32 w-full rounded-2xl"
               />
@@ -298,7 +297,7 @@ export default function UILabScreen() {
               {[1, 2, 3, 4, 5].map((i) => (
                 <FadeInView
                   key={i}
-                  viewportAware
+                  // viewportAware
                   translateY={30}
                   className="mb-4 rounded-2xl bg-slate-50 p-6 dark:bg-slate-800">
                   <View className="flex-row items-center gap-x-3">
@@ -389,7 +388,9 @@ export default function UILabScreen() {
         <DialogContent onClose={() => setShowDialog(false)}>
           <DialogHeader>
             <DialogTitle>Project Settings</DialogTitle>
-            <DialogDescription>Manage your project preferences and team access here.</DialogDescription>
+            <DialogDescription>
+              Manage your project preferences and team access here.
+            </DialogDescription>
           </DialogHeader>
           <View className="h-20 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800">
             <Text variant="subtext">Custom Content Area</Text>
@@ -406,7 +407,8 @@ export default function UILabScreen() {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently remove your account from our servers.
+              This action cannot be undone. This will permanently remove your account from our
+              servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

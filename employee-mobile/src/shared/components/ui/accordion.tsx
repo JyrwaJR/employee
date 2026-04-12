@@ -1,26 +1,24 @@
 import * as React from 'react';
-import { View, TouchableOpacity, LayoutAnimation, Platform, UIManager } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import Animated, { 
   useAnimatedStyle, 
   useSharedValue, 
   withTiming, 
-  interpolate,
-  useDerivedValue
+  useDerivedValue,
+  measure,
+  useAnimatedRef,
+  runOnUI
 } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import { Text } from './text';
 import { cn } from '../../utils/cn';
-
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
 
 const AccordionContext = React.createContext<{
   value?: string;
   onValueChange?: (value: string) => void;
 }>({});
 
-const Accordion = ({ 
+export const Accordion = ({ 
   children, 
   value, 
   onValueChange,
@@ -36,7 +34,7 @@ const Accordion = ({
   </AccordionContext.Provider>
 );
 
-const AccordionItem = ({ 
+export const AccordionItem = ({ 
   children, 
   value: itemValue, 
   className 
@@ -59,7 +57,7 @@ const AccordionItem = ({
   );
 };
 
-const AccordionTrigger = ({ 
+export const AccordionTrigger = ({ 
   children, 
   isOpen, 
   value: itemValue,
@@ -98,7 +96,7 @@ const AccordionTrigger = ({
   );
 };
 
-const AccordionContent = ({ 
+export const AccordionContent = ({ 
   children, 
   isOpen,
   className 
@@ -107,19 +105,36 @@ const AccordionContent = ({
   isOpen?: boolean;
   className?: string;
 }) => {
-  // We use LayoutAnimation for the height transition as it's more 
-  // performant for "auto height" than measuring via Reanimated.
+  const aref = useAnimatedRef<View>();
+  const heightValue = useSharedValue(0);
+
+  // Smooth height transition using Reanimated
+  // This is much smoother than LayoutAnimation as it stays on the UI thread
+  const animatedStyle = useAnimatedStyle(() => ({
+    height: heightValue.value,
+    opacity: heightValue.value === 0 ? 0 : 1,
+    overflow: 'hidden',
+  }));
+
   React.useEffect(() => {
-    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    if (isOpen) {
+      // Small delay to allow layout calculation
+      runOnUI(() => {
+        const measured = measure(aref);
+        if (measured) {
+          heightValue.value = withTiming(measured.height, { duration: 300 });
+        }
+      })();
+    } else {
+      heightValue.value = withTiming(0, { duration: 250 });
+    }
   }, [isOpen]);
 
-  if (!isOpen) return null;
-
   return (
-    <View className={cn('pb-4 pt-0', className)}>
-      {children}
-    </View>
+    <Animated.View style={animatedStyle}>
+      <View ref={aref} className={cn('pb-4 pt-0', className)} style={{ position: 'absolute', width: '100%' }}>
+        {children}
+      </View>
+    </Animated.View>
   );
 };
-
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };

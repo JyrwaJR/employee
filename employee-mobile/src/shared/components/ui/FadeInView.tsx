@@ -1,25 +1,28 @@
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { View, Dimensions } from 'react-native';
 import Animated, { 
   useAnimatedStyle, 
   useSharedValue, 
   withTiming, 
   withDelay,
-  Easing
+  Easing,
+  useAnimatedScrollHandler
 } from 'react-native-reanimated';
+
+const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 
 /* -------------------------------------------------------------------------- */
 /*                                   Context                                  */
 /* -------------------------------------------------------------------------- */
 
-const AnimationContext = createContext<{ start: boolean; stagger: number }>({ 
-  start: false, 
-  stagger: 0 
-});
+interface AnimationContextType {
+  start: boolean;
+  stagger: number;
+  scrollOffset: Animated.SharedValue<number>;
+}
 
-/**
- * Orchestrates entrance animations. 
- * Can be linked to a Skeleton state or triggered on mount.
- */
+const AnimationContext = createContext<AnimationContextType | null>(null);
+
 export const AnimationProvider = ({ 
   children, 
   start = true, 
@@ -28,13 +31,34 @@ export const AnimationProvider = ({
   children: React.ReactNode; 
   start?: boolean; 
   stagger?: number;
-}) => (
-  <AnimationContext.Provider value={{ start, stagger }}>
-    {children}
-  </AnimationContext.Provider>
-);
+}) => {
+  const scrollOffset = useSharedValue(0);
 
-export const useAnimation = () => useContext(AnimationContext);
+  return (
+    <AnimationContext.Provider value={{ start, stagger, scrollOffset }}>
+      {children}
+    </AnimationContext.Provider>
+  );
+};
+
+export const useAnimation = () => {
+  const context = useContext(AnimationContext);
+  if (!context) throw new Error('useAnimation must be used within AnimationProvider');
+  return context;
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                Scroll Handler                              */
+/* -------------------------------------------------------------------------- */
+
+export const useAnimationScrollHandler = () => {
+  const { scrollOffset } = useAnimation();
+  return useAnimatedScrollHandler({
+    onScroll: (event) => {
+      scrollOffset.value = event.contentOffset.y;
+    },
+  });
+};
 
 /* -------------------------------------------------------------------------- */
 /*                                  Component                                 */
@@ -46,44 +70,63 @@ interface FadeInViewProps {
   delay?: number;
   translateY?: number;
   className?: string;
-  /** Index for automatic stagger calculation */
   index?: number;
+  viewportAware?: boolean;
 }
 
 /**
- * A reusable entrance animation component.
- * Automatically respects the AnimationProvider state.
+ * High-performance entrance animation.
+ * Optimized with Easing.bezier and direct UI-thread transitions.
  */
 export const FadeInView = ({ 
   children, 
-  duration = 600, 
+  duration = 700, 
   delay = 0, 
-  translateY = 15,
+  translateY = 25,
   className,
-  index = 0
+  index = 0,
+  viewportAware = false
 }: FadeInViewProps) => {
-  const { start, stagger } = useAnimation();
+  const { start, stagger, scrollOffset } = useAnimation();
   const opacity = useSharedValue(0);
   const offset = useSharedValue(translateY);
+  const [isVisible, setIsVisible] = useState(!viewportAware);
+  const [layoutY, setLayoutY] = useState(0);
+
+  const onLayout = (event: any) => {
+    if (viewportAware) {
+      setLayoutY(event.nativeEvent.layout.y);
+    }
+  };
 
   useEffect(() => {
-    if (start) {
+    if (viewportAware && start && !isVisible) {
+      const checkVisibility = () => {
+        // Trigger slightly before it enters the viewport for smoothness
+        if (layoutY < (scrollOffset.value + SCREEN_HEIGHT + 100)) {
+          setIsVisible(true);
+        }
+      };
+      
+      const interval = setInterval(checkVisibility, 50);
+      return () => clearInterval(interval);
+    }
+  }, [viewportAware, start, layoutY, isVisible, scrollOffset]);
+
+  useEffect(() => {
+    if (start && isVisible) {
       const finalDelay = delay + (index * stagger);
       
-      opacity.value = withDelay(
-        finalDelay, 
-        withTiming(1, { duration, easing: Easing.out(Easing.quad) })
-      );
-      
-      offset.value = withDelay(
-        finalDelay, 
-        withTiming(0, { duration, easing: Easing.out(Easing.quad) })
-      );
-    } else {
-      opacity.value = 0;
-      offset.value = translateY;
+      // Use Beizer curve for a more "premium" feel than quad/cubic
+      const config = {
+        duration,
+        easing: Easing.bezier(0.25, 0.1, 0.25, 1)
+      };
+
+      opacity.value = withDelay(finalDelay, withTiming(1, config));
+      offset.value = withDelay(finalDelay, withTiming(0, config));
     }
-  }, [start, delay, index, stagger, duration, translateY]);
+  }, [start, isVisible, delay, index, stagger, duration]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -91,7 +134,11 @@ export const FadeInView = ({
   }));
 
   return (
-    <Animated.View style={animatedStyle} className={className}>
+    <Animated.View 
+      onLayout={onLayout}
+      style={animatedStyle} 
+      className={className}
+    >
       {children}
     </Animated.View>
   );
