@@ -1,8 +1,8 @@
 import { Platform, ToastAndroid } from 'react-native';
-import { toast } from 'sonner-native';
 import { NOTIFY, NotificationKey } from '../constants/notifications';
 import { ApiResponse } from '../types/api';
 import { logger } from './logger';
+import { toast } from '../components/ui';
 
 /**
  * Intelligent Toast Dispatcher
