@@ -16,17 +16,19 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-  AlertDialog,
-  AlertDialogCancel,
+  AlertDialogAction,
   toast,
   SkeletonProvider,
   SkeletonItem,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
+  AnimationProvider,
+  FadeInView,
   AlertDialogFooter,
-  AlertDialogAction,
+  AlertDialogDescription,
+  AlertDialogTitle,
+  AlertDialogHeader,
+  AlertDialogContent,
+  AlertDialog,
+  AlertDialogCancel,
 } from '@/src/shared/components/ui';
 import { KeyboardSafeView, HeaderStack } from '@/src/shared/components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -36,6 +38,7 @@ export default function UILabScreen() {
   const [showDialog, setShowDialog] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [isSkeletonTrigger, setIsSkeletonTrigger] = useState(false);
+  const [isAnimationReplaying, setIsAnimationReplaying] = useState(true);
   const { theme, setTheme, toggleTheme } = useThemeStore();
   const methods = useForm({
     defaultValues: {
@@ -155,7 +158,6 @@ export default function UILabScreen() {
           </FormProvider>
         </Section>
 
-        {/* Loading / Skeleton Section */}
         <Section title="Skeleton Pulse">
           <View className="flex-row items-center gap-x-4">
             <Skeleton className="h-12 w-12 rounded-full" />
@@ -199,7 +201,42 @@ export default function UILabScreen() {
           </SkeletonProvider>
         </Section>
 
-        {/* Overlays Section */}
+        {/* Entrance Animations Section */}
+        <Section title="Entrance Animations (Automatic Stagger)">
+          <Button
+            title="Replay Entrance Sequence"
+            variant="outline"
+            onPress={() => {
+              setIsAnimationReplaying(false);
+              setTimeout(() => setIsAnimationReplaying(true), 10);
+            }}
+          />
+
+          <AnimationProvider start={isAnimationReplaying} stagger={120}>
+            <View className="gap-y-3">
+              {[1, 2, 3].map((i) => (
+                <FadeInView
+                  key={i}
+                  index={i}
+                  className="rounded-xl border border-gray-100 bg-white p-4 dark:border-gray-800 dark:bg-slate-900">
+                  <View className="flex-row items-center gap-x-3">
+                    <View className="h-10 w-10 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900/30">
+                      <Ionicons name="flash" size={20} color="#3b82f6" />
+                    </View>
+                    <View className="flex-1">
+                      <Text weight="bold">Item Sequence {i}</Text>
+                      <Text variant="subtext" size="sm">
+                        Automatically staggered entrance
+                      </Text>
+                    </View>
+                  </View>
+                </FadeInView>
+              ))}
+            </View>
+          </AnimationProvider>
+        </Section>
+
+        <View className="h-20" />
         <Section title="Overlays & Notifications">
           <View className="flex-row flex-wrap gap-2">
             <Button
