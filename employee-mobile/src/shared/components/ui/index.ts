@@ -9,3 +9,5 @@ export * from './alert';
 export * from './toaster';
 export * from './FadeInView';
 export * from './image';
+export * from './card';
+export * from './accordion';

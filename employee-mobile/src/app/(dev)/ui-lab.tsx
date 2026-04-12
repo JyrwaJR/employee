@@ -30,6 +30,16 @@ import {
   AlertDialogContent,
   AlertDialog,
   AlertDialogCancel,
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
 } from '@/src/shared/components/ui';
 import { KeyboardSafeView, HeaderStack } from '@/src/shared/components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -40,6 +50,7 @@ export default function UILabScreen() {
   const [showAlert, setShowAlert] = useState(false);
   const [isSkeletonTrigger, setIsSkeletonTrigger] = useState(false);
   const [isAnimationReplaying, setIsAnimationReplaying] = useState(true);
+  const [accordionValue, setAccordionValue] = useState('item-1');
   const { theme, setTheme, toggleTheme } = useThemeStore();
   const methods = useForm({
     defaultValues: {
@@ -134,6 +145,55 @@ export default function UILabScreen() {
               We were unable to save your changes. Please try again.
             </AlertDescription>
           </Alert>
+        </Section>
+
+        {/* Accordion Section */}
+        <Section title="Accordion (Collapsible Content)">
+          <Accordion value={accordionValue} onValueChange={setAccordionValue}>
+            <AccordionItem value="item-1">
+              <AccordionTrigger>Is it accessible?</AccordionTrigger>
+              <AccordionContent>
+                <Text variant="subtext">
+                  Yes. It adheres to the WAI-ARIA design pattern and supports keyboard navigation 
+                  on platforms where applicable.
+                </Text>
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-2">
+              <AccordionTrigger>Is it animated?</AccordionTrigger>
+              <AccordionContent>
+                <Text variant="subtext">
+                  Yes. It uses native LayoutAnimations for the expansion and Reanimated for the 
+                  state-driven chevron rotation.
+                </Text>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </Section>
+
+        {/* Cards Section */}
+        <Section title="Cards (Shadcn Style)">
+          <Card>
+            <CardHeader>
+              <CardTitle>Project Update</CardTitle>
+              <CardDescription>Generated on April 12, 2026</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Text>
+                The primary UI infrastructure is now complete. We have implemented 
+                Shadcn-inspired patterns for layout, navigation, and animations.
+              </Text>
+              <View className="h-4" />
+              <Image 
+                source={{ uri: 'https://picsum.photos/400/200' }}
+                containerClassName="h-32 w-full rounded-2xl"
+              />
+            </CardContent>
+            <CardFooter className="justify-end gap-x-2">
+              <Button title="Cancel" variant="ghost" size="sm" onPress={() => {}} />
+              <Button title="Deploy" size="sm" onPress={() => {}} />
+            </CardFooter>
+          </Card>
         </Section>
 
         {/* Buttons Section */}
