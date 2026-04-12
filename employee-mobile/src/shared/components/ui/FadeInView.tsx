@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, memo } from 'react';
 import { View, Dimensions } from 'react-native';
 import Animated, { 
   useAnimatedStyle, 
@@ -75,10 +75,10 @@ interface FadeInViewProps {
 }
 
 /**
- * High-performance entrance animation.
- * Optimized with Easing.bezier and direct UI-thread transitions.
+ * Memoized FadeInView to prevent animation restarts during parent re-renders
+ * (like when a Modal/Dialog opens).
  */
-export const FadeInView = ({ 
+export const FadeInView = memo(({ 
   children, 
   duration = 700, 
   delay = 0, 
@@ -90,19 +90,19 @@ export const FadeInView = ({
   const { start, stagger, scrollOffset } = useAnimation();
   const opacity = useSharedValue(0);
   const offset = useSharedValue(translateY);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const [isVisible, setIsVisible] = useState(!viewportAware);
   const [layoutY, setLayoutY] = useState(0);
 
   const onLayout = (event: any) => {
-    if (viewportAware) {
+    if (viewportAware && !hasAnimated) {
       setLayoutY(event.nativeEvent.layout.y);
     }
   };
 
   useEffect(() => {
-    if (viewportAware && start && !isVisible) {
+    if (viewportAware && start && !isVisible && !hasAnimated) {
       const checkVisibility = () => {
-        // Trigger slightly before it enters the viewport for smoothness
         if (layoutY < (scrollOffset.value + SCREEN_HEIGHT + 100)) {
           setIsVisible(true);
         }
@@ -111,22 +111,25 @@ export const FadeInView = ({
       const interval = setInterval(checkVisibility, 50);
       return () => clearInterval(interval);
     }
-  }, [viewportAware, start, layoutY, isVisible, scrollOffset]);
+  }, [viewportAware, start, layoutY, isVisible, scrollOffset, hasAnimated]);
 
   useEffect(() => {
-    if (start && isVisible) {
+    if (start && isVisible && !hasAnimated) {
       const finalDelay = delay + (index * stagger);
       
-      // Use Beizer curve for a more "premium" feel than quad/cubic
       const config = {
         duration,
         easing: Easing.bezier(0.25, 0.1, 0.25, 1)
       };
 
       opacity.value = withDelay(finalDelay, withTiming(1, config));
-      offset.value = withDelay(finalDelay, withTiming(0, config));
+      offset.value = withDelay(finalDelay, withTiming(0, config, () => {
+        // Mark as completed on the UI thread
+      }));
+      
+      setHasAnimated(true); // Prevent restart on re-render
     }
-  }, [start, isVisible, delay, index, stagger, duration]);
+  }, [start, isVisible, delay, index, stagger, duration, hasAnimated]);
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -142,4 +145,6 @@ export const FadeInView = ({
       {children}
     </Animated.View>
   );
-};
+});
+
+FadeInView.displayName = 'FadeInView';

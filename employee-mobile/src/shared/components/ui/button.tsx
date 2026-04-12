@@ -8,11 +8,9 @@ const buttonVariants = cva('flex-row items-center justify-center rounded-2xl sha
   variants: {
     variant: {
       primary: 'bg-blue-600',
-      secondary: 'bg-slate-100 dark:bg-slate-800',
-      outline:
-        'border border-slate-200 bg-background shadow-none dark:border-slate-800 dark:bg-slate-950',
-      ghost: 'bg-white dark:bg-slate-950 !shadow-none',
-      google: 'border border-gray-200 bg-white',
+      secondary: 'bg-slate-100 dark:bg-slate-800 shadow-none',
+      outline: 'border border-gray-400 bg-background shadow-none dark:border-gray-800',
+      ghost: 'bg-background !shadow-none',
       destructive: 'bg-red-500',
     },
     size: {
@@ -49,8 +47,6 @@ export const Button = ({
   ...props
 }: ButtonProps) => {
   const { trigger, isDelayed } = useDelay(loadingDelay);
-  const isGoogle = variant === 'google';
-
   const isDisabled = isDelayed || isLoading || props.disabled;
 
   return (
@@ -66,18 +62,17 @@ export const Button = ({
       {...props}>
       {isLoading ? (
         <ActivityIndicator
-          color={isGoogle || variant === 'outline' || variant === 'ghost' ? '#000' : '#FFF'}
+          color={variant === 'outline' || variant === 'ghost' ? '#000' : '#FFF'}
         />
       ) : (
         <>
-          {isGoogle && <Text className="mr-3 text-lg font-bold text-red-500">G</Text>}
           {children || (
             <Text
               className={cn(
                 'text-base font-semibold',
-                isGoogle || variant === 'outline' || variant === 'ghost' || variant === 'secondary'
+                variant === 'outline' || variant === 'ghost' || variant === 'secondary'
                   ? 'text-slate-900 dark:text-slate-50'
-                  : 'text-white'
+                  : '!dark:text-black text-white'
               )}>
               {title}
             </Text>

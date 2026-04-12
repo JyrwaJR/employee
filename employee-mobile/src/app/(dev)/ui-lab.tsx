@@ -189,8 +189,8 @@ export default function UILabScreen() {
               />
             </CardContent>
             <CardFooter className="justify-end gap-x-2">
-              <Button title="Cancel" variant="ghost" size="sm" onPress={() => {}} />
-              <Button title="Deploy" size="sm" onPress={() => {}} />
+              <Button title="Cancel" variant="secondary" onPress={() => {}} />
+              <Button title="Deploy" onPress={() => {}} />
             </CardFooter>
           </Card>
         </Section>
@@ -203,7 +203,6 @@ export default function UILabScreen() {
           <Button title="Destructive Action" variant="destructive" onPress={() => {}} />
           <Button title="Loading State" isLoading onPress={() => {}} />
           <Button title="Ghost Button" variant="ghost" onPress={() => {}} />
-          <Button title="Google Button" variant="google" onPress={() => {}} />
         </Section>
 
         {/* Inputs Section */}
@@ -294,10 +293,10 @@ export default function UILabScreen() {
         <Section title="Entrance Animations (Automatic Stagger)">
           <AnimationProvider stagger={150}>
             <View className="rounded-3xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-slate-900">
-              {[1, 2, 3, 4, 5].map((i) => (
+              {[1, 2, 3].map((i) => (
                 <FadeInView
                   key={i}
-                  // viewportAware
+                  delay={i * 100}
                   translateY={30}
                   className="mb-4 rounded-2xl bg-slate-50 p-6 dark:bg-slate-800">
                   <View className="flex-row items-center gap-x-3">
