@@ -11,30 +11,35 @@ import { routes } from '@/src/shared/constants/routes';
 import { FieldInput } from '@/src/shared/components/ui/field-input';
 import { Button } from '@components/ui/button';
 import { useLoginMutation } from '../hooks/useLoginMutation';
+import { useAuth } from '@/src/shared/hooks/useAuth';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
+const formDefaultValue: LoginFormInputs = {
+  phone_no: '',
+  password: '',
+};
+
 export const LoginScreen = () => {
+  const { isSignedIn } = useAuth();
+
   const methods = useForm<LoginFormInputs>({
     resolver: zodResolver(LoginSchema),
-    defaultValues: {
-      phone_no: '',
-      password: '',
-    },
+    defaultValues: formDefaultValue,
+    shouldFocusError: true,
+    shouldUnregister: true,
   });
 
   const loginMutation = useLoginMutation();
 
-  const onSubmit = (data: LoginFormInputs) => {
-    loginMutation.mutate(data);
-  };
+  const onSubmit = (data: LoginFormInputs) => loginMutation.mutate(data);
 
   return (
     <KeyboardSafeView contentContainerClassName="px-6 justify-center">
       {/* Header Section */}
       <View className="mb-10 items-center">
         <View className="mb-6 h-16 w-16 items-center justify-center rounded-2xl bg-blue-600">
-          <Text variant={'heading'} className="text-white" size={'2xl'}>
+          <Text variant={'heading'} weight={'bold'} size={'2xl'}>
             ✨
           </Text>
         </View>
@@ -92,6 +97,7 @@ export const LoginScreen = () => {
             title="Sign in"
             onPress={methods.handleSubmit(onSubmit)}
             isLoading={loginMutation.isPending}
+            disabled={isSignedIn}
           />
         </View>
       </FormProvider>

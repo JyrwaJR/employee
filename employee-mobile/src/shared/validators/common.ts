@@ -9,7 +9,7 @@ import { z } from 'zod';
 
 export const phoneValidation = z
   .string('Phone number is required')
-  .min(1, 'Phone number is required')
+  .min(10, 'Phone number is required')
   .length(10, 'Phone number must be exactly 10 digits')
   .regex(ONLY_NUMBER_REGEX, 'Phone number must only contain digits');
 
