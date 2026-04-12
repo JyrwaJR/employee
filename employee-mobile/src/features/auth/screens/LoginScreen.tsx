@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Alert } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -50,15 +50,17 @@ export const LoginScreen = () => {
           <FieldInput
             name="phone_no"
             label="Phone No."
-            placeholder="e.g. 07XXXXXXXX"
+            placeholder="07XXXXXXXX"
             keyboardType="phone-pad"
+            autoCapitalize="none"
+            autoCorrect={false}
+            autoComplete="tel"
             testID="PHONE_INPUT"
+            returnKeyType="next"
             onChangeText={(value) => {
-              // filter none numeric characters
-              const valueWithoutDashes = value.replace(/[-]/g, '');
-              const trimmedValue = valueWithoutDashes.replace(/[^0-9]/g, '');
-              if (trimmedValue.length <= 10) {
-                methods.setValue('phone_no', trimmedValue);
+              const cleaned = value.replace(/[^0-9]/g, '');
+              if (cleaned.length <= 10) {
+                methods.setValue('phone_no', cleaned, { shouldValidate: true });
               }
             }}
           />
@@ -69,6 +71,12 @@ export const LoginScreen = () => {
             secureTextEntry
             label="Password"
             placeholder="••••••••"
+            autoCapitalize="none"
+            autoCorrect={false}
+            spellCheck={false}
+            autoComplete="password"
+            returnKeyType="done"
+            onSubmitEditing={methods.handleSubmit(onSubmit)}
           />
 
           <View className="mb-8 items-end">
@@ -85,14 +93,6 @@ export const LoginScreen = () => {
             onPress={methods.handleSubmit(onSubmit)}
             isLoading={loginMutation.isPending}
           />
-
-          <View className="my-8 flex-row items-center gap-x-2">
-            <View className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-800" />
-            <Text variant={'subtext'}>Or continue with</Text>
-            <View className="h-[1px] flex-1 bg-slate-200 dark:bg-slate-800" />
-          </View>
-
-          <Button title="Google" variant="google" onPress={() => Alert.alert('Google Auth')} />
         </View>
       </FormProvider>
 
