@@ -17,14 +17,17 @@ import {
   DialogDescription,
   DialogFooter,
   AlertDialog,
+  AlertDialogCancel,
+  toast,
+  SkeletonProvider,
+  SkeletonItem,
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogAction,
-  AlertDialogCancel,
- toast } from '@/src/shared/components/ui';
+} from '@/src/shared/components/ui';
 import { KeyboardSafeView, HeaderStack } from '@/src/shared/components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useThemeStore } from '@/src/shared/store/theme.store';
@@ -32,6 +35,7 @@ import { useThemeStore } from '@/src/shared/store/theme.store';
 export default function UILabScreen() {
   const [showDialog, setShowDialog] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [isSkeletonTrigger, setIsSkeletonTrigger] = useState(false);
   const { theme, setTheme, toggleTheme } = useThemeStore();
   const methods = useForm({
     defaultValues: {
@@ -161,6 +165,38 @@ export default function UILabScreen() {
             </View>
           </View>
           <Skeleton className="h-32 w-full rounded-2xl" />
+        </Section>
+
+        {/* Contextual Skeleton Section */}
+        <Section title="Contextual Skeleton (The Ghost Wrapper)">
+          <Button
+            title={isSkeletonTrigger ? 'Stop Loading' : 'Trigger Context Loading'}
+            variant="secondary"
+            onPress={() => setIsSkeletonTrigger(!isSkeletonTrigger)}
+          />
+
+          <SkeletonProvider isLoading={isSkeletonTrigger}>
+            <View className="mt-4 flex-row items-center gap-x-4 rounded-2xl border border-gray-100 bg-white p-4 dark:border-gray-800 dark:bg-slate-900">
+              <SkeletonItem className="rounded-full">
+                <View className="h-16 w-16 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
+                  <Ionicons name="person" size={32} color="#3b82f6" />
+                </View>
+              </SkeletonItem>
+
+              <View className="flex-1 gap-y-1">
+                <SkeletonItem className="rounded-md">
+                  <Text variant="heading" size="lg">
+                    Alex Henderson
+                  </Text>
+                </SkeletonItem>
+                <SkeletonItem className="rounded-md">
+                  <Text variant="subtext" size="sm">
+                    Senior Software Architect
+                  </Text>
+                </SkeletonItem>
+              </View>
+            </View>
+          </SkeletonProvider>
         </Section>
 
         {/* Overlays Section */}
