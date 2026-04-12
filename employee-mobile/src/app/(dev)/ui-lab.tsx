@@ -90,31 +90,6 @@ export default function UILabScreen() {
           }
         />
 
-        {/* Theme Section */}
-        {/* Theme Section */}
-        <Section title="Theme Management">
-          <View className="flex-row gap-x-2">
-            <Button
-              title="Light"
-              variant={theme === 'light' ? 'primary' : 'outline'}
-              className="flex-1"
-              onPress={() => setTheme('light')}
-            />
-            <Button
-              title="Dark"
-              variant={theme === 'dark' ? 'primary' : 'outline'}
-              className="flex-1"
-              onPress={() => setTheme('dark')}
-            />
-            <Button
-              title="System"
-              variant={theme === 'system' ? 'primary' : 'outline'}
-              className="flex-1"
-              onPress={() => setTheme('system')}
-            />
-          </View>
-        </Section>
-
         {/* Typography Section */}
         <Section title="Typography">
           <Text variant="heading" size="3xl">

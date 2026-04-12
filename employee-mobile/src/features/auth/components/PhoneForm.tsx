@@ -51,6 +51,7 @@ export const PhoneForm = () => {
           placeholder="+1 234 567 8900"
           keyboardType="phone-pad"
           autoComplete="tel"
+          onEndEditing={methods.handleSubmit(onPhoneSubmit)}
         />
 
         <Button

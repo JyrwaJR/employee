@@ -1,54 +1,39 @@
 import React from 'react';
-import { View, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import { Text } from '@/src/shared/components/ui/text';
-import { Link, useRouter } from 'expo-router';
+import { View, ScrollView } from 'react-native';
+import { Text, Button, FieldInput } from '@/src/shared/components/ui';
+import { Link } from 'expo-router';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useMutation } from '@tanstack/react-query';
-import { Button } from '@/src/shared/components/ui/button';
-import { http } from '@/src/shared/utils/http';
-import { api } from '@/src/shared/api';
-import { notify } from '@/src/shared/utils/notify';
 import { Container } from '@/src/shared/components/layout/Container';
 import { SignUpSchema } from '../validators/signup.schema';
 import { routes } from '@/src/shared/constants/routes';
-import { FieldInput } from '@/src/shared/components/ui/field-input';
+import { useSignUpMutation } from '../hooks/useSignUpMutation';
+import { KeyboardSafeView } from '@/src/shared/components/layout';
 
 type SignUpFormInputs = z.infer<typeof SignUpSchema>;
 
-export const SignUpScreen = () => {
-  const router = useRouter();
+const defaultValues: SignUpFormInputs = {
+  first_name: '',
+  last_name: '',
+  phone_no: '',
+  password: '',
+  confirm_password: '',
+};
 
-  const signUpMutation = useMutation({
-    mutationFn: (data: SignUpFormInputs) => http.post(api.auth.signUp, data),
-    onSuccess: (data) => {
-      if (data.success) {
-        router.replace(routes.auth.login);
-      }
-      notify(data, 'AUTH_REGISTER');
-      return data;
-    },
-  });
+export const SignUpScreen = () => {
+  const signUpMutation = useSignUpMutation();
 
   const methods = useForm<SignUpFormInputs>({
     resolver: zodResolver(SignUpSchema),
-    defaultValues: {
-      first_name: '',
-      last_name: '',
-      phone_no: '',
-      password: '',
-      confirm_password: '',
-    },
+    defaultValues,
   });
 
   const onSubmit = (data: SignUpFormInputs) => signUpMutation.mutate(data);
 
   return (
     <Container>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        className="flex-1">
+      <KeyboardSafeView className="flex-1">
         <ScrollView
           contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
           showsVerticalScrollIndicator={false}
@@ -156,7 +141,7 @@ export const SignUpScreen = () => {
             </Link>
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
+      </KeyboardSafeView>
     </Container>
   );
 };

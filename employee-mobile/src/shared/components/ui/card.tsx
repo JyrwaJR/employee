@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, ViewProps } from 'react-native';
+import { View, ViewProps, Text as RNText } from 'react-native';
 import { Text } from './text';
 import { cn } from '../../utils/cn';
 
@@ -7,12 +7,13 @@ const Card = React.forwardRef<View, ViewProps>(({ className, ...props }, ref) =>
   <View
     ref={ref}
     className={cn(
-      'rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950',
+      'rounded-3xl border border-slate-200 bg-white shadow-none dark:border-slate-800 dark:bg-slate-950',
       className
     )}
     {...props}
   />
 ));
+
 Card.displayName = 'Card';
 
 const CardHeader = React.forwardRef<View, ViewProps>(({ className, ...props }, ref) => (
@@ -20,20 +21,26 @@ const CardHeader = React.forwardRef<View, ViewProps>(({ className, ...props }, r
 ));
 CardHeader.displayName = 'CardHeader';
 
-const CardTitle = React.forwardRef<View, ViewProps>(({ className, ...props }, ref) => (
-  <Text
-    variant="heading"
-    size="lg"
-    weight="semibold"
-    className={cn('leading-none tracking-tight', className)}
-    {...props}
-  />
-));
+const CardTitle = React.forwardRef<RNText, React.ComponentProps<typeof Text>>(
+  ({ className, ...props }, ref) => (
+    <Text
+      ref={ref}
+      variant="heading"
+      size="lg"
+      weight="semibold"
+      className={cn('leading-none tracking-tight', className)}
+      {...props}
+    />
+  )
+);
+
 CardTitle.displayName = 'CardTitle';
 
-const CardDescription = React.forwardRef<View, ViewProps>(({ className, ...props }, ref) => (
-  <Text variant="subtext" size="sm" className={cn(className)} {...props} />
-));
+const CardDescription = React.forwardRef<RNText, React.ComponentProps<typeof Text>>(
+  ({ className, ...props }, ref) => (
+    <Text ref={ref} variant="subtext" size="sm" className={cn(className)} {...props} />
+  )
+);
 CardDescription.displayName = 'CardDescription';
 
 const CardContent = React.forwardRef<View, ViewProps>(({ className, ...props }, ref) => (
