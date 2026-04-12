@@ -8,3 +8,4 @@ export * from './alert-dialog';
 export * from './alert';
 export * from './toaster';
 export * from './FadeInView';
+export * from './image';

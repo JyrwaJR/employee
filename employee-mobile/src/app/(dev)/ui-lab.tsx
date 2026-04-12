@@ -22,6 +22,7 @@ import {
   SkeletonItem,
   AnimationProvider,
   FadeInView,
+  Image,
   AlertDialogFooter,
   AlertDialogDescription,
   AlertDialogTitle,
@@ -61,22 +62,25 @@ export default function UILabScreen() {
   );
 
   return (
-    <KeyboardSafeView className="bg-slate-50 dark:bg-slate-900">
-      <HeaderStack
-        title="🛠 UI Laboratory"
-        subtitle="Shared Component Catalog"
-        rightIcon={
-          <TouchableOpacity onPress={toggleTheme} className="p-2">
-            <Ionicons
-              name={theme === 'dark' ? 'sunny' : 'moon'}
-              size={22}
-              color={theme === 'dark' ? '#FBBF24' : '#1e293b'}
-            />
-          </TouchableOpacity>
-        }
-      />
+    <>
+      <KeyboardSafeView
+        className="flex-1 bg-slate-50 dark:bg-slate-900"
+        contentContainerClassName="px-6 py-8">
+        <HeaderStack
+          title="🛠 UI Laboratory"
+          subtitle="Shared Component Catalog"
+          rightIcon={
+            <TouchableOpacity onPress={toggleTheme} className="p-2">
+              <Ionicons
+                name={theme === 'dark' ? 'sunny' : 'moon'}
+                size={22}
+                color={theme === 'dark' ? '#FBBF24' : '#1e293b'}
+              />
+            </TouchableOpacity>
+          }
+        />
 
-      <ScrollView className="px-6 py-8" showsVerticalScrollIndicator={false}>
+      {/* Theme Section */}
         {/* Theme Section */}
         <Section title="Theme Management">
           <View className="flex-row gap-x-2">
@@ -201,24 +205,42 @@ export default function UILabScreen() {
           </SkeletonProvider>
         </Section>
 
+        {/* Premium Image Section */}
+        <Section title="Premium Image (Loading & Error States)">
+          <View className="flex-row gap-4">
+            <View className="flex-1">
+              <Text variant="subtext" className="mb-2">
+                Successful Load
+              </Text>
+              <Image
+                source={{ uri: 'https://picsum.photos/200/300' }}
+                containerClassName="h-40 w-full rounded-2xl"
+              />
+            </View>
+
+            <View className="flex-1">
+              <Text variant="subtext" className="mb-2">
+                Custom Fallback
+              </Text>
+              <Image
+                source={{ uri: 'https://invalid-image-url.com/error.jpg' }}
+                fallbackIcon="person-outline"
+                containerClassName="h-40 w-full rounded-2xl"
+              />
+            </View>
+          </View>
+        </Section>
+
         {/* Entrance Animations Section */}
         <Section title="Entrance Animations (Automatic Stagger)">
-          <Button
-            title="Replay Entrance Sequence"
-            variant="outline"
-            onPress={() => {
-              setIsAnimationReplaying(false);
-              setTimeout(() => setIsAnimationReplaying(true), 10);
-            }}
-          />
-
-          <AnimationProvider start={isAnimationReplaying} stagger={120}>
-            <View className="gap-y-3">
-              {[1, 2, 3].map((i) => (
+          <AnimationProvider stagger={150}>
+            <View className="rounded-3xl border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-slate-900">
+              {[1, 2, 3, 4, 5].map((i) => (
                 <FadeInView
                   key={i}
-                  index={i}
-                  className="rounded-xl border border-gray-100 bg-white p-4 dark:border-gray-800 dark:bg-slate-900">
+                  viewportAware
+                  translateY={30}
+                  className="mb-4 rounded-2xl bg-slate-50 p-6 dark:bg-slate-800">
                   <View className="flex-row items-center gap-x-3">
                     <View className="h-10 w-10 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900/30">
                       <Ionicons name="flash" size={20} color="#3b82f6" />
@@ -301,16 +323,13 @@ export default function UILabScreen() {
         </Section>
 
         <View className="h-20" />
-      </ScrollView>
+      </KeyboardSafeView>
 
-      {/* Dialog Demo */}
       <Dialog open={showDialog} onOpenChange={setShowDialog}>
         <DialogContent onClose={() => setShowDialog(false)}>
           <DialogHeader>
             <DialogTitle>Project Settings</DialogTitle>
-            <DialogDescription>
-              Manage your project preferences and team access here.
-            </DialogDescription>
+            <DialogDescription>Manage your project preferences and team access here.</DialogDescription>
           </DialogHeader>
           <View className="h-20 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800">
             <Text variant="subtext">Custom Content Area</Text>
@@ -322,14 +341,12 @@ export default function UILabScreen() {
         </DialogContent>
       </Dialog>
 
-      {/* AlertDialog Demo */}
       <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently remove your account from our
-              servers.
+              This action cannot be undone. This will permanently remove your account from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -342,6 +359,6 @@ export default function UILabScreen() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </KeyboardSafeView>
+    </>
   );
 }

@@ -9,7 +9,8 @@ const buttonVariants = cva('flex-row items-center justify-center rounded-2xl sha
     variant: {
       primary: 'bg-blue-600',
       secondary: 'bg-slate-100 dark:bg-slate-800',
-      outline: 'border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950',
+      outline:
+        'border border-slate-200 bg-background shadow-none dark:border-slate-800 dark:bg-slate-950',
       ghost: 'bg-white dark:bg-slate-950 !shadow-none',
       google: 'border border-gray-200 bg-white',
       destructive: 'bg-red-500',
