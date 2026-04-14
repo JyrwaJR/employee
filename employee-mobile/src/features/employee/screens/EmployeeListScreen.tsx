@@ -32,9 +32,13 @@ export default function EmployeeListScreen() {
 
   // Handle Query Error
   React.useEffect(() => {
-    if (isError) {
+    let isMounted = true;
+    if (isError && isMounted) {
       notify(error, 'EMPLOYEE_UPDATE');
     }
+    return () => {
+      isMounted = false;
+    };
   }, [isError, error]);
 
   const filteredData = EMPLOYEES;

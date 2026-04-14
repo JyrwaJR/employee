@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, StatusBar, FlatList } from 'react-native';
+import { View, TextInput, TouchableOpacity, FlatList } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
 import { StatBox } from '@/src/shared/components/display/StatsBox';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useQuery } from '@tanstack/react-query';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
-import { http } from '@/src/shared/utils/http';
-import { api } from '@/src/shared/api';
 import { router } from 'expo-router';
 import { Text } from '@/src/shared/components/ui/text';
 import { useThemeStore } from '@/src/shared/store/theme.store';
-import { EmployeeT } from '../../employee/types';
 import { EmployeeListItem } from '../../employee/components/EmployeeListItem';
-import { queryKeys } from '@/src/shared/api/query-keys';
 import { routes } from '@/src/shared/constants/routes';
+import { useEmployees } from '../hooks/useEmployees';
 
 const STATS = [
   { label: 'Total Staff', value: '42', color: 'text-blue-600 dark:text-blue-400' },
@@ -27,18 +23,12 @@ export const HomeScreen = () => {
   const { user } = useAuth();
   const { theme } = useThemeStore();
 
-  const { data: EMPLOYEES, isFetching } = useQuery({
-    queryKey: queryKeys.employees.list,
-    queryFn: () => http.get<EmployeeT[]>(api.employees.list),
-    select: (data) => data.data || [],
-    enabled: !!user,
-  });
+  const { data: EMPLOYEES, isFetching } = useEmployees();
 
   if (isFetching) return <LoadingScreen />;
 
   return (
     <Container className="flex-1">
-      <StatusBar barStyle={theme === 'dark' ? 'light-content' : 'dark-content'} />
       {/* Top Header Section */}
       <View className="z-10 rounded-b-[32px] border-b border-gray-100 bg-white px-6 pb-6 pt-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
         {/* Nav Bar */}

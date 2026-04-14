@@ -18,7 +18,7 @@ export const queryKeys = {
   },
   employees: {
     /** Key for the list of all employees */
-    list: ['employees'] as const,
+    list: (page?: number) => ['employees', page] as const,
     /** Key for specific employee details */
     details: (id: string) => ['employee', id] as const,
   },

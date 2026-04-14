@@ -17,18 +17,22 @@ export const LocalAuthProvider = ({ children }: { children: React.ReactNode }) =
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
     (async () => {
       try {
         const compatible = await LocalAuthentication.hasHardwareAsync();
-        setIsSupported(compatible);
+        if (isMounted) setIsSupported(compatible);
         if (compatible) {
           const enrolled = await LocalAuthentication.isEnrolledAsync();
-          setIsEnrolled(enrolled);
+          if (isMounted) setIsEnrolled(enrolled);
         }
       } catch (error) {
         logger.error('LocalAuthProvider: Hardware Detection Error', error);
       }
     })();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const authenticate = async () => {
