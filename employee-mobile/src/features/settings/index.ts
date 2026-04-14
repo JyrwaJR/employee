@@ -1,4 +1,4 @@
-// public exports
+// Public API
 
 // Components
 
@@ -7,12 +7,6 @@
 // Screens
 export * from './screens/SettingsScreen';
 
-// Services
-
-// Store
-
 // Types
-
-// Utils
 
 // Validators

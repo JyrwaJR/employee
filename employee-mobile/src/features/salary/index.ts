@@ -1,5 +1,6 @@
-// public exports
+// Public API
 export * from './api/salary.endpoints';
+
 // Components
 
 // Hooks
@@ -7,12 +8,7 @@ export * from './api/salary.endpoints';
 // Screens
 export * from './screens/PayslipScreen';
 export * from './screens/SalaryStatementsScreen';
-// Services
-
-// Store
 
 // Types
-
-// Utils
 
 // Validators

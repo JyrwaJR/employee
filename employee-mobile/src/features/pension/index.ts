@@ -1,5 +1,6 @@
-// public exports
+// Public API
 export * from './api/pension.endpoints';
+
 // Components
 
 // Hooks
@@ -7,12 +8,7 @@ export * from './api/pension.endpoints';
 // Screens
 export * from './screens/PensionDetailScreen';
 export { default as PensionScreen } from './screens/PensionScreen';
-// Services
-
-// Store
 
 // Types
-
-// Utils
 
 // Validators

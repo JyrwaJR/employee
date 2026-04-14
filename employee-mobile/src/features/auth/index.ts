@@ -1,24 +1,22 @@
-// public exports
+// Public API
 export * from './api/auth.endpoints';
+
 // Components
 export * from './components/PhoneForm';
 export * from './components/VerifyOtpForm';
 export * from './components/ResetPasswordForm';
+
 // Hooks
 export * from './hooks/useLoginMutation';
+export * from './hooks/useSignUpMutation';
 
 // Screens
 export * from './screens/ForgotPasswordScreen';
 export * from './screens/SignUpScreen';
 export * from './screens/LoginScreen';
-// Services
-
-// Store
 
 // Types
 export * from './types';
-
-// Utils
 
 // Validators
 export * from './validators/common.schema';
