@@ -7,7 +7,7 @@ import { SSLPinning } from './SSLPinningProvider';
 import React from 'react';
 import { ThemeProvider } from './ThemeProvider';
 import { LocalAuthRedirect } from '@shared/components/auth/LocalAuthRedirect';
-import { PushNotificationProvider } from '@/src/features/pushNotification/providers/PushNotificationProvider';
+import { NotificationProvider } from './NotificationProvider';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { UpdatesProvider } from './UpdatesProvider';
@@ -28,7 +28,7 @@ export const ProviderWrapper = ({ children }: Props) => {
               <SSLPinning>
                 <TQueryProvider>
                   <AuthContextProvider>
-                    <PushNotificationProvider>
+                    <NotificationProvider>
                       <LocalAuthProvider>
                         <LocalAuthRedirect>
                           <AuthRedirect>
@@ -38,7 +38,7 @@ export const ProviderWrapper = ({ children }: Props) => {
                           </AuthRedirect>
                         </LocalAuthRedirect>
                       </LocalAuthProvider>
-                    </PushNotificationProvider>
+                    </NotificationProvider>
                   </AuthContextProvider>
                 </TQueryProvider>
               </SSLPinning>

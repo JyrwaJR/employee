@@ -1,5 +1,5 @@
 /**
- * Notification Feature Endpoints
+ * Notification System Endpoints (Global)
  */
 export const notificationEndpoints = {
   /** Register push token for User */
