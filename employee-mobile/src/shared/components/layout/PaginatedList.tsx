@@ -56,7 +56,6 @@ export function PaginatedList<T>({
   onEndReached,
   ListEmptyComponent,
   skeletonCount = 6,
-  skeletonHeight = 100,
   contentContainerStyle,
   className,
   ...props
@@ -66,11 +65,7 @@ export function PaginatedList<T>({
     return (
       <View className="flex-1 gap-y-4 p-4">
         {Array.from({ length: skeletonCount }).map((_, index) => (
-          <Skeleton
-            key={index}
-            className={cn('w-full rounded-2xl', className)}
-            style={{ height: skeletonHeight }}
-          />
+          <Skeleton key={index} className={cn('w-full rounded-2xl', className)} />
         ))}
       </View>
     );
