@@ -39,4 +39,10 @@ export const queryKeys = {
     list: (year: string, month: string, status: string) =>
       ['pension', year, month, status] as const,
   },
+  announcements: {
+    /** Key for the list of announcements, optionally paginated */
+    list: (page?: number) => ['announcement_list', page].filter(Boolean),
+    /** Key for a specific announcement details */
+    details: (id: string) => ['announcement_details', id] as const,
+  },
 };

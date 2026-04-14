@@ -48,4 +48,5 @@ export const routes = {
   profile: '/profile' as const,
   leave: '/leave' as const,
   statement: '/statement' as const,
+  announcements: '/announcements' as const,
 };

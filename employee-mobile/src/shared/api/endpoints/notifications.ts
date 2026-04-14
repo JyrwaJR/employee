@@ -6,4 +6,6 @@ export const notificationEndpoints = {
   register: '/notification/register',
   /** Unregister push token for User */
   unregister: '/notification/unregister',
+  /** List announcements/notices (Board) */
+  list: () => '/announcements/list',
 } as const;

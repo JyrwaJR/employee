@@ -24,6 +24,7 @@ const adminDrawerMenuItems: MenuItemsT[] = [
   { id: 1, title: 'Home', href: '/' },
   { id: 2, title: 'Employees', href: '/employees' },
   { id: 4, title: 'Settings', href: '/settings' },
+  { id: 5, title: 'Announcements', href: '/announcements' },
 ];
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
