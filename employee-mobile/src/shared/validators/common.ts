@@ -4,7 +4,7 @@ import {
   ONLY_NUMBER_REGEX,
   SPECIAL_CHARACTER_REGEX,
   UPPERCASE_LETTER_REGEX,
-} from '@/src/shared/constants/regex';
+} from '@shared/constants/regex';
 import { z } from 'zod';
 
 export const phoneValidation = z
