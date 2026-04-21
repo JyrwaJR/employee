@@ -1,4 +1,5 @@
 export const ONLY_NUMBER_REGEX = /^[0-9]*$/;
+export const ONLY_LETTER_REGEX = /^[a-zA-Z]*$/;
 export const SPECIAL_CHARACTER_REGEX = /[!@#$%^&*(),.?":{}|<>_\-\\[\]`~+=;/]/;
 export const LOWERCASE_LETTER_REGEX = /[a-z]/;
 export const UPPERCASE_LETTER_REGEX = /[A-Z]/;

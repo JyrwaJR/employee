@@ -46,7 +46,7 @@ export const LoginScreen = () => {
         <Text variant={'heading'} size={'3xl'} weight={'semibold'}>
           Welcome back
         </Text>
-        <Text variant={'subtext'}>Please enter your details to sign in.</Text>
+        <Text variant={'subtext'}>Please enter your email and password to sign in.</Text>
       </View>
 
       {/* Form Section */}

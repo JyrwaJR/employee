@@ -1,3 +1,4 @@
+import { ONLY_LETTER_REGEX } from '@/src/shared/constants/regex';
 import { passwordValidation, phoneValidation } from '@/src/shared/validators/common';
 import { z } from 'zod';
 
@@ -11,7 +12,7 @@ export const SignUpSchema = z
     last_name: z
       .string('Last name is required')
       .min(1, 'Last name is required')
-      .regex(/^[a-zA-Z]+$/, 'Last name must only contain letters'),
+      .regex(ONLY_LETTER_REGEX, 'Last name must only contain letters'),
     password: passwordValidation,
     confirm_password: passwordValidation,
   })

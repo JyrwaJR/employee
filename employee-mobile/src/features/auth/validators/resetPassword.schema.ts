@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { passwordValidation } from '@/src/shared/validators/common';
+import { ONLY_NUMBER_REGEX } from '@/src/shared/constants/regex';
 
 /**
  * Schema for Reset Password Step 1: New Password & Confirm Password
@@ -26,7 +27,7 @@ export const ResetPasswordOtpSchema = z.object({
   otp: z
     .string('OTP is required')
     .length(6, 'OTP must be exactly 6 digits')
-    .regex(/^[0-9]+$/, 'OTP must only contain numbers'),
+    .regex(ONLY_NUMBER_REGEX, 'OTP must only contain numbers'),
 });
 
 /**
