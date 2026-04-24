@@ -8,7 +8,7 @@ export const SignUpSchema = z
     first_name: z
       .string('First name is required')
       .min(1, 'First name is required')
-      .regex(/^[a-zA-Z]+$/, 'First name must only contain letters'),
+      .regex(ONLY_LETTER_REGEX, 'First name must only contain letters'),
     last_name: z
       .string('Last name is required')
       .min(1, 'Last name is required')
