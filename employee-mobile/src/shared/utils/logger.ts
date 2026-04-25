@@ -13,7 +13,7 @@ const sendLogToServer = async (type: ErrorType, message: string, content: string
   try {
     await axiosInstance.post('/logs', logEntry);
   } catch (error) {
-    console.error('Failed to send logs to server', error);
+    console.log('Failed to send logs to server', error);
   }
 };
 
@@ -62,7 +62,7 @@ const logMethod = async (type: ErrorType, ...args: any[]): Promise<void> => {
 
       await sendLogToServer(type, message, content);
     } catch {
-      console.error(`Failed to send ${type.toLowerCase()} logs to server`);
+      console.log(`Failed to send ${type.toLowerCase()} logs to server`);
     }
   }
 };
