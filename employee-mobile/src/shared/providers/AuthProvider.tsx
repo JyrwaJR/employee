@@ -27,6 +27,12 @@ export const AuthContextProvider = ({ children }: Props) => {
   const [isInitializing, setIsInitializing] = useState(true);
   const [isTokenSet, setIsTokenSet] = useState(false);
 
+  /**
+   * logoutMutation handles the server-side logout process.
+   * It calls the logout API and, regardless of the API response (success or failure),
+   * it performs a "fail-safe" cleanup of the local session by removing tokens
+   * and purging the user profile from the query cache.
+   */
   const logoutMutation = useMutation({
     mutationFn: ({ refresh_token }: { refresh_token: string }) =>
       http.post(api.auth.logout, { refresh_token }),
@@ -48,6 +54,10 @@ export const AuthContextProvider = ({ children }: Props) => {
     },
   });
 
+  /**
+   * logout is a memoized callback used to trigger the logout flow.
+   * It retrieves the refresh token from secure storage and passes it to the logoutMutation.
+   */
   const logout = useCallback(async () => {
     const refreshToken = await TokenStoreManager.getRefreshToken();
     if (refreshToken) {
@@ -56,6 +66,13 @@ export const AuthContextProvider = ({ children }: Props) => {
     // eslint-disable-next-line
   }, []);
 
+  /**
+   * attemptSilentRefresh attempts to renew the user's access token using the refresh token.
+   * This is used during app bootstrap and periodically to keep the session alive.
+   *
+   * @param {AbortSignal} [signal] - Optional signal to cancel the request.
+   * @returns {Promise<boolean>} Resolves to true if the refresh was successful, false otherwise.
+   */
   const attemptSilentRefresh = useCallback(
     async (signal?: AbortSignal): Promise<boolean> => {
       try {
@@ -88,7 +105,12 @@ export const AuthContextProvider = ({ children }: Props) => {
     [isTokenSet]
   );
 
-  // Bootstrap logic
+  /**
+   * Bootstrap Effect
+   * Runs once on mount to check for existing session tokens.
+   * If an access token exists, it sets the session as active.
+   * If not, it attempts a silent refresh before marking initialization as complete.
+   */
   useEffect(() => {
     let mounted = true;
     const controller = new AbortController();
@@ -115,6 +137,11 @@ export const AuthContextProvider = ({ children }: Props) => {
     };
   }, [attemptSilentRefresh]);
 
+  /**
+   * Session Validation Effect
+   * Performed whenever a token is set or refreshed.
+   * It validates the current session once to ensure synchronization between local storage and backend.
+   */
   useEffect(() => {
     let mounted = true;
     const validateSessionOnce = async () => {
@@ -131,7 +158,11 @@ export const AuthContextProvider = ({ children }: Props) => {
     };
   }, [isTokenSet, attemptSilentRefresh, logout]);
 
-  // Profile Fetching
+  /**
+   * Profile Fetching Query
+   * Automatically fetches the user's profile data once a valid token is confirmed.
+   * Uses TanStack Query for caching and synchronization.
+   */
   const {
     data: user,
     isFetching: isFetchingUser,
@@ -145,21 +176,33 @@ export const AuthContextProvider = ({ children }: Props) => {
     select: (data) => data.data,
   });
 
+  /**
+   * Session Termination Effect
+   * Monitors the profile query for errors (e.g., 401 Unauthorized).
+   * If the session is invalid, it triggers the logout cleanup.
+   */
   useEffect(() => {
     if (isError) {
       logout();
     }
   }, [isError, logout]);
 
+  /** Derived state to check if the user is fully authenticated */
   const isSignedIn = !!user && isTokenSet;
 
+  /**
+   * Memoized Auth Context Value
+   * Provided to the rest of the application via useAuth hook.
+   */
   const value: AuthContextT = {
     user: user || null,
     isSignedIn,
+    /** Triggers a re-check of tokens and profile refetch */
     refresh: () => {
       setIsTokenSet(true);
       refetch();
     },
+    /** Combined loading state for bootstrap, fetching, and logout operations */
     isLoading:
       (isSignedIn ? isInitializing || isFetchingUser : isInitializing) || logoutMutation.isPending,
     role: user?.role || 'USER',
