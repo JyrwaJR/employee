@@ -1,14 +1,5 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import { RoleT } from '@/src/features/auth/types';
-
-/**
- * Tab Route Definition
- */
-export type TabRouteT = {
-  name: string;
-  title: string;
-  icon: keyof typeof MaterialIcons.glyphMap;
-};
+import { TabRouteT } from '../types/tab';
 
 /**
  * Common tabs accessible by all roles.
