@@ -12,8 +12,9 @@ export const unstable_settings = {
 };
 
 // Prevent the splash screen from auto-hiding immediately.
-SplashScreen.preventAutoHideAsync().catch(() => {
+SplashScreen.preventAutoHideAsync().catch((e) => {
   /* ignore error */
+  logger.warn('Failed to prevent splash screen from hiding', e);
 });
 
 // Configure splash screen animation
