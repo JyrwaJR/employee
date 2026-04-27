@@ -11,7 +11,8 @@ const configureNotificationSettings = () => {
     handleNotification: async () => ({
       shouldPlaySound: true,
       shouldSetBadge: true,
-      shouldShowAlert: true,
+      shouldShowList: true,
+      shouldShowBanner: true,
     }),
   });
 };
