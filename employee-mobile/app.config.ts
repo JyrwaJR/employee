@@ -24,18 +24,13 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   version: '1.0.0',
   scheme: 'employee-mobile',
   platforms: ['ios', 'android'],
-  web: {
-    bundler: 'metro',
-    output: 'static',
-    favicon: './src/assets/favicon.png',
-  },
   plugins: [
     'expo-router',
     'expo-splash-screen',
     [
       'expo-local-authentication',
       {
-        faceIDPermission: 'Allow $(PRODUCT_NAME) to use Face ID.',
+        faceIDPermission: 'Allow $(PRODUCT_NAME) to use Biometric authentication.',
       },
     ],
     [
