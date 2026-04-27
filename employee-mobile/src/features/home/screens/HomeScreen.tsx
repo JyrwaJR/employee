@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, FlatList } from 'react-native';
-import { Container } from '@/src/shared/components/layout/Container';
-import { StatBox } from '@/src/shared/components/display/StatsBox';
-import { useAuth } from '@/src/shared/hooks/useAuth';
+import { Container } from '@shared/components/layout/Container';
+import { StatBox } from '@shared/components/display/StatsBox';
+import { useAuth } from '@shared/hooks/useAuth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
+import { LoadingScreen } from '@shared/components/screens/LoadingScreen';
 import { router } from 'expo-router';
-import { Text } from '@/src/shared/components/ui/text';
-import { useThemeStore } from '@/src/shared/store/theme.store';
-import { EmployeeListItem } from '../../employee/components/EmployeeListItem';
-import { routes } from '@/src/shared/constants/routes';
+import { Text } from '@shared/components/ui/text';
+import { useThemeStore } from '@shared/store/theme.store';
+import { EmployeeListItem } from '@features/employee/components/EmployeeListItem';
+import { routes } from '@shared/constants/routes';
 import { useEmployees } from '../hooks/useEmployees';
 import { STATS } from '../constants';
 
@@ -33,7 +33,7 @@ export const HomeScreen = () => {
               Good Morning,
             </Text>
             <Text variant="heading" size="2xl" className="text-gray-900 dark:text-white">
-              {user?.first_name + ' ' + user?.last_name}
+              {user ? user?.first_name + ' ' + user?.last_name : 'Loading...'}
             </Text>
           </View>
           <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
