@@ -36,7 +36,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-notifications',
       {
-        icon: './src/assets/icon.png',
+        icon: './src/shared/assets/icon.png',
         color: '#ffffff',
         defaultChannel: 'default',
         enableBackgroundRemoteNotifications: true,
@@ -48,10 +48,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     tsconfigPaths: true,
   },
   orientation: 'portrait',
-  icon: './src/assets/icon.png',
+  icon: './src/shared/assets/icon.png',
   userInterfaceStyle: 'automatic',
   splash: {
-    image: './src/assets/splash.png',
+    image: './src/shared/assets/splash.png',
     resizeMode: 'contain',
     backgroundColor: '#ffffff',
   },
@@ -63,7 +63,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
     adaptiveIcon: {
-      foregroundImage: './src/assets/adaptive-icon.png',
+      foregroundImage: './src/shared/assets/adaptive-icon.png',
       backgroundColor: '#ffffff',
     },
     package: getIdentifier('com.jyrwaboys.employeemobile'),
