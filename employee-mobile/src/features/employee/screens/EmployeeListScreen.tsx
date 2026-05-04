@@ -1,34 +1,21 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, FlatList, StatusBar } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
-import { useQuery } from '@tanstack/react-query';
-import { http } from '@/src/shared/utils/http';
-import { api } from '@/src/shared/api';
-import { EmployeeT } from '@/src/features/employee/types';
 import { EmployeeListItem } from '../components/EmployeeListItem';
 import { router } from 'expo-router';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { Text } from '@/src/shared/components/ui/text';
 import { FilterCard } from '@/src/shared/components/display/FilterCard';
 import { notify } from '@/src/shared/utils/notify';
-import { queryKeys } from '@/src/shared/api/query-keys';
 import { routes } from '@/src/shared/constants/routes';
+import { useEmployees } from '../hooks';
 
 // --- Screen ---
 export default function EmployeeListScreen() {
   const [search, setSearch] = useState('');
+  const [page, _] = useState<number>(1);
 
-  const {
-    data: EMPLOYEES,
-    isFetching,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: queryKeys.employees.list,
-    queryFn: () => http.get<EmployeeT[]>(api.employees.list()),
-    select: (data) => data.data || [],
-    placeholderData: (prev) => prev,
-  });
+  const { data: EMPLOYEES, isFetching, isError, error } = useEmployees({ page });
 
   // Handle Query Error
   React.useEffect(() => {

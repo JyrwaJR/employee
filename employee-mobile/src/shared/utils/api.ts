@@ -3,7 +3,7 @@ import { TokenStoreManager } from '@/src/shared/store/token.store';
 import { router } from 'expo-router';
 import { queryClient } from './reactQuery';
 import { routes } from '@/src/shared/constants/routes';
-import { api } from '../api';
+import { sharedEndpoints } from '../api';
 
 const axiosInstance = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
@@ -31,13 +31,13 @@ const processQueue = (error: any, token: string | null = null) => {
 const shouldSkipRefresh = (url?: string) => {
   if (!url) return true;
   const skipUrls = [
-    api.auth.login,
-    api.auth.signUp,
-    api.auth.refresh,
-    api.auth.logout,
-    api.auth.forgotPassword,
-    api.auth.getOtp,
-    api.auth.verifyOtp,
+    sharedEndpoints.auth.login,
+    sharedEndpoints.auth.signUp,
+    sharedEndpoints.auth.refresh,
+    sharedEndpoints.auth.logout,
+    sharedEndpoints.auth.forgotPassword,
+    sharedEndpoints.auth.getOtp,
+    sharedEndpoints.auth.verifyOtp,
   ];
   return skipUrls.some((path) => url.includes(path));
 };
@@ -119,9 +119,12 @@ axiosInstance.interceptors.response.use(
       }
 
       // Use standard axios instance for the refresh call
-      const res = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}${api.auth.refresh}`, {
-        refresh_token: refreshToken,
-      });
+      const res = await axios.post(
+        `${process.env.EXPO_PUBLIC_API_URL}${sharedEndpoints.auth.refresh}`,
+        {
+          refresh_token: refreshToken,
+        }
+      );
 
       const payload: any = res.data;
 

@@ -7,7 +7,7 @@ import { Button } from '@/src/shared/components/ui/button';
 import { Text } from '@/src/shared/components/ui/text';
 import { notify } from '@/src/shared/utils/notify';
 import { http } from '@/src/shared/utils/http';
-import { api } from '@/src/shared/api';
+import { sharedEndpoints } from '@/src/shared/api';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { useRouter } from 'expo-router';
 import { routes } from '@/src/shared/constants/routes';
@@ -48,7 +48,7 @@ export const ResetPasswordForm = () => {
 
   // 1. Send OTP Mutation (Triggered after password validation)
   const sendOtpMutation = useMutation({
-    mutationFn: async (data: { phone_no: string }) => http.post(api.auth.getOtp, data),
+    mutationFn: async (data: { phone_no: string }) => http.post(sharedEndpoints.auth.getOtp, data),
     onSuccess: (data: any) => {
       if (data.success) {
         setStatus('INPUT_OTP');
@@ -65,7 +65,7 @@ export const ResetPasswordForm = () => {
       password: string;
       confirm_password: string;
     }) => {
-      return http.post(api.auth.forgotPassword, data);
+      return http.post(sharedEndpoints.auth.forgotPassword, data);
     },
     onSuccess: (data: any) => {
       if (data.success) {

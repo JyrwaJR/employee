@@ -2,17 +2,13 @@ import React from 'react';
 import { View, ScrollView, TouchableOpacity, Image, Linking } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useQuery } from '@tanstack/react-query';
-import { http } from '@/src/shared/utils/http';
-import { api } from '@/src/shared/api';
-import { EmployeeT } from '@/src/features/employee/types';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { Text } from '@/src/shared/components/ui/text';
 import { cn } from '@/src/shared/utils/cn';
-import { queryKeys } from '@/src/shared/api/query-keys';
 import { routes } from '@/src/shared/constants/routes';
 import { notify } from '@/src/shared/utils/notify';
+import { useEmployee } from '../hooks/useEmployee';
 
 const InfoRow = ({ label, value, icon }: { label: string; value: string; icon: string }) => (
   <View className="flex-row items-center border-b border-gray-100 py-3 last:border-0 dark:border-gray-800">
@@ -67,12 +63,7 @@ export default function EmployeeDetailScreen() {
   const idx = id.toString() || '';
   const auth = useAuth();
 
-  const { data, isFetching, isError, error } = useQuery({
-    queryKey: queryKeys.employees.details(idx),
-    queryFn: () => http.get<EmployeeT>(api.employees.details(idx)),
-    select: (data) => data.data,
-    enabled: !!id,
-  });
+  const { data, isFetching, isError, error } = useEmployee({ employeeId: idx });
 
   // Handle Query Error
   React.useEffect(() => {

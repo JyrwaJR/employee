@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
-import { api } from '@/src/shared/api';
+import { sharedEndpoints } from '@/src/shared/api';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
@@ -23,7 +23,7 @@ type Props = { salaryId: string };
 export const PayslipScreen = ({ salaryId }: Props) => {
   const { data, isFetching, isError, error } = useQuery({
     queryKey: queryKeys.salary.payslip(salaryId),
-    queryFn: () => http.get<SalarySlip>(api.salary.details(salaryId)),
+    queryFn: () => http.get<SalarySlip>(sharedEndpoints.salary.details(salaryId)),
     select: (res) => res.data,
     enabled: !!salaryId,
   });

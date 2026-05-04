@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
 import { LoginSchema } from '../validators/login.schema';
 import { http } from '@/src/shared/utils/http';
-import { api } from '@/src/shared/api';
+import { sharedEndpoints } from '@/src/shared/api';
 import { TokenStoreManager } from '@/src/shared/store/token.store';
 import { notify } from '@/src/shared/utils/notify';
 import { useAuth } from '@/src/shared/hooks/useAuth';
@@ -22,7 +22,7 @@ type LoginResT = {
 export const useLoginMutation = () => {
   const { refresh } = useAuth();
   return useMutation({
-    mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(api.auth.login, data),
+    mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(sharedEndpoints.auth.login, data),
     onSuccess: async (data: any) => {
       if (data.success) {
         const responseData = data.data;

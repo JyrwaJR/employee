@@ -1,4 +1,4 @@
-import { api } from '@/src/shared/api';
+import { sharedEndpoints } from '@/src/shared/api';
 import { routes } from '@/src/shared/constants/routes';
 import { http } from '@/src/shared/utils/http';
 import { notify } from '@/src/shared/utils/notify';
@@ -18,7 +18,7 @@ export function useSignUpMutation() {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (data: SignUpInputs) => http.post(api.auth.signUp, data),
+    mutationFn: (data: SignUpInputs) => http.post(sharedEndpoints.auth.signUp, data),
     onSuccess: (data) => {
       if (data.success) {
         router.replace(routes.auth.login);

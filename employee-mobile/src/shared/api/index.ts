@@ -13,10 +13,10 @@ import { salaryEndpoints } from '@/src/features/salary/api/salary.endpoints';
  *
  * @example
  * // In a service or hook:
- * import { api } from '@/src/shared/api';
- * const url = api.employees.details(id);
+ * import { sharedEndpoints } from '@/src/shared/api';
+ * const url = sharedEnpoints.employees.details(id);
  */
-export const api = {
+export const sharedEndpoints = {
   auth: authEndpoints,
   employees: employeeEndpoints,
   leave: leaveEndpoints,
@@ -25,4 +25,4 @@ export const api = {
   salary: salaryEndpoints,
 } as const;
 
-export type ApiFactory = typeof api;
+export type ApiFactory = typeof sharedEndpoints;

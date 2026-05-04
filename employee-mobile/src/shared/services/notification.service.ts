@@ -4,7 +4,7 @@ import * as Notifications from 'expo-notifications';
 import * as Constants from 'expo-constants';
 import { logger } from '@/src/shared/utils/logger';
 import { http } from '@/src/shared/utils/http';
-import { api } from '@/src/shared/api';
+import { sharedEndpoints } from '@/src/shared/api';
 
 export type RegistrationResult = {
   success: boolean;
@@ -56,7 +56,8 @@ export const NotificationService = {
     }
 
     const projectId =
-      Constants?.default.easConfig?.projectId ?? Constants?.default.expoConfig?.extra?.eas?.projectId;
+      Constants?.default.easConfig?.projectId ??
+      Constants?.default.expoConfig?.extra?.eas?.projectId;
 
     if (!projectId) {
       logger.error('NotificationService: EAS Project ID not found');
@@ -69,7 +70,7 @@ export const NotificationService = {
       const token = tokenResponse.data;
 
       // 2. Register with Backend
-      const res = await http.post(api.notification.register, {
+      const res = await http.post(sharedEndpoints.notification.register, {
         token,
         user_id: userId,
       });

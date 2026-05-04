@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Button } from '@/src/shared/components/ui/button';
 import { notify } from '@/src/shared/utils/notify';
 import { http } from '@/src/shared/utils/http';
-import { api } from '@/src/shared/api';
+import { sharedEndpoints } from '@/src/shared/api';
 import { router } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { OTPSchema } from '../validators/otp.schema';
@@ -25,7 +25,7 @@ export const VerifyOtpForm = () => {
   });
 
   const sendOtpMutation = useMutation({
-    mutationFn: async (data: OTPInputs) => http.post(api.auth.verifyOtp, data),
+    mutationFn: async (data: OTPInputs) => http.post(sharedEndpoints.auth.verifyOtp, data),
     onSuccess: (data) => {
       if (data.success) {
         router.push(routes.auth.forgotPassword(phone_no, 'RESET'));
