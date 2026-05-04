@@ -6,6 +6,7 @@ import { useAnnouncements } from '../hooks/useAnnouncements';
 import { AnnouncementCard } from '../components/AnnouncementCard';
 import { AnnouncementSkeleton } from '../components/AnnouncementSkeleton';
 import { Container } from '@/src/shared/components/layout';
+import { Ternary } from '@/src/shared/components/base/Ternary';
 
 /**
  * Announcement Board Screen
@@ -51,19 +52,23 @@ export const AnnouncementBoardScreen = () => {
           }}
           onEndReachedThreshold={0.5}
           ListEmptyComponent={
-            isLoading ? (
-              <View>
-                <AnnouncementSkeleton />
-                <AnnouncementSkeleton />
-                <AnnouncementSkeleton />
-              </View>
-            ) : (
-              <View className="mt-20 items-center justify-center">
-                <Text variant="subtext" size="lg">
-                  No announcements yet
-                </Text>
-              </View>
-            )
+            <Ternary
+              condition={isLoading}
+              ifTrue={
+                <View>
+                  <AnnouncementSkeleton />
+                  <AnnouncementSkeleton />
+                  <AnnouncementSkeleton />
+                </View>
+              }
+              ifFalse={
+                <View className="mt-20 items-center justify-center">
+                  <Text variant="subtext" size="lg">
+                    No announcements yet
+                  </Text>
+                </View>
+              }
+            />
           }
           ListFooterComponent={renderFooter}
         />

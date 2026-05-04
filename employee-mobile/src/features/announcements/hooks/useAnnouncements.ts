@@ -15,7 +15,7 @@ const fetchAnnouncementsMock = async ({ pageParam = 1 }): Promise<AnnouncementRe
     const id = `ann-${pageParam}-${i}`;
     const categories: AnnouncementT['category'][] = ['HOLIDAY', 'NOTICE', 'PERSONAL', 'GLOBAL'];
     const category = categories[Math.floor(Math.random() * categories.length)];
-    
+
     return {
       id,
       title: `${category.charAt(0) + category.slice(1).toLowerCase()} Board Update #${pageParam}-${i}`,
@@ -43,9 +43,8 @@ export const useAnnouncements = () => {
     queryKey: queryKeys.announcements.list(),
     queryFn: fetchAnnouncementsMock,
     initialPageParam: 1,
-    getNextPageParam: (lastPage) => (lastPage.lastPage ? undefined : lastPage.page + 1),
+    getNextPageParam: (lastPage) => (!lastPage.hasMore ? undefined : lastPage.page + 1),
     // Correction: Standardizing pagination logic
     getPreviousPageParam: (firstPage) => (firstPage.page > 1 ? firstPage.page - 1 : undefined),
-    
   });
 };

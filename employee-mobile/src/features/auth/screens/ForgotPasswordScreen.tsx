@@ -11,11 +11,26 @@ import { useSearchParams } from 'expo-router/build/hooks';
 import { ResetPasswordForm } from '../components/ResetPasswordForm';
 import { routes } from '@/src/shared/constants/routes';
 import { HeaderStack } from '@/src/shared/components/layout';
+import { AuthHeader } from '../components/AuthHeader';
 
 export const ForgotPassword = () => {
   const search = useSearchParams();
 
   const currentStep = search?.get('step') || 'PHONE';
+
+  const headerTitle =
+    currentStep === 'PHONE'
+      ? 'Forgot Password?'
+      : currentStep === 'OTP'
+        ? 'Verify OTP'
+        : 'Reset Password';
+
+  const headerSubtitle =
+    currentStep === 'PHONE'
+      ? 'Don’t worry! It happens. Please enter the phone number associated with your account.'
+      : currentStep === 'OTP'
+        ? 'Enter the verification code sent to your phone.'
+        : 'Create a new strong password for your account.';
 
   return (
     <Container>
@@ -26,26 +41,11 @@ export const ForgotPassword = () => {
         <ScrollView
           contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
           showsVerticalScrollIndicator={false}>
-          {/* Header Section */}
-          <View className="mb-8 items-center">
-            <View className="mb-6 h-16 w-16 items-center justify-center rounded-2xl bg-blue-100 dark:bg-blue-900/30">
-              <Ionicons name="lock-closed" size={32} color="#2563eb" />
-            </View>
-            <Text variant={'heading'} size={'2xl'} weight={'semibold'} className="text-center">
-              {currentStep === 'PHONE'
-                ? 'Forgot Password?'
-                : currentStep === 'OTP'
-                  ? 'Verify OTP'
-                  : 'Reset Password'}
-            </Text>
-            <Text variant={'subtext'} className="mt-2 text-center">
-              {currentStep === 'PHONE'
-                ? 'Don’t worry! It happens. Please enter the phone number associated with your account.'
-                : currentStep === 'OTP'
-                  ? 'Enter the verification code sent to your phone.'
-                  : 'Create a new strong password for your account.'}
-            </Text>
-          </View>
+          <AuthHeader
+            icon={<Ionicons name="lock-closed" size={32} color="#2563eb" />}
+            title={headerTitle}
+            subtitle={headerSubtitle}
+          />
 
           {/* Form Section */}
           <Ternary

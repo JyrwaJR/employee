@@ -1,55 +1,11 @@
 import React from 'react';
-import { View, Image, TouchableOpacity, ScrollView, StatusBar, Switch, Alert } from 'react-native';
+import { View, Image, ScrollView, StatusBar, Switch, Alert } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
-import { cn } from '@/src/shared/utils/cn';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { Text } from '@/src/shared/components/ui/text';
 import { useThemeStore } from '@/src/shared/store/theme.store';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-/**
- * Clean, minimal row for details (Label: Value)
- */
-const ProfileDetailRow = ({ label, value }: { label: string; value: string | undefined }) => (
-  <View className="flex-row justify-between border-b border-gray-100 py-2 last:border-0 dark:border-gray-800">
-    <Text variant="subtext" className="w-1/3 text-sm font-medium">
-      {label}
-    </Text>
-    <Text className="flex-1 text-right text-sm font-medium text-gray-900 dark:text-white">
-      {value || '-'}
-    </Text>
-  </View>
-);
-
-/**
- * Minimal settings row
- */
-interface MenuRowProps {
-  icon: keyof typeof MaterialCommunityIcons.glyphMap;
-  label: string;
-  isDestructive?: boolean;
-  onPress: () => void;
-  rightElement?: React.ReactNode;
-}
-
-const MenuRow = ({ icon, label, isDestructive, onPress, rightElement }: MenuRowProps) => (
-  <TouchableOpacity
-    activeOpacity={0.7}
-    onPress={onPress}
-    className="flex-row items-center justify-between border-b border-gray-100 py-4 last:border-0 dark:border-gray-800">
-    <View className="flex-row items-center gap-3">
-      <MaterialCommunityIcons name={icon} size={20} color={isDestructive ? '#EF4444' : '#64748B'} />
-      <Text
-        className={cn(
-          'text-sm font-medium',
-          isDestructive ? 'text-red-600' : 'text-gray-700 dark:text-gray-200'
-        )}>
-        {label}
-      </Text>
-    </View>
-    {rightElement || <MaterialCommunityIcons name="chevron-right" size={20} color="#CBD5E1" />}
-  </TouchableOpacity>
-);
+import { SettingRow } from '@/src/shared/components/display/SettingRow';
+import { ProfileDetailRow } from '../components/ProfileDetailRow';
 
 export const ProfileScreen = () => {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
@@ -144,24 +100,15 @@ export const ProfileScreen = () => {
             Preferences & Account
           </Text>
           <View className="rounded-lg border border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-gray-900">
-            <MenuRow
+            <SettingRow
               icon="bell-outline"
               label="Notifications"
-              onPress={() => setNotificationsEnabled(!notificationsEnabled)}
-              rightElement={
-                <Switch
-                  value={notificationsEnabled}
-                  onValueChange={setNotificationsEnabled}
-                  trackColor={{ false: '#E5E7EB', true: '#2563EB' }}
-                  thumbColor={'#FFFFFF'}
-                  ios_backgroundColor="#E5E7EB"
-                  style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
-                />
-              }
+              value={notificationsEnabled}
+              onValueChange={setNotificationsEnabled}
             />
-            <MenuRow icon="lock-outline" label="Change Password" onPress={() => {}} />
-            <MenuRow icon="file-document-outline" label="Service Record" onPress={() => {}} />
-            <MenuRow icon="logout" label="Log Out" isDestructive onPress={handleLogout} />
+            <SettingRow icon="lock-outline" label="Change Password" onPress={() => {}} />
+            <SettingRow icon="file-document-outline" label="Service Record" onPress={() => {}} />
+            <SettingRow icon="logout" label="Log Out" isDestructive onPress={handleLogout} showBorder={false} />
           </View>
         </View>
 

@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
-import { Text, Button, FieldInput } from '@/src/shared/components/ui';
-import { Link } from 'expo-router';
-import { useForm, FormProvider } from 'react-hook-form';
+import { Button, FieldInput } from '@/src/shared/components/ui';
+import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Container } from '@/src/shared/components/layout/Container';
@@ -10,6 +9,10 @@ import { SignUpSchema } from '../validators/signup.schema';
 import { routes } from '@/src/shared/constants/routes';
 import { useSignUpMutation } from '../hooks/useSignUpMutation';
 import { KeyboardSafeView } from '@/src/shared/components/layout';
+import { AuthHeader } from '../components/AuthHeader';
+import { AuthFooter } from '../components/AuthFooter';
+import { AuthDivider } from '../components/AuthDivider';
+import { Text } from '@/src/shared/components/ui/text';
 
 type SignUpFormInputs = z.infer<typeof SignUpSchema>;
 
@@ -20,6 +23,22 @@ const defaultValues: SignUpFormInputs = {
   password: '',
   confirm_password: '',
 };
+
+const TermsText = () => (
+  <View className="p-2">
+    <Text variant="subtext" size="xs">
+      By creating an account, you agree to our{' '}
+      <Text variant="link" size="xs">
+        Terms of Service
+      </Text>{' '}
+      and{' '}
+      <Text variant="link" size="xs">
+        Privacy Policy
+      </Text>
+      .
+    </Text>
+  </View>
+);
 
 export const SignUpScreen = () => {
   const signUpMutation = useSignUpMutation();
@@ -38,20 +57,13 @@ export const SignUpScreen = () => {
           contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
           showsVerticalScrollIndicator={false}
           className="px-6">
-          {/* Header */}
-          <View className="mb-8 mt-4 items-center">
-            <View className="mb-4 h-12 w-12 items-center justify-center rounded-xl bg-blue-50">
-              <Text variant={'heading'} size={'2xl'}>
-                🚀
-              </Text>
-            </View>
-            <Text variant={'heading'} size={'3xl'} weight={'semibold'}>
-              Create account
-            </Text>
-            <Text variant={'subtext'}>Provide your details to register.</Text>
-          </View>
+          <AuthHeader
+            emoji="🚀"
+            title="Create account"
+            subtitle="Provide your details to register."
+            iconContainerClassName="bg-blue-50"
+          />
 
-          {/* Form */}
           <FormProvider {...methods}>
             <View className="w-full gap-y-2">
               <View className="flex-row justify-between gap-x-2">
@@ -97,20 +109,7 @@ export const SignUpScreen = () => {
                 testID="CONFIRM_PASSWORD_INPUT"
               />
 
-              {/* Terms Text */}
-              <View className="p-2">
-                <Text variant="subtext" size="xs">
-                  By creating an account, you agree to our{' '}
-                  <Text variant="link" size="xs">
-                    Terms of Service
-                  </Text>{' '}
-                  and{' '}
-                  <Text variant="link" size="xs">
-                    Privacy Policy
-                  </Text>
-                  .
-                </Text>
-              </View>
+              <TermsText />
 
               <Button
                 testID="CREATE_ACCOUNT_BUTTON"
@@ -119,27 +118,16 @@ export const SignUpScreen = () => {
                 isLoading={signUpMutation.isPending}
               />
 
-              <View className="my-4 flex-row items-center gap-x-4">
-                <View className="h-[1px] flex-1 bg-gray-200" />
-                <Text variant={'subtext'} weight={'medium'}>
-                  Or
-                </Text>
-                <View className="h-[1px] flex-1 bg-gray-200" />
-              </View>
+              <AuthDivider />
             </View>
           </FormProvider>
 
-          {/* Footer */}
-          <View className="my-8 flex-row justify-center">
-            <Text variant={'subtext'} weight={'medium'}>
-              Already have an account?{' '}
-            </Text>
-            <Link href={routes.auth.login}>
-              <Text variant={'link'} weight={'semibold'}>
-                Sign in
-              </Text>
-            </Link>
-          </View>
+          <AuthFooter
+            text="Already have an account?"
+            linkText="Sign in"
+            linkHref={routes.auth.login}
+            className="my-8"
+          />
         </ScrollView>
       </KeyboardSafeView>
     </Container>

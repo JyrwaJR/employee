@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, FlatList } from 'react-native';
+import { View, FlatList, TouchableOpacity } from 'react-native';
 import { Container } from '@shared/components/layout/Container';
 import { StatBox } from '@shared/components/display/StatsBox';
 import { useAuth } from '@shared/hooks/useAuth';
@@ -12,6 +12,8 @@ import { routes } from '@shared/constants/routes';
 import { STATS } from '../constants';
 import { useEmployees } from '../../employee/hooks';
 import { EmployeeListItem } from '../../employee';
+import { ScreenHeader } from '@/src/shared/components/layout/ScreenHeader';
+import { SearchInput } from '@/src/shared/components/ui/SearchInput';
 
 export const HomeScreen = () => {
   const [search, setSearch] = useState('');
@@ -22,43 +24,31 @@ export const HomeScreen = () => {
 
   if (isFetching) return <LoadingScreen />;
 
+  const BellIcon = (
+    <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+      <MaterialCommunityIcons
+        name="bell"
+        size={24}
+        color={theme === 'dark' ? 'white' : 'black'}
+      />
+    </TouchableOpacity>
+  );
+
   return (
     <Container className="flex-1">
-      {/* Top Header Section */}
-      <View className="z-10 rounded-b-[32px] border-b border-gray-100 bg-white px-6 pb-6 pt-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-        {/* Nav Bar */}
-        <View className="mb-6 flex-row items-center justify-between">
-          <View>
-            <Text variant="subtext" className="text-sm font-medium">
-              Good Morning,
-            </Text>
-            <Text variant="heading" size="2xl" className="text-gray-900 dark:text-white">
-              {user ? user?.first_name + ' ' + user?.last_name : 'Loading...'}
-            </Text>
-          </View>
-          <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-            <MaterialCommunityIcons
-              name="bell"
-              size={24}
-              color={theme === 'dark' ? 'white' : 'black'}
-            />
-          </TouchableOpacity>
-        </View>
-
-        {/* Search Bar */}
-        <View className="flex-row items-center rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3 dark:border-gray-800 dark:bg-gray-800">
-          <Text className="mr-2 text-gray-400">🔍</Text>
-          <TextInput
-            placeholder="Search employees..."
-            value={search}
-            onChangeText={setSearch}
-            className="flex-1 text-base text-gray-900 dark:text-white"
-            placeholderTextColor="#9CA3AF"
-          />
-        </View>
-      </View>
+      <ScreenHeader
+        title={user ? user?.first_name + ' ' + user?.last_name : 'Loading...'}
+        subtitle="Good Morning,"
+        rightElement={BellIcon}>
+        <SearchInput
+          placeholder="Search employees..."
+          value={search}
+          onChangeText={setSearch}
+        />
+      </ScreenHeader>
 
       {/* Content Scroll */}
+...
       <View className="flex-1 px-6 pt-6">
         {/* Stats Row */}
         <View className="mb-8 flex-row gap-x-2">

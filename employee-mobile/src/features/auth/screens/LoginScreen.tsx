@@ -12,6 +12,8 @@ import { FieldInput } from '@/src/shared/components/ui/field-input';
 import { Button } from '@components/ui/button';
 import { useLoginMutation } from '../hooks/useLoginMutation';
 import { useAuth } from '@/src/shared/hooks/useAuth';
+import { AuthHeader } from '../components/AuthHeader';
+import { AuthFooter } from '../components/AuthFooter';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
@@ -36,18 +38,12 @@ export const LoginScreen = () => {
 
   return (
     <KeyboardSafeView contentContainerClassName="px-6 justify-center">
-      {/* Header Section */}
-      <View className="mb-10 items-center">
-        <View className="mb-6 h-16 w-16 items-center justify-center rounded-2xl bg-blue-600">
-          <Text variant={'heading'} weight={'bold'} size={'2xl'}>
-            ✨
-          </Text>
-        </View>
-        <Text variant={'heading'} size={'3xl'} weight={'semibold'}>
-          Welcome back
-        </Text>
-        <Text variant={'subtext'}>Please enter your email and password to sign in.</Text>
-      </View>
+      <AuthHeader
+        emoji="✨"
+        title="Welcome back"
+        subtitle="Please enter your email and password to sign in."
+        iconContainerClassName="bg-blue-600"
+      />
 
       {/* Form Section */}
       <FormProvider {...methods}>
@@ -102,12 +98,12 @@ export const LoginScreen = () => {
         </View>
       </FormProvider>
 
-      <View className="mt-10 flex-row justify-center">
-        <Text variant={'subtext'}>Don&apos;t have an account? </Text>
-        <Link testID={'SIGNUP_BUTTON'} href={routes.auth.signUp}>
-          <Text variant={'link'}>Sign up</Text>
-        </Link>
-      </View>
+      <AuthFooter
+        text="Don't have an account?"
+        linkText="Sign up"
+        linkHref={routes.auth.signUp}
+        testID="SIGNUP_BUTTON"
+      />
 
       {/* Developer UI Laboratory Entrance */}
       {__DEV__ && (

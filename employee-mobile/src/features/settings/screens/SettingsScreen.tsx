@@ -1,57 +1,11 @@
 import React from 'react';
-import { View, Text, Switch, ScrollView } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { View, Text, ScrollView } from 'react-native';
 import { useThemeStore } from '@/src/shared/store/theme.store';
 import { useTheme } from '@/src/shared/hooks/use-theme';
 import { Container } from '@/src/shared/components/layout/Container';
 import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
 import { useLocalAuthStore } from '@/src/shared/store/local-auth.store';
-
-const SettingItem = ({
-  icon,
-  label,
-  description,
-  value,
-  onValueChange,
-  showBorder = true,
-}: {
-  icon: keyof typeof MaterialCommunityIcons.glyphMap;
-  label: string;
-  description?: string;
-  value: boolean;
-  onValueChange: (val: boolean) => void;
-  showBorder?: boolean;
-}) => {
-  const theme = useTheme();
-  return (
-    <View
-      className={`flex-row items-center justify-between bg-white px-4 py-4 dark:bg-slate-900 ${
-        showBorder ? 'border-b border-gray-100 dark:border-gray-800' : ''
-      }`}>
-      <View className="flex-row items-center gap-4">
-        <View className="items-center justify-center rounded-full bg-gray-100 p-2 dark:bg-slate-800">
-          <MaterialCommunityIcons
-            name={icon}
-            size={20}
-            color={theme === 'dark' ? '#9CA3AF' : '#4B5563'}
-          />
-        </View>
-        <View>
-          <Text className="text-base font-medium text-gray-900 dark:text-white">{label}</Text>
-          {description && (
-            <Text className="text-xs text-gray-500 dark:text-gray-400">{description}</Text>
-          )}
-        </View>
-      </View>
-      <Switch
-        value={value}
-        onValueChange={onValueChange}
-        trackColor={{ false: '#E5E7EB', true: '#BFDBFE' }}
-        thumbColor={value ? '#2563EB' : '#F3F4F6'}
-      />
-    </View>
-  );
-};
+import { SettingRow } from '@/src/shared/components/display/SettingRow';
 
 export const SettingsScreen = () => {
   const { theme, toggleTheme } = useThemeStore();
@@ -63,22 +17,23 @@ export const SettingsScreen = () => {
         <View className="py-6">
           {/* Appearance Section */}
           <SectionHeader title="Appearance" />
-          <View className="mb-8 overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-slate-900">
-            <SettingItem
+          <View className="mb-8 overflow-hidden rounded-xl border border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-slate-900">
+            <SettingRow
               icon={theme === 'dark' ? 'weather-night' : 'weather-sunny'}
               label="Dark Mode"
               description="Adjust the appearance of the app"
               value={theme === 'dark'}
               onValueChange={toggleTheme}
               showBorder={false}
+              iconColor={theme === 'dark' ? '#9CA3AF' : '#4B5563'}
             />
           </View>
 
           {/* Notifications Section */}
           <SectionHeader title="Security" />
 
-          <View className="mb-8 overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-slate-900">
-            <SettingItem
+          <View className="mb-8 overflow-hidden rounded-xl border border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-slate-900">
+            <SettingRow
               icon={'security'}
               label="Enable Biometric"
               description="Adjust the appearance of the app"

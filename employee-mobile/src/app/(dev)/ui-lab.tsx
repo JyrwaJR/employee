@@ -50,7 +50,7 @@ export default function UILabScreen() {
   const [showAlert, setShowAlert] = useState(false);
   const [isSkeletonTrigger, setIsSkeletonTrigger] = useState(false);
   const [accordionValue, setAccordionValue] = useState('item-1');
-  const { theme, setTheme, toggleTheme } = useThemeStore();
+  const { theme, toggleTheme } = useThemeStore();
   const methods = useForm({
     defaultValues: {
       test_input: '',

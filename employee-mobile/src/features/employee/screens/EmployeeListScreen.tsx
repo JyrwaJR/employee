@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, FlatList, StatusBar } from 'react-native';
+import { View, FlatList, TouchableOpacity, StatusBar } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
 import { EmployeeListItem } from '../components/EmployeeListItem';
 import { router } from 'expo-router';
@@ -9,6 +9,8 @@ import { FilterCard } from '@/src/shared/components/display/FilterCard';
 import { notify } from '@/src/shared/utils/notify';
 import { routes } from '@/src/shared/constants/routes';
 import { useEmployees } from '../hooks';
+import { ScreenHeader } from '@/src/shared/components/layout/ScreenHeader';
+import { SearchInput } from '@/src/shared/components/ui/SearchInput';
 
 // --- Screen ---
 export default function EmployeeListScreen() {
@@ -36,29 +38,18 @@ export default function EmployeeListScreen() {
     <Container className="flex-1">
       <StatusBar barStyle="dark-content" />
 
-      {/* Header */}
-      <View className="z-10 rounded-b-[32px] border-b border-gray-100 bg-white px-6 pb-4 pt-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-        <Text variant="heading" size="2xl" className="mb-4 text-gray-900 dark:text-white">
-          Staff Directory
-        </Text>
-
-        {/* Search */}
-        <View className="mb-4 flex-row items-center rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3 dark:border-gray-800 dark:bg-gray-800">
-          <Text className="mr-2 text-gray-400">🔍</Text>
-          <TextInput
-            placeholder="Search by name or role..."
-            value={search}
-            onChangeText={setSearch}
-            className="flex-1 text-base text-gray-900 dark:text-white"
-            placeholderTextColor="#9CA3AF"
-          />
-        </View>
-
-        {/* Filters */}
+      <ScreenHeader title="Staff Directory">
+        <SearchInput
+          placeholder="Search by name or role..."
+          value={search}
+          onChangeText={setSearch}
+          containerClassName="mb-4"
+        />
         <FilterCard />
-      </View>
+      </ScreenHeader>
 
       {/* List */}
+...
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id}

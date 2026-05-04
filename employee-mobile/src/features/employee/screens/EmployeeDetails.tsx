@@ -5,58 +5,12 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { Text } from '@/src/shared/components/ui/text';
-import { cn } from '@/src/shared/utils/cn';
 import { routes } from '@/src/shared/constants/routes';
 import { notify } from '@/src/shared/utils/notify';
 import { useEmployee } from '../hooks/useEmployee';
-
-const InfoRow = ({ label, value, icon }: { label: string; value: string; icon: string }) => (
-  <View className="flex-row items-center border-b border-gray-100 py-3 last:border-0 dark:border-gray-800">
-    <View className="mr-3 h-8 w-8 items-center justify-center rounded-full bg-gray-50 dark:bg-gray-800">
-      <Text className="text-sm">{icon}</Text>
-    </View>
-    <View>
-      <Text variant="subtext" className="text-xs font-medium uppercase">
-        {label}
-      </Text>
-      <Text className="text-sm font-semibold text-gray-900 dark:text-white">{value}</Text>
-    </View>
-  </View>
-);
-
-const SectionCard = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <View className="mb-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-    <Text variant="heading" className="mb-4 text-sm text-gray-900 dark:text-white">
-      {title}
-    </Text>
-    {children}
-  </View>
-);
-
-const ActionButton = ({
-  label,
-  icon,
-  onPress,
-  primary,
-}: {
-  label: string;
-  icon: string;
-  onPress: () => void;
-  primary?: boolean;
-}) => (
-  <TouchableOpacity
-    onPress={onPress}
-    className={cn(
-      'mx-1 flex-1 flex-row items-center justify-center rounded-xl py-3',
-      primary ? 'bg-blue-600' : 'bg-gray-100 dark:bg-gray-800'
-    )}>
-    <Text className="mr-2">{icon}</Text>
-    <Text
-      className={cn('font-semibold', primary ? 'text-white' : 'text-gray-900 dark:text-gray-200')}>
-      {label}
-    </Text>
-  </TouchableOpacity>
-);
+import { InfoRow } from '../components/InfoRow';
+import { SectionCard } from '../components/SectionCard';
+import { ActionButton } from '../components/ActionButton';
 
 export default function EmployeeDetailScreen() {
   const { id } = useLocalSearchParams();

@@ -8,6 +8,8 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MoneyRow } from '@/src/shared/components/display/MoneyRow';
 import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
 import { DetailRow } from '@/src/shared/components/display/DetailRow';
+import { GovtHeader } from '@/src/shared/components/display/GovtHeader';
+import { SummaryCard } from '@/src/shared/components/display/SummaryCard';
 
 export const PensionDetailScreen = () => {
   const { id: _id } = useLocalSearchParams();
@@ -48,58 +50,31 @@ export const PensionDetailScreen = () => {
     { label: 'Recovery', value: data.recovery },
   ];
 
+  const summaryDetails = [
+    { label: 'PPO No', value: data.ppoNo },
+    { label: 'Bank Acct', value: '•••• 4567' },
+    { label: 'Status', value: data.status },
+  ];
+
   return (
     <>
       <Header title={`Pension Slip`} showBackButton={true} />
       <Container className="flex-1">
         <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
-          {/* Government Header Block */}
-          <View className="mb-8 items-center">
-            <View className="mb-3 h-12 w-12 items-center justify-center opacity-80">
-              <Text className="text-3xl">🏛️</Text>
-            </View>
-            <Text className="mb-1 text-xs font-bold uppercase tracking-[0.2em] text-gray-400">
-              Government of India
-            </Text>
-            <Text variant="heading" size="lg" className="text-center text-gray-900 dark:text-white">
-              Dept of Pension & Pensioners Welfare
-            </Text>
-            <Text variant="subtext" className="text-center text-sm">
-              New Delhi
-            </Text>
-            <View className="mt-4 rounded-full bg-gray-200 px-4 py-1 dark:bg-gray-800">
-              <Text className="text-xs font-bold uppercase text-gray-600 dark:text-gray-300">
-                {data.month} {data.year}
-              </Text>
-            </View>
-          </View>
+          <GovtHeader
+            title="Dept of Pension & Pensioners Welfare"
+            subtitle="New Delhi"
+            badge={`${data.month} ${data.year}`}
+          />
 
-          {/* Net Pay Hero Card */}
-          <View className="mb-6 rounded-3xl bg-blue-600 p-6 shadow-xl shadow-blue-900/20 dark:bg-blue-700">
-            <Text className="mb-1 text-sm font-medium text-blue-100">Net Pension Disbursed</Text>
-            <Text className="mb-6 text-4xl font-bold text-white">
-              ₹{data.netPayable.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
-            </Text>
-
-            <View className="mb-4 h-[1px] w-full bg-blue-500/50" />
-
-            <View className="flex-row justify-between">
-              <View>
-                <Text className="mb-1 text-xs text-blue-200">PPO No</Text>
-                <Text className="font-semibold text-white">{data.ppoNo}</Text>
-              </View>
-              <View>
-                <Text className="mb-1 text-xs text-blue-200">Bank Acct</Text>
-                <Text className="font-semibold text-white">•••• 4567</Text>
-              </View>
-              <View>
-                <Text className="mb-1 text-xs text-blue-200">Status</Text>
-                <Text className="font-semibold uppercase text-white">{data.status}</Text>
-              </View>
-            </View>
-          </View>
+          <SummaryCard
+            label="Net Pension Disbursed"
+            amount={`₹${data.netPayable.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`}
+            details={summaryDetails}
+          />
 
           {/* Pensioner Details Grid */}
+...
           <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-gray-400">
               Pensioner Particulars
