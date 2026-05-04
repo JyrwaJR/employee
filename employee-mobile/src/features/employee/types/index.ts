@@ -1,22 +1,9 @@
+import { MonthT } from '@/src/shared/types/common';
 import { UserT } from '../../auth/types';
 
 export type CityClass = 'X' | 'Y' | 'Z';
 
 export type EmployeeStatus = 'ACTIVE' | 'INACTIVE';
-
-export type Month =
-  | 'JANUARY'
-  | 'FEBRUARY'
-  | 'MARCH'
-  | 'APRIL'
-  | 'MAY'
-  | 'JUNE'
-  | 'JULY'
-  | 'AUGUST'
-  | 'SEPTEMBER'
-  | 'OCTOBER'
-  | 'NOVEMBER'
-  | 'DECEMBER';
 
 export type SalarySlipStatus = 'PENDING' | 'PROCESSED' | 'PAID' | 'FAILED' | 'HELD';
 
@@ -24,7 +11,7 @@ export type SalarySlipStatus = 'PENDING' | 'PROCESSED' | 'PAID' | 'FAILED' | 'HE
 export type SalarySlip = {
   id: string;
   employee_id: string;
-  month: Month;
+  month: MonthT;
   year: number;
   status: SalarySlipStatus;
   payment_date: string | null;
