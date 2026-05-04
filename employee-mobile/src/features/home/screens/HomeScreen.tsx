@@ -8,10 +8,10 @@ import { LoadingScreen } from '@shared/components/screens/LoadingScreen';
 import { router } from 'expo-router';
 import { Text } from '@shared/components/ui/text';
 import { useThemeStore } from '@shared/store/theme.store';
-import { EmployeeListItem } from '@features/employee/components/EmployeeListItem';
 import { routes } from '@shared/constants/routes';
-import { useEmployees } from '../hooks/useEmployees';
 import { STATS } from '../constants';
+import { useEmployees } from '../../employee/hooks';
+import { EmployeeListItem } from '../../employee';
 
 export const HomeScreen = () => {
   const [search, setSearch] = useState('');
