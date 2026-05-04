@@ -9,10 +9,10 @@ const FOLDERS = [
   'components',
   'hooks',
   'screens',
-  'services',
   'store',
   'types',
   'utils',
+  'utils/constants',
   'validators',
 ];
 
