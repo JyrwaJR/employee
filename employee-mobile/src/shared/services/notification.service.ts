@@ -6,10 +6,12 @@ import { logger } from '@/src/shared/utils/logger';
 import { http } from '@/src/shared/utils/http';
 import { sharedEndpoints } from '@/src/shared/api';
 
+type TErrorType = 'PERMISSION_DENIED' | 'NOT_A_DEVICE' | 'CONFIG_ERROR' | 'NETWORK_ERROR';
+
 export type RegistrationResult = {
   success: boolean;
   token?: string;
-  errorType?: 'PERMISSION_DENIED' | 'NOT_A_DEVICE' | 'CONFIG_ERROR' | 'NETWORK_ERROR';
+  errorType?: TErrorType;
 };
 
 /**
@@ -87,7 +89,9 @@ export const NotificationService = {
     }
   },
 
-  async unregister(_token: string): Promise<void> {
-    // Implement token removal logic if needed
+  async unregister({ id }: { id: string }): Promise<void> {
+    await http.post(sharedEndpoints.notification.unregister, {
+      user_id: id,
+    });
   },
 };

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 /**
- * Announcement Category 
+ * Announcement Category
  */
 export const AnnouncementCategorySchema = z.enum(['HOLIDAY', 'NOTICE', 'PERSONAL', 'GLOBAL']);
 
@@ -21,5 +21,5 @@ export const AnnouncementSchema = z.object({
   priority: AnnouncementPrioritySchema,
   isRead: z.boolean(),
   createdAt: z.string(), // ISO String
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.string()).optional(),
 });

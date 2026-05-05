@@ -1,12 +1,12 @@
 import React from 'react';
 import { FlatList, View, RefreshControl } from 'react-native';
-import { Text } from '@/src/shared/components/ui/text';
-import { AnimationProvider, FadeInView } from '@/src/shared/components/ui/FadeInView';
+import { Text } from '@shared/components/ui/text';
+import { AnimationProvider, FadeInView } from '@shared/components/ui/FadeInView';
 import { useAnnouncements } from '../hooks/useAnnouncements';
 import { AnnouncementCard } from '../components/AnnouncementCard';
 import { AnnouncementSkeleton } from '../components/AnnouncementSkeleton';
-import { Container } from '@/src/shared/components/layout';
-import { Ternary } from '@/src/shared/components/base/Ternary';
+import { Container } from '@shared/components/layout';
+import { Ternary } from '@shared/components/base/Ternary';
 
 /**
  * Announcement Board Screen
