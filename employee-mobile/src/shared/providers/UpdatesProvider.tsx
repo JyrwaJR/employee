@@ -1,18 +1,7 @@
-import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import * as Updates from 'expo-updates';
 import { Alert } from 'react-native';
-
-interface UpdatesContextType {
-  isUpdateAvailable: boolean;
-  isUpdateReady: boolean;
-  isDownloading: boolean;
-  updateError: string | null;
-  checkAndDownloadUpdate: () => Promise<void>;
-  runUpdate: () => Promise<void>;
-  skipUpdate: () => void;
-}
-
-const UpdatesContext = createContext<UpdatesContextType | undefined>(undefined);
+import { UpdatesContext } from '../context/update.context';
 
 export const UpdatesProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);
@@ -77,12 +66,4 @@ export const UpdatesProvider: React.FC<React.PropsWithChildren> = ({ children })
   };
 
   return <UpdatesContext.Provider value={value}>{children}</UpdatesContext.Provider>;
-};
-
-export const useUpdates = () => {
-  const context = useContext(UpdatesContext);
-  if (context === undefined) {
-    throw new Error('useUpdates must be used within an UpdatesProvider');
-  }
-  return context;
 };

@@ -28,7 +28,7 @@ export const LocalAuthRedirect = ({ children }: { children: React.ReactNode }) =
   }, [isSupported, isEnabled, user]);
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1">
       {children}
       {isEnabled && !isExpoGo && user && !isAuthenticated && (
         <View style={StyleSheet.absoluteFill} className="bg-white dark:bg-slate-950">
@@ -38,9 +38,3 @@ export const LocalAuthRedirect = ({ children }: { children: React.ReactNode }) =
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

@@ -32,17 +32,14 @@ export interface FilterCardProps {
   className?: string;
 }
 
-const FilterChip = ({
-  label,
-  selected,
-  onPress,
-  disabled,
-}: {
+type FilterChipProps = {
   label: string;
   selected: boolean;
   onPress: () => void;
   disabled?: boolean;
-}) => (
+};
+
+const FilterChip = ({ label, selected, onPress, disabled }: FilterChipProps) => (
   <TouchableOpacity
     onPress={onPress}
     disabled={disabled}

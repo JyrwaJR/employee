@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Modal, ActivityIndicator } from 'react-native';
-import { useUpdates } from '@shared/providers/UpdatesProvider';
+import { useUpdates } from '@shared/hooks/useUpdate';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 
