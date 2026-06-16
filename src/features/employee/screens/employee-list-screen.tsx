@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { View, FlatList, TouchableOpacity, StatusBar } from 'react-native';
 import { Container } from '@/src/shared/components/layout/container';
-import { EmployeeListItem } from '../components/employee-list-item';
+import { EmployeeListItem } from '@/src/shared/components/employee-list-item';
 import { router } from 'expo-router';
 import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
 import { Text } from '@/src/shared/components/ui/text';
 import { FilterCard } from '@/src/shared/components/display/filter-card';
 import { toast } from '@/src/shared/components/ui';
 import { routes } from '@/src/shared/constants/routes';
-import { useEmployees } from '../hooks';
+import { useEmployees } from '@/src/shared/hooks';
 import { ScreenHeader } from '@/src/shared/components/layout/screen-header';
 import { SearchInput } from '@/src/shared/components/search-input';
 

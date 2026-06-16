@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
 import { cn } from '@/src/shared/utils/helpers/cn';
 import { Text } from '@/src/shared/components/ui/text';
-import { EmployeeT } from '../types';
+import { EmployeeT } from '@/src/features/employee/types';
 import { getStatusColor } from '@/src/shared/utils/helpers/get-status-color';
 
 type Props = {

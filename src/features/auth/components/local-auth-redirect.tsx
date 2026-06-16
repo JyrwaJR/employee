@@ -1,6 +1,6 @@
 import { useAuth } from '@/src/shared/hooks/use-auth';
 import { useLocalAuth } from '@/src/shared/hooks/use-local-auth';
-import { useLocalAuthStore } from '@/src/features/auth/store/local-auth.store';
+import { useLocalAuthStore } from '@/src/shared/stores/local-auth.store';
 import { useCallback, useEffect } from 'react';
 import { Forbidden } from '@/src/shared/components/screens/forbidden';
 import { isExpoGo } from '@/src/shared/constants';

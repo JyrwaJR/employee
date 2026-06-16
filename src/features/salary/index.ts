@@ -1,9 +1,6 @@
 // Public API
 export * from './utils/constants/salary.endpoint';
 
-// Components
-export * from './components';
-
 // Hooks
 
 // Screens

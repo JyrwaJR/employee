@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from 'react-native';
 import { useThemeStore } from '@/src/shared/stores/theme.store';
 import { Container } from '@/src/shared/components/layout/container';
 import { SectionHeader } from '@/src/shared/components/base/section-header';
-import { useLocalAuthStore } from '@/src/features/auth/store/local-auth.store';
+import { useLocalAuthStore } from '@/src/shared/stores/local-auth.store';
 import { SettingRow } from '@/src/shared/components/display/setting-row';
 
 export const SettingsScreen = () => {

@@ -1,6 +1,6 @@
 import { http } from '@/src/shared/utils/api/http';
 import { useQuery } from '@tanstack/react-query';
-import { EmployeeT } from '../types';
+import { EmployeeT } from '@/src/features/employee/types';
 import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { queryKeys } from '@/src/shared/constants/query-keys';
 import React from 'react';

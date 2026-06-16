@@ -9,7 +9,7 @@ import { http } from '@/src/shared/utils/api/http';
 import { SalarySlip } from '@/src/features/employee/types';
 import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { Text } from '@/src/shared/components/ui/text';
-import { HistoryCard } from '@/src/features/salary/components/history-card';
+import { HistoryCard } from '@/src/shared/components/display/history-card';
 import { HeaderStack } from '@/src/shared/components/layout/header';
 import { FilterCard } from '@/src/shared/components/display/filter-card';
 import { months, years } from '@/src/shared/utils/helpers/years';

@@ -1,3 +1,4 @@
+export * from './use-employees';
 export * from './use-access';
 export * from './use-delay';
 export * from './use-theme';

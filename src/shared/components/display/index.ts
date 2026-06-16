@@ -1,4 +1,5 @@
 export * from './stats-box';
+export * from './history-card';
 export * from './year-filter';
 export * from './setting-row';
 export * from './summary-card';

@@ -1,9 +1,6 @@
 // Public API
 export * from './utils/constants/employee.endpoint';
 
-// Components
-export * from './components/employee-list-item';
-
 // Screens
 export { default as EmployeeDetails } from './screens/employee-details';
 export { default as EmployeeListScreen } from './screens/employee-list-screen';

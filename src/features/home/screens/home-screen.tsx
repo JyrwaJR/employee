@@ -10,8 +10,8 @@ import { Text } from '@shared/components/ui/text';
 import { useThemeStore } from '@shared/stores/theme.store';
 import { routes } from '@shared/constants/routes';
 import { STATS } from '../utils';
-import { useEmployees } from '../../employee/hooks';
-import { EmployeeListItem } from '../../employee';
+import { useEmployees } from '@/src/shared/hooks';
+import { EmployeeListItem } from '@/src/shared/components/employee-list-item';
 import { ScreenHeader } from '@/src/shared/components/layout/screen-header';
 import { SearchInput } from '@/src/shared/components/search-input';
 
