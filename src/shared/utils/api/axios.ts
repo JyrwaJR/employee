@@ -1,17 +1,12 @@
+import { v4 as uuidv4 } from 'uuid';
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { TokenStoreManager } from '@/src/features/auth/store/token.store';
 import { router } from 'expo-router';
 import { queryClient } from '../react-query';
 import { routes } from '@/src/shared/constants/routes';
-import { ENDPOINTS } from '../constants/endpoints';
+import { ENDPOINTS } from '../../constants/endpoints';
 import { logger } from '../logger/logger';
 import { ApiResponse } from '../../types/api';
-
-const generateTraceId = () =>
-  'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0;
-    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
-  });
 
 export const handleAxiosError = <T>(error: unknown): ApiResponse<T> => {
   let errorMessage = 'Something went wrong. Please try again.';
@@ -105,7 +100,7 @@ axiosInstance.interceptors.request.use(async (config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  const traceId = generateTraceId();
+  const traceId = uuidv4();
   config.headers['x-trace-id'] = traceId;
   (config as any)._startTime = Date.now();
 
