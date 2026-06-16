@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AuthContext } from '@/src/shared/providers/auth.context';
+import { AuthContext } from '@/src/shared/contexts/auth.context';
 import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { TokenStoreManager } from '@/src/features/auth/store/token.store';
 import { AuthContextT, UserT } from '@/src/shared/types/auth'; // Updated to Shared Types

@@ -1,4 +1,4 @@
-import { LocalAuthContext } from '@/src/shared/providers/local-auth.context';
+import { LocalAuthContext } from '@/src/shared/contexts/local-auth.context';
 import { useContext } from 'react';
 
 /**
