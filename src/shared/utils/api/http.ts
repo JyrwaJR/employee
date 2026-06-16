@@ -1,7 +1,7 @@
 import { AxiosError, AxiosRequestConfig, isCancel, AxiosResponse } from 'axios';
 import { logger } from '../logger/logger';
-import axiosInstance from '../api/api';
-import { ApiResponse } from '../types/api';
+import axiosInstance from '../api/axios';
+import { ApiResponse } from '../../types/api';
 import { z } from 'zod';
 
 export const handleAxiosError = <T>(error: unknown): ApiResponse<T> => {
@@ -54,7 +54,6 @@ export const http = {
       if (!isValidUrl(url)) {
         throw new Error('Invalid URL');
       }
-      logger.log({ method: 'GET =>', path: url });
       const response = await axiosInstance.get(url, config);
       return handleResponse<T>(response);
     } catch (error) {
@@ -74,7 +73,6 @@ export const http = {
       if (!isValidUrl(url)) {
         throw new Error('Invalid URL');
       }
-      logger.log({ method: 'POST =>', path: url });
       const response = await axiosInstance.post(url, data, config);
       return handleResponse<T>(response);
     } catch (error) {
@@ -91,7 +89,6 @@ export const http = {
       if (!isValidUrl(url)) {
         throw new Error('Invalid URL');
       }
-      logger.log({ method: 'PUT =>', path: url });
       const response = await axiosInstance.put(url, data, config);
       return handleResponse<T>(response);
     } catch (error) {
@@ -104,7 +101,6 @@ export const http = {
       if (!isValidUrl(url)) {
         throw new Error('Invalid URL');
       }
-      logger.log({ method: 'DELETE =>', path: url });
       const response = await axiosInstance.delete(url, config);
       return handleResponse<T>(response);
     } catch (error) {

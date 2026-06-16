@@ -4,6 +4,13 @@ import { router } from 'expo-router';
 import { queryClient } from '../react-query';
 import { routes } from '@/src/shared/constants/routes';
 import { ENDPOINTS } from '../constants/endpoints';
+import { logger } from '../logger/logger';
+
+const generateTraceId = () =>
+  'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
+  });
 
 const axiosInstance = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
@@ -68,11 +75,28 @@ axiosInstance.interceptors.request.use(async (config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
+  const traceId = generateTraceId();
+  config.headers['x-trace-id'] = traceId;
+  (config as any)._startTime = Date.now();
+
+  logger.log({ method: `${config.method?.toUpperCase()} =>`, path: config.url, traceId });
+
   return config;
 });
 
 axiosInstance.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    const duration = Date.now() - ((res.config as any)._startTime || Date.now());
+    const traceId = res.headers['x-trace-id'] || (res.config.headers['x-trace-id'] as string) || 'unknown';
+    logger.log({
+      method: `${res.config.method?.toUpperCase()} <=`,
+      path: res.config.url,
+      traceId,
+      duration: `${duration}ms`,
+    });
+    return res;
+  },
   async (error: AxiosError) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
