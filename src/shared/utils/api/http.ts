@@ -1,36 +1,8 @@
-import { AxiosError, AxiosRequestConfig, isCancel, AxiosResponse } from 'axios';
+import { AxiosRequestConfig, isCancel, AxiosResponse } from 'axios';
 import { logger } from '../logger/logger';
-import axiosInstance from '../api/axios';
+import axiosInstance, { handleAxiosError } from '../api/axios';
 import { ApiResponse } from '../../types/api';
 import { z } from 'zod';
-
-export const handleAxiosError = <T>(error: unknown): ApiResponse<T> => {
-  let errorMessage = 'Something went wrong. Please try again.';
-  let errorDetails: string | Record<string, unknown> = '';
-
-  if (error instanceof AxiosError) {
-    if (error.response) {
-      errorMessage = (error.response.data as { message?: string })?.message || errorMessage;
-      errorDetails =
-        (error.response.data as { error?: string | Record<string, unknown> })?.error ||
-        error.response.data ||
-        '';
-    } else if (error.request) {
-      errorMessage = 'Please check your internet connection.';
-    } else {
-      errorMessage = error.message;
-    }
-  } else if (error instanceof Error) {
-    errorMessage = error.message;
-  }
-
-  return {
-    success: false,
-    message: errorMessage,
-    error: errorDetails,
-    data: null,
-  };
-};
 
 const handleResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiResponse<T> => {
   return {

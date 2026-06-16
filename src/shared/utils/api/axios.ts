@@ -5,12 +5,41 @@ import { queryClient } from '../react-query';
 import { routes } from '@/src/shared/constants/routes';
 import { ENDPOINTS } from '../constants/endpoints';
 import { logger } from '../logger/logger';
+import { ApiResponse } from '../../types/api';
 
 const generateTraceId = () =>
   'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0;
     return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
   });
+
+export const handleAxiosError = <T>(error: unknown): ApiResponse<T> => {
+  let errorMessage = 'Something went wrong. Please try again.';
+  let errorDetails: string | Record<string, unknown> = '';
+
+  if (error instanceof AxiosError) {
+    if (error.response) {
+      errorMessage = (error.response.data as { message?: string })?.message || errorMessage;
+      errorDetails =
+        (error.response.data as { error?: string | Record<string, unknown> })?.error ||
+        error.response.data ||
+        '';
+    } else if (error.request) {
+      errorMessage = 'Please check your internet connection.';
+    } else {
+      errorMessage = error.message;
+    }
+  } else if (error instanceof Error) {
+    errorMessage = error.message;
+  }
+
+  return {
+    success: false,
+    message: errorMessage,
+    error: errorDetails,
+    data: null,
+  };
+};
 
 const axiosInstance = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
@@ -99,6 +128,19 @@ axiosInstance.interceptors.response.use(
   },
   async (error: AxiosError) => {
     const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
+
+    const duration = Date.now() - ((originalRequest as any)?._startTime || Date.now());
+    const traceId =
+      error.response?.headers?.['x-trace-id'] ||
+      ((originalRequest?.headers as any)?.['x-trace-id'] as string) ||
+      'unknown';
+    logger.log({
+      method: `${originalRequest?.method?.toUpperCase()} <=`,
+      path: originalRequest?.url,
+      traceId,
+      duration: `${duration}ms`,
+      status: error.response?.status,
+    });
 
     // 1. If not a 401 or shouldn't refresh, just fail
     if (
