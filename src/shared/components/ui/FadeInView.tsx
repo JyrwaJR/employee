@@ -7,6 +7,7 @@ import Animated, {
   withDelay,
   Easing,
   useAnimatedScrollHandler,
+  SharedValue,
 } from 'react-native-reanimated';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
@@ -18,7 +19,7 @@ const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 interface AnimationContextType {
   start: boolean;
   stagger: number;
-  scrollOffset: Animated.SharedValue<number>;
+  scrollOffset: SharedValue<number>;
 }
 
 const AnimationContext = createContext<AnimationContextType | null>(null);

@@ -1,10 +1,10 @@
 import { http } from '@/src/shared/utils/http';
 import { useQuery } from '@tanstack/react-query';
 import { EmployeeT } from '../types';
-import { sharedEndpoints } from '@/src/shared/api';
-import { queryKeys } from '@/src/shared/api/query-keys';
+import { ENDPOINTS } from '@/src/shared/constants/endpoints';
+import { queryKeys } from '@/src/shared/constants/query-keys';
 import React from 'react';
-import { notify } from '@/src/shared/utils/notify';
+import { toast } from '@/src/shared/components/ui';
 
 type UseEmployeeProps = {
   page?: number;
@@ -13,7 +13,7 @@ type UseEmployeeProps = {
 export function useEmployees({ page }: UseEmployeeProps = { page: 1 }) {
   const query = useQuery({
     queryKey: queryKeys.employees.list(page),
-    queryFn: () => http.get<EmployeeT[]>(sharedEndpoints.employees.list),
+    queryFn: () => http.get<EmployeeT[]>(ENDPOINTS.EMPLOYEE.LIST),
     select: (data) => data.data || [],
     placeholderData: (prev) => prev,
   });
@@ -23,7 +23,9 @@ export function useEmployees({ page }: UseEmployeeProps = { page: 1 }) {
   React.useEffect(() => {
     let isMounted = true;
     if (isError && isMounted) {
-      notify(error, 'EMPLOYEE_UPDATE');
+      toast.error('Update Failed', {
+        description: (error as any)?.message || 'Could not update employee details',
+      });
     }
     return () => {
       isMounted = false;

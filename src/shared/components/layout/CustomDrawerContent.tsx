@@ -7,7 +7,7 @@ import { Link, Route, usePathname } from 'expo-router';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Pressable, Text, View } from 'react-native';
-import { useThemeStore } from '@shared/store/theme.store';
+import { useThemeStore } from '@shared/stores/theme.store';
 
 export type MenuItemsT = {
   id: number;

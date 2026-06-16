@@ -5,9 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { Button } from '@/src/shared/components/ui/button';
-import { notify } from '@/src/shared/utils/notify';
+import { toast } from '@/src/shared/components/ui';
 import { http } from '@/src/shared/utils/http';
-import { sharedEndpoints } from '@/src/shared/api';
+import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { useRouter } from 'expo-router';
 import { ForgotPasswordSchema } from '../validators/forgotPassword.schema';
 import { routes } from '@/src/shared/constants/routes';
@@ -25,16 +25,24 @@ export const PhoneForm = () => {
   const phone_no = methods.watch('phone_no');
 
   const sendOtpMutation = useMutation({
-    mutationFn: async (data: ForgotPasswordInputs) => http.post(sharedEndpoints.auth.getOtp, data),
+    mutationFn: async (data: ForgotPasswordInputs) => http.post(ENDPOINTS.AUTH.GET_OTP, data),
     onSuccess: (data) => {
       if (data.success) {
         router.push(routes.auth.forgotPassword(phone_no, 'OTP'));
+        toast.success('Secure Code Sent', {
+          description: data.message || 'Verification code sent to your phone',
+        });
+      } else {
+        toast.error('OTP Error', {
+          description: data.message || 'Failed to send verification code',
+        });
       }
-      notify(data, 'AUTH_OTP');
       return data;
     },
-    onError: () => {
-      notify({ success: false }, 'AUTH_OTP');
+    onError: (error: any) => {
+      toast.error('OTP Error', {
+        description: error?.message || 'Failed to send verification code',
+      });
     },
   });
 

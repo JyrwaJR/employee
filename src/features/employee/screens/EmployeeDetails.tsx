@@ -6,7 +6,7 @@ import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { Text } from '@/src/shared/components/ui/text';
 import { routes } from '@/src/shared/constants/routes';
-import { notify } from '@/src/shared/utils/notify';
+import { toast } from '@/src/shared/components/ui';
 import { useEmployee } from '../hooks/useEmployee';
 import { InfoRow } from '../components/InfoRow';
 import { SectionCard } from '../components/SectionCard';
@@ -23,7 +23,9 @@ export default function EmployeeDetailScreen() {
   React.useEffect(() => {
     let isMounted = true;
     if (isError && isMounted) {
-      notify(error, 'EMPLOYEE_UPDATE');
+      toast.error('Update Failed', {
+        description: (error as any)?.message || 'Could not update employee details',
+      });
     }
     return () => {
       isMounted = false;

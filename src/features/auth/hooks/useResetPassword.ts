@@ -5,8 +5,8 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { http } from '@/src/shared/utils/http';
-import { sharedEndpoints } from '@/src/shared/api';
-import { notify } from '@/src/shared/utils/notify';
+import { ENDPOINTS } from '@/src/shared/constants/endpoints';
+import { toast } from '@/src/shared/components/ui';
 import { routes } from '@/src/shared/constants/routes';
 import {
   ResetPasswordSchema,
@@ -39,12 +39,18 @@ export const useResetPassword = () => {
   });
 
   const sendOtpMutation = useMutation({
-    mutationFn: async (data: { phone_no: string }) => http.post(sharedEndpoints.auth.getOtp, data),
+    mutationFn: async (data: { phone_no: string }) => http.post(ENDPOINTS.AUTH.GET_OTP, data),
     onSuccess: (data: any) => {
       if (data.success) {
         setStatus('INPUT_OTP');
+        toast.success('Secure Code Sent', {
+          description: data.message || 'Verification code sent to your phone',
+        });
+      } else {
+        toast.error('OTP Error', {
+          description: data.message || 'Failed to send verification code',
+        });
       }
-      notify(data, 'AUTH_OTP');
     },
   });
 
@@ -55,19 +61,27 @@ export const useResetPassword = () => {
       password: string;
       confirm_password: string;
     }) => {
-      return http.post(sharedEndpoints.auth.forgotPassword, data);
+      return http.post(ENDPOINTS.AUTH.FORGOT_PASSWORD, data);
     },
     onSuccess: (data: any) => {
       if (data.success) {
         router.replace(routes.auth.login);
+        toast.success('Security Update', {
+          description: data.message || 'Password reset successful',
+        });
+      } else {
+        toast.error('Update Failed', {
+          description: data.message || 'Unable to reset password',
+        });
       }
-      notify(data, 'AUTH_RESET');
     },
   });
 
   const onPasswordSubmit = (data: ResetPasswordInputs) => {
     if (!phone_no) {
-      notify({ success: false, message: 'Phone number missing!' }, 'AUTH_RESET');
+      toast.error('Update Failed', {
+        description: 'Phone number missing!',
+      });
       return;
     }
     setPasswordData(data);
@@ -76,7 +90,9 @@ export const useResetPassword = () => {
 
   const onOtpSubmit = (data: ResetPasswordOtpInputs) => {
     if (!passwordData || !phone_no) {
-      notify({ success: false, message: 'Missing data for reset.' }, 'AUTH_RESET');
+      toast.error('Update Failed', {
+        description: 'Missing data for reset.',
+      });
       return;
     }
     resetPasswordMutation.mutate({

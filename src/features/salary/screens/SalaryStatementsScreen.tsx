@@ -7,15 +7,15 @@ import { useAuth } from '@/src/shared/hooks/useAuth';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { http } from '@/src/shared/utils/http';
 import { SalarySlip } from '@/src/features/employee/types';
-import { sharedEndpoints } from '@/src/shared/api';
+import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { Text } from '@/src/shared/components/ui/text';
 import { HistoryCard } from '@/src/shared/components/display/HistoryCard';
 import { HeaderStack } from '@/src/shared/components/layout/Header';
 import { FilterCard } from '@/src/shared/components/display/FilterCard';
 import { months, years } from '@/src/shared/utils/helper/years';
-import { queryKeys } from '@/src/shared/api/query-keys';
+import { queryKeys } from '@/src/shared/constants/query-keys';
 import { routes } from '@/src/shared/constants/routes';
-import { notify } from '@/src/shared/utils/notify';
+import { toast } from '@/src/shared/components/ui';
 
 type Props = {
   idx?: string;
@@ -46,7 +46,7 @@ export const StatementScreen = ({ idx, isTab }: Props) => {
 
   const { data, isFetching, isError, error } = useQuery({
     queryKey: queryKeys.salary.statements(id, isTab),
-    queryFn: () => http.get<SalarySlip[]>(sharedEndpoints.salary.list(id)),
+    queryFn: () => http.get<SalarySlip[]>(ENDPOINTS.SALARY.LIST(id)),
     select: (data) => data.data,
     enabled: !!id,
   });
@@ -54,7 +54,9 @@ export const StatementScreen = ({ idx, isTab }: Props) => {
   // Handle Query Error
   React.useEffect(() => {
     if (isError) {
-      notify(error, 'SALARY_FETCH');
+      toast.error('Access Error', {
+        description: (error as any)?.message || 'Could not retrieve payroll details',
+      });
     }
   }, [isError, error]);
 

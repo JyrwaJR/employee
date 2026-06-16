@@ -6,12 +6,12 @@ import { FilterCard } from '@/src/shared/components/display/FilterCard';
 import { years } from '@/src/shared/utils/helper/years';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
-import { sharedEndpoints } from '@/src/shared/api';
+import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { LeaveT } from '../types';
 import { LeaveCard } from '../components/LeaveCard';
-import { queryKeys } from '@/src/shared/api/query-keys';
+import { queryKeys } from '@/src/shared/constants/query-keys';
 
 const statusOptions = [
   { label: 'Approved', value: 'APPROVED' },
@@ -28,7 +28,7 @@ export const LeaveScreen = () => {
 
   const { data, isFetching } = useQuery({
     queryKey: queryKeys.leaves.list(employeeId, selectedYear, status),
-    queryFn: () => http.get<LeaveT[]>(sharedEndpoints.leave.list(employeeId)),
+    queryFn: () => http.get<LeaveT[]>(ENDPOINTS.LEAVE.LIST(employeeId)),
     enabled: !!employeeId,
     select: (data) => data.data,
   });

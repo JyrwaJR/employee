@@ -7,11 +7,11 @@ import { SalarySlip } from '@/src/features/employee/types';
 import { FilterCard } from '@/src/shared/components/display/FilterCard';
 import { months, years } from '@/src/shared/utils/helper/years';
 import { useQuery } from '@tanstack/react-query';
-import { sharedEndpoints } from '@/src/shared/api';
+import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { http } from '@/src/shared/utils/http';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
-import { queryKeys } from '@/src/shared/api/query-keys';
+import { queryKeys } from '@/src/shared/constants/query-keys';
 
 const statusOptions = [
   { label: 'Paid', value: 'PAID' },
@@ -28,7 +28,7 @@ const PensionScreen = () => {
 
   const { data: PENSION_DATA, isFetching } = useQuery({
     queryKey: queryKeys.pension.list(empId, selectedYear, selectedMonth, status),
-    queryFn: () => http.get<SalarySlip[]>(sharedEndpoints.pension.list(empId)),
+    queryFn: () => http.get<SalarySlip[]>(ENDPOINTS.PENSION.LIST(empId)),
     select: (data) => data.data,
     enabled: !!empId,
   });

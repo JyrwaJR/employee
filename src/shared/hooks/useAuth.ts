@@ -1,4 +1,4 @@
-import { AuthContext } from '@/src/shared/context/auth.context';
+import { AuthContext } from '@/src/shared/providers/auth.context';
 import { useContext } from 'react';
 
 /**

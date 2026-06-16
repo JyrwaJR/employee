@@ -1,10 +1,10 @@
 import { useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/http';
-import { sharedEndpoints } from '@/src/shared/api';
+import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { SalarySlip } from '@/src/features/employee/types';
-import { queryKeys } from '@/src/shared/api/query-keys';
-import { notify } from '@/src/shared/utils/notify';
+import { queryKeys } from '@/src/shared/constants/query-keys';
+import { toast } from '@/src/shared/components/ui';
 
 const parseAmount = (value?: string | null): number => {
   return parseFloat(value || '0');
@@ -13,7 +13,7 @@ const parseAmount = (value?: string | null): number => {
 export const usePayslipData = (salaryId: string) => {
   const query = useQuery({
     queryKey: queryKeys.salary.payslip(salaryId),
-    queryFn: () => http.get<SalarySlip>(sharedEndpoints.salary.details(salaryId)),
+    queryFn: () => http.get<SalarySlip>(ENDPOINTS.SALARY.DETAILS(salaryId)),
     select: (res) => res.data,
     enabled: !!salaryId,
   });
@@ -22,7 +22,9 @@ export const usePayslipData = (salaryId: string) => {
 
   useEffect(() => {
     if (isError) {
-      notify(error, 'SALARY_FETCH');
+      toast.error('Access Error', {
+        description: (error as any)?.message || 'Could not retrieve payroll details',
+      });
     }
   }, [isError, error]);
 

@@ -1,9 +1,9 @@
 /**
  * Employee Feature Endpoints
  */
-export const employeeEndpoints = {
+export const EMPLOYEE_ENDPOINT = {
   /** Main staff register/list */
-  list: '/employees',
+  LIST: '/employees',
   /** Individual employee profile view */
-  details: '/employees/:id',
+  DETAILS: (id: string) => `/employees/${id}`,
 } as const;

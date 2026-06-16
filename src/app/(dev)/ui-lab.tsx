@@ -43,7 +43,7 @@ import {
 } from '@/src/shared/components/ui';
 import { KeyboardSafeView, HeaderStack } from '@/src/shared/components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useThemeStore } from '@/src/shared/store/theme.store';
+import { useThemeStore } from '@/src/shared/stores/theme.store';
 
 export default function UILabScreen() {
   const [showDialog, setShowDialog] = useState(false);

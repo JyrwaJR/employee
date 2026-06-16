@@ -2,9 +2,9 @@ import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
 import { LoginSchema } from '../validators/login.schema';
 import { http } from '@/src/shared/utils/http';
-import { sharedEndpoints } from '@/src/shared/api';
-import { TokenStoreManager } from '@/src/shared/store/token.store';
-import { notify } from '@/src/shared/utils/notify';
+import { ENDPOINTS } from '@/src/shared/constants/endpoints';
+import { TokenStoreManager } from '@/src/shared/stores/token.store';
+import { toast } from '@/src/shared/components/ui';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { logger } from '@/src/shared/utils/logger';
 
@@ -22,7 +22,7 @@ type LoginResT = {
 export const useLoginMutation = () => {
   const { refresh } = useAuth();
   return useMutation({
-    mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(sharedEndpoints.auth.login, data),
+    mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(ENDPOINTS.AUTH.LOGIN, data),
     onSuccess: async (data: any) => {
       if (data.success) {
         const responseData = data.data;
@@ -35,7 +35,9 @@ export const useLoginMutation = () => {
           await TokenStoreManager.addToken(accessToken);
           await TokenStoreManager.addRefreshToken(refreshToken);
 
-          notify(data, 'AUTH_LOGIN');
+          toast.success('Authentication Success', {
+            description: data.message || 'Sign in successful',
+          });
           refresh(); // Trigger auth state update
           return data;
         } else {
@@ -46,13 +48,14 @@ export const useLoginMutation = () => {
             hasRefresh: !!refreshToken,
           });
 
-          notify(
-            { success: false, message: 'Auth synchronization failed. Please try again.' },
-            'AUTH_LOGIN'
-          );
+          toast.error('Authentication Failed', {
+            description: 'Auth synchronization failed. Please try again.',
+          });
         }
       } else {
-        notify(data, 'AUTH_LOGIN');
+        toast.error('Authentication Failed', {
+          description: data.message || 'Invalid credentials',
+        });
       }
     },
   });

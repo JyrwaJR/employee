@@ -1,11 +1,11 @@
 /**
  * Notification System Endpoints (Global)
  */
-export const notificationEndpoints = {
+export const NOTIFICATION_ENDPOINT = {
   /** Register push token for User */
-  register: '/notification/register',
+  REGISTER: '/notification/register',
   /** Unregister push token for User */
-  unregister: '/notification/unregister',
+  UNREGISTER: '/notification/unregister',
   /** List announcements/notices (Board) */
-  list: () => '/notification/list',
+  LIST: '/notification/list',
 } as const;

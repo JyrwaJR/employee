@@ -7,7 +7,7 @@ import { cn } from '@/src/shared/utils/cn';
 interface AuthFooterProps {
   text: string;
   linkText: string;
-  linkHref: string;
+  linkHref: any;
   testID?: string;
   className?: string;
 }

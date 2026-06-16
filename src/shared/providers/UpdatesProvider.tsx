@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import * as Updates from 'expo-updates';
 import { Alert } from 'react-native';
-import { UpdatesContext } from '../context/update.context';
+import { UpdatesContext } from './update.context';
 
 export const UpdatesProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [isUpdateAvailable, setIsUpdateAvailable] = useState(false);

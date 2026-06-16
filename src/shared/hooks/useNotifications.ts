@@ -5,7 +5,7 @@ import { Route, router } from 'expo-router';
 import { logger } from '@/src/shared/utils/logger';
 import { isExpoGo } from '@/src/shared/constants';
 import { useAuth } from '@/src/shared/hooks/useAuth';
-import { notify } from '@/src/shared/utils/notify';
+import { toast } from '@/src/shared/components/ui';
 import { withRetry } from '@/src/shared/utils/retry';
 import { routes } from '@/src/shared/constants/routes';
 import { NotificationService } from '../services/notification.service';
@@ -103,13 +103,9 @@ export const useNotifications = () => {
           id: notif.request.identifier,
         });
 
-        notify(
-          {
-            success: true,
-            message: notif.request.content.body || 'New message received',
-          },
-          'PUSH_SYSTEM'
-        );
+        toast.success('New Notification', {
+          description: notif.request.content.body || 'New message received',
+        });
       }
     });
 

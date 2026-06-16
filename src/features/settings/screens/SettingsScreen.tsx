@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { useThemeStore } from '@/src/shared/store/theme.store';
+import { useThemeStore } from '@/src/shared/stores/theme.store';
 import { Container } from '@/src/shared/components/layout/Container';
 import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
-import { useLocalAuthStore } from '@/src/shared/store/local-auth.store';
+import { useLocalAuthStore } from '@/src/shared/stores/local-auth.store';
 import { SettingRow } from '@/src/shared/components/display/SettingRow';
 
 export const SettingsScreen = () => {

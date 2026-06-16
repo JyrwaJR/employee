@@ -1,7 +1,7 @@
-import { sharedEndpoints } from '@/src/shared/api';
+import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { routes } from '@/src/shared/constants/routes';
 import { http } from '@/src/shared/utils/http';
-import { notify } from '@/src/shared/utils/notify';
+import { toast } from '@/src/shared/components/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { SignUpSchema } from '../validators/signup.schema';
@@ -18,12 +18,18 @@ export function useSignUpMutation() {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (data: SignUpInputs) => http.post(sharedEndpoints.auth.signUp, data),
+    mutationFn: (data: SignUpInputs) => http.post(ENDPOINTS.AUTH.SIGN_UP, data),
     onSuccess: (data) => {
       if (data.success) {
         router.replace(routes.auth.login);
+        toast.success('Registration Success', {
+          description: data.message || 'Sign up successful',
+        });
+      } else {
+        toast.error('Registration Failed', {
+          description: data.message || 'Could not complete registration',
+        });
       }
-      notify(data, 'AUTH_REGISTER');
       return data;
     },
   });

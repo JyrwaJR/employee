@@ -9,7 +9,7 @@ import { ThemeToggle } from '../../base/ThemeToggle';
 import { CustomTabBar } from './CustomTabBar';
 import { getTabConfig } from '@/src/shared/config/tabs';
 
-const TabLayout = () => {
+export const TabLayout = () => {
   const { role } = useAuth();
   const theme = useTheme();
   const pathname = usePathname();
@@ -54,5 +54,3 @@ const TabLayout = () => {
 };
 
 TabLayout.displayName = 'TabLayout';
-
-export default TabLayout;

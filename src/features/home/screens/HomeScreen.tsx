@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LoadingScreen } from '@shared/components/screens/LoadingScreen';
 import { router } from 'expo-router';
 import { Text } from '@shared/components/ui/text';
-import { useThemeStore } from '@shared/store/theme.store';
+import { useThemeStore } from '@shared/stores/theme.store';
 import { routes } from '@shared/constants/routes';
 import { STATS } from '../constants';
 import { useEmployees } from '../../employee/hooks';

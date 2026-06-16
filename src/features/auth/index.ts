@@ -1,5 +1,5 @@
 // Public API
-export * from './api/auth.endpoints';
+export * from './api/auth.endpoint';
 
 // Components
 export * from './components/PhoneForm';

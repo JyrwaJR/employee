@@ -5,9 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { Button } from '@/src/shared/components/ui/button';
-import { notify } from '@/src/shared/utils/notify';
+import { toast } from '@/src/shared/components/ui';
 import { http } from '@/src/shared/utils/http';
-import { sharedEndpoints } from '@/src/shared/api';
+import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { router } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { OTPSchema } from '../validators/otp.schema';
@@ -25,12 +25,18 @@ export const VerifyOtpForm = () => {
   });
 
   const sendOtpMutation = useMutation({
-    mutationFn: async (data: OTPInputs) => http.post(sharedEndpoints.auth.verifyOtp, data),
+    mutationFn: async (data: OTPInputs) => http.post(ENDPOINTS.AUTH.VERIFY_OTP, data),
     onSuccess: (data) => {
       if (data.success) {
         router.push(routes.auth.forgotPassword(phone_no, 'RESET'));
+        toast.success('Verification Success', {
+          description: data.message || 'Code verified successfully',
+        });
+      } else {
+        toast.error('Verification Failed', {
+          description: data.message || 'Invalid verification code',
+        });
       }
-      notify(data, 'AUTH_VERIFY');
       return data;
     },
   });

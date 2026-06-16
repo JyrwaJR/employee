@@ -6,7 +6,7 @@ import { router } from 'expo-router';
 import { LoadingScreen } from '@/src/shared/components/screens/LoadingScreen';
 import { Text } from '@/src/shared/components/ui/text';
 import { FilterCard } from '@/src/shared/components/display/FilterCard';
-import { notify } from '@/src/shared/utils/notify';
+import { toast } from '@/src/shared/components/ui';
 import { routes } from '@/src/shared/constants/routes';
 import { useEmployees } from '../hooks';
 import { ScreenHeader } from '@/src/shared/components/layout/ScreenHeader';
@@ -23,7 +23,9 @@ export default function EmployeeListScreen() {
   React.useEffect(() => {
     let isMounted = true;
     if (isError && isMounted) {
-      notify(error, 'EMPLOYEE_UPDATE');
+      toast.error('Update Failed', {
+        description: (error as any)?.message || 'Could not update employee details',
+      });
     }
     return () => {
       isMounted = false;

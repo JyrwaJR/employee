@@ -1,5 +1,5 @@
 // Public API
-export * from './api/employee.endpoints';
+export * from './api/employee.endpoint';
 
 // Components
 export * from './components/EmployeeListItem';

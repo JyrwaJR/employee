@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { UpdatesContext } from '../context/update.context';
+import { UpdatesContext } from '../providers/update.context';
 
 export const useUpdates = () => {
   const context = useContext(UpdatesContext);

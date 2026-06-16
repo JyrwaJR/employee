@@ -3,7 +3,7 @@ import { View, Image, ScrollView, StatusBar, Alert } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { Text } from '@/src/shared/components/ui/text';
-import { useThemeStore } from '@/src/shared/store/theme.store';
+import { useThemeStore } from '@/src/shared/stores/theme.store';
 import { SettingRow } from '@/src/shared/components/display/SettingRow';
 import { ProfileDetailRow } from '../components/ProfileDetailRow';
 

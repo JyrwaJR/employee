@@ -1,9 +1,9 @@
 /**
  * Salary Feature Endpoints
  */
-export const salaryEndpoints = {
+export const SALARY_ENDPOINT = {
   /** Employee-specific salary history */
-  list: '/employees/:id/salary',
+  LIST: (id: string) => `/employees/${id}/salary`,
   /** Direct link to a specific salary payslip */
-  details: '/salary/:id',
+  DETAILS: (id: string) => `/salary/${id}`,
 } as const;
