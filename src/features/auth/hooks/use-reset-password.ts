@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
-import { http } from '@/src/shared/utils/http';
+import { http } from '@/src/shared/utils/api/http';
 import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { toast } from '@/src/shared/components/ui';
 import { routes } from '@/src/shared/constants/routes';

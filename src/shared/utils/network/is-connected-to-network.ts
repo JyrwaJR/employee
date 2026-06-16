@@ -1,5 +1,5 @@
 import * as Network from 'expo-network';
-import { logger } from 'react-native-reanimated/lib/typescript/common';
+import { logger } from '../logger/logger';
 
 /**
  * Checks the current network connectivity and internet reachability status.

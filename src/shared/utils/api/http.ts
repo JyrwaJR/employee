@@ -1,6 +1,6 @@
 import { AxiosError, AxiosRequestConfig, isCancel, AxiosResponse } from 'axios';
-import { logger } from './logger';
-import axiosInstance from './api';
+import { logger } from '../logger/logger';
+import axiosInstance from '../api/api';
 import { ApiResponse } from '../types/api';
 import { z } from 'zod';
 

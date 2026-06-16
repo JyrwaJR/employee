@@ -1,4 +1,4 @@
-import axiosInstance from './api';
+import axiosInstance from '../api/api';
 
 type ErrorType = 'ERROR' | 'INFO' | 'WARN' | 'LOG';
 

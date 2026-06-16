@@ -1,4 +1,4 @@
-import { logger } from './logger';
+import { logger } from '../logger/logger';
 
 /**
  * Options for the retry operation.

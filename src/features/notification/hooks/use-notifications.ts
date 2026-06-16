@@ -2,11 +2,11 @@ import { useState, useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Route, router } from 'expo-router';
-import { logger } from '@/src/shared/utils/logger';
+import { logger } from '@/src/shared/utils/logger/logger';
 import { isExpoGo } from '@/src/shared/constants';
 import { useAuth } from '@/src/shared/hooks/use-auth';
 import { toast } from '@/src/shared/components/ui';
-import { withRetry } from '@/src/shared/utils/retry';
+import { withRetry } from '@/src/shared/utils/helpers/retry';
 import { routes } from '@/src/shared/constants/routes';
 import { NotificationService } from '@/src/shared/services/notification.service';
 

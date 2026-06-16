@@ -2,8 +2,8 @@ import { Platform } from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import * as Constants from 'expo-constants';
-import { logger } from '@/src/shared/utils/logger';
-import { http } from '@/src/shared/utils/http';
+import { logger } from '@/src/shared/utils/logger/logger';
+import { http } from '@/src/shared/utils/api/http';
 import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 
 type TErrorType = 'PERMISSION_DENIED' | 'NOT_A_DEVICE' | 'CONFIG_ERROR' | 'NETWORK_ERROR';

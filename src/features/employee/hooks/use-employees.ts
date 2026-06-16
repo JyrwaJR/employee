@@ -1,4 +1,4 @@
-import { http } from '@/src/shared/utils/http';
+import { http } from '@/src/shared/utils/api/http';
 import { useQuery } from '@tanstack/react-query';
 import { EmployeeT } from '../types';
 import { ENDPOINTS } from '@/src/shared/constants/endpoints';

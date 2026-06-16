@@ -1,12 +1,12 @@
 import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
 import { LoginSchema } from '../validators/login.schema';
-import { http } from '@/src/shared/utils/http';
+import { http } from '@/src/shared/utils/api/http';
 import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { TokenStoreManager } from '@/src/features/auth/store/token.store';
 import { toast } from '@/src/shared/components/ui';
 import { useAuth } from '@/src/shared/hooks/use-auth';
-import { logger } from '@/src/shared/utils/logger';
+import { logger } from '@/src/shared/utils/logger/logger';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 

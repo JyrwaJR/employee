@@ -1,6 +1,6 @@
 import { useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { http } from '@/src/shared/utils/http';
+import { http } from '@/src/shared/utils/api/http';
 import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { SalarySlip } from '@/src/features/employee/types';
 import { queryKeys } from '@/src/shared/constants/query-keys';
