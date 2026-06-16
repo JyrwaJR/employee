@@ -1,9 +1,9 @@
-import { AUTH_ENDPOINT } from '@/src/features/auth/api/auth.endpoint';
-import { EMPLOYEE_ENDPOINT } from '@/src/features/employee/api/employee.endpoint';
-import { LEAVE_ENDPOINT } from '@/src/features/leave/api/leave.endpoint';
-import { NOTIFICATION_ENDPOINT } from '@/src/features/notification/api/notification.endpoint';
-import { PENSION_ENDPOINT } from '@/src/features/pension/api/pension.endpoint';
-import { SALARY_ENDPOINT } from '@/src/features/salary/api/salary.endpoint';
+import { AUTH_ENDPOINT } from '@/src/features/auth/utils/constants/auth.endpoint';
+import { EMPLOYEE_ENDPOINT } from '@/src/features/employee/utils/constants/employee.endpoint';
+import { LEAVE_ENDPOINT } from '@/src/features/leave/utils/constants/leave.endpoint';
+import { NOTIFICATION_ENDPOINT } from '@/src/features/notification/utils/constants/notification.endpoint';
+import { PENSION_ENDPOINT } from '@/src/features/pension/utils/constants/pension.endpoint';
+import { SALARY_ENDPOINT } from '@/src/features/salary/utils/constants/salary.endpoint';
 
 /**
  * Centralized API Registry
