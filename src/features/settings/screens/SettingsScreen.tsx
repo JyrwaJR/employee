@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { useThemeStore } from '@/src/shared/store/theme.store';
-import { useTheme } from '@/src/shared/hooks/use-theme';
 import { Container } from '@/src/shared/components/layout/Container';
 import { SectionHeader } from '@/src/shared/components/base/SectionHeader';
 import { useLocalAuthStore } from '@/src/shared/store/local-auth.store';

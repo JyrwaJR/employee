@@ -18,7 +18,7 @@ export const usePayslipData = (salaryId: string) => {
     enabled: !!salaryId,
   });
 
-  const { data, isError, error } = query;
+  const { data, isError, error, isFetching } = query;
 
   useEffect(() => {
     if (isError) {
@@ -70,7 +70,8 @@ export const usePayslipData = (salaryId: string) => {
   }, [data]);
 
   return {
-    ...query,
+    data,
+    isFetching,
     ...parsedData,
   };
 };

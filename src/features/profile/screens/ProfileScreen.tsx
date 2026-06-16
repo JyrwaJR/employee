@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, ScrollView, StatusBar, Switch, Alert } from 'react-native';
+import { View, Image, ScrollView, StatusBar, Alert } from 'react-native';
 import { Container } from '@/src/shared/components/layout/Container';
 import { useAuth } from '@/src/shared/hooks/useAuth';
 import { Text } from '@/src/shared/components/ui/text';

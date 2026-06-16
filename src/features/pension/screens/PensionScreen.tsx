@@ -27,7 +27,7 @@ const PensionScreen = () => {
   const empId = user?.employee_id || '';
 
   const { data: PENSION_DATA, isFetching } = useQuery({
-    queryKey: queryKeys.pension.list(selectedYear, selectedMonth, status),
+    queryKey: queryKeys.pension.list(empId, selectedYear, selectedMonth, status),
     queryFn: () => http.get<SalarySlip[]>(sharedEndpoints.pension.list(empId)),
     select: (data) => data.data,
     enabled: !!empId,

@@ -2,9 +2,12 @@ const { defineConfig } = require('eslint/config');
 const expoConfig = require('eslint-config-expo/flat');
 const prettierConfig = require('eslint-config-prettier');
 const unusedImports = require('eslint-plugin-unused-imports');
+const pluginQuery = require('@tanstack/eslint-plugin-query');
 
 module.exports = defineConfig([
   expoConfig,
+  ...pluginQuery.configs['flat/recommended'],
+
   {
     // Comprehensive ignores for modern Expo/Mobile development
     ignores: [

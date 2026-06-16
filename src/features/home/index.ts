@@ -2,9 +2,6 @@
 
 // Components
 
-// Hooks
-export * from './hooks/useEmployees';
-
 // Screens
 export * from './screens/HomeScreen';
 

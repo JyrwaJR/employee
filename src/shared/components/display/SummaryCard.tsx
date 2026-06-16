@@ -6,10 +6,10 @@ import { cn } from '@/src/shared/utils/cn';
 interface SummaryCardProps {
   label: string;
   amount: string;
-  details: Array<{
+  details: {
     label: string;
     value: string;
-  }>;
+  }[];
   className?: string;
   variant?: 'blue' | 'green' | 'red';
 }

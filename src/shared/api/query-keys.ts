@@ -35,9 +35,9 @@ export const queryKeys = {
       ['employee salary', id, isTab].filter((v) => v !== undefined),
   },
   pension: {
-    /** Key for pension records, typically filtered by year, month, and status */
-    list: (year: string, month: string, status: string) =>
-      ['pension', year, month, status] as const,
+    /** Key for pension records, typically filtered by employee ID, year, month, and status */
+    list: (employeeId: string, year: string, month: string, status: string) =>
+      ['pension', employeeId, year, month, status] as const,
   },
   announcements: {
     /** Key for the list of announcements, optionally paginated */
