@@ -26,11 +26,7 @@ export const HomeScreen = () => {
 
   const BellIcon = (
     <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-      <MaterialCommunityIcons
-        name="bell"
-        size={24}
-        color={theme === 'dark' ? 'white' : 'black'}
-      />
+      <MaterialCommunityIcons name="bell" size={24} color={theme === 'dark' ? 'white' : 'black'} />
     </TouchableOpacity>
   );
 
@@ -40,15 +36,10 @@ export const HomeScreen = () => {
         title={user ? user?.first_name + ' ' + user?.last_name : 'Loading...'}
         subtitle="Good Morning,"
         rightElement={BellIcon}>
-        <SearchInput
-          placeholder="Search employees..."
-          value={search}
-          onChangeText={setSearch}
-        />
+        <SearchInput placeholder="Search employees..." value={search} onChangeText={setSearch} />
       </ScreenHeader>
-
       {/* Content Scroll */}
-...
+      ...
       <View className="flex-1 px-6 pt-6">
         {/* Stats Row */}
         <View className="mb-8 flex-row gap-x-2">

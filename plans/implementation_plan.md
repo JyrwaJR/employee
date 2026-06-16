@@ -7,3 +7,7 @@
    - Update `eslint.config.js` to require and integrate `@tanstack/eslint-plugin-query` rules.
    - Adjust `eslint-plugin-unused-imports` settings to ensure unused imports trigger errors, and configure rules so they don't conflict with TypeScript or base ESLint rules.
 4. **Validation**: Run `pnpm run lint` and verify configurations work and fix existing lint errors.
+5. **Configure Prettier**:
+   - Create `.prettierrc` JSON file with the Prettier configuration.
+   - Remove `prettier.config.js` to keep a single source of configuration.
+   - Verify Prettier runs and formats successfully using the new configuration.

@@ -37,7 +37,6 @@ export default function EmployeeListScreen() {
   return (
     <Container className="flex-1">
       <StatusBar barStyle="dark-content" />
-
       <ScreenHeader title="Staff Directory">
         <SearchInput
           placeholder="Search by name or role..."
@@ -47,9 +46,8 @@ export default function EmployeeListScreen() {
         />
         <FilterCard />
       </ScreenHeader>
-
       {/* List */}
-...
+      ...
       <FlatList
         data={filteredData}
         keyExtractor={(item) => item.id}
@@ -67,7 +65,6 @@ export default function EmployeeListScreen() {
           </View>
         }
       />
-
       {/* FAB */}
       <TouchableOpacity
         activeOpacity={0.9}

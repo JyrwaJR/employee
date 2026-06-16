@@ -108,7 +108,13 @@ export const ProfileScreen = () => {
             />
             <SettingRow icon="lock-outline" label="Change Password" onPress={() => {}} />
             <SettingRow icon="file-document-outline" label="Service Record" onPress={() => {}} />
-            <SettingRow icon="logout" label="Log Out" isDestructive onPress={handleLogout} showBorder={false} />
+            <SettingRow
+              icon="logout"
+              label="Log Out"
+              isDestructive
+              onPress={handleLogout}
+              showBorder={false}
+            />
           </View>
         </View>
 

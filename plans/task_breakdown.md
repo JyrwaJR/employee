@@ -10,3 +10,9 @@
   - Status: COMPLETE
 - **Task 5: Run compiler and lint checks to fix and verify rules**
   - Status: COMPLETE
+- **Task 6: Create .prettierrc config file**
+  - Status: COMPLETE
+- **Task 7: Remove redundant prettier.config.js**
+  - Status: COMPLETE
+- **Task 8: Verify Prettier formatting**
+  - Status: COMPLETE

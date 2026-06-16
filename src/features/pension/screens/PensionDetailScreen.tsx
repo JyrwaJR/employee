@@ -66,15 +66,13 @@ export const PensionDetailScreen = () => {
             subtitle="New Delhi"
             badge={`${data.month} ${data.year}`}
           />
-
           <SummaryCard
             label="Net Pension Disbursed"
             amount={`₹${data.netPayable.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`}
             details={summaryDetails}
           />
-
           {/* Pensioner Details Grid */}
-...
+          ...
           <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-gray-400">
               Pensioner Particulars
@@ -83,7 +81,6 @@ export const PensionDetailScreen = () => {
             <DetailRow label="Bank Name" value={data.bankName} />
             <DetailRow label="PAN No" value={data.pan} />
           </View>
-
           {/* Earnings Section */}
           <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <SectionHeader title="Earnings" icon="💰" />
@@ -92,7 +89,6 @@ export const PensionDetailScreen = () => {
             ))}
             <MoneyRow label="Gross Pension" value={data.grossAmount} isBold />
           </View>
-
           {/* Deductions Section */}
           <View className="mb-8 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
             <SectionHeader title="Deductions" icon="📉" />
@@ -101,13 +97,11 @@ export const PensionDetailScreen = () => {
             ))}
             <MoneyRow label="Total Deductions" value={data.totalDeductions} isBold isDeduction />
           </View>
-
           {/* Footer Note */}
           <Text variant="subtext" className="mb-6 px-8 text-center text-xs leading-5">
             This is a computer-generated pension slip. No signature is required. Generated via NIC
             e-HRMS.
           </Text>
-
           {/* Actions */}
           <View className="mb-10 flex-row gap-4">
             <TouchableOpacity className="flex-1 flex-row items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white p-4 dark:border-gray-700 dark:bg-slate-800">

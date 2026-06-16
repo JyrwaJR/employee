@@ -11,7 +11,7 @@ interface KeyboardSafeViewProps {
   useSafeArea?: boolean;
   safeAreaEdges?: Edge[];
   /**
-   * Whether tapping the background should dismiss the keyboard. 
+   * Whether tapping the background should dismiss the keyboard.
    * Handled via ScrollView props for better scroll performance.
    */
   dismissKeyboardOnTap?: boolean;
@@ -51,8 +51,7 @@ export const KeyboardSafeView: React.FC<KeyboardSafeViewProps> = ({
         keyboardOpeningTime={0}
         scrollEventThrottle={16}
         bounces={true}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         {/* 
            Crucial: We remove TouchableWithoutFeedback and let content 
            interact directly with the ScrollView responder chain.

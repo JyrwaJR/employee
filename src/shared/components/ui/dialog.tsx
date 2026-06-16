@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { Modal, View, Pressable, ViewProps, StyleSheet } from 'react-native';
-import Animated, { 
-  useAnimatedStyle, 
-  useSharedValue, 
-  withSpring, 
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
   withTiming,
   interpolate,
-  Extrapolate
+  Extrapolate,
 } from 'react-native-reanimated';
 import { Text } from './text';
 import { cn } from '../../utils/cn';
@@ -27,8 +27,7 @@ export const Dialog = ({ open, onOpenChange, children }: DialogProps) => {
       visible={open}
       animationType="none" // We handle EVERYTHING via Reanimated for smoothness
       statusBarTranslucent
-      onRequestClose={() => onOpenChange(false)}
-    >
+      onRequestClose={() => onOpenChange(false)}>
       {children}
     </Modal>
   );
@@ -45,12 +44,12 @@ export const DialogContent = ({ children, className, onClose, ...props }: Dialog
   const progress = useSharedValue(0);
 
   useEffect(() => {
-    progress.value = withSpring(1, { 
-      damping: 20, 
+    progress.value = withSpring(1, {
+      damping: 20,
       stiffness: 150,
-      mass: 0.8
+      mass: 0.8,
     });
-    
+
     return () => {
       progress.value = 0;
     };
@@ -62,16 +61,14 @@ export const DialogContent = ({ children, className, onClose, ...props }: Dialog
 
   const contentStyle = useAnimatedStyle(() => ({
     opacity: interpolate(progress.value, [0, 1], [0, 1]),
-    transform: [
-      { scale: interpolate(progress.value, [0, 1], [0.92, 1], Extrapolate.CLAMP) }
-    ],
+    transform: [{ scale: interpolate(progress.value, [0, 1], [0.92, 1], Extrapolate.CLAMP) }],
   }));
 
   const handleClose = () => {
     // We trigger the fade out before calling the parent onClose
     progress.value = withTiming(0, { duration: 200 }, () => {
       // Small timeout to ensure Reanimated's UI thread is done before React state flips
-      onClose?.(); 
+      onClose?.();
     });
   };
 
@@ -83,18 +80,17 @@ export const DialogContent = ({ children, className, onClose, ...props }: Dialog
       </Animated.View>
 
       {/* Content Container */}
-      <View style={StyleSheet.absoluteFill} className="items-center justify-center pointer-events-box-none px-4">
+      <View
+        style={StyleSheet.absoluteFill}
+        className="pointer-events-box-none items-center justify-center px-4">
         <Animated.View
           style={[contentStyle]}
           className={cn(
             'w-full max-w-sm rounded-3xl bg-white p-6 shadow-2xl dark:bg-slate-900',
             className
           )}
-          {...props}
-        >
-          <Pressable onPress={(e) => e.stopPropagation()}>
-            {children}
-          </Pressable>
+          {...props}>
+          <Pressable onPress={(e) => e.stopPropagation()}>{children}</Pressable>
         </Animated.View>
       </View>
     </View>
