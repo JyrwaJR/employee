@@ -1,5 +1,5 @@
 // Public API
-export * from './api/pension.endpoint';
+export * from './utils/constants/pension.endpoint';
 
 // Components
 

@@ -1,4 +1,4 @@
-import { cn } from '@/src/shared/utils/cn';
+import { cn } from '@/src/shared/utils/helpers/cn';
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { Container } from '../layout/container';

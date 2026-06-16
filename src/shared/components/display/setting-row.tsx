@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, Switch } from 'react-native';
 import { Text } from '@/src/shared/components/ui/text';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { cn } from '@/src/shared/utils/cn';
+import { cn } from '@/src/shared/utils/helpers/cn';
 
 interface SettingRowProps {
   icon: keyof typeof MaterialCommunityIcons.glyphMap;

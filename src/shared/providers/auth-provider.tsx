@@ -4,7 +4,7 @@ import { AuthContext } from '@/src/shared/contexts/auth.context';
 import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { TokenStoreManager } from '@/src/features/auth/store/token.store';
 import { AuthContextT, UserT } from '@/src/shared/types/auth'; // Updated to Shared Types
-import { http } from '@/src/shared/utils/http';
+import { http } from '@/src/shared/utils/api/http';
 import { logger } from '@/src/shared/utils/logger';
 import { queryKeys } from '@/src/shared/constants/query-keys';
 import { toast } from '@/src/shared/components/ui';

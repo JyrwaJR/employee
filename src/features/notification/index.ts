@@ -1,5 +1,5 @@
 // Public API
-export * from './api/notification.endpoint';
+export * from './utils/constants/notification.endpoint';
 
 // Components
 // export * from './components/...';

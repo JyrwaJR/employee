@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { Text } from '@/src/shared/components/ui/text';
-import { cn } from '@/src/shared/utils/cn';
+import { cn } from '@/src/shared/utils/helpers/cn';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 export interface FilterOption {

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { SalarySlip } from '@/src/features/employee/types';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { cn } from '@/src/shared/utils/cn';
+import { cn } from '@/src/shared/utils/helpers/cn';
 import { Text } from '@/src/shared/components/ui/text';
 
 export const HistoryCard = ({ item, onPress }: { item: SalarySlip; onPress: () => void }) => (

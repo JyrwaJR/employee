@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@/src/shared/hooks/use-theme';
 import { Text } from '@/src/shared/components/ui/text';
-import { cn } from '@/src/shared/utils/cn';
+import { cn } from '@/src/shared/utils/helpers/cn';
 
 /**
  * Props for the Header component

@@ -11,7 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
 import { Text } from './text';
-import { cn } from '../../utils/cn';
+import { cn } from '../../utils/helpers/cn';
 
 const AccordionContext = React.createContext<{
   value?: string;

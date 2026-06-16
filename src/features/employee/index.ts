@@ -1,5 +1,5 @@
 // Public API
-export * from './api/employee.endpoint';
+export * from './utils/constants/employee.endpoint';
 
 // Components
 export * from './components/employee-list-item';

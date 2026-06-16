@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { cn } from '@/src/shared/utils/cn';
+import { cn } from '@/src/shared/utils/helpers/cn';
 import { Text } from '@/src/shared/components/ui/text';
 import { LeaveT } from '@/src/features/leave/types';
-import { getStatusColor } from '@/src/shared/utils/get-status-color';
+import { getStatusColor } from '@/src/shared/utils/helpers/get-status-color';
 
 export const LeaveCard = ({ item, onPress }: { item: LeaveT; onPress?: () => void }) => {
   const statusStyle = getStatusColor(item.status);

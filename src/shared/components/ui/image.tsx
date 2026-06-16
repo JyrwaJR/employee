@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Image as RNImage, ImageProps as RNImageProps, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Skeleton } from './skeleton';
-import { cn } from '../../utils/cn';
+import { cn } from '../../utils/helpers/cn';
 
 interface ImageProps extends RNImageProps {
   containerClassName?: string;

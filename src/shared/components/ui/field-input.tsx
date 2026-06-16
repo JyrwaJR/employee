@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Controller, Control, RegisterOptions, useFormContext } from 'react-hook-form';
 import { Input } from './input';
 import { Text } from './text';
-import { cn } from '@/src/shared/utils/cn';
+import { cn } from '@/src/shared/utils/helpers/cn';
 
 interface FieldInputProps extends React.ComponentProps<typeof Input> {
   name: string;

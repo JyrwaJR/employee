@@ -1,4 +1,4 @@
-import { cn } from '@/src/shared/utils/cn';
+import { cn } from '@/src/shared/utils/helpers/cn';
 import React from 'react';
 import { Text, TouchableOpacity, ActivityIndicator, TouchableOpacityProps } from 'react-native';
 import { useDelay } from '@/src/shared/hooks/use-delay';

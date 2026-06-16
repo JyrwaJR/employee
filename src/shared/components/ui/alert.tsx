@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, ViewProps } from 'react-native';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Text } from './text';
-import { cn } from '../../utils/cn';
+import { cn } from '../../utils/helpers/cn';
 
 const alertVariants = cva('relative w-full rounded-2xl border p-4 flex-row items-start gap-x-3', {
   variants: {

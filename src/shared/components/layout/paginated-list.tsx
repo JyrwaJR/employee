@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, FlatListProps, RefreshControl, View, ActivityIndicator } from 'react-native';
 import { Skeleton } from '../ui/skeleton';
 import { Text } from '../ui/text';
-import { cn } from '../../utils/cn';
+import { cn } from '../../utils/helpers/cn';
 
 interface PaginatedListProps<T> extends Omit<FlatListProps<T>, 'data'> {
   /**

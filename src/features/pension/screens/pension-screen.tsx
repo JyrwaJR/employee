@@ -5,11 +5,11 @@ import { Text } from '@/src/shared/components/ui/text';
 import { HistoryCard } from '@/src/features/salary/components/history-card';
 import { SalarySlip } from '@/src/features/employee/types';
 import { FilterCard } from '@/src/shared/components/display/filter-card';
-import { months, years } from '@/src/shared/utils/helper/years';
+import { months, years } from '@/src/shared/utils/helpers/years';
 import { useQuery } from '@tanstack/react-query';
 import { ENDPOINTS } from '@/src/shared/constants/endpoints';
 import { useAuth } from '@/src/shared/hooks/use-auth';
-import { http } from '@/src/shared/utils/http';
+import { http } from '@/src/shared/utils/api/http';
 import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
 import { queryKeys } from '@/src/shared/constants/query-keys';
 

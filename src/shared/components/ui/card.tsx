@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, ViewProps, Text as RNText } from 'react-native';
 import { Text } from './text';
-import { cn } from '../../utils/cn';
+import { cn } from '../../utils/helpers/cn';
 
 const Card = React.forwardRef<View, ViewProps>(({ className, ...props }, ref) => (
   <View

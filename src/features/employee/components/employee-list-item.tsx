@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity, Image } from 'react-native';
-import { cn } from '@/src/shared/utils/cn';
+import { cn } from '@/src/shared/utils/helpers/cn';
 import { Text } from '@/src/shared/components/ui/text';
 import { EmployeeT } from '../types';
-import { getStatusColor } from '@/src/shared/utils/get-status-color';
+import { getStatusColor } from '@/src/shared/utils/helpers/get-status-color';
 
 type Props = {
   item: EmployeeT;

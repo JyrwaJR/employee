@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { cn } from '@/src/shared/utils/cn';
+import { cn } from '@/src/shared/utils/helpers/cn';
 import { Text } from '../ui/text';
 
 type MoneyRowProps = {

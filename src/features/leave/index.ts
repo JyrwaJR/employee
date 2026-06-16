@@ -1,5 +1,5 @@
 // Public API
-export * from './api/leave.endpoint';
+export * from './utils/constants/leave.endpoint';
 
 // Components
 export * from './components/leave-card';

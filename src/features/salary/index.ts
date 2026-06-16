@@ -1,5 +1,5 @@
 // Public API
-export * from './api/salary.endpoint';
+export * from './utils/constants/salary.endpoint';
 
 // Components
 export * from './components';
