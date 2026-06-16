@@ -2,11 +2,11 @@
 export * from './api/employee.endpoint';
 
 // Components
-export * from './components/EmployeeListItem';
+export * from './components/employee-list-item';
 
 // Screens
-export { default as EmployeeDetails } from './screens/EmployeeDetails';
-export { default as EmployeeListScreen } from './screens/EmployeeListScreen';
+export { default as EmployeeDetails } from './screens/employee-details';
+export { default as EmployeeListScreen } from './screens/employee-list-screen';
 
 // Types
 export * from './types';

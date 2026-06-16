@@ -1,1 +1,1 @@
-export * from './GlobalErrorBoundary';
+export * from './global-error-boundary';

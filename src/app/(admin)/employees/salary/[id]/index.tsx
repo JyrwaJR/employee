@@ -1,6 +1,6 @@
-import { PayslipScreen } from '@/src/features/salary/screens/PayslipScreen';
+import { PayslipScreen } from '@/src/features/salary/screens/payslip-screen';
 import { useLocalSearchParams } from 'expo-router';
-import { HeaderStack } from '@/src/shared/components/layout/Header';
+import { HeaderStack } from '@/src/shared/components/layout/header';
 
 export default function Page() {
   const { id } = useLocalSearchParams();

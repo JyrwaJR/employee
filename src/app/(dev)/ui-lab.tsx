@@ -20,8 +20,6 @@ import {
   toast,
   SkeletonProvider,
   SkeletonItem,
-  AnimationProvider,
-  FadeInView,
   Image,
   AlertDialogFooter,
   AlertDialogDescription,
@@ -41,6 +39,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from '@/src/shared/components/ui';
+import { AnimationProvider, FadeInView } from '@/src/shared/components/fade-in-view';
 import { KeyboardSafeView, HeaderStack } from '@/src/shared/components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useThemeStore } from '@/src/shared/stores/theme.store';

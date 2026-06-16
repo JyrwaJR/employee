@@ -6,8 +6,8 @@ export * from './api/pension.endpoint';
 // Hooks
 
 // Screens
-export * from './screens/PensionDetailScreen';
-export { default as PensionScreen } from './screens/PensionScreen';
+export * from './screens/pension-detail-screen';
+export { default as PensionScreen } from './screens/pension-screen';
 
 // Types
 

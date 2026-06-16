@@ -5,7 +5,7 @@
 // Hooks
 
 // Screens
-export * from './screens/SettingsScreen';
+export * from './screens/settings-screen';
 
 // Types
 

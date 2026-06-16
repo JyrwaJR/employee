@@ -1,4 +1,4 @@
-import { StatementScreen } from '@/src/features/salary/screens/SalaryStatementsScreen';
+import { StatementScreen } from '@/src/features/salary/screens/salary-statements-screen';
 import { useLocalSearchParams } from 'expo-router';
 
 export default function Home() {

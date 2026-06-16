@@ -239,93 +239,37 @@ features/training/hooks/use-training.ts         ← all training data/mutations 
 
 ## Naming Conventions
 
-### File and Folder Names — `kebab-case` (MANDATORY)
+### File and Folder Names — `kebab-case` (MANDATORY — NO EXCEPTIONS)
 
-Every file and every folder in the project uses `kebab-case`. No exceptions.
+Every file and every folder in the project uses `kebab-case`. There are no exceptions — not for React components, hooks, or any other file type.
 
 ```
 ✅ create-module.ts
 ✅ find-many-meetings.ts
 ✅ use-training-modules.ts
+✅ training-list-page.tsx
 ✅ meeting-query.validator.ts
 ✅ audit-log.service.ts
 
-❌ createModule.ts          ← camelCase — FORBIDDEN for file names
-❌ FindManyMeetings.ts      ← PascalCase — FORBIDDEN for file names (except React components)
-❌ trainingModules.ts       ← FORBIDDEN
+❌ createModule.ts              ← camelCase — FORBIDDEN
+❌ FindManyMeetings.ts          ← PascalCase — FORBIDDEN
+❌ TrainingListPage.tsx         ← PascalCase — FORBIDDEN
+❌ useTrainingModules.ts        ← camelCase — FORBIDDEN
+❌ trainingModules.ts           ← FORBIDDEN
 ```
 
-### React Components — `PascalCase` (file name AND export)
+### Internal Exports — follow their own conventions
 
-```
-✅ TrainingListPage.tsx
-✅ CreateModuleDialog.tsx
-✅ MeetingsTable.tsx
-```
+While **file names are always kebab-case**, the exports inside those files follow their own conventions:
 
-### Hooks — `camelCase` with `use` prefix
-
-```
-✅ useTrainingModules.ts
-✅ useMeetings.ts
-✅ useDeleteModule.ts
-```
-
-### Services — `kebab-case` file, `camelCase` exported function
-
-```
-File:   features/training/services/create-module.ts
-Export: export async function createModule(...)
-```
-
-### Validators — `kebab-case` file, `PascalCase` Zod schema export
-
-```
-File:   features/training/validators/create-module.validator.ts
-Export: export const CreateModuleSchema = z.object({...})
-```
-
-### Types — `PascalCase` interface/type names, `kebab-case` file names
-
-```
-File:   features/training/types/index.ts
-Export: export interface TrainingModule { ... }
-```
-
-### Constants — `SCREAMING_SNAKE_CASE` values, `kebab-case` file names
-
-```
-File:   shared/constants/routes.ts
-Export: export const ADMIN_ROUTES = [...]
-```
-
-### API Route Segments — `kebab-case`
-
-```
-✅ /api/training-modules
-✅ /api/membership-applications
-✅ /api/audit-logs
-
-❌ /api/trainingModules
-❌ /api/membershipApplications
-```
-
-### Summary Table
-
-| Item                        | Convention             | Example                            |
-| --------------------------- | ---------------------- | ---------------------------------- |
-| Folders                     | `kebab-case`           | `membership-applications/`         |
-| Non-component files         | `kebab-case`           | `create-module.ts`                 |
-| React component files       | `PascalCase`           | `TrainingListPage.tsx`             |
-| React component exports     | `PascalCase`           | `export function TrainingListPage` |
-| Hooks (file + export)       | `camelCase` with `use` | `useTrainingModules`               |
-| Service functions           | `camelCase`            | `createModule()`                   |
-| Zod schemas                 | `PascalCase`           | `CreateModuleSchema`               |
-| TypeScript types/interfaces | `PascalCase`           | `TrainingModule`                   |
-| Constants                   | `SCREAMING_SNAKE_CASE` | `ADMIN_ROUTES`                     |
-| Route segments              | `kebab-case`           | `/api/training-modules`            |
-| Prisma model names          | `PascalCase`           | `TrainingModule`                   |
-| Prisma field names          | `camelCase`            | `createdAt`, `associationId`       |
+| File Type            | File Convention | Export Convention       | Example                                                       |
+| -------------------- | --------------- | ----------------------- | ------------------------------------------------------------- |
+| React components     | `kebab-case`    | `PascalCase`            | `file: training-list-page.tsx` → `export function TrainingListPage` |
+| Hooks                | `kebab-case`    | `camelCase` with `use`  | `file: use-training-modules.ts` → `export function useTrainingModules` |
+| Services             | `kebab-case`    | `camelCase`             | `file: create-module.ts` → `export async function createModule` |
+| Validators           | `kebab-case`    | `PascalCase` Zod schema | `file: create-module.validator.ts` → `export const CreateModuleSchema` |
+| Types                | `kebab-case`    | `PascalCase`            | `file: training-module.ts` → `export interface TrainingModule` |
+| Constants            | `kebab-case`    | `SCREAMING_SNAKE_CASE`  | `file: routes.ts` → `export const ADMIN_ROUTES = [...]`      |
 
 ---
 
@@ -419,7 +363,7 @@ src/features/<feature-name>/
 ## Component Rules
 
 - **One component per file.** No exceptions.
-- Component file names use `PascalCase.tsx`.
+- Component file names use `kebab-case.tsx`.
 - Shared reusable UI → `shared/components/`.
 - Feature-specific UI → `features/<name>/components/`.
 - shadcn/ui primitives → `shared/components/ui/` only (never modified directly).
@@ -433,7 +377,7 @@ src/features/<feature-name>/
 
 ## Hook Rules
 
-- File names use `camelCase` with the `use` prefix: `useTrainingModules.ts`.
+- File names use `kebab-case` with `use` prefix: `use-training-modules.ts`.
 - One hook = one data/state concern. Split if a hook is doing two distinct things.
 - Hooks in `features/<name>/hooks/` → feature-scoped.
 - Hooks in `shared/hooks/` → cross-feature, no feature-specific knowledge.
@@ -515,16 +459,16 @@ features/training/validators/
 ```
 
 features/training/components/
-TrainingCard.tsx
-TrainingTable.tsx
+training-card.tsx
+training-table.tsx
 index.ts
 
 ```
 
 ```ts
 // index.ts
-export * from './TrainingCard';
-export * from './TrainingTable';
+export * from './training-card';
+export * from './training-table';
 ```
 
 ### Rule
@@ -695,9 +639,9 @@ Before submitting any code change, verify every item in this list:
 
 ### Naming
 
-- [ ] All new folders and non-component files use `kebab-case`.
-- [ ] All new React component files use `PascalCase`.
-- [ ] All new hooks start with `use`.
+- [ ] All new files and folders use `kebab-case` — no exceptions.
+- [ ] All new component file names are `kebab-case.tsx`, exports are `PascalCase`.
+- [ ] All new hook file names use `kebab-case` with `use-` prefix.
 - [ ] All new API route segments use `kebab-case`.
 - [ ] New route added to the correct constant in `shared/constants/routes.ts`.
 

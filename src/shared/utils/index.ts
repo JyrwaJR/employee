@@ -1,11 +1,11 @@
 export { default as api } from './api';
 export * from './cn';
-export * from './getStatusColor';
+export * from './get-status-color';
 export * from './http';
-export * from './isConnectedToNetwork';
+export * from './is-connected-to-network';
 export * from './logger';
 export * from './retry';
 export * from './text';
 export * from './url';
-export * from './reactQuery';
+export * from './react-query';
 export * from './helper';

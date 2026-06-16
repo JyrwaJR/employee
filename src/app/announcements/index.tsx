@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderStack } from '@/src/shared/components/layout/Header';
+import { HeaderStack } from '@/src/shared/components/layout/header';
 import { AnnouncementBoardScreen } from '@/src/features/announcements';
 
 export default function AnnouncementsRoute() {

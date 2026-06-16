@@ -5,7 +5,7 @@ export * from './api/notification.endpoint';
 // export * from './components/...';
 
 // Hooks
-// export * from './hooks/...';
+export * from './hooks';
 
 // Screens
 // export * from './screens/...';

@@ -3,7 +3,7 @@
 // Components
 
 // Screens
-export * from './screens/HomeScreen';
+export * from './screens/home-screen';
 
 // Types
 export * from './types/stats';

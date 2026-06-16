@@ -1,3 +1,3 @@
-export * from './Ternary';
-export * from './SectionHeader';
-export * from './ThemeToggle';
+export * from './ternary';
+export * from './section-header';
+export * from './theme-toggle';
