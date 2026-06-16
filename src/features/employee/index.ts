@@ -12,4 +12,3 @@ export { default as EmployeeListScreen } from './screens/EmployeeListScreen';
 export * from './types';
 
 // Validators
-export * from './validators/endpoints.schema';
