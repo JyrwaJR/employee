@@ -2,7 +2,7 @@ import React from 'react';
 import { router } from 'expo-router';
 import { Text, View } from 'react-native';
 import { Button } from '../ui/button';
-import { routes } from '@/src/shared/constants/routes';
+import { routes } from '@utils/constants/routes';
 
 export const NotFoundScreen = ({
   title = '404 - Page Not Found',

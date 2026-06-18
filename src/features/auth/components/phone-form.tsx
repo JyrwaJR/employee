@@ -7,10 +7,10 @@ import { useMutation } from '@tanstack/react-query';
 import { Button } from '@/src/shared/components/ui/button';
 import { toast } from '@/src/shared/components/ui';
 import { http } from '@/src/shared/utils/api/http';
-import { ENDPOINTS } from '@/src/shared/constants/endpoints';
+import { ENDPOINTS } from '@utils/constants/endpoints';
 import { useRouter } from 'expo-router';
 import { ForgotPasswordSchema } from '../validators/forgot-password.schema';
-import { routes } from '@/src/shared/constants/routes';
+import { routes } from '@utils/constants/routes';
 import { FieldInput } from '@/src/shared/components/ui/field-input';
 
 type ForgotPasswordInputs = z.infer<typeof ForgotPasswordSchema>;

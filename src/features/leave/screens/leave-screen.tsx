@@ -6,12 +6,12 @@ import { FilterCard } from '@/src/shared/components/display/filter-card';
 import { years } from '@/src/shared/utils/helpers/years';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@/src/shared/utils/api/http';
-import { ENDPOINTS } from '@/src/shared/constants/endpoints';
+import { ENDPOINTS } from '@utils/constants/endpoints';
 import { useAuth } from '@/src/shared/hooks/use-auth';
 import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
 import { LeaveT } from '../types';
 import { LeaveCard } from '../components/leave-card';
-import { queryKeys } from '@/src/shared/constants/query-keys';
+import { queryKeys } from '@utils/constants/query-keys';
 
 const statusOptions = [
   { label: 'Approved', value: 'APPROVED' },

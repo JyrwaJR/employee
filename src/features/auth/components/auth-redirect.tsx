@@ -3,7 +3,7 @@ import { usePathname, useRouter, useLocalSearchParams, Route } from 'expo-router
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
-import { ROUTE_ROLES, PUBLIC_ROUTES } from '@/src/shared/constants/auth';
+import { ROUTE_ROLES, PUBLIC_ROUTES } from '@utils/constants/auth';
 import { useAccess } from '@/src/shared/hooks/use-access';
 
 type Props = {

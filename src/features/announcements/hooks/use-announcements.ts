@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { queryKeys } from '@/src/shared/constants/query-keys';
+import { queryKeys } from '@utils/constants/query-keys';
 import { AnnouncementResponseT, AnnouncementT } from '../types';
 
 /**

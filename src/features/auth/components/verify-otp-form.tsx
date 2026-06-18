@@ -7,11 +7,11 @@ import { useMutation } from '@tanstack/react-query';
 import { Button } from '@/src/shared/components/ui/button';
 import { toast } from '@/src/shared/components/ui';
 import { http } from '@/src/shared/utils/api/http';
-import { ENDPOINTS } from '@/src/shared/constants/endpoints';
+import { ENDPOINTS } from '@utils/constants/endpoints';
 import { router } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { OTPSchema } from '../validators/otp.schema';
-import { routes } from '@/src/shared/constants/routes';
+import { routes } from '@utils/constants/routes';
 import { FieldInput } from '@/src/shared/components/ui/field-input';
 
 type OTPInputs = z.infer<typeof OTPSchema>;

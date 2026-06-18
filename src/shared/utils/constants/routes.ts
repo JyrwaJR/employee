@@ -6,7 +6,7 @@ import { Route } from 'expo-router';
  *
  * @example
  * // In a component or hook:
- * import { routes } from '@/src/shared/constants/routes';
+ * import { routes } from '@utils/constants/routes';
  * router.push(routes.employees.details(id));
  */
 export const PAGE_ROUTES = {

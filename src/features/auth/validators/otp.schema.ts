@@ -1,4 +1,4 @@
-import { ONLY_NUMBER_REGEX } from '@/src/shared/constants/regex';
+import { ONLY_NUMBER_REGEX } from '@utils/constants/regex';
 import { phoneValidation } from '@/src/shared/validators/common';
 import { z } from 'zod';
 

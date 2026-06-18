@@ -1,4 +1,4 @@
-import { JWT_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@/src/shared/constants';
+import { JWT_TOKEN_KEY, REFRESH_TOKEN_KEY } from '@utils/constants';
 import { getItemAsync, setItemAsync, deleteItemAsync } from 'expo-secure-store';
 
 const key = JWT_TOKEN_KEY;

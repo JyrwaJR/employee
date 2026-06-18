@@ -5,7 +5,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
 import { useAuth } from '@/src/shared/hooks/use-auth';
 import { Text } from '@/src/shared/components/ui/text';
-import { routes } from '@/src/shared/constants/routes';
+import { routes } from '@utils/constants/routes';
 import { toast } from '@/src/shared/components/ui';
 import { useEmployee } from '../hooks/use-employee';
 import { InfoRow } from '../components/info-row';

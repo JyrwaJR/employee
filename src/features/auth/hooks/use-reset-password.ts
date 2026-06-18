@@ -5,9 +5,9 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { http } from '@/src/shared/utils/api/http';
-import { ENDPOINTS } from '@/src/shared/constants/endpoints';
+import { ENDPOINTS } from '@utils/constants/endpoints';
 import { toast } from '@/src/shared/components/ui';
-import { routes } from '@/src/shared/constants/routes';
+import { routes } from '@utils/constants/routes';
 import {
   ResetPasswordSchema,
   ResetPasswordOtpSchema,

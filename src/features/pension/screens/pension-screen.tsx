@@ -7,11 +7,11 @@ import { SalarySlip } from '@/src/features/employee/types';
 import { FilterCard } from '@/src/shared/components/display/filter-card';
 import { months, years } from '@/src/shared/utils/helpers/years';
 import { useQuery } from '@tanstack/react-query';
-import { ENDPOINTS } from '@/src/shared/constants/endpoints';
+import { ENDPOINTS } from '@utils/constants/endpoints';
 import { useAuth } from '@/src/shared/hooks/use-auth';
 import { http } from '@/src/shared/utils/api/http';
 import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
-import { queryKeys } from '@/src/shared/constants/query-keys';
+import { queryKeys } from '@utils/constants/query-keys';
 
 const statusOptions = [
   { label: 'Paid', value: 'PAID' },

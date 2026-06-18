@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Container } from '@/src/shared/components/layout/container';
 import { SignUpSchema } from '../validators/signup.schema';
-import { routes } from '@/src/shared/constants/routes';
+import { routes } from '@utils/constants/routes';
 import { useSignUpMutation } from '../hooks/use-sign-up-mutation';
 import { KeyboardSafeView } from '@/src/shared/components/layout';
 import { AuthHeader } from '../components/auth-header';

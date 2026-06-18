@@ -9,7 +9,7 @@ import { VerifyOtpForm } from '../components/verify-otp-form';
 import { Ternary } from '@/src/shared/components/base/ternary';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { ResetPasswordForm } from '../components/reset-password-form';
-import { routes } from '@/src/shared/constants/routes';
+import { routes } from '@utils/constants/routes';
 import { HeaderStack } from '@/src/shared/components/layout';
 import { AuthHeader } from '../components/auth-header';
 

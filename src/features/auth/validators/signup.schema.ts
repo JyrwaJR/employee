@@ -1,4 +1,4 @@
-import { ONLY_LETTER_REGEX } from '@/src/shared/constants/regex';
+import { ONLY_LETTER_REGEX } from '@utils/constants/regex';
 import { passwordValidation, phoneValidation } from '@/src/shared/validators/common';
 import { z } from 'zod';
 

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { passwordValidation } from '@/src/shared/validators/common';
-import { ONLY_NUMBER_REGEX } from '@/src/shared/constants/regex';
+import { ONLY_NUMBER_REGEX } from '@utils/constants/regex';
 
 /**
  * Schema for Reset Password Step 1: New Password & Confirm Password

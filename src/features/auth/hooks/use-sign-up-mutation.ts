@@ -1,5 +1,5 @@
-import { ENDPOINTS } from '@/src/shared/constants/endpoints';
-import { routes } from '@/src/shared/constants/routes';
+import { ENDPOINTS } from '@utils/constants/endpoints';
+import { routes } from '@utils/constants/routes';
 import { http } from '@/src/shared/utils/api/http';
 import { toast } from '@/src/shared/components/ui';
 import { useMutation } from '@tanstack/react-query';

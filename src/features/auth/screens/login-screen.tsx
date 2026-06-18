@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { Text } from '@/src/shared/components/ui/text';
 import { KeyboardSafeView } from '@/src/shared/components/layout';
 import { LoginSchema } from '../validators/login.schema';
-import { routes } from '@/src/shared/constants/routes';
+import { routes } from '@utils/constants/routes';
 import { FieldInput } from '@/src/shared/components/ui/field-input';
 import { Button } from '@components/ui/button';
 import { useLoginMutation } from '../hooks/use-login-mutation';
