@@ -29,7 +29,7 @@ export function buildUrlWithQuery(
   // Handle relative URLs
   const searchAndHash = urlObj.search + urlObj.hash;
   const originalHadLeadingSlash = url.startsWith('/');
-  
+
   // URL constructor ensures urlObj.pathname starts with '/'
   // If the original URL didn't have one, we should remove it from the result
   if (!originalHadLeadingSlash && urlObj.pathname.startsWith('/')) {
