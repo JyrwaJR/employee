@@ -6,6 +6,7 @@ import {
   UPPERCASE_LETTER_REGEX,
 } from '@shared/constants/regex';
 import { z } from 'zod';
+import { METHODS } from '../constants/method';
 
 export const phoneValidation = z
   .string('Phone number is required')
@@ -23,5 +24,4 @@ export const passwordValidation = z
   .regex(NUMBER_REGEX, 'Must contain a number')
   .regex(SPECIAL_CHARACTER_REGEX, 'Must contain a special character');
 
-export const methodValidation = (name: string) =>
-  z.string('Method is required').default(name).optional().nullable().catch(name);
+export const methodValidation = z.enum(METHODS, 'Invalid Method');

@@ -13,6 +13,9 @@
       "@utils/*": ["./src/shared/utils/*"],
       "@lib/*": ["./src/shared/lib/*"],
       "@lib": ["./src/shared/lib/*"],
+      "@stores/*": ["./src/shared/stores/*"],
+      "@features/*": ["./src/features/*"],
+      "@constants/*": ["./src/shared/utils/constants/*"],
       "@sharedTypes/*": ["./src/shared/types/*"],
       "@validators/*": ["./src/shared/validators/*"]
     }

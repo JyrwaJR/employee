@@ -9,20 +9,20 @@ import { Route } from 'expo-router';
  * import { routes } from '@/src/shared/constants/routes';
  * router.push(routes.employees.details(id));
  */
-export const routes = {
+export const PAGE_ROUTES = {
   /** Root route (Home) */
-  home: '/' as const,
+  HOME: '/' as const,
 
   /** Authentication related routes */
-  auth: {
-    login: '/auth' as Route,
-    signUp: '/auth/sign-up' as Route,
+  AUTH: {
+    LOGIN: '/auth' as Route,
+    SIGN_UP: '/auth/sign-up' as Route,
     /**
      * Helper for forgot password flow with query states.
      * @param phone - Optional phone number to pre-fill
      * @param step - Current step in the flow ('OTP' or 'RESET')
      */
-    forgotPassword: (phone?: string, step?: 'OTP' | 'RESET') => {
+    FORGOT_PASSWORD: (phone?: string, step?: 'OTP' | 'RESET') => {
       const params = new URLSearchParams();
       if (phone) params.append('phone', phone);
       if (step) params.append('step', step);
@@ -32,21 +32,21 @@ export const routes = {
   },
 
   /** Admin or management routes for employees */
-  employees: {
+  EMPLOYEES: {
     /** Main staff register/list */
-    list: '/employees' as const,
+    LIST: '/employees' as const,
     /** Individual employee profile view */
-    details: (id: string) => `/employees/${id}` as Route,
+    DETAILS: (id: string) => `/employees/${id}` as Route,
     /** Employee-specific salary history */
-    salaryHistory: (id: string) => `/employees/${id}/salary` as Route,
+    SALARY_HISTORY: (id: string) => `/employees/${id}/salary` as Route,
     /** Direct link to a specific salary payslip */
-    salaryPayslip: (id: string) => `/employees/salary/${id}` as Route,
+    SALARY_PAY_SLIP: (id: string) => `/employees/salary/${id}` as Route,
   },
 
   /** Core feature sidebar/tab links */
-  pension: '/pension' as const,
-  profile: '/profile' as const,
-  leave: '/leave' as const,
-  statement: '/statement' as const,
-  announcements: '/announcements' as const,
+  PENSION: '/pension' as const,
+  PROFILE: '/profile' as const,
+  LEAVE: '/leave' as const,
+  STATEMENT: '/statement' as const,
+  ANNOUNCEMENT: '/announcements' as const,
 };

@@ -1,36 +1,33 @@
 import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
 import { LoginSchema } from '../validators/login.schema';
-import { http } from '@/src/shared/utils/api/http';
-import { ENDPOINTS } from '@/src/shared/constants/endpoints';
-import { TokenStoreManager } from '@/src/features/auth/store/token.store';
+import { TokenStoreManager } from '@/src/shared/stores/token.store';
 import { toast } from '@/src/shared/components/ui';
 import { useAuth } from '@/src/shared/hooks/use-auth';
 import { logger } from '@/src/shared/utils/logger/logger';
+import { rpc } from '@/src/shared/utils/api/rpc';
+import { AUTH_METHODS } from '../utils/constants/methods';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
 type LoginResT = {
-  created_at: string;
-  first_name: string;
-  last_name: string;
+  access_token: string;
   refresh_token: string;
-  role: string;
-  updated_at: string;
 };
 
 export const useLoginMutation = () => {
   const { refresh } = useAuth();
   return useMutation({
-    mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(ENDPOINTS.AUTH.LOGIN, data),
-    onSuccess: async (data: any) => {
+    mutationFn: (data: LoginFormInputs) =>
+      rpc<LoginResT, LoginFormInputs>(AUTH_METHODS.EMPLOYEE_LOGIN, data),
+    onSuccess: async (data) => {
       console.log(data);
       if (data.success) {
-        const responseData = data.data;
+        const res = data.data;
 
         // Robust token extraction (handles both 'token' top-level and 'access_token' in data)
-        const accessToken = data.token || responseData?.access_token || responseData?.token;
-        const refreshToken = responseData?.refresh_token;
+        const accessToken = data.token || res?.access_token || res?.refresh_token;
+        const refreshToken = res?.refresh_token;
 
         if (accessToken && refreshToken) {
           await TokenStoreManager.addToken(accessToken);
@@ -44,6 +41,7 @@ export const useLoginMutation = () => {
         } else {
           // Failure to extract tokens after a successful response
           const missing = !accessToken ? 'Access Token' : 'Refresh Token';
+
           logger.error(`LoginScreen: Successful login but ${missing} is missing.`, {
             hasAccess: !!accessToken,
             hasRefresh: !!refreshToken,

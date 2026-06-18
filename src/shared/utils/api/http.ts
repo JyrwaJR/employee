@@ -1,16 +1,8 @@
-import { AxiosRequestConfig, isCancel, AxiosResponse } from 'axios';
+import { AxiosRequestConfig, isCancel } from 'axios';
 import { logger } from '../logger/logger';
-import axiosInstance, { handleAxiosError } from '../api/axios';
-import { ApiResponse } from '../../types/api';
-
-const handleResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiResponse<T> => {
-  return {
-    success: response.data.success,
-    message: response.data.message || 'Request successful',
-    data: response.data.data ?? null,
-    meta: response?.data?.meta,
-  };
-};
+import axiosInstance from '@utils/api/axios';
+import { ApiResponse } from '@sharedTypes/api';
+import { handleResponse, handleAxiosError } from './response';
 
 export const http = {
   get: async <T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {

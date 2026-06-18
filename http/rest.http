@@ -1,0 +1,8 @@
+POST http://10.179.35.36/eisdatafetcher/eisapitest.php
+Content-Type: application/json
+
+{
+    "functionName" : "employee_login",
+    "emp_cd" : "2026200215R",
+    "password" : "MeghEISE"
+}

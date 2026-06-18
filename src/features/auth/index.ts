@@ -21,7 +21,7 @@ export * from './screens/login-screen';
 export * from './types';
 
 // Store
-export * from './store';
+export * from '../../shared/stores';
 
 // Validators
 export * from './validators/common.schema';
