@@ -8,7 +8,7 @@ import { LoadingScreen } from '@shared/components/screens/loading-screen';
 import { router } from 'expo-router';
 import { Text } from '@shared/components/ui/text';
 import { useThemeStore } from '@shared/stores/theme.store';
-import { ROUTES } from '@constants/routes';
+import { PAGE_ROUTES } from '@constants/routes';
 import { STATS } from '../utils';
 import { useEmployees } from '@/src/shared/hooks';
 import { EmployeeListItem } from '@/src/shared/components/employee-list-item';
@@ -66,7 +66,7 @@ export const HomeScreen = () => {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <EmployeeListItem
-              onPress={() => router.push(ROUTES.employees.details(item.id))}
+              onPress={() => router.push(PAGE_ROUTES.employees.details(item.id))}
               item={item}
             />
           )}
