@@ -18,8 +18,8 @@ import { AuthFooter } from '../components/auth-footer';
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
 const formDefaultValue: LoginFormInputs = {
-  phone_no: '',
-  password: '',
+  emp_cd: process.env.EXPO_PUBLIC_EMP_CD || '',
+  password: process.env.EXPO_PUBLIC_PASSWORD || '',
 };
 
 export const LoginScreen = () => {
@@ -49,21 +49,14 @@ export const LoginScreen = () => {
       <FormProvider {...methods}>
         <View className="w-full">
           <FieldInput
-            name="phone_no"
-            label="Phone No."
+            name="emp_cd"
+            label="Employee ID"
             placeholder="07XXXXXXXX"
             keyboardType="phone-pad"
             autoCapitalize="none"
             autoCorrect={false}
-            autoComplete="tel"
             testID="PHONE_INPUT"
             returnKeyType="next"
-            onChangeText={(value) => {
-              const cleaned = value.replace(/[^0-9]/g, '');
-              if (cleaned.length <= 10) {
-                methods.setValue('phone_no', cleaned, { shouldValidate: true });
-              }
-            }}
           />
 
           <FieldInput

@@ -11,7 +11,10 @@
       "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/shared/components/*"],
       "@utils/*": ["./src/shared/utils/*"],
-      "@types/*": ["./src/shared/types/*"]
+      "@lib/*": ["./src/shared/lib/*"],
+      "@lib": ["./src/shared/lib/*"],
+      "@sharedTypes/*": ["./src/shared/types/*"],
+      "@validators/*": ["./src/shared/validators/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts", "nativewind-env.d.ts"]

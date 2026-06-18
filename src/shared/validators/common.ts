@@ -22,3 +22,6 @@ export const passwordValidation = z
   .regex(UPPERCASE_LETTER_REGEX, 'Must contain an uppercase letter')
   .regex(NUMBER_REGEX, 'Must contain a number')
   .regex(SPECIAL_CHARACTER_REGEX, 'Must contain a special character');
+
+export const methodValidation = (name: string) =>
+  z.string('Method is required').default(name).optional().nullable().catch(name);

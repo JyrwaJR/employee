@@ -24,6 +24,7 @@ export const useLoginMutation = () => {
   return useMutation({
     mutationFn: (data: LoginFormInputs) => http.post<LoginResT>(ENDPOINTS.AUTH.LOGIN, data),
     onSuccess: async (data: any) => {
+      console.log(data);
       if (data.success) {
         const responseData = data.data;
 

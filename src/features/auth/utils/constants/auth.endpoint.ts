@@ -4,7 +4,7 @@
 export const AUTH_ENDPOINT = {
   ME: '/auth/me',
   SIGN_UP: '/auth/sign-up',
-  LOGIN: '/auth/sign-in',
+  LOGIN: '/eisdatafetcher/eisapitest.php',
   LOGOUT: '/auth/logout',
   REFRESH: '/auth/refresh',
   FORGOT_PASSWORD: '/auth/forgot-password',

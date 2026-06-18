@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { TokenStoreManager } from '@/src/features/auth/store/token.store';
 import { router } from 'expo-router';
@@ -38,6 +37,9 @@ export const handleAxiosError = <T>(error: unknown): ApiResponse<T> => {
 
 const axiosInstance = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
+  withCredentials: true,
+  timeout: 10000,
+  timeoutErrorMessage: 'Request timed out. Please try again.',
 });
 
 /* -------------------------------------------------- */
@@ -100,11 +102,11 @@ axiosInstance.interceptors.request.use(async (config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  const traceId = uuidv4();
-  config.headers['x-trace-id'] = traceId;
+  // const traceId = uuidv4();
+  // config.headers['x-trace-id'] = traceId;
   (config as any)._startTime = Date.now();
 
-  logger.log({ method: `${config.method?.toUpperCase()} =>`, path: config.url, traceId });
+  logger.log({ method: `${config.method?.toUpperCase()} =>`, path: config.url });
 
   return config;
 });
@@ -112,7 +114,8 @@ axiosInstance.interceptors.request.use(async (config) => {
 axiosInstance.interceptors.response.use(
   (res) => {
     const duration = Date.now() - ((res.config as any)._startTime || Date.now());
-    const traceId = res.headers['x-trace-id'] || (res.config.headers['x-trace-id'] as string) || 'unknown';
+    const traceId =
+      res.headers['x-trace-id'] || (res.config.headers['x-trace-id'] as string) || 'unknown';
     logger.log({
       method: `${res.config.method?.toUpperCase()} <=`,
       path: res.config.url,

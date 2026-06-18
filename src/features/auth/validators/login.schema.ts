@@ -1,9 +1,13 @@
-import { passwordValidation, phoneValidation } from '@/src/shared/validators/common';
+import { methodValidation } from '@validators/common';
 import { z } from 'zod';
 
 export const LoginSchema = z
   .object({
-    phone_no: phoneValidation,
-    password: passwordValidation,
+    functionName: methodValidation('employee_login'),
+    emp_cd: z
+      .string('Employee code is required')
+      .min(1, 'Employee code is required')
+      .transform((val) => val.toUpperCase()),
+    password: z.string('Password is required').min(1, 'Password is required'),
   })
   .strict();
