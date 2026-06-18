@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
-import { Container } from '@/src/shared/components/layout/container';
-import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
-import { Text } from '@/src/shared/components/ui/text';
+import { Container } from '@components/layout/container';
+import { LoadingScreen } from '@components/screens/loading-screen';
+import { Text } from '@components/ui/text';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { DetailRow } from '@/src/shared/components/display/detail-row';
-import { SectionHeader } from '@/src/shared/components/base/section-header';
-import { MoneyRow } from '@/src/shared/components/display/money-row';
+import { DetailRow } from '@components/display/detail-row';
+import { SectionHeader } from '@components/base/section-header';
+import { MoneyRow } from '@components/display/money-row';
 import { usePayslipData } from '../hooks/use-payslip-data';
-import { GovtHeader } from '@/src/shared/components/display/govt-header';
-import { SummaryCard } from '@/src/shared/components/display/summary-card';
+import { GovtHeader } from '@components/display/govt-header';
+import { SummaryCard } from '@components/display/summary-card';
 
 type Props = { salaryId: string };
 

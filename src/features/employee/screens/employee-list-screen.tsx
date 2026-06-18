@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { View, FlatList, TouchableOpacity, StatusBar } from 'react-native';
-import { Container } from '@/src/shared/components/layout/container';
-import { EmployeeListItem } from '@/src/shared/components/employee-list-item';
+import { Container } from '@components/layout';
+import { EmployeeListItem } from '@components/employee-list-item';
 import { router } from 'expo-router';
-import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
-import { Text } from '@/src/shared/components/ui/text';
-import { FilterCard } from '@/src/shared/components/display/filter-card';
-import { toast } from '@/src/shared/components/ui';
+import { LoadingScreen } from '@components/screens/loading-screen';
+import { Text } from '@components/ui/text';
+import { FilterCard } from '@components/display/filter-card';
+import { toast } from '@components/ui';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { useEmployees } from '@/src/shared/hooks';
-import { ScreenHeader } from '@/src/shared/components/layout/screen-header';
-import { SearchInput } from '@/src/shared/components/search-input';
+import { useEmployees } from '@shared/hooks';
+import { ScreenHeader } from '@components/layout/screen-header';
+import { SearchInput } from '@components/search-input';
 
 // --- Screen ---
 export default function EmployeeListScreen() {
@@ -34,7 +34,14 @@ export default function EmployeeListScreen() {
 
   const filteredData = EMPLOYEES;
 
-  if (isFetching) return <LoadingScreen />;
+  if (isFetching) {
+    return (
+      <>
+        <ScreenHeader title="Staff Directory" />
+        <LoadingScreen />
+      </>
+    );
+  }
 
   return (
     <Container className="flex-1">

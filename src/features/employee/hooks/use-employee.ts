@@ -2,7 +2,7 @@ import { ENDPOINTS } from '@utils/constants/endpoints';
 import { queryKeys } from '@utils/constants/query-keys';
 import { useQuery } from '@tanstack/react-query';
 import { EmployeeT } from '../types';
-import { http } from '@/src/shared/utils/api/http';
+import { http } from '@utils/api/http';
 
 type UseEmployeeProps = { employeeId: string };
 

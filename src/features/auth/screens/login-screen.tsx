@@ -4,14 +4,14 @@ import { Link } from 'expo-router';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Text } from '@/src/shared/components/ui/text';
-import { KeyboardSafeView } from '@/src/shared/components/layout';
+import { Text } from '@components/ui/text';
+import { KeyboardSafeView } from '@components/layout';
 import { LoginSchema } from '../validators/login.schema';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { FieldInput } from '@/src/shared/components/ui/field-input';
+import { FieldInput } from '@components/ui/field-input';
 import { Button } from '@components/ui/button';
 import { useLoginMutation } from '../hooks/use-login-mutation';
-import { useAuth } from '@/src/shared/hooks/use-auth';
+import { useAuth } from '@hooks/use-auth';
 import { AuthHeader } from '../components/auth-header';
 import { AuthFooter } from '../components/auth-footer';
 

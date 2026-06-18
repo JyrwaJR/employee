@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Image, ScrollView, StatusBar, Alert } from 'react-native';
-import { Container } from '@/src/shared/components/layout/container';
-import { useAuth } from '@/src/shared/hooks/use-auth';
-import { Text } from '@/src/shared/components/ui/text';
-import { useThemeStore } from '@/src/shared/stores/theme.store';
-import { SettingRow } from '@/src/shared/components/display/setting-row';
+import { Container } from '@components/layout/container';
+import { useAuth } from '@hooks/use-auth';
+import { Text } from '@components/ui/text';
+import { useThemeStore } from '@stores/theme.store';
+import { SettingRow } from '@components/display/setting-row';
 import { ProfileDetailRow } from '../components/profile-detail-row';
 
 export const ProfileScreen = () => {

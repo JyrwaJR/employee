@@ -1,8 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Link } from 'expo-router';
-import { Text } from '@/src/shared/components/ui/text';
-import { cn } from '@/src/shared/utils/helpers/cn';
+import { Text } from '@components/ui/text';
+import { cn } from '@utils/helpers/cn';
 
 interface AuthFooterProps {
   text: string;

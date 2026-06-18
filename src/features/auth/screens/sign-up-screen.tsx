@@ -1,18 +1,18 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
-import { Button, FieldInput } from '@/src/shared/components/ui';
+import { Button, FieldInput } from '@components/ui';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Container } from '@/src/shared/components/layout/container';
+import { Container } from '@components/layout/container';
 import { SignUpSchema } from '../validators/signup.schema';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { useSignUpMutation } from '../hooks/use-sign-up-mutation';
-import { KeyboardSafeView } from '@/src/shared/components/layout';
+import { KeyboardSafeView } from '@components/layout';
 import { AuthHeader } from '../components/auth-header';
 import { AuthFooter } from '../components/auth-footer';
 import { AuthDivider } from '../components/auth-divider';
-import { Text } from '@/src/shared/components/ui/text';
+import { Text } from '@components/ui/text';
 
 type SignUpFormInputs = z.infer<typeof SignUpSchema>;
 

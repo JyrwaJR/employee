@@ -1,9 +1,9 @@
-import { cn } from '@/src/shared/utils/helpers/cn';
+import { cn } from '@utils/helpers/cn';
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { Container } from '../layout/container';
 import { Text } from '../ui/text';
-import { useTheme } from '@/src/shared/hooks/use-theme';
+import { useTheme } from '@hooks/use-theme';
 
 // --- Types ---
 interface LoadingScreenProps {

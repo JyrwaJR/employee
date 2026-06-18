@@ -2,13 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Route, router } from 'expo-router';
-import { logger } from '@/src/shared/utils/logger/logger';
+import { logger } from '@utils/logger/logger';
 import { isExpoGo } from '@utils/constants';
-import { useAuth } from '@/src/shared/hooks/use-auth';
-import { toast } from '@/src/shared/components/ui';
-import { withRetry } from '@/src/shared/utils/helpers/retry';
+import { useAuth } from '@hooks/use-auth';
+import { toast } from '@components/ui';
+import { withRetry } from '@utils/helpers/retry';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { NotificationService } from '@/src/shared/services/notification.service';
+import { NotificationService } from '@shared/services/notification.service';
 
 /**
  * Whitelist of permitted internal routes for push-triggered navigation.

@@ -1,4 +1,4 @@
-import { LeaveScreen } from '@/src/features/leave/screens/leave-screen';
+import { LeaveScreen } from '@features/leave/screens/leave-screen';
 
 export default function page() {
   return <LeaveScreen />;

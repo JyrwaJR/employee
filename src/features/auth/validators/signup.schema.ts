@@ -1,5 +1,5 @@
 import { ONLY_LETTER_REGEX } from '@utils/constants/regex';
-import { passwordValidation, phoneValidation } from '@/src/shared/validators/common';
+import { passwordValidation, phoneValidation } from '@validators/common';
 import { z } from 'zod';
 
 export const SignUpSchema = z

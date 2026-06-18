@@ -1,6 +1,6 @@
 import React from 'react';
-import { HeaderStack } from '@/src/shared/components/layout/header';
-import { AnnouncementBoardScreen } from '@/src/features/announcements';
+import { HeaderStack } from '@components/layout/header';
+import { AnnouncementBoardScreen } from '@features/announcements';
 
 export default function AnnouncementsRoute() {
   return (

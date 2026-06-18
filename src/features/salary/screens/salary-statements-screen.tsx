@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
-import { Container } from '@/src/shared/components/layout/container';
+import { Container } from '@components/layout/container';
 import { router } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
-import { useAuth } from '@/src/shared/hooks/use-auth';
-import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
-import { http } from '@/src/shared/utils/api/http';
-import { SalarySlip } from '@/src/features/employee/types';
+import { useAuth } from '@hooks/use-auth';
+import { LoadingScreen } from '@components/screens/loading-screen';
+import { http } from '@utils/api/http';
+import { SalarySlip } from '@features/employee/types';
 import { ENDPOINTS } from '@utils/constants/endpoints';
-import { Text } from '@/src/shared/components/ui/text';
-import { HistoryCard } from '@/src/shared/components/display/history-card';
-import { HeaderStack } from '@/src/shared/components/layout/header';
-import { FilterCard } from '@/src/shared/components/display/filter-card';
-import { months, years } from '@/src/shared/utils/helpers/years';
+import { Text } from '@components/ui/text';
+import { HistoryCard } from '@components/display/history-card';
+import { HeaderStack } from '@components/layout/header';
+import { FilterCard } from '@components/display/filter-card';
+import { months, years } from '@utils/helpers/years';
 import { queryKeys } from '@utils/constants/query-keys';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { toast } from '@/src/shared/components/ui';
+import { toast } from '@components/ui';
 
 type Props = {
   idx?: string;

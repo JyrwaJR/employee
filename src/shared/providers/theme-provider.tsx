@@ -1,4 +1,4 @@
-import { useThemeStore } from '@/src/shared/stores/theme.store';
+import { useThemeStore } from '@stores/theme.store';
 import { colorScheme as nativewindColorScheme } from 'nativewind';
 import { ReactNode, useLayoutEffect } from 'react';
 import { Appearance } from 'react-native';

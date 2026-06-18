@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity, Image, Linking } from 'react-native';
-import { Container } from '@/src/shared/components/layout/container';
+import { Container } from '@components/layout/container';
 import { router, useLocalSearchParams } from 'expo-router';
-import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
-import { useAuth } from '@/src/shared/hooks/use-auth';
-import { Text } from '@/src/shared/components/ui/text';
+import { LoadingScreen } from '@components/screens/loading-screen';
+import { useAuth } from '@hooks/use-auth';
+import { Text } from '@components/ui/text';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { toast } from '@/src/shared/components/ui';
+import { toast } from '@components/ui';
 import { useEmployee } from '../hooks/use-employee';
 import { InfoRow } from '../components/info-row';
 import { SectionCard } from '../components/section-card';

@@ -1,5 +1,5 @@
 import axios, { AxiosError, InternalAxiosRequestConfig, AxiosInstance } from 'axios';
-import { TokenStoreManager } from '@/src/shared/stores/token.store';
+import { TokenStoreManager } from '@stores/token.store';
 import { router } from 'expo-router';
 import { queryClient } from '../react-query';
 import { PAGE_ROUTES, ENDPOINTS } from '@utils/constants';

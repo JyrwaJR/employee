@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Skeleton } from '@/src/shared/components/ui/skeleton';
+import { Skeleton } from '@components/ui/skeleton';
 
 /**
  * Skeleton Loading State for Announcements

@@ -1,4 +1,4 @@
-import { useThemeStore } from '@/src/shared/stores/theme.store';
+import { useThemeStore } from '@stores/theme.store';
 import { Ionicons } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 

@@ -1,4 +1,4 @@
-import { cn } from '@/src/shared/utils/helpers/cn';
+import { cn } from '@utils/helpers/cn';
 import { View } from 'react-native';
 import { Text } from '../ui/text';
 

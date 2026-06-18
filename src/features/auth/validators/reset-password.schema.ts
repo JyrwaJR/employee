@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { passwordValidation } from '@/src/shared/validators/common';
+import { passwordValidation } from '@validators/common';
 import { ONLY_NUMBER_REGEX } from '@utils/constants/regex';
 
 /**

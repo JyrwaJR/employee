@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AuthContext } from '@/src/shared/contexts/auth.context';
+import { AuthContext } from '@shared/contexts/auth.context';
 import { ENDPOINTS } from '@constants/endpoints';
-import { TokenStoreManager } from '@/src/shared/stores/token.store';
-import { AuthContextT, UserT } from '@/src/shared/types/auth'; // Updated to Shared Types
-import { http } from '@/src/shared/utils/api/http';
-import { logger } from '@/src/shared/utils/logger';
+import { TokenStoreManager } from '@stores/token.store';
+import { AuthContextT, UserT } from '@sharedTypes/auth'; // Updated to Shared Types
+import { http } from '@utils/api/http';
+import { logger } from '@utils/logger';
 import { queryKeys } from '@constants/query-keys';
-import { toast } from '@/src/shared/components/ui';
+import { toast } from '@components/ui';
 
 type Props = {
   children: React.ReactNode;

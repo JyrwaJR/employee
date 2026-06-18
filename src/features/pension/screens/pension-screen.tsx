@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
-import { Container } from '@/src/shared/components/layout/container';
-import { Text } from '@/src/shared/components/ui/text';
-import { HistoryCard } from '@/src/shared/components/display/history-card';
-import { SalarySlip } from '@/src/features/employee/types';
-import { FilterCard } from '@/src/shared/components/display/filter-card';
-import { months, years } from '@/src/shared/utils/helpers/years';
+import { Container } from '@components/layout/container';
+import { Text } from '@components/ui/text';
+import { HistoryCard } from '@components/display/history-card';
+import { SalarySlip } from '@features/employee/types';
+import { FilterCard } from '@components/display/filter-card';
+import { months, years } from '@utils/helpers/years';
 import { useQuery } from '@tanstack/react-query';
 import { ENDPOINTS } from '@utils/constants/endpoints';
-import { useAuth } from '@/src/shared/hooks/use-auth';
-import { http } from '@/src/shared/utils/api/http';
-import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
+import { useAuth } from '@hooks/use-auth';
+import { http } from '@utils/api/http';
+import { LoadingScreen } from '@components/screens/loading-screen';
 import { queryKeys } from '@utils/constants/query-keys';
 
 const statusOptions = [

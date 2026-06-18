@@ -1,4 +1,4 @@
-import { RoleT } from '@/src/features/auth/types';
+import { RoleT } from '@features/auth/types';
 
 export type RouteConfigT = {
   url: string;

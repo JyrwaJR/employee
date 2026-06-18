@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text } from '@/src/shared/components/ui/text';
-import { cn } from '@/src/shared/utils/helpers/cn';
+import { Text } from '@components/ui/text';
+import { cn } from '@utils/helpers/cn';
 
 interface AuthHeaderProps {
   icon?: React.ReactNode;

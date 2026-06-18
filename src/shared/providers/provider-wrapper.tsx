@@ -14,8 +14,8 @@ import { ThemeProvider } from './theme-provider';
 import { UpdatesProvider } from './updates-provider';
 
 // Shared Components & Redirects
-import { AuthRedirect } from '@/src/features/auth/components/auth-redirect';
-import { LocalAuthRedirect } from '@/src/features/auth/components/local-auth-redirect';
+import { AuthRedirect } from '@features/auth/components/auth-redirect';
+import { LocalAuthRedirect } from '@features/auth/components/local-auth-redirect';
 import { UpdateModal } from '@shared/components/display/update-modal';
 import { GlobalErrorBoundary } from '@shared/components/feedback/global-error-boundary';
 

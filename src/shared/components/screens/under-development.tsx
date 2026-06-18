@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useTheme } from '@/src/shared/hooks/use-theme';
+import { useTheme } from '@hooks/use-theme';
 import { useRouter } from 'expo-router';
 
 interface UnderDevelopmentProps {

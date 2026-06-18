@@ -1,7 +1,7 @@
 import { ENDPOINTS } from '@utils/constants/endpoints';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { http } from '@/src/shared/utils/api/http';
-import { toast } from '@/src/shared/components/ui';
+import { http } from '@utils/api/http';
+import { toast } from '@components/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { SignUpSchema } from '../validators/signup.schema';

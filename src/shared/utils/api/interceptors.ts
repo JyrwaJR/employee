@@ -1,5 +1,5 @@
 import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
-import { TokenStoreManager } from '@/src/shared/stores/token.store';
+import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '../logger/logger';
 import { shouldSkipRefresh, attemptTokenRefresh } from './token-refresh';
 

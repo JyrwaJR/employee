@@ -1,5 +1,5 @@
 import { ONLY_NUMBER_REGEX } from '@utils/constants/regex';
-import { phoneValidation } from '@/src/shared/validators/common';
+import { phoneValidation } from '@validators/common';
 import { z } from 'zod';
 
 export const OTPSchema = z.object({

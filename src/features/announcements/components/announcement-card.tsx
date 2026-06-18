@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { Text } from '@/src/shared/components/ui/text';
+import { Text } from '@components/ui/text';
 import { AnnouncementT } from '../types';
 
 /**

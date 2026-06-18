@@ -1,7 +1,7 @@
-import { cn } from '@/src/shared/utils/helpers/cn';
+import { cn } from '@utils/helpers/cn';
 import React from 'react';
 import { Text, TouchableOpacity, ActivityIndicator, TouchableOpacityProps } from 'react-native';
-import { useDelay } from '@/src/shared/hooks/use-delay';
+import { useDelay } from '@hooks/use-delay';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const buttonVariants = cva(

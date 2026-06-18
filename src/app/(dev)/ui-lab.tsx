@@ -38,11 +38,11 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from '@/src/shared/components/ui';
-import { AnimationProvider, FadeInView } from '@/src/shared/components/fade-in-view';
-import { KeyboardSafeView, HeaderStack } from '@/src/shared/components/layout';
+} from '@components/ui';
+import { AnimationProvider, FadeInView } from '@components/fade-in-view';
+import { KeyboardSafeView, HeaderStack } from '@components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useThemeStore } from '@/src/shared/stores/theme.store';
+import { useThemeStore } from '@stores/theme.store';
 
 export default function UILabScreen() {
   const [showDialog, setShowDialog] = useState(false);

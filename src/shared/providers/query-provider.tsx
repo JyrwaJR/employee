@@ -1,4 +1,4 @@
-import { queryClient } from '@/src/shared/utils/react-query';
+import { queryClient } from '@utils/react-query';
 import { QueryClientProvider } from '@tanstack/react-query';
 
 type Props = {

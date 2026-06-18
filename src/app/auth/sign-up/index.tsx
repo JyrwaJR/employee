@@ -1,5 +1,5 @@
-import { HeaderStack } from '@/src/shared/components/layout/header';
-import { SignUpScreen } from '@/src/features/auth/screens/sign-up-screen';
+import { HeaderStack } from '@components/layout/header';
+import { SignUpScreen } from '@features/auth/screens/sign-up-screen';
 
 export default function page() {
   return (

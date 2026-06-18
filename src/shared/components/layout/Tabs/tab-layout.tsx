@@ -1,13 +1,13 @@
 import { Tabs, usePathname } from 'expo-router';
-import { useTheme } from '@/src/shared/hooks/use-theme';
+import { useTheme } from '@hooks/use-theme';
 import { View } from 'react-native';
 import { DrawerToggleButton } from '@react-navigation/drawer';
 import { Header } from '../header';
-import { useAuth } from '@/src/shared/hooks/use-auth';
+import { useAuth } from '@hooks/use-auth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemeToggle } from '../../base/theme-toggle';
 import { CustomTabBar } from './custom-tab-bar';
-import { getTabConfig } from '@/src/shared/config/tabs';
+import { getTabConfig } from '@shared/config/tabs';
 
 export const TabLayout = () => {
   const { role } = useAuth();

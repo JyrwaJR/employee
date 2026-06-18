@@ -1,8 +1,8 @@
-import { useAuth } from '@/src/shared/hooks/use-auth';
-import { useLocalAuth } from '@/src/shared/hooks/use-local-auth';
-import { useLocalAuthStore } from '@/src/shared/stores/local-auth.store';
+import { useAuth } from '@hooks/use-auth';
+import { useLocalAuth } from '@hooks/use-local-auth';
+import { useLocalAuthStore } from '@stores/local-auth.store';
 import { useCallback, useEffect } from 'react';
-import { Forbidden } from '@/src/shared/components/screens/forbidden';
+import { Forbidden } from '@components/screens/forbidden';
 import { isExpoGo } from '@utils/constants';
 import { View, StyleSheet } from 'react-native';
 

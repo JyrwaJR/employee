@@ -1,10 +1,10 @@
 import { useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { http } from '@/src/shared/utils/api/http';
+import { http } from '@utils/api/http';
 import { ENDPOINTS } from '@utils/constants/endpoints';
-import { SalarySlip } from '@/src/features/employee/types';
+import { SalarySlip } from '@features/employee/types';
 import { queryKeys } from '@utils/constants/query-keys';
-import { toast } from '@/src/shared/components/ui';
+import { toast } from '@components/ui';
 
 const parseAmount = (value?: string | null): number => {
   return parseFloat(value || '0');

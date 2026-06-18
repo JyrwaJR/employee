@@ -4,14 +4,14 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
-import { Button } from '@/src/shared/components/ui/button';
-import { toast } from '@/src/shared/components/ui';
-import { http } from '@/src/shared/utils/api/http';
+import { Button } from '@components/ui/button';
+import { toast } from '@components/ui';
+import { http } from '@utils/api/http';
 import { ENDPOINTS } from '@utils/constants/endpoints';
 import { useRouter } from 'expo-router';
 import { ForgotPasswordSchema } from '../validators/forgot-password.schema';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { FieldInput } from '@/src/shared/components/ui/field-input';
+import { FieldInput } from '@components/ui/field-input';
 
 type ForgotPasswordInputs = z.infer<typeof ForgotPasswordSchema>;
 

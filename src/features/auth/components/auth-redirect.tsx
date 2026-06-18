@@ -1,10 +1,10 @@
-import { useAuth } from '@/src/shared/hooks/use-auth';
+import { useAuth } from '@hooks/use-auth';
 import { usePathname, useRouter, useLocalSearchParams, Route } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
+import { LoadingScreen } from '@components/screens/loading-screen';
 import { ROUTE_ROLES, PUBLIC_ROUTES } from '@utils/constants/auth';
-import { useAccess } from '@/src/shared/hooks/use-access';
+import { useAccess } from '@hooks/use-access';
 
 type Props = {
   children: React.ReactNode;

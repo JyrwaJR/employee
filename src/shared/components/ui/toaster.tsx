@@ -1,9 +1,9 @@
 import React from 'react';
 import { Toaster as SonnerToaster, toast as originalToast } from 'sonner-native';
-import { useThemeStore } from '@/src/shared/stores/theme.store';
+import { useThemeStore } from '@stores/theme.store';
 import { Appearance, Platform } from 'react-native';
 import { cssInterop } from 'nativewind';
-import { truncateText } from '@/src/shared/utils/helpers/text';
+import { truncateText } from '@utils/helpers/text';
 
 /**
  * Configure sonner-native to be tailwind-aware in v4

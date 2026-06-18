@@ -1,9 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
 import { FormProvider } from 'react-hook-form';
-import { Button } from '@/src/shared/components/ui/button';
-import { Text } from '@/src/shared/components/ui/text';
-import { FieldInput } from '@/src/shared/components/ui/field-input';
+import { Button } from '@components/ui/button';
+import { Text } from '@components/ui/text';
+import { FieldInput } from '@components/ui/field-input';
 import { useResetPassword } from '../hooks/use-reset-password';
 
 export const ResetPasswordForm = () => {

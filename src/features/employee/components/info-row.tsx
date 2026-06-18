@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text } from '@/src/shared/components/ui/text';
+import { Text } from '@components/ui/text';
 
 export const InfoRow = ({ label, value, icon }: { label: string; value: string; icon: string }) => (
   <View className="flex-row items-center border-b border-gray-100 py-3 last:border-0 dark:border-gray-800">

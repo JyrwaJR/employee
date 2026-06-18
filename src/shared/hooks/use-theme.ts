@@ -1,5 +1,5 @@
 import { useColorScheme } from 'react-native';
-import { useThemeStore } from '@/src/shared/stores/theme.store';
+import { useThemeStore } from '@stores/theme.store';
 
 export const useTheme = () => {
   const { theme } = useThemeStore();

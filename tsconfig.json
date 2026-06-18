@@ -4,10 +4,10 @@
     "strict": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["*"],
       "@src/*": ["./src/*"],
       "@feature/*": ["./src/features/*"],
       "@shared/*": ["./src/shared/*"],
+      "@config/*": ["./src/shared/config/*"],
       "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/shared/components/*"],
       "@hooks/*": ["./src/shared/hooks/*"],

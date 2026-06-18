@@ -3,9 +3,9 @@ import { View, TouchableOpacity, ViewStyle, StyleProp, TextStyle } from 'react-n
 import { useRouter, useNavigation, Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useTheme } from '@/src/shared/hooks/use-theme';
-import { Text } from '@/src/shared/components/ui/text';
-import { cn } from '@/src/shared/utils/helpers/cn';
+import { useTheme } from '@hooks/use-theme';
+import { Text } from '@components/ui/text';
+import { cn } from '@utils/helpers/cn';
 
 /**
  * Props for the Header component

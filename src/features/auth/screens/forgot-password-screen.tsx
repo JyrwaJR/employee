@@ -1,16 +1,16 @@
 import React from 'react';
 import { View, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Link } from 'expo-router';
-import { Text } from '@/src/shared/components/ui/text';
-import { Container } from '@/src/shared/components/layout/container';
+import { Text } from '@components/ui/text';
+import { Container } from '@components/layout/container';
 import { Ionicons } from '@expo/vector-icons';
 import { PhoneForm } from '../components/phone-form';
 import { VerifyOtpForm } from '../components/verify-otp-form';
-import { Ternary } from '@/src/shared/components/base/ternary';
+import { Ternary } from '@components/base/ternary';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { ResetPasswordForm } from '../components/reset-password-form';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { HeaderStack } from '@/src/shared/components/layout';
+import { HeaderStack } from '@components/layout';
 import { AuthHeader } from '../components/auth-header';
 
 export const ForgotPassword = () => {

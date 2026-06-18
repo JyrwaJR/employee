@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text } from '@/src/shared/components/ui/text';
+import { Text } from '@components/ui/text';
 
 export const AuthDivider = () => (
   <View className="my-6 flex-row items-center gap-x-4">

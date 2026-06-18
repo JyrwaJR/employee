@@ -4,9 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
-import { http } from '@/src/shared/utils/api/http';
+import { http } from '@utils/api/http';
 import { ENDPOINTS } from '@utils/constants/endpoints';
-import { toast } from '@/src/shared/components/ui';
+import { toast } from '@components/ui';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import {
   ResetPasswordSchema,

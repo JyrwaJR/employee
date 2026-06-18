@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Text } from '@/src/shared/components/ui/text';
+import { Text } from '@components/ui/text';
 
 export const SectionCard = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <View className="mb-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">

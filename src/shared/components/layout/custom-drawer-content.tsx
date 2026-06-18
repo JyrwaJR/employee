@@ -1,4 +1,4 @@
-import { useAuth } from '@/src/shared/hooks/use-auth';
+import { useAuth } from '@hooks/use-auth';
 
 import colors from 'tailwindcss/colors';
 

@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { useThemeStore } from '@/src/shared/stores/theme.store';
-import { Container } from '@/src/shared/components/layout/container';
-import { SectionHeader } from '@/src/shared/components/base/section-header';
-import { useLocalAuthStore } from '@/src/shared/stores/local-auth.store';
-import { SettingRow } from '@/src/shared/components/display/setting-row';
+import { useThemeStore } from '@stores/theme.store';
+import { Container } from '@components/layout/container';
+import { SectionHeader } from '@components/base/section-header';
+import { useLocalAuthStore } from '@stores/local-auth.store';
+import { SettingRow } from '@components/display/setting-row';
 
 export const SettingsScreen = () => {
   const { theme, toggleTheme } = useThemeStore();

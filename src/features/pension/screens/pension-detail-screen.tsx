@@ -1,15 +1,15 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Container } from '@/src/shared/components/layout/container';
-import { Header } from '@/src/shared/components/layout/header';
-import { Text } from '@/src/shared/components/ui/text';
+import { Container } from '@components/layout/container';
+import { Header } from '@components/layout/header';
+import { Text } from '@components/ui/text';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { MoneyRow } from '@/src/shared/components/display/money-row';
-import { SectionHeader } from '@/src/shared/components/base/section-header';
-import { DetailRow } from '@/src/shared/components/display/detail-row';
-import { GovtHeader } from '@/src/shared/components/display/govt-header';
-import { SummaryCard } from '@/src/shared/components/display/summary-card';
+import { MoneyRow } from '@components/display/money-row';
+import { SectionHeader } from '@components/base/section-header';
+import { DetailRow } from '@components/display/detail-row';
+import { GovtHeader } from '@components/display/govt-header';
+import { SummaryCard } from '@components/display/summary-card';
 
 export const PensionDetailScreen = () => {
   const { id: _id } = useLocalSearchParams();

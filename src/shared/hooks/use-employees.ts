@@ -1,10 +1,10 @@
-import { http } from '@/src/shared/utils/api/http';
+import { http } from '@utils/api/http';
 import { useQuery } from '@tanstack/react-query';
-import { EmployeeT } from '@/src/features/employee/types';
+import { EmployeeT } from '@features/employee/types';
 import { ENDPOINTS } from '@utils/constants/endpoints';
 import { queryKeys } from '@utils/constants/query-keys';
 import React from 'react';
-import { toast } from '@/src/shared/components/ui';
+import { toast } from '@components/ui';
 
 type UseEmployeeProps = {
   page?: number;

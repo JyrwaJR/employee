@@ -1,5 +1,5 @@
-import { useAuth } from '@/src/shared/hooks/use-auth';
-import { RoleT } from '@/src/features/auth/types';
+import { useAuth } from '@hooks/use-auth';
+import { RoleT } from '@features/auth/types';
 
 /**
  * useAccess hook
