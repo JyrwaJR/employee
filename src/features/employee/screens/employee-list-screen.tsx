@@ -8,7 +8,7 @@ import { Text } from '@components/ui/text';
 import { FilterCard } from '@components/display/filter-card';
 import { toast } from '@components/ui';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { useEmployees } from '@shared/hooks';
+import { useEmployees } from '@hooks';
 import { ScreenHeader } from '@components/layout/screen-header';
 import { SearchInput } from '@components/search-input';
 

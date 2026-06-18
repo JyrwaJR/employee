@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { AuthContext } from '@shared/contexts/auth.context';
-import { ENDPOINTS } from '@constants/endpoints';
+import { AuthContext } from '@contexts/auth.context';
+import { ENDPOINTS } from '@utils/constants/endpoints';
 import { TokenStoreManager } from '@stores/token.store';
-import { AuthContextT, UserT } from '@sharedTypes/auth'; // Updated to Shared Types
+import { AuthContextT, UserT } from '@types/auth'; // Updated to Shared Types
 import { http } from '@utils/api/http';
 import { logger } from '@utils/logger';
-import { queryKeys } from '@constants/query-keys';
+import { queryKeys } from '@utils/constants/query-keys';
 import { toast } from '@components/ui';
 
 type Props = {

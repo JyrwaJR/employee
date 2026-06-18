@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, isCancel } from 'axios';
 import { logger } from '../logger/logger';
 import axiosInstance from '@utils/api/axios';
-import { ApiResponse } from '@sharedTypes/api';
+import { ApiResponse } from '@types/api';
 import { handleResponse, handleAxiosError } from './response';
 
 export const http = {

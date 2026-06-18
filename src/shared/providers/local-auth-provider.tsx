@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as LocalAuthentication from 'expo-local-authentication';
-import { LocalAuthContext } from '@shared/contexts/local-auth.context';
+import { LocalAuthContext } from '@contexts/local-auth.context';
 import { logger } from '@utils/logger';
 
 /**

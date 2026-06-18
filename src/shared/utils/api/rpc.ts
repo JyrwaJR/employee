@@ -1,5 +1,5 @@
 import { METHODS } from '@utils/constants';
-import { ApiResponse } from '@sharedTypes/api';
+import { ApiResponse } from '@types/api';
 import { http } from './http';
 
 export type RpcRequest<TParams = unknown> = {

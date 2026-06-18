@@ -7,7 +7,7 @@ import { useAuth } from '@hooks/use-auth';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemeToggle } from '../../base/theme-toggle';
 import { CustomTabBar } from './custom-tab-bar';
-import { getTabConfig } from '@shared/config/tabs';
+import { getTabConfig } from '@config/tabs';
 
 export const TabLayout = () => {
   const { role } = useAuth();

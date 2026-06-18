@@ -4,9 +4,9 @@ import {
   ONLY_NUMBER_REGEX,
   SPECIAL_CHARACTER_REGEX,
   UPPERCASE_LETTER_REGEX,
-} from '@constants/regex';
+} from '@utils/constants/regex';
 import { z } from 'zod';
-import { METHODS } from '@constants/method';
+import { METHODS } from '@utils/constants/method';
 
 export const phoneValidation = z
   .string('Phone number is required')

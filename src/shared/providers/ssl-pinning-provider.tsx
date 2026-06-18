@@ -1,4 +1,4 @@
-import { SSL_CONFIG } from '@shared/config/network';
+import { SSL_CONFIG } from '@config/network';
 import { useEffect } from 'react';
 import { initializeSslPinning } from 'react-native-ssl-public-key-pinning';
 

@@ -13,7 +13,7 @@ import { SALARY_ENDPOINT } from '@features/salary/utils/constants/salary.endpoin
  *
  * @example
  * // In a service or hook:
- * import { ENDPOINTS } from '@shared/api';
+ * import { ENDPOINTS } from '@utils/constants/endpoints';
  * const url = ENDPOINTS.EMPLOYEE.DETAILS(id);
  */
 export const ENDPOINTS = {

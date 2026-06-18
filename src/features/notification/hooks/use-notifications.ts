@@ -8,7 +8,7 @@ import { useAuth } from '@hooks/use-auth';
 import { toast } from '@components/ui';
 import { withRetry } from '@utils/helpers/retry';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { NotificationService } from '@shared/services/notification.service';
+import { NotificationService } from '@services/notification.service';
 
 /**
  * Whitelist of permitted internal routes for push-triggered navigation.

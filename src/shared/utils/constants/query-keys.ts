@@ -4,7 +4,7 @@
  *
  * @example
  * // In a component or hook:
- * import { queryKeys } from '@shared/api/query-keys';
+ * import { queryKeys } from '@utils/constants/query-keys';
  *
  * const { data } = useQuery({
  *   queryKey: queryKeys.employees.details(id),

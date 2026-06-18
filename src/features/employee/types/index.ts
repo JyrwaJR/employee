@@ -1,4 +1,4 @@
-import { MonthT } from '@sharedTypes/common';
+import { MonthT } from '@types/common';
 import { UserT } from '../../auth/types';
 
 export type CityClass = 'X' | 'Y' | 'Z';
