@@ -7,7 +7,7 @@ import { z } from 'zod';
 import { Text } from '@/src/shared/components/ui/text';
 import { KeyboardSafeView } from '@/src/shared/components/layout';
 import { LoginSchema } from '../validators/login.schema';
-import { routes } from '@utils/constants/routes';
+import { PAGE_ROUTES } from '@utils/constants/routes';
 import { FieldInput } from '@/src/shared/components/ui/field-input';
 import { Button } from '@components/ui/button';
 import { useLoginMutation } from '../hooks/use-login-mutation';
@@ -74,7 +74,7 @@ export const LoginScreen = () => {
           />
 
           <View className="mb-8 items-end">
-            <Link href={routes.auth.forgotPassword()} asChild>
+            <Link href={PAGE_ROUTES.AUTH.FORGOT_PASSWORD()} asChild>
               <TouchableOpacity>
                 <Text variant={'link'}>Forgot password?</Text>
               </TouchableOpacity>
@@ -94,7 +94,7 @@ export const LoginScreen = () => {
       <AuthFooter
         text="Don't have an account?"
         linkText="Sign up"
-        linkHref={routes.auth.signUp}
+        linkHref={PAGE_ROUTES.AUTH.SIGN_UP}
         testID="SIGNUP_BUTTON"
       />
 

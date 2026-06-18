@@ -1,5 +1,5 @@
 import { ENDPOINTS } from '@utils/constants/endpoints';
-import { routes } from '@utils/constants/routes';
+import { PAGE_ROUTES } from '@utils/constants/routes';
 import { http } from '@/src/shared/utils/api/http';
 import { toast } from '@/src/shared/components/ui';
 import { useMutation } from '@tanstack/react-query';
@@ -21,7 +21,7 @@ export function useSignUpMutation() {
     mutationFn: (data: SignUpInputs) => http.post(ENDPOINTS.AUTH.SIGN_UP, data),
     onSuccess: (data) => {
       if (data.success) {
-        router.replace(routes.auth.login);
+        router.replace(PAGE_ROUTES.AUTH.LOGIN);
         toast.success('Registration Success', {
           description: data.message || 'Sign up successful',
         });

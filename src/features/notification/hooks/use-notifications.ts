@@ -7,7 +7,7 @@ import { isExpoGo } from '@utils/constants';
 import { useAuth } from '@/src/shared/hooks/use-auth';
 import { toast } from '@/src/shared/components/ui';
 import { withRetry } from '@/src/shared/utils/helpers/retry';
-import { routes } from '@utils/constants/routes';
+import { PAGE_ROUTES } from '@utils/constants/routes';
 import { NotificationService } from '@/src/shared/services/notification.service';
 
 /**
@@ -15,10 +15,10 @@ import { NotificationService } from '@/src/shared/services/notification.service'
  * Prevents unauthorized redirection to sensitive or spoofed screens.
  */
 const ALLOWED_PUSH_ROUTES = [
-  routes.home,
-  routes.statement,
-  routes.employees.details(''),
-  routes.profile,
+  PAGE_ROUTES.HOME,
+  PAGE_ROUTES.STATEMENT,
+  PAGE_ROUTES.EMPLOYEES.DETAILS(''),
+  PAGE_ROUTES.PROFILE,
 ];
 
 /**
@@ -51,7 +51,7 @@ export const useNotifications = () => {
       router.push(url as Route);
     } else {
       logger.warn(`NotificationHook: Blocked unauthorized redirect to [${url}]. Falling back.`);
-      router.push(routes.profile as Route);
+      router.push(PAGE_ROUTES.PROFILE as Route);
     }
   };
 

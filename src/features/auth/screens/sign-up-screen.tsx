@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Container } from '@/src/shared/components/layout/container';
 import { SignUpSchema } from '../validators/signup.schema';
-import { routes } from '@utils/constants/routes';
+import { PAGE_ROUTES } from '@utils/constants/routes';
 import { useSignUpMutation } from '../hooks/use-sign-up-mutation';
 import { KeyboardSafeView } from '@/src/shared/components/layout';
 import { AuthHeader } from '../components/auth-header';
@@ -125,7 +125,7 @@ export const SignUpScreen = () => {
           <AuthFooter
             text="Already have an account?"
             linkText="Sign in"
-            linkHref={routes.auth.login}
+            linkHref={PAGE_ROUTES.AUTH.LOGIN}
             className="my-8"
           />
         </ScrollView>

@@ -11,7 +11,7 @@ import { ENDPOINTS } from '@utils/constants/endpoints';
 import { router } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { OTPSchema } from '../validators/otp.schema';
-import { routes } from '@utils/constants/routes';
+import { PAGE_ROUTES } from '@utils/constants/routes';
 import { FieldInput } from '@/src/shared/components/ui/field-input';
 
 type OTPInputs = z.infer<typeof OTPSchema>;
@@ -28,7 +28,7 @@ export const VerifyOtpForm = () => {
     mutationFn: async (data: OTPInputs) => http.post(ENDPOINTS.AUTH.VERIFY_OTP, data),
     onSuccess: (data) => {
       if (data.success) {
-        router.push(routes.auth.forgotPassword(phone_no, 'RESET'));
+        router.push(PAGE_ROUTES.AUTH.FORGOT_PASSWORD(phone_no, 'RESET'));
         toast.success('Verification Success', {
           description: data.message || 'Code verified successfully',
         });

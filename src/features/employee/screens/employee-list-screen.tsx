@@ -7,7 +7,7 @@ import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
 import { Text } from '@/src/shared/components/ui/text';
 import { FilterCard } from '@/src/shared/components/display/filter-card';
 import { toast } from '@/src/shared/components/ui';
-import { routes } from '@utils/constants/routes';
+import { PAGE_ROUTES } from '@utils/constants/routes';
 import { useEmployees } from '@/src/shared/hooks';
 import { ScreenHeader } from '@/src/shared/components/layout/screen-header';
 import { SearchInput } from '@/src/shared/components/search-input';
@@ -58,7 +58,7 @@ export default function EmployeeListScreen() {
         renderItem={({ item }) => (
           <EmployeeListItem
             item={item}
-            onPress={() => router.push(routes.employees.details(item.id))}
+            onPress={() => router.push(PAGE_ROUTES.EMPLOYEES.DETAILS(item.id))}
           />
         )}
         ListEmptyComponent={

@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { Text } from '@/src/shared/components/ui/text';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { routes } from '@utils/constants/routes';
+import { PAGE_ROUTES } from '@utils/constants/routes';
 
 interface ForbiddenProps {
   title?: string;
@@ -24,7 +24,7 @@ export const Forbidden = ({
     if (onPressHome) {
       onPressHome();
     } else {
-      router.replace(routes.home);
+      router.replace(PAGE_ROUTES.HOME);
     }
   };
 

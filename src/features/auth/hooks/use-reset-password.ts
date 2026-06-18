@@ -7,7 +7,7 @@ import { useSearchParams } from 'expo-router/build/hooks';
 import { http } from '@/src/shared/utils/api/http';
 import { ENDPOINTS } from '@utils/constants/endpoints';
 import { toast } from '@/src/shared/components/ui';
-import { routes } from '@utils/constants/routes';
+import { PAGE_ROUTES } from '@utils/constants/routes';
 import {
   ResetPasswordSchema,
   ResetPasswordOtpSchema,
@@ -65,7 +65,7 @@ export const useResetPassword = () => {
     },
     onSuccess: (data: any) => {
       if (data.success) {
-        router.replace(routes.auth.login);
+        router.replace(PAGE_ROUTES.AUTH.LOGIN);
         toast.success('Security Update', {
           description: data.message || 'Password reset successful',
         });

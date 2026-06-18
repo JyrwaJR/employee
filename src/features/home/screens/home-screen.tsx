@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { View, FlatList, TouchableOpacity } from 'react-native';
-import { Container } from '@shared/components/layout/container';
-import { StatBox } from '@shared/components/display/stats-box';
-import { useAuth } from '@shared/hooks/use-auth';
+import { Container } from '@components/layout/container';
+import { StatBox } from '@components/display/stats-box';
+import { useAuth } from '@hooks/use-auth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { LoadingScreen } from '@shared/components/screens/loading-screen';
+import { LoadingScreen } from '@components/screens/loading-screen';
 import { router } from 'expo-router';
-import { Text } from '@shared/components/ui/text';
-import { useThemeStore } from '@shared/stores/theme.store';
+import { Text } from '@components/ui/text';
+import { useThemeStore } from '@stores/theme.store';
 import { PAGE_ROUTES } from '@constants/routes';
 import { STATS } from '../utils';
 import { useEmployees } from '@/src/shared/hooks';
 import { EmployeeListItem } from '@/src/shared/components/employee-list-item';
-import { ScreenHeader } from '@/src/shared/components/layout/screen-header';
-import { SearchInput } from '@/src/shared/components/search-input';
+import { ScreenHeader } from '@components/layout/screen-header';
+import { SearchInput } from '@components/search-input';
 
 export const HomeScreen = () => {
   const [search, setSearch] = useState('');
@@ -66,7 +66,7 @@ export const HomeScreen = () => {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <EmployeeListItem
-              onPress={() => router.push(PAGE_ROUTES.employees.details(item.id))}
+              onPress={() => router.push(PAGE_ROUTES.EMPLOYEES.DETAILS(item.id))}
               item={item}
             />
           )}

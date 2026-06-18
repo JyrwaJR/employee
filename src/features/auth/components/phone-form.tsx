@@ -10,7 +10,7 @@ import { http } from '@/src/shared/utils/api/http';
 import { ENDPOINTS } from '@utils/constants/endpoints';
 import { useRouter } from 'expo-router';
 import { ForgotPasswordSchema } from '../validators/forgot-password.schema';
-import { routes } from '@utils/constants/routes';
+import { PAGE_ROUTES } from '@utils/constants/routes';
 import { FieldInput } from '@/src/shared/components/ui/field-input';
 
 type ForgotPasswordInputs = z.infer<typeof ForgotPasswordSchema>;
@@ -28,7 +28,7 @@ export const PhoneForm = () => {
     mutationFn: async (data: ForgotPasswordInputs) => http.post(ENDPOINTS.AUTH.GET_OTP, data),
     onSuccess: (data) => {
       if (data.success) {
-        router.push(routes.auth.forgotPassword(phone_no, 'OTP'));
+        router.push(PAGE_ROUTES.AUTH.FORGOT_PASSWORD(phone_no, 'OTP'));
         toast.success('Secure Code Sent', {
           description: data.message || 'Verification code sent to your phone',
         });

@@ -14,7 +14,7 @@ import { HeaderStack } from '@/src/shared/components/layout/header';
 import { FilterCard } from '@/src/shared/components/display/filter-card';
 import { months, years } from '@/src/shared/utils/helpers/years';
 import { queryKeys } from '@utils/constants/query-keys';
-import { routes } from '@utils/constants/routes';
+import { PAGE_ROUTES } from '@utils/constants/routes';
 import { toast } from '@/src/shared/components/ui';
 
 type Props = {
@@ -105,7 +105,7 @@ export const StatementScreen = ({ idx, isTab }: Props) => {
           <HistoryCard
             item={item}
             onPress={() => {
-              router.push(routes.employees.salaryPayslip(item.id));
+              router.push(PAGE_ROUTES.EMPLOYEES.SALARY_PAY_SLIP(item.id));
             }}
           />
         )}

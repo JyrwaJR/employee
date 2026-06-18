@@ -10,11 +10,12 @@
       "@shared/*": ["./src/shared/*"],
       "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/shared/components/*"],
-      "@utils/*": ["./src/shared/utils/*"],
+      "@hooks/*": ["./src/shared/hooks/*"],
       "@lib/*": ["./src/shared/lib/*"],
       "@lib": ["./src/shared/lib/*"],
       "@stores/*": ["./src/shared/stores/*"],
       "@features/*": ["./src/features/*"],
+      "@utils/*": ["./src/shared/utils/*"],
       "@constants/*": ["./src/shared/utils/constants/*"],
       "@sharedTypes/*": ["./src/shared/types/*"],
       "@validators/*": ["./src/shared/validators/*"]

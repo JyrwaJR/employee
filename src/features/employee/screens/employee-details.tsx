@@ -5,7 +5,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { LoadingScreen } from '@/src/shared/components/screens/loading-screen';
 import { useAuth } from '@/src/shared/hooks/use-auth';
 import { Text } from '@/src/shared/components/ui/text';
-import { routes } from '@utils/constants/routes';
+import { PAGE_ROUTES } from '@utils/constants/routes';
 import { toast } from '@/src/shared/components/ui';
 import { useEmployee } from '../hooks/use-employee';
 import { InfoRow } from '../components/info-row';
@@ -107,7 +107,9 @@ export default function EmployeeDetailScreen() {
             </View>
             {auth.user?.role === 'SUPER_ADMIN' && (
               <TouchableOpacity
-                onPress={() => router.push(routes.employees.salaryHistory(data?.id as string))}
+                onPress={() =>
+                  router.push(PAGE_ROUTES.EMPLOYEES.SALARY_HISTORY(data?.id as string))
+                }
                 className="mt-4 flex-row items-center justify-center">
                 <Text className="text-sm font-semibold text-blue-600">View Salary History →</Text>
               </TouchableOpacity>
