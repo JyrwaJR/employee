@@ -4,14 +4,10 @@ import { Container } from '@components/layout/container';
 import { Text } from '@components/ui/text';
 import { FilterCard } from '@components/display/filter-card';
 import { years } from '@utils/helpers/years';
-import { useQuery } from '@tanstack/react-query';
-import { http } from '@utils/api/http';
-import { ENDPOINTS } from '@utils/constants/endpoints';
-import { useAuth } from '@hooks/use-auth';
 import { LoadingScreen } from '@components/screens/loading-screen';
-import { LeaveT } from '../types';
 import { LeaveCard } from '../components/leave-card';
-import { queryKeys } from '@utils/constants/query-keys';
+import { useLeaves } from '../hooks';
+import { ScreenHeader } from '@components/layout';
 
 const statusOptions = [
   { label: 'Approved', value: 'APPROVED' },
@@ -21,22 +17,18 @@ const statusOptions = [
 
 export const LeaveScreen = () => {
   const [selectedYear, setSelectedYear] = React.useState('2025');
-  const { user } = useAuth();
-  const [status, setStatus] = React.useState<string | undefined>(undefined);
+  const [status, setStatus] = React.useState<string>('APPROVED');
   const [isFiltersOpen, setIsFiltersOpen] = React.useState(true);
-  const employeeId = user?.employee_id || '';
 
-  const { data, isFetching } = useQuery({
-    queryKey: queryKeys.leaves.list(employeeId, selectedYear, status),
-    queryFn: () => http.get<LeaveT[]>(ENDPOINTS.LEAVE.LIST(employeeId)),
-    enabled: !!employeeId,
-    select: (data) => data.data,
-  });
+  const { data = [], isFetching } = useLeaves(selectedYear, status);
 
-  // Filter Logic
-  const filteredData = data || [];
-
-  if (isFetching) return <LoadingScreen />;
+  if (isFetching)
+    return (
+      <>
+        <ScreenHeader title="My Leaves" />
+        <LoadingScreen />
+      </>
+    );
 
   return (
     <Container className="flex-1 bg-gray-50 dark:bg-slate-950">
@@ -68,7 +60,7 @@ export const LeaveScreen = () => {
       </View>
 
       <FlatList
-        data={filteredData}
+        data={data}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => <LeaveCard item={item} onPress={() => {}} />}
         contentContainerStyle={{ padding: 16, paddingBottom: 100 }}

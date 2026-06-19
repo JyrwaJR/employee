@@ -38,6 +38,7 @@ export const queryKeys = {
     /** Key for pension records, typically filtered by employee ID, year, month, and status */
     list: (employeeId: string, year: string, month: string, status: string) =>
       ['pension', employeeId, year, month, status] as const,
+    detail: (employeeId: string, pensionId: string) => ['pension', employeeId, pensionId] as const,
   },
   announcements: {
     /** Key for the list of announcements, optionally paginated */

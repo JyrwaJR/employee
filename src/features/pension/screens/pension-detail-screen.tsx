@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { Container } from '@components/layout/container';
 import { Header } from '@components/layout/header';
 import { Text } from '@components/ui/text';
@@ -13,7 +13,6 @@ import { SummaryCard } from '@components/display/summary-card';
 
 export const PensionDetailScreen = () => {
   const { id: _id } = useLocalSearchParams();
-  const _router = useRouter();
 
   // In a real app, fetch data based on ID. Using Mock Data for now corresponding to ID 1
   const data = {

@@ -3,15 +3,11 @@ import { View, FlatList } from 'react-native';
 import { Container } from '@components/layout/container';
 import { Text } from '@components/ui/text';
 import { HistoryCard } from '@components/display/history-card';
-import { SalarySlip } from '@features/employee/types';
 import { FilterCard } from '@components/display/filter-card';
 import { months, years } from '@utils/helpers/years';
-import { useQuery } from '@tanstack/react-query';
-import { ENDPOINTS } from '@utils/constants/endpoints';
-import { useAuth } from '@hooks/use-auth';
-import { http } from '@utils/api/http';
 import { LoadingScreen } from '@components/screens/loading-screen';
-import { queryKeys } from '@utils/constants/query-keys';
+import { usePensions } from '../hooks';
+import { ScreenHeader } from '@components/layout';
 
 const statusOptions = [
   { label: 'Paid', value: 'PAID' },
@@ -23,17 +19,16 @@ const PensionScreen = () => {
   const [selectedYear, setSelectedYear] = React.useState('2025');
   const [selectedMonth, setSelectedMonth] = React.useState('JANUARY');
   const [status, setStatus] = React.useState('PAID');
-  const { user } = useAuth();
-  const empId = user?.employee_id || '';
 
-  const { data: PENSION_DATA, isFetching } = useQuery({
-    queryKey: queryKeys.pension.list(empId, selectedYear, selectedMonth, status),
-    queryFn: () => http.get<SalarySlip[]>(ENDPOINTS.PENSION.LIST(empId)),
-    select: (data) => data.data,
-    enabled: !!empId,
-  });
+  const { data: PENSION_DATA, isFetching } = usePensions(selectedYear, selectedMonth, status);
 
-  if (isFetching) return <LoadingScreen />;
+  if (isFetching)
+    return (
+      <>
+        <ScreenHeader title="Pension History" />
+        <LoadingScreen />
+      </>
+    );
 
   return (
     <>
