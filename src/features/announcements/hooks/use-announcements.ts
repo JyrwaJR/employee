@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@utils/constants/query-keys';
+import { ANNOUNCEMENT_KEYS } from '../utils/constants';
 import { AnnouncementResponseT, AnnouncementT } from '../types';
 
 /**
@@ -40,7 +40,7 @@ const fetchAnnouncementsMock = async ({ pageParam = 1 }): Promise<AnnouncementRe
  */
 export const useAnnouncements = () => {
   return useInfiniteQuery({
-    queryKey: QUERY_KEYS.ANNOUNCEMENTS.LIST(),
+    queryKey: ANNOUNCEMENT_KEYS.LIST(),
     queryFn: fetchAnnouncementsMock,
     initialPageParam: 1,
     getNextPageParam: (lastPage) => (!lastPage.hasMore ? undefined : lastPage.page + 1),
