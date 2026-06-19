@@ -2,7 +2,7 @@ import { http } from '@utils/api/http';
 import { useQuery } from '@tanstack/react-query';
 import { EmployeeT } from '@features/employee/types';
 import { ENDPOINTS } from '@utils/constants/endpoints';
-import { queryKeys } from '@utils/constants/query-keys';
+import { QUERY_KEYS } from '@utils/constants/query-keys';
 import React from 'react';
 import { toast } from '@components/ui';
 
@@ -12,7 +12,7 @@ type UseEmployeeProps = {
 
 export function useEmployees({ page }: UseEmployeeProps = { page: 1 }) {
   const query = useQuery({
-    queryKey: queryKeys.employees.list(page),
+    queryKey: QUERY_KEYS.EMPLOYEES.LIST(page),
     queryFn: () => http.get<EmployeeT[]>(ENDPOINTS.EMPLOYEE.LIST),
     select: (data) => data.data || [],
     placeholderData: (prev) => prev,

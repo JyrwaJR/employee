@@ -6,7 +6,7 @@ import { TokenStoreManager } from '@stores/token.store';
 import { AuthContextT, UserT } from '@types/auth'; // Updated to Shared Types
 import { http } from '@utils/api/http';
 import { logger } from '@utils/logger';
-import { queryKeys } from '@utils/constants/query-keys';
+import { QUERY_KEYS } from '@utils/constants/query-keys';
 import { toast } from '@components/ui';
 
 type Props = {
@@ -47,7 +47,7 @@ export const AuthContextProvider = ({ children }: Props) => {
       await TokenStoreManager.removeRefreshToken();
 
       // 2. Purge Cache
-      queryClient.setQueryData(queryKeys.auth.me, null);
+      queryClient.setQueryData(QUERY_KEYS.AUTH.ME, null);
       if (data?.success) {
         toast.success('Session Ended', {
           description: data.message || 'You have been signed out',
@@ -177,7 +177,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     refetch,
     isError,
   } = useQuery({
-    queryKey: queryKeys.auth.me,
+    queryKey: QUERY_KEYS.AUTH.ME,
     queryFn: async ({ signal }) => await http.get<UserT>(ENDPOINTS.AUTH.ME, { signal }),
     enabled: isTokenSet,
     retry: false,
