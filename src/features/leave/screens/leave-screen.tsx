@@ -54,7 +54,7 @@ export const LeaveScreen = () => {
           years={years}
           onYearChange={setSelectedYear}
           status={status}
-          onStatusChange={(val) => setStatus(status === val ? undefined : val)} // Toggle off if clicked again
+          onStatusChange={(val) => setStatus(status === val ? '' : val)} // Toggle off if clicked again
           statusOptions={statusOptions}
         />
       </View>

@@ -2,20 +2,16 @@ import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { Container } from '@components/layout/container';
 import { router } from 'expo-router';
-import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@hooks/use-auth';
 import { LoadingScreen } from '@components/screens/loading-screen';
-import { http } from '@utils/api/http';
-import { SalarySlip } from '@features/employee/types';
-import { ENDPOINTS } from '@utils/constants/endpoints';
 import { Text } from '@components/ui/text';
 import { HistoryCard } from '@components/display/history-card';
 import { HeaderStack } from '@components/layout/header';
 import { FilterCard } from '@components/display/filter-card';
 import { months, years } from '@utils/helpers/years';
-import { queryKeys } from '@utils/constants/query-keys';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { toast } from '@components/ui';
+import { useSalaryStatement } from '../hooks';
 
 type Props = {
   idx?: string;
@@ -44,12 +40,7 @@ export const StatementScreen = ({ idx, isTab }: Props) => {
 
   const id = idx ? idx : user?.employee_id || '';
 
-  const { data, isFetching, isError, error } = useQuery({
-    queryKey: queryKeys.salary.statements(id, isTab),
-    queryFn: () => http.get<SalarySlip[]>(ENDPOINTS.SALARY.LIST(id)),
-    select: (data) => data.data,
-    enabled: !!id,
-  });
+  const { data, isFetching, isError, error } = useSalaryStatement(id, isTab);
 
   // Handle Query Error
   React.useEffect(() => {

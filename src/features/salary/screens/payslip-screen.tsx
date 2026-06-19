@@ -7,7 +7,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DetailRow } from '@components/display/detail-row';
 import { SectionHeader } from '@components/base/section-header';
 import { MoneyRow } from '@components/display/money-row';
-import { usePayslipData } from '../hooks/use-payslip-data';
+import { usePayslipData } from '../hooks';
 import { GovtHeader } from '@components/display/govt-header';
 import { SummaryCard } from '@components/display/summary-card';
 
