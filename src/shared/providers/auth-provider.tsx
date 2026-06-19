@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { AuthContext } from '@contexts/auth.context';
-import { AUTH_ENDPOINT } from '@features/auth/utils/constants';
+import { ENDPOINTS } from '@utils/constants/endpoints';
 import { TokenStoreManager } from '@stores/token.store';
 import { AuthContextT, UserT } from '@types/auth'; // Updated to Shared Types
 import { http } from '@utils/api/http';
@@ -35,7 +35,7 @@ export const AuthContextProvider = ({ children }: Props) => {
    */
   const logoutMutation = useMutation({
     mutationFn: ({ refresh_token }: { refresh_token: string }) =>
-      http.post(AUTH_ENDPOINT.LOGOUT, { refresh_token }),
+      http.post(ENDPOINTS.AUTH.LOGOUT, { refresh_token }),
     onSettled: async (data) => {
       // Fail-safe cleanup: Always clear local session even if API fails
       setIsInitializing(true);
@@ -91,7 +91,7 @@ export const AuthContextProvider = ({ children }: Props) => {
         if (!refreshToken) return false;
 
         const res = await http.post<{ refresh_token: string; access_token: string }>(
-          AUTH_ENDPOINT.REFRESH,
+          ENDPOINTS.AUTH.REFRESH,
           { refresh_token: refreshToken },
           { signal }
         );
@@ -178,7 +178,7 @@ export const AuthContextProvider = ({ children }: Props) => {
     isError,
   } = useQuery({
     queryKey: QUERY_KEYS.AUTH.ME,
-    queryFn: async ({ signal }) => await http.get<UserT>(AUTH_ENDPOINT.ME, { signal }),
+    queryFn: async ({ signal }) => await http.get<UserT>(ENDPOINTS.AUTH.ME, { signal }),
     enabled: isTokenSet,
     retry: false,
     select: (data) => data.data,

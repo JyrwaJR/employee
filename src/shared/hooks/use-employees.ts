@@ -1,7 +1,8 @@
 import { http } from '@utils/api/http';
 import { useQuery } from '@tanstack/react-query';
 import { EmployeeT } from '@features/employee/types';
-import { EMPLOYEE_ENDPOINT, EMPLOYEE_KEYS } from '@features/employee/utils/constants';
+import { ENDPOINTS } from '@utils/constants/endpoints';
+import { EMPLOYEE_KEYS } from '@features/employee/utils/constants';
 import React from 'react';
 import { toast } from '@components/ui';
 import { buildUrlWithQuery } from '@utils/helpers';
@@ -13,7 +14,7 @@ type UseEmployeeProps = {
 export function useEmployees({ page }: UseEmployeeProps = { page: 1 }) {
   const query = useQuery({
     queryKey: EMPLOYEE_KEYS.LIST(page),
-    queryFn: () => http.get<EmployeeT[]>(buildUrlWithQuery(EMPLOYEE_ENDPOINT.LIST, { page })),
+    queryFn: () => http.get<EmployeeT[]>(buildUrlWithQuery(ENDPOINTS.EMPLOYEE.LIST, { page })),
     select: (data) => data.data || [],
     placeholderData: (prev) => prev,
   });
