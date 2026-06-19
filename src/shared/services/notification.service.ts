@@ -4,7 +4,7 @@ import * as Notifications from 'expo-notifications';
 import * as Constants from 'expo-constants';
 import { logger } from '@utils/logger/logger';
 import { http } from '@utils/api/http';
-import { ENDPOINTS } from '@utils/constants/endpoints';
+import { NOTIFICATION_ENDPOINT } from '@features/notification/utils/constants';
 
 type TErrorType = 'PERMISSION_DENIED' | 'NOT_A_DEVICE' | 'CONFIG_ERROR' | 'NETWORK_ERROR';
 
@@ -72,7 +72,7 @@ export const NotificationService = {
       const token = tokenResponse.data;
 
       // 2. Register with Backend
-      const res = await http.post(ENDPOINTS.NOTIFICATION.REGISTER, {
+      const res = await http.post(NOTIFICATION_ENDPOINT.REGISTER, {
         token,
         user_id: userId,
       });
@@ -90,7 +90,7 @@ export const NotificationService = {
   },
 
   async unregister({ id }: { id: string }): Promise<void> {
-    await http.post(ENDPOINTS.NOTIFICATION.UNREGISTER, {
+    await http.post(NOTIFICATION_ENDPOINT.UNREGISTER, {
       user_id: id,
     });
   },

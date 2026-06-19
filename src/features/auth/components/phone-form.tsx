@@ -7,7 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Button } from '@components/ui/button';
 import { toast } from '@components/ui';
 import { http } from '@utils/api/http';
-import { ENDPOINTS } from '@utils/constants/endpoints';
+import { AUTH_ENDPOINT } from '@features/auth/utils/constants';
 import { useRouter } from 'expo-router';
 import { ForgotPasswordSchema } from '../validators/forgot-password.schema';
 import { PAGE_ROUTES } from '@utils/constants/routes';
@@ -25,7 +25,7 @@ export const PhoneForm = () => {
   const phone_no = methods.watch('phone_no');
 
   const sendOtpMutation = useMutation({
-    mutationFn: async (data: ForgotPasswordInputs) => http.post(ENDPOINTS.AUTH.GET_OTP, data),
+    mutationFn: async (data: ForgotPasswordInputs) => http.post(AUTH_ENDPOINT.GET_OTP, data),
     onSuccess: (data) => {
       if (data.success) {
         router.push(PAGE_ROUTES.AUTH.FORGOT_PASSWORD(phone_no, 'OTP'));

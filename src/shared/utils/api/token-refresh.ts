@@ -2,7 +2,8 @@ import axios, { AxiosError, InternalAxiosRequestConfig, AxiosInstance } from 'ax
 import { TokenStoreManager } from '@stores/token.store';
 import { router } from 'expo-router';
 import { queryClient } from '../react-query';
-import { PAGE_ROUTES, ENDPOINTS } from '@utils/constants';
+import { PAGE_ROUTES } from '@utils/constants';
+import { AUTH_ENDPOINT } from '@features/auth/utils/constants';
 
 let isRefreshing = false;
 let isExiting = false;
@@ -22,13 +23,13 @@ function processQueue(error: any, token: string | null = null) {
 export function shouldSkipRefresh(url?: string) {
   if (!url) return true;
   const skipUrls = [
-    ENDPOINTS.AUTH.LOGIN,
-    ENDPOINTS.AUTH.SIGN_UP,
-    ENDPOINTS.AUTH.REFRESH,
-    ENDPOINTS.AUTH.LOGOUT,
-    ENDPOINTS.AUTH.FORGOT_PASSWORD,
-    ENDPOINTS.AUTH.GET_OTP,
-    ENDPOINTS.AUTH.VERIFY_OTP,
+    AUTH_ENDPOINT.LOGIN,
+    AUTH_ENDPOINT.SIGN_UP,
+    AUTH_ENDPOINT.REFRESH,
+    AUTH_ENDPOINT.LOGOUT,
+    AUTH_ENDPOINT.FORGOT_PASSWORD,
+    AUTH_ENDPOINT.GET_OTP,
+    AUTH_ENDPOINT.VERIFY_OTP,
   ];
   return skipUrls.some((path) => url.includes(path));
 }
@@ -82,7 +83,7 @@ export async function attemptTokenRefresh(
       throw new Error('MISSING_REFRESH_TOKEN');
     }
 
-    const res = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}${ENDPOINTS.AUTH.REFRESH}`, {
+    const res = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}${AUTH_ENDPOINT.REFRESH}`, {
       refresh_token: refreshToken,
     });
 
