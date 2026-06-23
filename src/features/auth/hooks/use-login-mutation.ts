@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { LoginSchema } from '../validators/login.schema';
 import { TokenStoreManager } from '@stores/token.store';
 import { toast } from '@components/ui';
-import { useAuth } from '@hooks/use-auth';
+import { useAuthStore } from '@stores/auth.store';
 import { logger } from '@utils/logger/logger';
 import { rpc } from '@utils/api/rpc';
 import { AUTH_METHODS } from '../utils/constants/methods';
@@ -16,7 +16,6 @@ type LoginResT = {
 };
 
 export const useLoginMutation = () => {
-  const { refresh } = useAuth();
   return useMutation({
     mutationFn: (data: LoginFormInputs) =>
       rpc<LoginResT, LoginFormInputs>(AUTH_METHODS.EMPLOYEE_LOGIN, {
@@ -26,7 +25,6 @@ export const useLoginMutation = () => {
     onSuccess: async (data) => {
       if (data.success) {
         const res = data.data;
-        // Robust token extraction (handles both 'token' top-level and 'access_token' in data)
         const accessToken = res?.access_token || res?.refresh_token;
         const refreshToken = res?.refresh_token;
 
@@ -37,10 +35,9 @@ export const useLoginMutation = () => {
           toast.success('Authentication Success', {
             description: data.message || 'Sign in successful',
           });
-          refresh(); // Trigger auth state update
+          useAuthStore.getState().fetchUser();
           return data;
         } else {
-          // Failure to extract tokens after a successful response
           const missing = !accessToken ? 'Access Token' : 'Refresh Token';
 
           logger.error(`LoginScreen: Successful login but ${missing} is missing.`, {
