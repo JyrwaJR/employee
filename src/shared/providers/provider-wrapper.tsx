@@ -5,7 +5,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryErrorResetBoundary } from '@tanstack/react-query';
 
 // Internal Providers
-import { AuthContextProvider } from './auth-provider';
+import { AuthInitializer } from './auth-provider';
 import { LocalAuthProvider } from './local-auth-provider';
 import { NotificationProvider } from './notification-provider';
 import { TQueryProvider } from './query-provider';
@@ -43,7 +43,7 @@ export const ProviderWrapper = ({ children }: Props) => {
               <TQueryProvider>
                 <QueryErrorResetBoundary>
                   <ThemeProvider>
-                    <AuthContextProvider>
+                    <AuthInitializer>
                       <NotificationProvider>
                         <LocalAuthProvider>
                           <LocalAuthRedirect>
@@ -55,7 +55,7 @@ export const ProviderWrapper = ({ children }: Props) => {
                           </LocalAuthRedirect>
                         </LocalAuthProvider>
                       </NotificationProvider>
-                    </AuthContextProvider>
+                    </AuthInitializer>
                   </ThemeProvider>
                 </QueryErrorResetBoundary>
               </TQueryProvider>
