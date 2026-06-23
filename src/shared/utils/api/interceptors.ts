@@ -5,6 +5,7 @@ import { shouldSkipRefresh, attemptTokenRefresh } from './token-refresh';
 import { decrypt, encrypt } from '@lib/encryption';
 
 const APP_ID = process.env.EXPO_PUBLIC_APP_ID;
+
 export function setupInterceptors(instance: AxiosInstance) {
   instance.interceptors.request.use(async (config) => {
     const token = await TokenStoreManager.getToken();
@@ -17,7 +18,6 @@ export function setupInterceptors(instance: AxiosInstance) {
         request_data: encrypt(JSON.stringify(config.data)),
         app_id: APP_ID,
       };
-      console.log('data', config.data);
     }
 
     (config as any)._startTime = Date.now();
@@ -37,7 +37,6 @@ export function setupInterceptors(instance: AxiosInstance) {
           res.data = decrypted;
         }
       }
-      console.log('res', res.data);
       return res;
     },
     async (error: AxiosError) => {
