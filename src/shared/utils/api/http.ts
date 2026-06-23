@@ -1,8 +1,8 @@
 import { AxiosRequestConfig, isCancel } from 'axios';
 import { logger } from '../logger/logger';
 import axiosInstance from '@utils/api/axios';
-import { ApiResponse } from '@types/api';
-import { handleResponse, handleAxiosError } from './response';
+import { ApiResponse } from '@sharedTypes/api';
+import { handleResponse, handleError } from './response';
 
 export const http = {
   get: async <T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
@@ -13,7 +13,7 @@ export const http = {
       if (isCancel(error)) {
         logger.warn(`GET ${url} Request to ${url} was cancelled.`);
       }
-      return handleAxiosError<T>(error);
+      return handleError<T>(error);
     }
   },
 
@@ -26,7 +26,8 @@ export const http = {
       const response = await axiosInstance.post(url, data, config);
       return handleResponse<T>(response);
     } catch (error) {
-      return handleAxiosError<T>(error);
+      console.log(error);
+      return handleError<T>(error);
     }
   },
 
@@ -39,7 +40,7 @@ export const http = {
       const response = await axiosInstance.put(url, data, config);
       return handleResponse<T>(response);
     } catch (error) {
-      return handleAxiosError<T>(error);
+      return handleError<T>(error);
     }
   },
 
@@ -48,7 +49,7 @@ export const http = {
       const response = await axiosInstance.delete(url, config);
       return handleResponse<T>(response);
     } catch (error) {
-      return handleAxiosError<T>(error);
+      return handleError<T>(error);
     }
   },
 };

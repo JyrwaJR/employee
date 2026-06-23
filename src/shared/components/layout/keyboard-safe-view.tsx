@@ -41,7 +41,6 @@ export const KeyboardSafeView: React.FC<KeyboardSafeViewProps> = ({
         className={cn('flex-1', className)}
         contentContainerStyle={styles.contentContainer}
         contentContainerClassName={cn(contentContainerClassName)}
-        // The magic props for scroll-friendly keyboard dismissal:
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode={dismissKeyboardOnTap ? 'on-drag' : 'none'}
         enableOnAndroid={true}
@@ -52,10 +51,6 @@ export const KeyboardSafeView: React.FC<KeyboardSafeViewProps> = ({
         scrollEventThrottle={16}
         bounces={true}
         showsVerticalScrollIndicator={false}>
-        {/* 
-           Crucial: We remove TouchableWithoutFeedback and let content 
-           interact directly with the ScrollView responder chain.
-        */}
         {children}
       </KeyboardAwareScrollView>
     </Container>

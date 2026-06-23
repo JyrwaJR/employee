@@ -2,12 +2,22 @@ import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '../logger/logger';
 import { shouldSkipRefresh, attemptTokenRefresh } from './token-refresh';
+import { decrypt, encrypt } from '@lib/encryption';
 
+const APP_ID = process.env.EXPO_PUBLIC_APP_ID;
 export function setupInterceptors(instance: AxiosInstance) {
   instance.interceptors.request.use(async (config) => {
     const token = await TokenStoreManager.getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    if (config.data) {
+      config.data = {
+        request_data: encrypt(JSON.stringify(config.data)),
+        app_id: APP_ID,
+      };
+      console.log('data', config.data);
     }
 
     (config as any)._startTime = Date.now();
@@ -19,15 +29,15 @@ export function setupInterceptors(instance: AxiosInstance) {
 
   instance.interceptors.response.use(
     (res) => {
-      const duration = Date.now() - ((res.config as any)._startTime || Date.now());
-      const traceId =
-        res.headers['x-trace-id'] || (res.config.headers['x-trace-id'] as string) || 'unknown';
-      logger.log({
-        method: `${res.config.method?.toUpperCase()} <=`,
-        path: res.config.url,
-        traceId,
-        duration: `${duration}ms`,
-      });
+      if (res.data?.response) {
+        const decrypted = decrypt(res.data?.response);
+        try {
+          res.data = JSON.parse(decrypted);
+        } catch {
+          res.data = decrypted;
+        }
+      }
+      console.log('res', res.data);
       return res;
     },
     async (error: AxiosError) => {

@@ -12,8 +12,8 @@ const getAppName = (baseName: string) => {
 };
 
 const getIdentifier = (baseIdentifier: string) => {
-  if (isDev) return `${baseIdentifier}`;
-  if (isPreview) return `${baseIdentifier}.preview`;
+  if (isDev) return `${baseIdentifier}.dev`;
+  if (isPreview) return `${baseIdentifier}`;
   return baseIdentifier;
 };
 

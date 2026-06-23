@@ -9,6 +9,7 @@ export interface ApiResponse<T> {
   message: string;
   data: T | null;
   meta?: MetaT;
-  token?: string;
   error?: string | Record<string, unknown>;
+  error_code?: string;
+  error_msg?: string;
 }

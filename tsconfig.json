@@ -17,6 +17,7 @@
       "@stores/*": ["./src/shared/stores/*"],
       "@styles/*": ["./src/shared/styles/*"],
       "@types/*": ["./src/shared/types/*"],
+      "@sharedTypes/*": ["./src/shared/types/*"],
       "@utils/*": ["./src/shared/utils/*"],
       "@validators/*": ["./src/shared/validators/*"]
     }

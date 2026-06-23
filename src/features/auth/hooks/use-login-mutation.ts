@@ -19,14 +19,15 @@ export const useLoginMutation = () => {
   const { refresh } = useAuth();
   return useMutation({
     mutationFn: (data: LoginFormInputs) =>
-      rpc<LoginResT, LoginFormInputs>(AUTH_METHODS.EMPLOYEE_LOGIN, data),
+      rpc<LoginResT, LoginFormInputs>(AUTH_METHODS.EMPLOYEE_LOGIN, {
+        emp_cd: data.emp_cd,
+        password: data.password,
+      }),
     onSuccess: async (data) => {
-      console.log(data);
       if (data.success) {
         const res = data.data;
-
         // Robust token extraction (handles both 'token' top-level and 'access_token' in data)
-        const accessToken = data.token || res?.access_token || res?.refresh_token;
+        const accessToken = res?.access_token || res?.refresh_token;
         const refreshToken = res?.refresh_token;
 
         if (accessToken && refreshToken) {

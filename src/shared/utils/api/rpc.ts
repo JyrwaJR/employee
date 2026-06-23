@@ -1,5 +1,5 @@
 import { METHODS } from '@utils/constants';
-import { ApiResponse } from '@types/api';
+import { ApiResponse } from '@sharedTypes/api';
 import { http } from './http';
 
 export type RpcRequest<TParams = unknown> = {
@@ -11,8 +11,9 @@ export const rpc = async <TResult, TParams = unknown>(
   method: string,
   params?: TParams
 ): Promise<ApiResponse<TResult>> => {
-  return http.post<TResult>('/rpc', {
-    method,
+  console.log('rpc', method, params);
+  return http.post<TResult>('/service_ext.php', {
+    functionName: method,
     params,
   });
 };
