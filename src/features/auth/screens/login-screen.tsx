@@ -45,7 +45,6 @@ export const LoginScreen = () => {
         iconContainerClassName="bg-blue-600"
       />
 
-      {/* Form Section */}
       <FormProvider {...methods}>
         <View className="w-full">
           <FieldInput

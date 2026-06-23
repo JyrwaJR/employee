@@ -1,9 +1,10 @@
 name: Production Build
 
 on:
-  push:
-    branches:
-      - master
+#   push:
+#     branches:
+#       - master
+      manual: {}
 
 jobs:
   fingerprint:

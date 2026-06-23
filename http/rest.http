@@ -1,8 +1,19 @@
-POST http://10.179.35.36/eisdatafetcher/eisapitest.php
+POST http://10.179.35.36/eisdatafetcher/service_ext.php
+Content-Type: application/json
+
+{ 
+    "request_data":"SVpVQWN2MDB1MU93NlR5VmJFWVVyajVqblNzdmdURU55QzlXLzNqUGVpV2ZpRzZaQnluUzQzalRsRzJjMmVyUVNnODlhdDBJTUkzZ3RmVzkyRS9WckxxcVlIbVBQVTRMVUlKeUZOWGxObzZJTkVaWWU0ZkUwU1ZkUWx6ZVI4a0w=",
+    "app_id":"eis_app"
+}
+
+
+###
+POST http://localhost:4000/hash
 Content-Type: application/json
 
 {
     "functionName" : "employee_login",
     "emp_cd" : "2026200215R",
-    "password" : "MeghEISE"
+    "password" : "MeghEISE",
+    "api_id" : "eis_app"
 }
