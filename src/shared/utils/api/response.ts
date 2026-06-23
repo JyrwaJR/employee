@@ -1,49 +1,26 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { ApiResponse } from '../../types';
+import { ApiResponse, BACKEND_ERROR_CODES } from '../../types';
 
 export class BackendError extends Error {
   error_msg: string;
-  error_code: BackendCode;
-  constructor(error_msg: string) {
+  error_code: BACKEND_ERROR_CODES;
+  constructor(error_msg: string, error_code: BACKEND_ERROR_CODES) {
     super(error_msg);
     this.error_msg = error_msg;
-    this.error_code = '02';
+    this.error_code = error_code;
   }
 }
-
-const ERROR_CODES = {
-  '-1': 'FAILURE',
-  '02': 'FAILURE',
-  '01': 'SUCCESS',
-} as const;
-
-type BackendCode = keyof typeof ERROR_CODES;
 
 export const isSuccessCode = (code: string): boolean => {
-  return ERROR_CODES[code as BackendCode] === 'SUCCESS';
+  return BACKEND_ERROR_CODES[code as BACKEND_ERROR_CODES] === 'SUCCESS';
 };
 
-export class BackendSuccess extends Error {
-  error_msg: string;
-  error_code: 'FAILURE' | 'SUCEESS';
-  constructor(error_msg: string) {
-    super(error_msg);
-    this.error_msg = error_msg;
-    this.error_code = 'SUCEESS';
-  }
-}
-
-export const handleError = <T>(error: unknown | AxiosError | Error): ApiResponse<T> => {
+export const handleError = <T>(error: unknown): ApiResponse<T> => {
   let errorMessage = 'Something went wrong. Please try again.';
-  let errorDetails: string | Record<string, unknown> = '';
 
   if (error instanceof AxiosError) {
     if (error.response) {
       errorMessage = (error.response.data as { message?: string })?.message || errorMessage;
-      errorDetails =
-        (error.response.data as { error?: string | Record<string, unknown> })?.error ||
-        error.response.data ||
-        '';
     } else if (error.request) {
       errorMessage = 'Please check your internet connection.';
     } else {
@@ -57,8 +34,7 @@ export const handleError = <T>(error: unknown | AxiosError | Error): ApiResponse
 
   return {
     success: false,
-    message: errorMessage,
-    error: errorDetails,
+    message: errorMessage || 'Failed to fetch data',
     data: null,
   };
 };
@@ -68,12 +44,12 @@ export const handleResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiR
     data: { error_code, error_msg },
   } = response;
 
-  if (error_code && !isSuccessCode(error_code)) {
-    throw new BackendError(error_msg || 'unknown error');
+  if (typeof error_code === 'string' && !isSuccessCode(error_code)) {
+    throw new BackendError(error_msg || 'unknown error', error_code);
   }
   return {
     success: true,
     message: error_msg || 'Successfully fetched data',
-    data: response.data.data as T,
+    data: response.data.data ?? null,
   };
 };
