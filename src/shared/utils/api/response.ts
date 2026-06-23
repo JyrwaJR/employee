@@ -71,7 +71,6 @@ export const handleResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiR
   if (error_code && !isSuccessCode(error_code)) {
     throw new BackendError(error_msg || 'unknown error');
   }
-
   return {
     success: true,
     message: error_msg || 'Successfully fetched data',

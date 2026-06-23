@@ -8,12 +8,12 @@ export type RpcRequest<TParams = unknown> = {
 };
 
 export const rpc = async <TResult, TParams = unknown>(
-  method: string,
+  functionName: string,
   params?: TParams
 ): Promise<ApiResponse<TResult>> => {
-  console.log('rpc', method, params);
+  console.log('rpc', functionName, params);
   return http.post<TResult>('/service_ext.php', {
-    functionName: method,
-    params,
+    functionName,
+    ...params,
   });
 };

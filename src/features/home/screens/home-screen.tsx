@@ -39,7 +39,6 @@ export const HomeScreen = () => {
         <SearchInput placeholder="Search employees..." value={search} onChangeText={setSearch} />
       </ScreenHeader>
       {/* Content Scroll */}
-      ...
       <View className="flex-1 px-6 pt-6">
         {/* Stats Row */}
         <View className="mb-8 flex-row gap-x-2">

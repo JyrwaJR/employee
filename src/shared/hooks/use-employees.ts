@@ -3,35 +3,22 @@ import { useQuery } from '@tanstack/react-query';
 import { EmployeeT } from '@features/employee/types';
 import { ENDPOINTS } from '@utils/constants/endpoints';
 import { EMPLOYEE_KEYS } from '@features/employee/utils/constants';
-import React from 'react';
-import { toast } from '@components/ui';
 import { buildUrlWithQuery } from '@utils/helpers';
+import { useAuth } from './use-auth';
 
 type UseEmployeeProps = {
   page?: number;
 };
 
 export function useEmployees({ page }: UseEmployeeProps = { page: 1 }) {
+  const { isSignedIn } = useAuth();
   const query = useQuery({
     queryKey: EMPLOYEE_KEYS.LIST(page),
     queryFn: () => http.get<EmployeeT[]>(buildUrlWithQuery(ENDPOINTS.EMPLOYEE.LIST, { page })),
     select: (data) => data.data || [],
     placeholderData: (prev) => prev,
+    enabled: isSignedIn,
   });
-
-  const { isError, error } = query;
-
-  React.useEffect(() => {
-    let isMounted = true;
-    if (isError && isMounted) {
-      toast.error('Update Failed', {
-        description: (error as any)?.message || 'Could not update employee details',
-      });
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, [isError, error]);
 
   return query;
 }
