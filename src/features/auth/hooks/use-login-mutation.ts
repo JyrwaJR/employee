@@ -25,7 +25,7 @@ export const useLoginMutation = () => {
     onSuccess: async (data) => {
       if (data.success) {
         const res = data.data;
-        const accessToken = res?.access_token || res?.refresh_token;
+        const accessToken = res?.access_token;
         const refreshToken = res?.refresh_token;
 
         if (accessToken && refreshToken) {
