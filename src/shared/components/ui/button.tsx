@@ -5,7 +5,7 @@ import { useDelay } from '@hooks/use-delay';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const buttonVariants = cva(
-  'flex-row disabled:opacity-70 items-center justify-center rounded-2xl shadow-sm',
+  'flex-row disabled:opacity-70 items-center justify-center rounded-xl shadow-sm',
   {
     variants: {
       variant: {

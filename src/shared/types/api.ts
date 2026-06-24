@@ -9,7 +9,7 @@ export interface ApiResponse<T> {
   message: string;
   data: T | null;
   // meta?: MetaT;
-  // error?: string | Record<string, unknown>;
+  error?: string | Record<string, unknown>;
   error_code?: BACKEND_ERROR_CODES;
   error_msg?: string;
 }
