@@ -35,7 +35,6 @@ export function encrypt(plain: string): string {
 
 export function decrypt(cipherText: string): string {
   if (!cipherText) {
-    console.log('cipherText is empty');
     return '';
   }
 

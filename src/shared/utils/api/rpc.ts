@@ -11,7 +11,6 @@ export const rpc = async <TResult, TParams = unknown>(
   functionName: string,
   params?: TParams
 ): Promise<ApiResponse<TResult>> => {
-  console.log('rpc', functionName, params);
   return http.post<TResult>('/service_ext.php', {
     functionName,
     ...params,

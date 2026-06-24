@@ -41,15 +41,16 @@ export const handleError = <T>(error: unknown): ApiResponse<T> => {
 
 export const handleResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiResponse<T> => {
   const {
-    data: { error_code, error_msg },
+    data: { error_code, error_msg, message },
   } = response;
 
-  if (typeof error_code === 'string' && !isSuccessCode(error_code)) {
+  if (typeof error_code === 'string' && !!error_code) {
     throw new BackendError(error_msg || 'unknown error', error_code);
   }
+
   return {
     success: true,
-    message: error_msg || 'Successfully fetched data',
+    message: message || 'Successfully fetched data',
     data: response.data.data ?? null,
   };
 };

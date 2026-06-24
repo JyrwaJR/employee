@@ -26,7 +26,6 @@ export const http = {
       const response = await axiosInstance.post(url, data, config);
       return handleResponse<T>(response);
     } catch (error) {
-      console.log(error);
       return handleError<T>(error);
     }
   },
