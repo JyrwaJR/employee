@@ -5,3 +5,4 @@ export * from './custom-drawer-content';
 export * from './paginated-list';
 export * from './screen-header';
 export * from './Tabs';
+export * from './stack-header';
