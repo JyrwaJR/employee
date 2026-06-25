@@ -9,6 +9,14 @@ export type UserT = {
   emp_birth_dt: string;
   emp_sex: 'M' | 'F' | 'O';
   role: RoleT;
+  first_name: string;
+  last_name: string;
+  department: string;
+  email: string;
+  avatar: string;
+  location: string;
+  phone: string;
+  employee_id: string;
 };
 
 export type AuthContextT = {

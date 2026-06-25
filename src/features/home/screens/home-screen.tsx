@@ -1,78 +1,72 @@
-import React, { useState } from 'react';
-import { View, FlatList, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import { Container } from '@components/layout/container';
-import { StatBox } from '@components/display/stats-box';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { LoadingScreen } from '@components/screens/loading-screen';
-import { router } from 'expo-router';
-import { Text } from '@components/ui/text';
 import { useThemeStore } from '@stores/theme.store';
-import { PAGE_ROUTES } from '@utils/constants/routes';
-import { STATS } from '../utils';
-import { useEmployees } from '@hooks';
-import { EmployeeListItem } from '@components/employee-list-item';
-import { ScreenHeader } from '@components/layout/screen-header';
-import { SearchInput } from '@components/search-input';
 import { useAuthStore } from '@stores/auth.store';
+import { ScreenHeader } from '@components/layout/screen-header';
+import { AnimationProvider, FadeInView } from '@components/fade-in-view';
+import { useHomeDashboard } from '../hooks/use-home-dashboard';
+import { LeaveProgressCard } from '../components/leave-progress-card';
+import { QuickActions } from '../components/quick-actions';
+import { ActiveLeaveCard } from '../components/active-leave-card';
+import { AnnouncementsPreview } from '../components/announcements-preview';
 
 export const HomeScreen = () => {
-  const [search, setSearch] = useState('');
   const { user } = useAuthStore();
   const { theme } = useThemeStore();
+  const { data, isFetching } = useHomeDashboard();
+  const isAfterNoon = new Date().getUTCHours() >= 12;
 
-  const { data: EMPLOYEES, isFetching } = useEmployees();
-
-  if (isFetching) return <LoadingScreen />;
-
-  const BellIcon = (
-    <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-      <MaterialCommunityIcons name="bell" size={24} color={theme === 'dark' ? 'white' : 'black'} />
-    </TouchableOpacity>
-  );
+  if (isFetching) return null;
 
   return (
-    <Container className="flex-1">
-      <ScreenHeader
-        title={user ? user?.emp_name : 'Loading...'}
-        subtitle="Good Morning,"
-        rightElement={BellIcon}>
-        <SearchInput placeholder="Search employees..." value={search} onChangeText={setSearch} />
-      </ScreenHeader>
-      {/* Content Scroll */}
-      <View className="flex-1 px-6 pt-6">
-        {/* Stats Row */}
-        <View className="mb-8 flex-row gap-x-2">
-          {STATS.map((stat, index) => (
-            <StatBox key={index} label={stat.label} value={stat.value} color={stat.color} />
-          ))}
-        </View>
-
-        {/* List Header */}
-        <View className="mb-4 flex-row items-end justify-between">
-          <Text variant="heading" size="lg" className="text-gray-900 dark:text-white">
-            All Employees
-          </Text>
-          <TouchableOpacity>
-            <Text variant="link" className="text-sm font-semibold">
-              View All
-            </Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Employee List */}
-        <FlatList
-          data={EMPLOYEES}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <EmployeeListItem
-              onPress={() => router.push(PAGE_ROUTES.EMPLOYEES.DETAILS(item.id))}
-              item={item}
-            />
-          )}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 100 }} // Space for FAB
+    <AnimationProvider stagger={80}>
+      <Container className="flex-1">
+        <ScreenHeader
+          title={user ? `${user.first_name} ${user.last_name}` : 'Loading...'}
+          subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.department ?? ''}`}
+          rightElement={
+            <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+              <MaterialCommunityIcons
+                name="bell"
+                size={24}
+                color={theme === 'dark' ? 'white' : 'black'}
+              />
+            </TouchableOpacity>
+          }
         />
-      </View>
-    </Container>
+
+        <ScrollView
+          className="flex-1 pt-6"
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingBottom: 100 }}>
+          <FadeInView index={0}>
+            <LeaveProgressCard
+              annual={data.leaveBalance.annual}
+              sick={data.leaveBalance.sick}
+              present={data.attendance.present}
+              workingDays={data.attendance.workingDays}
+            />
+          </FadeInView>
+
+          <FadeInView index={1}>
+            <View className="my-6">
+              <QuickActions />
+            </View>
+          </FadeInView>
+
+          <FadeInView index={2}>
+            <View className="mb-6">
+              <ActiveLeaveCard leave={data.activeLeave} />
+            </View>
+          </FadeInView>
+
+          <FadeInView index={3}>
+            <AnnouncementsPreview announcements={data.announcements} />
+          </FadeInView>
+        </ScrollView>
+      </Container>
+    </AnimationProvider>
   );
 };

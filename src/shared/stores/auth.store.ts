@@ -24,7 +24,7 @@ type AuthStore = {
   _hydrate: () => Promise<void>;
 };
 
-export const useAuthStore = create<AuthStore>()(
+export const useAuthStoreStore = create<AuthStore>()(
   persist(
     (set, get) => ({
       user: null,
@@ -124,10 +124,12 @@ export const useAuthStore = create<AuthStore>()(
         setItem: SecureStore.setItemAsync,
         removeItem: SecureStore.deleteItemAsync,
       })),
+
       partialize: (state) => ({ user: state.user }),
+
       onRehydrateStorage: () => (state) => {
         if (state?.user) {
-          state.isSignedIn = true;
+          state.isSignedIn = state.isSignedIn;
           state.role = state.user.role;
         }
         if (state) {

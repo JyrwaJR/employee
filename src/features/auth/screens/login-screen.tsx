@@ -11,7 +11,7 @@ import { PAGE_ROUTES } from '@utils/constants/routes';
 import { FieldInput } from '@components/ui/field-input';
 import { Button } from '@components/ui/button';
 import { useLoginMutation } from '../hooks/use-login-mutation';
-import { useAuth } from '@hooks/use-auth';
+import { useAuthStore } from '@stores/auth.store';
 import { AuthHeader } from '../components/auth-header';
 import { AuthFooter } from '../components/auth-footer';
 import { useGetOAuthToken } from '../hooks/use-get-oauth-token';
@@ -25,7 +25,7 @@ const formDefaultValue: LoginFormInputs = {
 };
 
 export const LoginScreen = () => {
-  const { isSignedIn } = useAuth();
+  const { isSignedIn } = useAuthStore();
 
   const methods = useForm<LoginFormInputs>({
     resolver: zodResolver(LoginSchema),
@@ -43,7 +43,7 @@ export const LoginScreen = () => {
         loginMutation.mutate(data, {
           onSuccess: (sData) => {
             if (sData.success) {
-              toast.success(sData.message);
+              toast.success('Welcome Back', { description: sData.message });
               return sData;
             }
             toast.error(sData.message);

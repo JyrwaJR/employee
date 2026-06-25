@@ -31,9 +31,11 @@ export function useGetOAuthToken() {
         'grant_type=client_credentials'
       );
 
+      console.log(response.data);
       return JSON.parse(response.data) as GetOAuthResponse;
     },
     onSuccess: (data) => {
+      console.log('HERE');
       if (data.access_token) {
         TokenStoreManager.addAccessToken(data.access_token);
       }
