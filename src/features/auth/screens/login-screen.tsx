@@ -25,7 +25,7 @@ const formDefaultValue: LoginFormInputs = {
 };
 
 export const LoginScreen = () => {
-  const { isSignedIn } = useAuthStore();
+  const { isSignedIn, isAuthLoading } = useAuthStore();
 
   const methods = useForm<LoginFormInputs>({
     resolver: zodResolver(LoginSchema),
@@ -34,13 +34,14 @@ export const LoginScreen = () => {
     shouldUnregister: true,
   });
 
-  const loginMutation = useLoginMutation();
-  const { mutate } = useGetOAuthToken();
+  const { mutate: loginMutate, isPending: isLoginPending } = useLoginMutation();
+
+  const { mutate, isPending: isTokenPending } = useGetOAuthToken();
 
   const onSubmit = (data: LoginFormInputs) => {
     mutate(undefined, {
       onSuccess: async () => {
-        loginMutation.mutate(data, {
+        loginMutate(data, {
           onSuccess: (sData) => {
             if (sData.success) {
               toast.success('Welcome Back', { description: sData.message });
@@ -56,7 +57,7 @@ export const LoginScreen = () => {
       },
     });
   };
-
+  const isPending = isAuthLoading || isLoginPending || isTokenPending;
   return (
     <KeyboardSafeView contentContainerClassName="px-6 justify-center">
       <AuthHeader
@@ -105,7 +106,7 @@ export const LoginScreen = () => {
           <Button
             testID="SIGN_IN_BUTTON"
             onPress={methods.handleSubmit(onSubmit)}
-            isLoading={loginMutation.isPending}
+            isLoading={isPending}
             title="Continue"
             disabled={isSignedIn}
           />
