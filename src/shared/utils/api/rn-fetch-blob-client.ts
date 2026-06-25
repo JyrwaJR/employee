@@ -2,6 +2,7 @@ import { encrypt, decrypt } from '@lib/encryption';
 import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '../logger/logger';
 import RNFetchBlob from 'rn-fetch-blob';
+import { METHODS } from '@utils/constants';
 
 const APP_ID = process.env.EXPO_PUBLIC_APP_ID;
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -91,7 +92,10 @@ async function request<T = any>(
     // Encrypted backend response
     const decrypted = decrypt<DecryptedBackendResponse<T>>(parsed.response);
 
-    logger.log('decrypted', decrypted);
+    if (decrypted.status_code === '401' && body.functionName !== METHODS.EMP_LOGIN) {
+      await TokenStoreManager.removeAccessToken();
+    }
+
     return backendResponse<T>({
       success_flag: decrypted.success_flag,
       message: decrypted.message,

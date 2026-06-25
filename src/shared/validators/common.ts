@@ -6,7 +6,7 @@ import {
   UPPERCASE_LETTER_REGEX,
 } from '@utils/constants/regex';
 import { z } from 'zod';
-import { METHODS } from '@utils/constants/method';
+import { METHODS } from '@utils/constants';
 
 export const phoneValidation = z
   .string('Phone number is required')
