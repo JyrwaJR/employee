@@ -4,13 +4,22 @@ import { Card, CardContent } from '@components/ui/card';
 import { Text } from '@components/ui/text';
 import { LeaveBalanceT } from '../types/dashboard';
 
+/** Props for the internal {@link ProgressBar}. */
 interface ProgressBarProps {
+  /** Label shown alongside the bar. */
   label: string;
+  /** Number of units consumed. */
   used: number;
+  /** Total available units. */
   total: number;
+  /** Tailwind or hex colour for the fill. */
   color: string;
 }
 
+/**
+ * A labelled horizontal progress bar showing used/total consumption.
+ * @internal Used inside {@link LeaveProgressCard}.
+ */
 const ProgressBar = ({ label, used, total, color }: ProgressBarProps) => {
   const percentage = total > 0 ? used / total : 0;
   return (
@@ -34,13 +43,22 @@ const ProgressBar = ({ label, used, total, color }: ProgressBarProps) => {
   );
 };
 
+/** Props for {@link LeaveProgressCard}. */
 interface LeaveProgressCardProps {
+  /** Annual leave balance data. */
   annual: LeaveBalanceT;
+  /** Sick leave balance data. */
   sick: LeaveBalanceT;
+  /** Days present this month. */
   present: number;
+  /** Total working days this month. */
   workingDays: number;
 }
 
+/**
+ * Card showing leave & attendance overview with progress bars
+ * for annual leave, sick leave, and monthly attendance.
+ */
 export const LeaveProgressCard = ({
   annual,
   sick,

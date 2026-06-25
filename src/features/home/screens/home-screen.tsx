@@ -15,6 +15,7 @@ import {
 } from '../components';
 import { EmptyScreen, LoadingScreen } from '@components/screens';
 
+/** Main home dashboard screen. Shows leave info, announcements, and quick actions. */
 export const HomeScreen = () => {
   const { user } = useAuthStore();
   const { theme } = useThemeStore();

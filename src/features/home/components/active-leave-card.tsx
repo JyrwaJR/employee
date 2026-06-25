@@ -6,10 +6,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { cn } from '@utils/helpers/cn';
 import { ActiveLeaveT } from '../types/dashboard';
 
+/** Props for {@link ActiveLeaveCard}. */
 interface ActiveLeaveCardProps {
+  /** Current active leave, or null if none. */
   leave: ActiveLeaveT | null;
 }
 
+/**
+ * Card displaying the user's currently active leave request.
+ * Shows a fallback "No upcoming leaves" message when `leave` is null.
+ */
 export const ActiveLeaveCard = ({ leave }: ActiveLeaveCardProps) => {
   if (!leave) {
     return (

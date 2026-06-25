@@ -6,12 +6,17 @@ import { Text } from '@components/ui/text';
 import { Route, router } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 
+/** A single quick-action shortcut item. */
 type QuickAction = {
+  /** Display label. */
   label: string;
+  /** MaterialCommunityIcons icon name. */
   icon: keyof typeof MaterialCommunityIcons.glyphMap;
+  /** App route to navigate to on press. */
   route: string;
 };
 
+/** Preset list of quick-action shortcuts. */
 const ACTIONS: QuickAction[] = [
   { label: 'Apply Leave', icon: 'calendar-plus', route: PAGE_ROUTES.LEAVE },
   { label: 'View Salary', icon: 'currency-inr', route: PAGE_ROUTES.STATEMENT },
@@ -19,6 +24,7 @@ const ACTIONS: QuickAction[] = [
   { label: 'Pension', icon: 'bank', route: PAGE_ROUTES.PENSION },
 ];
 
+/** Displays a horizontal row of quick-action shortcut buttons. */
 export const QuickActions = () => {
   const { theme } = useThemeStore();
   const iconColor = theme === 'dark' ? '#60A5FA' : '#3B82F6';

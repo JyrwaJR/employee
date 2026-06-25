@@ -6,10 +6,16 @@ import { router } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { AnnouncementT } from '../types/dashboard';
 
+/** Props for {@link AnnouncementsPreview}. */
 interface AnnouncementsPreviewProps {
+  /** List of announcements to display. */
   announcements: AnnouncementT[];
 }
 
+/**
+ * Displays a preview list of recent announcements with a "View All" link.
+ * Each item shows title, date, and a short preview snippet.
+ */
 export const AnnouncementsPreview = ({ announcements }: AnnouncementsPreviewProps) => (
   <View className="mx-6">
     <View className="mb-4 flex-row items-center justify-between">

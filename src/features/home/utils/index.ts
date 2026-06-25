@@ -1,1 +1,1 @@
-export * from './stats';
+/** Home feature utilities. */
