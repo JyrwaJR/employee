@@ -64,17 +64,24 @@ export const StackHeader = memo(
 
     const handleBack = useCallback(() => router.back(), [router]);
 
-    if (!config) return null;
+    const hasExplicitProps =
+      titleProp !== undefined ||
+      subtitleProp !== undefined ||
+      leftSlotProp !== undefined ||
+      rightSlotProp !== undefined ||
+      showBackProp !== undefined;
 
-    const title = titleProp ?? config.title;
-    const subtitle = subtitleProp ?? config.subtitle;
-    const leftSlot = leftSlotProp ?? config.leftSlot;
-    const rightSlot = rightSlotProp ?? config.rightSlot;
-    const showBack = (showBackProp ?? config.showBackButton) && canGoBack;
+    if (!config && !hasExplicitProps) return null;
+
+    const title = titleProp ?? config?.title ?? '';
+    const subtitle = subtitleProp ?? config?.subtitle;
+    const leftSlot = leftSlotProp ?? config?.leftSlot;
+    const rightSlot = rightSlotProp ?? config?.rightSlot;
+    const showBack = canGoBack && (showBackProp ?? config?.showBackButton ?? false);
 
     return (
       <View
-        className={cn('bg-white dark:bg-slate-950', config.background || '')}
+        className={cn('bg-white dark:bg-slate-950', config?.background || '')}
         style={{ paddingTop: insets.top }}>
         <View className="min-h-[56px] flex-row items-center justify-between px-4 py-3">
           <View className="flex-1 flex-row items-center justify-start">
@@ -108,7 +115,7 @@ export const StackHeader = memo(
           <View className="flex-1 flex-row items-center justify-end">{rightSlot}</View>
         </View>
 
-        {config.bottomContent && <View className="px-4 pb-3">{config.bottomContent}</View>}
+        {config?.bottomContent && <View className="px-4 pb-3">{config.bottomContent}</View>}
       </View>
     );
   }
