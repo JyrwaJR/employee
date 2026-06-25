@@ -6,7 +6,6 @@ import { useAuthStore } from '@stores/auth.store';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { Text } from '@components/ui/text';
 import { HistoryCard } from '@components/display/history-card';
-import { HeaderStack } from '@components/layout/header';
 import { FilterCard } from '@components/display/filter-card';
 import { months, years } from '@utils/helpers/years';
 import { PAGE_ROUTES } from '@utils/constants/routes';
@@ -61,7 +60,6 @@ export const StatementScreen = ({ idx, isTab }: Props) => {
 
   return (
     <Container>
-      {!isTab && <HeaderStack title="Statements" />}
       {/* Header */}
 
       <View className="mt-4 bg-transparent p-4">

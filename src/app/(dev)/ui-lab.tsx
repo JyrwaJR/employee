@@ -40,7 +40,7 @@ import {
   AccordionContent,
 } from '@components/ui';
 import { AnimationProvider, FadeInView } from '@components/fade-in-view';
-import { KeyboardSafeView, HeaderStack } from '@components/layout';
+import { KeyboardSafeView, StackHeader } from '@components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useThemeStore } from '@stores/theme.store';
 
@@ -75,10 +75,10 @@ export default function UILabScreen() {
       <KeyboardSafeView
         className="flex-1 bg-slate-50 dark:bg-slate-900"
         contentContainerClassName="px-6 py-8">
-        <HeaderStack
+        <StackHeader
           title="🛠 UI Laboratory"
           subtitle="Shared Component Catalog"
-          rightIcon={
+          rightSlot={
             <TouchableOpacity onPress={toggleTheme} className="p-2">
               <Ionicons
                 name={theme === 'dark' ? 'sunny' : 'moon'}

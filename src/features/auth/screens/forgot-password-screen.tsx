@@ -10,7 +10,7 @@ import { Ternary } from '@components/base/ternary';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { ResetPasswordForm } from '../components/reset-password-form';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { HeaderStack } from '@components/layout';
+import { StackHeader } from '@components/layout';
 import { AuthHeader } from '../components/auth-header';
 
 export const ForgotPassword = () => {
@@ -34,7 +34,7 @@ export const ForgotPassword = () => {
 
   return (
     <Container>
-      <HeaderStack />
+      <StackHeader />
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         className="flex-1 justify-center px-6">

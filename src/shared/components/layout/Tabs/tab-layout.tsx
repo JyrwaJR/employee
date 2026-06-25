@@ -2,7 +2,7 @@ import { Tabs, usePathname } from 'expo-router';
 import { useTheme } from '@hooks/use-theme';
 import { View } from 'react-native';
 import { DrawerToggleButton } from '@react-navigation/drawer';
-import { Header } from '../header';
+import { StackHeader } from '../stack-header';
 import { useAuthStore } from '@stores/auth.store';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemeToggle } from '../../base/theme-toggle';
@@ -27,10 +27,10 @@ export const TabLayout = () => {
 
   return (
     <View className="flex-1 bg-white dark:bg-slate-950">
-      <Header
+      <StackHeader
         title={getTitle()}
-        leftIcon={<DrawerToggleButton tintColor={theme === 'dark' ? 'white' : 'black'} />}
-        rightIcon={<ThemeToggle />}
+        leftSlot={<DrawerToggleButton tintColor={theme === 'dark' ? 'white' : 'black'} />}
+        rightSlot={<ThemeToggle />}
         showBackButton={false}
       />
       <Tabs

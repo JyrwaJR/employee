@@ -1,6 +1,5 @@
 export * from './keyboard-safe-view';
 export * from './container';
-export * from './header';
 export * from './custom-drawer-content';
 export * from './paginated-list';
 export * from './screen-header';
