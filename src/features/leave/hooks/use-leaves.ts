@@ -2,10 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { http } from '@utils/api';
 import { LEAVE_ENDPOINT, LEAVE_KEYS } from '../utils/constants';
 import { LeaveT } from '../types';
-import { useAuth } from '@hooks';
+import { useAuthStore } from '@hooks';
 
 export function useLeaves(year: string, status: string) {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const empId = user?.employee_id || '';
 
   return useQuery({

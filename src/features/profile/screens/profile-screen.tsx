@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image, ScrollView, StatusBar, Alert } from 'react-native';
 import { Container } from '@components/layout/container';
-import { useAuth } from '@hooks/use-auth';
+import { useAuthStore } from '@stores/auth.store';
 import { Text } from '@components/ui/text';
 import { useThemeStore } from '@stores/theme.store';
 import { SettingRow } from '@components/display/setting-row';
@@ -9,7 +9,7 @@ import { ProfileDetailRow } from '../components/profile-detail-row';
 
 export const ProfileScreen = () => {
   const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuthStore();
   const { theme } = useThemeStore();
 
   const handleLogout = () => {

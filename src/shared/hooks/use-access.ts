@@ -1,5 +1,5 @@
 import { RoleT } from '@features/auth/types';
-import { useAuthStoreStore } from '@stores/auth.store';
+import { useAuthStore } from '@stores/auth.store';
 
 /**
  * useAccess hook
@@ -17,7 +17,7 @@ import { useAuthStoreStore } from '@stores/auth.store';
  * <Button disabled={!checkAccess('SUPER_ADMIN')} />
  */
 export const useAccess = (allowedRoles?: RoleT | RoleT[]) => {
-  const { role: currentRole } = useAuthStoreStore();
+  const { role: currentRole } = useAuthStore();
 
   /**
    * Internal function to check if the current user has one of the required roles.

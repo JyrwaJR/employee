@@ -1,4 +1,4 @@
-import { useAuth } from '@hooks/use-auth';
+import { useAuthStore } from '@stores/auth.store';
 
 import colors from 'tailwindcss/colors';
 
@@ -28,7 +28,7 @@ const adminDrawerMenuItems: MenuItemsT[] = [
 ];
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const { theme } = useThemeStore();
   const isDark = theme === 'dark';
   const pathname = usePathname();

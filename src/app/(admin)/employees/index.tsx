@@ -1,10 +1,10 @@
 import EmployeeListScreen from '@features/employee/screens/employee-list-screen';
-import { useAuth } from '@hooks/use-auth';
+import { useAuthStore } from '@stores/auth.store';
 import { NotFoundScreen } from '@components/screens/not-found-screen';
 import { HeaderStack } from '@components/layout/header';
 
 export default function Page() {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const isAdmin = user?.role === 'SUPER_ADMIN' || user?.role === 'ADMIN';
 
   if (!isAdmin) {

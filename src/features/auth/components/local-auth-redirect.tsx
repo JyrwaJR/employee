@@ -1,4 +1,4 @@
-import { useAuth } from '@hooks/use-auth';
+import { useAuthStore } from '@stores/auth.store';
 import { useLocalAuth } from '@hooks/use-local-auth';
 import { useLocalAuthStore } from '@stores/local-auth.store';
 import { useCallback, useEffect } from 'react';
@@ -9,7 +9,7 @@ import { View, StyleSheet } from 'react-native';
 export const LocalAuthRedirect = ({ children }: { children: React.ReactNode }) => {
   const { authenticate, isAuthenticated, isSupported } = useLocalAuth();
   const { isEnabled } = useLocalAuthStore();
-  const { user } = useAuth();
+  const { user } = useAuthStore();
 
   const handleSensitiveAction = useCallback(async () => {
     if (!user || !isEnabled) return;

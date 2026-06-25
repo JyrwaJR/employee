@@ -3,7 +3,7 @@ import { View, ScrollView, TouchableOpacity, Image, Linking } from 'react-native
 import { Container } from '@components/layout/container';
 import { router, useLocalSearchParams } from 'expo-router';
 import { LoadingScreen } from '@components/screens/loading-screen';
-import { useAuth } from '@hooks/use-auth';
+import { useAuthStore } from '@stores/auth.store';
 import { Text } from '@components/ui/text';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { toast } from '@components/ui';
@@ -15,7 +15,7 @@ import { ActionButton } from '../components/action-button';
 export default function EmployeeDetailScreen() {
   const { id } = useLocalSearchParams();
   const idx = id.toString() || '';
-  const auth = useAuth();
+  const auth = useAuthStore();
 
   const { data, isFetching, isError, error } = useEmployee({ employeeId: idx });
 

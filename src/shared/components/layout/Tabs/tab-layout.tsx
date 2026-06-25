@@ -3,14 +3,14 @@ import { useTheme } from '@hooks/use-theme';
 import { View } from 'react-native';
 import { DrawerToggleButton } from '@react-navigation/drawer';
 import { Header } from '../header';
-import { useAuth } from '@hooks/use-auth';
+import { useAuthStore } from '@stores/auth.store';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ThemeToggle } from '../../base/theme-toggle';
 import { CustomTabBar } from './custom-tab-bar';
 import { getTabConfig } from '@config/tabs';
 
 export const TabLayout = () => {
-  const { role } = useAuth();
+  const { role } = useAuthStore();
   const theme = useTheme();
   const pathname = usePathname();
   const insets = useSafeAreaInsets();

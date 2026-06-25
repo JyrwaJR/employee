@@ -4,7 +4,7 @@ import * as Notifications from 'expo-notifications';
 import { Route, router } from 'expo-router';
 import { logger } from '@utils/logger/logger';
 import { isExpoGo } from '@utils/constants';
-import { useAuth } from '@hooks/use-auth';
+import { useAuthStore } from '@stores/auth.store';
 import { toast } from '@components/ui';
 import { withRetry } from '@utils/helpers/retry';
 import { PAGE_ROUTES } from '@utils/constants/routes';
@@ -26,7 +26,7 @@ const ALLOWED_PUSH_ROUTES = [
  * Handles registration, foreground listeners, and deep-linking interactions.
  */
 export const useNotifications = () => {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const [notification, setNotification] = useState<Notifications.Notification | undefined>(
     undefined
   );

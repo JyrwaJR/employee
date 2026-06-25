@@ -1,12 +1,12 @@
 import { SalarySlip } from '@features/employee';
-import { useAuth } from '@hooks';
+import { useAuthStore } from '@hooks';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@utils/api';
 import { PENSION_ENDPOINT, PENSION_KEYS } from '../utils/constants';
 import { buildUrlWithQuery } from '@utils/helpers';
 
 export function usePensions(year: string, month: string, status: string) {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const empId = user?.employee_id || '';
 
   return useQuery({

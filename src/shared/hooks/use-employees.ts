@@ -4,14 +4,14 @@ import { EmployeeT } from '@features/employee/types';
 import { ENDPOINTS } from '@utils/constants/endpoints';
 import { EMPLOYEE_KEYS } from '@features/employee/utils/constants';
 import { buildUrlWithQuery } from '@utils/helpers';
-import { useAuthStoreStore } from '@stores/auth.store';
+import { useAuthStore } from '@stores/auth.store';
 
 type UseEmployeeProps = {
   page?: number;
 };
 
 export function useEmployees({ page }: UseEmployeeProps = { page: 1 }) {
-  const { isSignedIn } = useAuthStoreStore();
+  const { isSignedIn } = useAuthStore();
   const query = useQuery({
     queryKey: EMPLOYEE_KEYS.LIST(page),
     queryFn: () => http.get<EmployeeT[]>(buildUrlWithQuery(ENDPOINTS.EMPLOYEE.LIST, { page })),

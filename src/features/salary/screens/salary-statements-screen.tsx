@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { Container } from '@components/layout/container';
 import { router } from 'expo-router';
-import { useAuth } from '@hooks/use-auth';
+import { useAuthStore } from '@stores/auth.store';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { Text } from '@components/ui/text';
 import { HistoryCard } from '@components/display/history-card';
@@ -30,7 +30,7 @@ const statusOptions = [
 ];
 
 export const StatementScreen = ({ idx, isTab }: Props) => {
-  const { user } = useAuth();
+  const { user } = useAuthStore();
 
   const [selectedYear, setSelectedYear] = useState('2026');
 

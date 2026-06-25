@@ -16,7 +16,7 @@ const statusOptions = [
 ];
 
 const PensionScreen = () => {
-  const [selectedYear, setSelectedYear] = React.useState('2025');
+  const [selectedYear, setSelectedYear] = React.useState('2026');
   const [selectedMonth, setSelectedMonth] = React.useState('JANUARY');
   const [status, setStatus] = React.useState('PAID');
 
