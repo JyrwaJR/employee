@@ -38,7 +38,7 @@ async function handleUnauthorizedExit() {
   isExiting = true;
 
   try {
-    await TokenStoreManager.removeToken();
+    await TokenStoreManager.removeAccessToken();
     await TokenStoreManager.removeRefreshToken();
     queryClient.clear();
     router.replace(PAGE_ROUTES.AUTH.LOGIN);
@@ -94,7 +94,7 @@ export async function attemptTokenRefresh(
       throw new Error('Invalid refresh response');
     }
 
-    await TokenStoreManager.addToken(access_token);
+    await TokenStoreManager.addAccessToken(access_token);
     if (new_refresh_token) {
       await TokenStoreManager.addRefreshToken(new_refresh_token);
     }

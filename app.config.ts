@@ -4,6 +4,7 @@ const APP_VARIANT = process.env.APP_VARIANT;
 
 const isDev = APP_VARIANT === 'development';
 const isPreview = APP_VARIANT === 'preview';
+const APP_VERSION = '1.0.0';
 
 const getAppName = (baseName: string) => {
   if (isDev) return `${baseName} (Dev)`;
@@ -12,21 +13,23 @@ const getAppName = (baseName: string) => {
 };
 
 const getIdentifier = (baseIdentifier: string) => {
-  if (isDev) return `${baseIdentifier}.dev`;
+  if (isDev) return `${baseIdentifier}`;
   if (isPreview) return `${baseIdentifier}`;
   return baseIdentifier;
 };
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
-  name: getAppName('employee-mobile'),
+  name: getAppName('Employee'),
   slug: 'employee',
-  version: '1.0.0',
+  version: APP_VERSION,
   scheme: 'employee-mobile',
   platforms: ['ios', 'android'],
   plugins: [
     'expo-router',
     'expo-splash-screen',
+    'expo-font',
+    'expo-web-browser',
     [
       'expo-local-authentication',
       {
@@ -71,14 +74,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   extra: {
     router: {},
     eas: {
-      projectId: '14849a6b-819c-4e05-9b59-022a381d8999',
+      projectId: '274cfcf8-439f-4622-ab99-76fa09023690',
     },
   },
-  owner: 'pixel-thread',
+  owner: 'jyrwajr',
   updates: {
     url: 'https://u.expo.dev/14849a6b-819c-4e05-9b59-022a381d8999',
   },
-  runtimeVersion: {
-    policy: 'appVersion',
-  },
+  runtimeVersion: APP_VERSION,
 });

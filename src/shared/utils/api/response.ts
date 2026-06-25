@@ -41,7 +41,7 @@ export const handleError = <T>(error: unknown): ApiResponse<T> => {
 
 export const handleResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiResponse<T> => {
   const {
-    data: { error_code, error_msg, message },
+    data: { error_code, error_msg, message, success },
   } = response;
 
   if (typeof error_code === 'string' && !!error_code) {
@@ -49,7 +49,7 @@ export const handleResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiR
   }
 
   return {
-    success: true,
+    success: success ?? true,
     message: message || 'Successfully fetched data',
     data: response.data.data ?? null,
   };

@@ -1,17 +1,19 @@
-POST http://10.179.35.36/eisdatafetcher/service_ext.php
-Content-Type: application/json
-
-{ 
-    "request_data":"SVpVQWN2MDB1MU93NlR5VmJFWVVyajVqblNzdmdURU55QzlXLzNqUGVpV2ZpRzZaQnluUzQzalRsRzJjMmVyUVNnODlhdDBJTUkzZ3RmVzkyRS9WckxxcVlIbVBQVTRMVUlKeUZOWGxObzZJTkVaWWU0ZkUwU1ZkUWx6ZVI4a0w=",
-    "app_id":"eis_app"
-}
-
+@token="WEo4U3NiNXFiNWJlZl9KemdhNU1nV1NzUnJBYTp3eHd4NzJDd0lnc0J2aXhkOFlCWUloVGJocDhh"
 
 ###
-POST http://localhost:3000/api/hash
+# @name getMe
+POST https://10.179.35.48:9443/oauth2/token
+
+{
+   "grant_type" : "client_credentials"
+}
+
+###
+# @name getMe
+POST http://localhost:3000/
 Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
 
 { 
-    "request_data":"SVpVQWN2MDB1MU93NlR5VmJFWVVyajVqblNzdmdURU55QzlXLzNqUGVpV2ZpRzZaQnluUzQzalRsRzJjMmVyUVNnODlhdDBJTUkzZ3RmVzkyRS9WckxxcVlIbVBQVTRMVUlKeUZOWGxObzZJTkVaWWU0ZkUwU1ZkUWx6ZVI4a0w=",
-    "app_id":"eis_app"
+
 }

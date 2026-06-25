@@ -33,14 +33,13 @@ export function encrypt(plain: string): string {
   return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(opensslOutput));
 }
 
-export function decrypt(cipherText: string): string {
+export function decrypt<T>(cipherText: string): T {
   if (!cipherText) {
-    return '';
+    throw new Error('Missing cipher text');
   }
 
   const { key, iv } = getKeyAndIv();
 
-  // Undo PHP's outer base64_encode()
   const opensslOutput = CryptoJS.enc.Base64.parse(cipherText).toString(CryptoJS.enc.Utf8);
 
   const decrypted = CryptoJS.AES.decrypt(opensslOutput, key, {
@@ -49,5 +48,5 @@ export function decrypt(cipherText: string): string {
     padding: CryptoJS.pad.Pkcs7,
   });
 
-  return decrypted.toString(CryptoJS.enc.Utf8);
+  return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8)) as T;
 }

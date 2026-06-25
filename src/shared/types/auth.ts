@@ -2,19 +2,13 @@ export type RoleT = 'SUPER_ADMIN' | 'ADMIN' | 'USER';
 
 export type UserT = {
   id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
+  emp_cd: string;
+  emp_fname: string;
+  emp_mname: string;
+  emp_lname: string;
+  emp_birth_dt: string;
+  emp_sex: 'M' | 'F' | 'O';
   role: RoleT;
-  avatar: string;
-  location: string;
-  phone: string;
-  department: string;
-  employee_id: string;
-  auth: {
-    id: number;
-    email: string;
-  };
 };
 
 export type AuthContextT = {

@@ -14,6 +14,8 @@ import { useLoginMutation } from '../hooks/use-login-mutation';
 import { useAuth } from '@hooks/use-auth';
 import { AuthHeader } from '../components/auth-header';
 import { AuthFooter } from '../components/auth-footer';
+import { useGetOAuthToken } from '../hooks/use-get-oauth-token';
+import { toast } from 'sonner-native';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
@@ -33,8 +35,27 @@ export const LoginScreen = () => {
   });
 
   const loginMutation = useLoginMutation();
+  const { mutate } = useGetOAuthToken();
 
-  const onSubmit = (data: LoginFormInputs) => loginMutation.mutate(data);
+  const onSubmit = (data: LoginFormInputs) => {
+    mutate(undefined, {
+      onSuccess: async () => {
+        loginMutation.mutate(data, {
+          onSuccess: (sData) => {
+            if (sData.success) {
+              toast.success(sData.message);
+              return sData;
+            }
+            toast.error(sData.message);
+            return sData;
+          },
+        });
+      },
+      onError: (error) => {
+        toast.error('Something went wrong', { description: error.message });
+      },
+    });
+  };
 
   return (
     <KeyboardSafeView contentContainerClassName="px-6 justify-center">
@@ -45,13 +66,14 @@ export const LoginScreen = () => {
         iconContainerClassName="bg-blue-600"
       />
 
+      {/* Form Section */}
       <FormProvider {...methods}>
         <View className="w-full">
           <FieldInput
             name="emp_cd"
             label="Employee ID"
             placeholder="07XXXXXXXX"
-            keyboardType="phone-pad"
+            keyboardType="default"
             autoCapitalize="none"
             autoCorrect={false}
             testID="PHONE_INPUT"
@@ -82,9 +104,9 @@ export const LoginScreen = () => {
 
           <Button
             testID="SIGN_IN_BUTTON"
-            title="Sign in"
             onPress={methods.handleSubmit(onSubmit)}
             isLoading={loginMutation.isPending}
+            title="Continue"
             disabled={isSignedIn}
           />
         </View>

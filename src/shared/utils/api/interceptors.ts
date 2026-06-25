@@ -8,7 +8,7 @@ const APP_ID = process.env.EXPO_PUBLIC_APP_ID;
 
 export function setupInterceptors(instance: AxiosInstance) {
   instance.interceptors.request.use(async (config) => {
-    const token = await TokenStoreManager.getToken();
+    const token = await TokenStoreManager.getAccessToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -30,7 +30,7 @@ export function setupInterceptors(instance: AxiosInstance) {
   instance.interceptors.response.use(
     (res) => {
       if (res.data?.response) {
-        const decrypted = decrypt(res.data?.response);
+        const decrypted = decrypt<string>(res.data?.response);
         try {
           res.data = JSON.parse(decrypted);
         } catch {
@@ -40,6 +40,7 @@ export function setupInterceptors(instance: AxiosInstance) {
       return res;
     },
     async (error: AxiosError) => {
+      console.log('INTERCEPTOR ERROR', error);
       const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
       const duration = Date.now() - ((originalRequest as any)?._startTime || Date.now());

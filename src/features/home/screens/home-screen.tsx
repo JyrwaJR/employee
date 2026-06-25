@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, FlatList, TouchableOpacity } from 'react-native';
 import { Container } from '@components/layout/container';
 import { StatBox } from '@components/display/stats-box';
-import { useAuth } from '@hooks/use-auth';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { router } from 'expo-router';
@@ -14,10 +13,11 @@ import { useEmployees } from '@hooks';
 import { EmployeeListItem } from '@components/employee-list-item';
 import { ScreenHeader } from '@components/layout/screen-header';
 import { SearchInput } from '@components/search-input';
+import { useAuthStore } from '@stores/auth.store';
 
 export const HomeScreen = () => {
   const [search, setSearch] = useState('');
-  const { user } = useAuth();
+  const { user } = useAuthStore();
   const { theme } = useThemeStore();
 
   const { data: EMPLOYEES, isFetching } = useEmployees();
@@ -33,7 +33,7 @@ export const HomeScreen = () => {
   return (
     <Container className="flex-1">
       <ScreenHeader
-        title={user ? user?.first_name + ' ' + user?.last_name : 'Loading...'}
+        title={user ? user?.emp_name : 'Loading...'}
         subtitle="Good Morning,"
         rightElement={BellIcon}>
         <SearchInput placeholder="Search employees..." value={search} onChangeText={setSearch} />

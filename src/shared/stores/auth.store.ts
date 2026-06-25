@@ -1,19 +1,22 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import * as SecureStore from 'expo-secure-store';
-import { UserT, RoleT } from '@types/auth';
+import { UserT, RoleT } from '../types/auth';
 import { ENDPOINTS } from '@utils/constants/endpoints';
 import { http } from '@utils/api/http';
 import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '@utils/logger';
+import { rpc } from '@utils/api';
+import { METHODS } from '@utils/constants';
 
 type AuthStore = {
   user: UserT | null;
+  emp_cd: string;
+  setEmpCode: (emp_cd: string) => void;
   isSignedIn: boolean;
   isAuthLoading: boolean;
   role: RoleT;
 
-  setUser: (user: UserT | null) => void;
   fetchUser: () => Promise<void>;
   refresh: () => void;
   reset: () => void;
@@ -27,26 +30,28 @@ export const useAuthStore = create<AuthStore>()(
       user: null,
       isSignedIn: false,
       isAuthLoading: true,
+      emp_cd: '',
+      setEmpCode: (emp_cd: string) => {
+        set({ emp_cd });
+      },
       role: 'USER' as RoleT,
 
-      setUser: (user) =>
-        set({
-          user,
-          isSignedIn: user !== null,
-          role: user?.role ?? 'USER',
-        }),
-
       fetchUser: async () => {
-        try {
-          const res = await http.get<UserT>(ENDPOINTS.AUTH.ME);
-          if (res.success && res.data) {
-            get().setUser(res.data);
-          } else {
+        const empCode = get().emp_cd;
+        if (empCode) {
+          try {
+            const res = await rpc<UserT>(METHODS.GET_EMP_DETAILS, { emp_cd: empCode });
+
+            if (res.success && res.data) {
+              // TODO: Correct the role when change if needed
+              set({ user: res.data, isSignedIn: true, role: 'USER' });
+            } else {
+              get().reset();
+            }
+          } catch (error) {
+            logger.error('AuthStore: fetchUser failed', error);
             get().reset();
           }
-        } catch (error) {
-          logger.error('AuthStore: fetchUser failed', error);
-          get().reset();
         }
       },
 
@@ -68,7 +73,7 @@ export const useAuthStore = create<AuthStore>()(
           logger.error('AuthStore: logout API call failed', error);
         }
 
-        await TokenStoreManager.removeToken();
+        await TokenStoreManager.removeAccessToken();
         await TokenStoreManager.removeRefreshToken();
         get().reset();
 
@@ -81,7 +86,7 @@ export const useAuthStore = create<AuthStore>()(
       _hydrate: async () => {
         set({ isAuthLoading: true });
         try {
-          const token = await TokenStoreManager.getToken();
+          const token = await TokenStoreManager.getAccessToken();
           if (token) {
             await get().fetchUser();
           } else {
@@ -92,7 +97,7 @@ export const useAuthStore = create<AuthStore>()(
                 { refresh_token: refreshToken }
               );
               if (res.success && res.data?.access_token) {
-                await TokenStoreManager.addToken(res.data.access_token);
+                await TokenStoreManager.addAccessToken(res.data.access_token);
                 if (res.data.refresh_token) {
                   await TokenStoreManager.addRefreshToken(res.data.refresh_token);
                 }

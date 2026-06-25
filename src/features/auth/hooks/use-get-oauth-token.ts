@@ -1,8 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+import RNFetchBlob from 'rn-fetch-blob';
+import { TokenStoreManager } from '@stores/token.store';
 
 const BASIC_AUTH_TOKEN = process.env.EXPO_PUBLIC_BASIC_AUTH;
-const API_URL = process.env.EXPO_PUBLIC_API_URL;
+
+const API_URL = process.env.EXPO_PUBLIC_API_OAUTH_URL;
 
 const url = `${API_URL}/oauth2/token`;
 
@@ -11,25 +13,34 @@ const headers = {
   'Content-Type': 'application/x-www-form-urlencoded',
 };
 
+type GetOAuthResponse = {
+  access_token: string;
+  expires_in: number;
+  refresh_token: string;
+  scope: string;
+  token_type: string;
+};
+
 export function useGetOAuthToken() {
-  return useMutation({
+  return useMutation<GetOAuthResponse>({
     mutationFn: async () => {
-      const response = await axios.post(url, 'grant_type=client_credentials', { headers });
+      const response = await RNFetchBlob.config({ trusty: true }).fetch(
+        'POST',
+        url,
+        headers,
+        'grant_type=client_credentials'
+      );
 
-      return response.data;
+      return JSON.parse(response.data) as GetOAuthResponse;
     },
-
     onSuccess: (data) => {
-      console.log('UseGetOAuthToken Data', JSON.stringify(data, null, 2));
-    },
-
-    onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        console.log('Status:', error.response?.status);
-        console.log('Data:', error.response?.data);
+      if (data.access_token) {
+        TokenStoreManager.addAccessToken(data.access_token);
       }
-
-      console.log('UseGetOAuthToken Error', error);
+      return data as GetOAuthResponse;
+    },
+    onError: () => {
+      TokenStoreManager.removeAccessToken();
     },
   });
 }

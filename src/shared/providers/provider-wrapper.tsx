@@ -9,7 +9,6 @@ import { AuthInitializer } from './auth-provider';
 import { LocalAuthProvider } from './local-auth-provider';
 import { NotificationProvider } from './notification-provider';
 import { TQueryProvider } from './query-provider';
-import { SSLPinning } from './ssl-pinning-provider';
 import { ThemeProvider } from './theme-provider';
 import { UpdatesProvider } from './updates-provider';
 
@@ -38,29 +37,27 @@ export const ProviderWrapper = ({ children }: Props) => {
     <GlobalErrorBoundary>
       <GestureHandlerRootView style={{ flex: 1 }}>
         <SafeAreaProvider className="flex-1">
-          <SSLPinning>
-            <UpdatesProvider>
-              <TQueryProvider>
-                <QueryErrorResetBoundary>
-                  <ThemeProvider>
-                    <AuthInitializer>
-                      <NotificationProvider>
-                        <LocalAuthProvider>
-                          <LocalAuthRedirect>
-                            <AuthRedirect>
-                              <StatusBar style="auto" animated translucent />
-                              {children}
-                              <UpdateModal />
-                            </AuthRedirect>
-                          </LocalAuthRedirect>
-                        </LocalAuthProvider>
-                      </NotificationProvider>
-                    </AuthInitializer>
-                  </ThemeProvider>
-                </QueryErrorResetBoundary>
-              </TQueryProvider>
-            </UpdatesProvider>
-          </SSLPinning>
+          <UpdatesProvider>
+            <TQueryProvider>
+              <QueryErrorResetBoundary>
+                <ThemeProvider>
+                  <AuthInitializer>
+                    <NotificationProvider>
+                      <LocalAuthProvider>
+                        <LocalAuthRedirect>
+                          <AuthRedirect>
+                            <StatusBar style="auto" animated translucent />
+                            {children}
+                            <UpdateModal />
+                          </AuthRedirect>
+                        </LocalAuthRedirect>
+                      </LocalAuthProvider>
+                    </NotificationProvider>
+                  </AuthInitializer>
+                </ThemeProvider>
+              </QueryErrorResetBoundary>
+            </TQueryProvider>
+          </UpdatesProvider>
         </SafeAreaProvider>
       </GestureHandlerRootView>
     </GlobalErrorBoundary>
