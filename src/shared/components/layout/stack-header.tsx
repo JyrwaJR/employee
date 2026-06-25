@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useSegments, useRouter, useNavigation } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,26 +8,36 @@ import { Text } from '@components/ui/text';
 import { cn } from '@utils/helpers/cn';
 import { PAGE_HEADERS, type PageHeaderConfig } from '@config/page-headers';
 
+/**
+ * Derives the current route path by filtering out layout-group segments.
+ */
 function useRoutePath(): string {
   const segments = useSegments();
   const filtered = segments.filter((s) => !s.startsWith('(') && !s.startsWith(')'));
   return '/' + filtered.join('/');
 }
 
+/**
+ * Match a path against page header configs, including dynamic route patterns.
+ */
 function matchConfig(path: string): PageHeaderConfig | null {
-  const headers = PAGE_HEADERS as Record<string, PageHeaderConfig | undefined>;
-  if (headers[path]) return headers[path]!;
-  const keys = Object.keys(headers).sort((a, b) => b.split('/').length - a.split('/').length);
+  if (PAGE_HEADERS[path as keyof typeof PAGE_HEADERS])
+    return PAGE_HEADERS[path as keyof typeof PAGE_HEADERS]!;
+  const keys = Object.keys(PAGE_HEADERS).sort((a, b) => b.split('/').length - a.split('/').length);
   for (const key of keys) {
     if (!key.includes('[')) continue;
     const pattern = key.replace(/\[.*?\]/g, '[^/]+');
     const regex = new RegExp(`^${pattern}$`);
-    if (regex.test(path)) return headers[key]!;
+    if (regex.test(path)) return PAGE_HEADERS[key as keyof typeof PAGE_HEADERS]!;
   }
   return null;
 }
 
-export const StackHeader = () => {
+/**
+ * A header component driven by the current route, automatically resolving
+ * title, subtitle, slots, and back-button visibility from page header config.
+ */
+export const StackHeader = memo(() => {
   const path = useRoutePath();
   const config = useMemo(() => matchConfig(path), [path]);
   const router = useRouter();
@@ -35,6 +45,8 @@ export const StackHeader = () => {
   const theme = useTheme();
   const insets = useSafeAreaInsets();
   const canGoBack = navigation.canGoBack();
+
+  const handleBack = useCallback(() => router.back(), [router]);
 
   if (!config) return null;
 
@@ -48,7 +60,7 @@ export const StackHeader = () => {
         <View className="flex-1 flex-row items-center justify-start">
           {showBack && (
             <TouchableOpacity
-              onPress={() => router.back()}
+              onPress={handleBack}
               className="mr-3"
               hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
               activeOpacity={0.7}>
@@ -79,4 +91,6 @@ export const StackHeader = () => {
       {config.bottomContent && <View className="px-4 pb-3">{config.bottomContent}</View>}
     </View>
   );
-};
+});
+
+StackHeader.displayName = 'StackHeader';
