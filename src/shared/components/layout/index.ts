@@ -6,3 +6,4 @@ export * from './paginated-list';
 export * from './screen-header';
 export * from './Tabs';
 export * from './stack-header';
+export * from './stack-header-layout';
