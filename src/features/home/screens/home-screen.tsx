@@ -11,6 +11,7 @@ import { LeaveProgressCard } from '../components/leave-progress-card';
 import { QuickActions } from '../components/quick-actions';
 import { ActiveLeaveCard } from '../components/active-leave-card';
 import { AnnouncementsPreview } from '../components/announcements-preview';
+import { LoadingScreen } from '@components/screens';
 
 export const HomeScreen = () => {
   const { user } = useAuthStore();
@@ -18,13 +19,15 @@ export const HomeScreen = () => {
   const { data, isFetching } = useHomeDashboard();
   const isAfterNoon = new Date().getUTCHours() >= 12;
 
-  if (isFetching) return null;
+  if (isFetching) return <LoadingScreen />;
+
+  if (!data) return <LoadingScreen />;
 
   return (
     <AnimationProvider stagger={80}>
       <Container className="flex-1">
         <ScreenHeader
-          title={user ? `${user.first_name} ${user.last_name}` : 'Loading...'}
+          title={user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...'}
           subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.department ?? ''}`}
           rightElement={
             <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
@@ -43,8 +46,8 @@ export const HomeScreen = () => {
           contentContainerStyle={{ paddingBottom: 100 }}>
           <FadeInView index={0}>
             <LeaveProgressCard
-              annual={data.leaveBalance.annual}
-              sick={data.leaveBalance.sick}
+              annual={data?.leaveBalance?.annual}
+              sick={data?.leaveBalance?.sick}
               present={data.attendance.present}
               workingDays={data.attendance.workingDays}
             />
@@ -58,12 +61,12 @@ export const HomeScreen = () => {
 
           <FadeInView index={2}>
             <View className="mb-6">
-              <ActiveLeaveCard leave={data.activeLeave} />
+              <ActiveLeaveCard leave={data?.activeLeave} />
             </View>
           </FadeInView>
 
           <FadeInView index={3}>
-            <AnnouncementsPreview announcements={data.announcements} />
+            <AnnouncementsPreview announcements={data?.announcements} />
           </FadeInView>
         </ScrollView>
       </Container>
