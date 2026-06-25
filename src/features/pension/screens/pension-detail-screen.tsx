@@ -2,7 +2,6 @@ import React from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Container } from '@components/layout/container';
-import { Header } from '@components/layout/header';
 import { Text } from '@components/ui/text';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MoneyRow } from '@components/display/money-row';
@@ -56,60 +55,57 @@ export const PensionDetailScreen = () => {
   ];
 
   return (
-    <>
-      <Header title={`Pension Slip`} showBackButton={true} />
-      <Container className="flex-1">
-        <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
-          <GovtHeader
-            title="Dept of Pension & Pensioners Welfare"
-            subtitle="New Delhi"
-            badge={`${data.month} ${data.year}`}
-          />
-          <SummaryCard
-            label="Net Pension Disbursed"
-            amount={`₹${data.netPayable.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`}
-            details={summaryDetails}
-          />
-          {/* Pensioner Details Grid */}
-          ...
-          <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-            <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-gray-400">
-              Pensioner Particulars
-            </Text>
-            <DetailRow label="Name" value={data.name} />
-            <DetailRow label="Bank Name" value={data.bankName} />
-            <DetailRow label="PAN No" value={data.pan} />
-          </View>
-          {/* Earnings Section */}
-          <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-            <SectionHeader title="Earnings" icon="💰" />
-            {earningsList.map((item, index) => (
-              <MoneyRow key={index} label={item.label} value={item.value} />
-            ))}
-            <MoneyRow label="Gross Pension" value={data.grossAmount} isBold />
-          </View>
-          {/* Deductions Section */}
-          <View className="mb-8 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-            <SectionHeader title="Deductions" icon="📉" />
-            {deductionsList.map((item, index) => (
-              <MoneyRow key={index} label={item.label} value={item.value} isDeduction />
-            ))}
-            <MoneyRow label="Total Deductions" value={data.totalDeductions} isBold isDeduction />
-          </View>
-          {/* Footer Note */}
-          <Text variant="subtext" className="mb-6 px-8 text-center text-xs leading-5">
-            This is a computer-generated pension slip. No signature is required. Generated via NIC
-            e-HRMS.
+    <Container className="flex-1">
+      <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
+        <GovtHeader
+          title="Dept of Pension & Pensioners Welfare"
+          subtitle="New Delhi"
+          badge={`${data.month} ${data.year}`}
+        />
+        <SummaryCard
+          label="Net Pension Disbursed"
+          amount={`₹${data.netPayable.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`}
+          details={summaryDetails}
+        />
+        {/* Pensioner Details Grid */}
+        ...
+        <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-gray-400">
+            Pensioner Particulars
           </Text>
-          {/* Actions */}
-          <View className="mb-10 flex-row gap-4">
-            <TouchableOpacity className="flex-1 flex-row items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white p-4 dark:border-gray-700 dark:bg-slate-800">
-              <MaterialCommunityIcons name="download-outline" size={20} color="#3B82F6" />
-              <Text className="font-semibold text-blue-600 dark:text-blue-400">Download PDF</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </Container>
-    </>
+          <DetailRow label="Name" value={data.name} />
+          <DetailRow label="Bank Name" value={data.bankName} />
+          <DetailRow label="PAN No" value={data.pan} />
+        </View>
+        {/* Earnings Section */}
+        <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <SectionHeader title="Earnings" icon="💰" />
+          {earningsList.map((item, index) => (
+            <MoneyRow key={index} label={item.label} value={item.value} />
+          ))}
+          <MoneyRow label="Gross Pension" value={data.grossAmount} isBold />
+        </View>
+        {/* Deductions Section */}
+        <View className="mb-8 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <SectionHeader title="Deductions" icon="📉" />
+          {deductionsList.map((item, index) => (
+            <MoneyRow key={index} label={item.label} value={item.value} isDeduction />
+          ))}
+          <MoneyRow label="Total Deductions" value={data.totalDeductions} isBold isDeduction />
+        </View>
+        {/* Footer Note */}
+        <Text variant="subtext" className="mb-6 px-8 text-center text-xs leading-5">
+          This is a computer-generated pension slip. No signature is required. Generated via NIC
+          e-HRMS.
+        </Text>
+        {/* Actions */}
+        <View className="mb-10 flex-row gap-4">
+          <TouchableOpacity className="flex-1 flex-row items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white p-4 dark:border-gray-700 dark:bg-slate-800">
+            <MaterialCommunityIcons name="download-outline" size={20} color="#3B82F6" />
+            <Text className="font-semibold text-blue-600 dark:text-blue-400">Download PDF</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </Container>
   );
 };

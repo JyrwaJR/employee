@@ -1,7 +1,6 @@
 import EmployeeListScreen from '@features/employee/screens/employee-list-screen';
 import { useAuthStore } from '@stores/auth.store';
 import { NotFoundScreen } from '@components/screens/not-found-screen';
-import { HeaderStack } from '@components/layout/header';
 
 export default function Page() {
   const { user } = useAuthStore();
@@ -11,10 +10,5 @@ export default function Page() {
     return <NotFoundScreen title="Unauthorized" message="You don't have access to this page." />;
   }
 
-  return (
-    <>
-      <HeaderStack title="Employees" />
-      <EmployeeListScreen />
-    </>
-  );
+  return <EmployeeListScreen />;
 }
