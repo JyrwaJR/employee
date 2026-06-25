@@ -1,1 +1,1 @@
-export * from './stats.schema';
+export * from './deshboard.schema';
