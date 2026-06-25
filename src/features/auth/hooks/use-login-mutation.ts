@@ -2,10 +2,10 @@ import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
 import { LoginSchema } from '../validators/login.schema';
 import { rpc } from '@utils/api';
-import { AUTH_METHODS } from '../utils/constants';
 import { TokenStoreManager } from '@stores/token.store';
 import { ApiResponse } from '@sharedTypes/api';
 import { useAuthStore } from '@stores/auth.store';
+import { METHODS } from '@utils/constants';
 
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
@@ -18,7 +18,7 @@ export const useLoginMutation = () => {
   const { fetchUser, setEmpCode } = useAuthStore();
   return useMutation<ApiResponse<LoginResponse>, unknown, LoginFormInputs>({
     mutationFn: async (data) => {
-      return await rpc<LoginResponse>(AUTH_METHODS.EMPLOYEE_LOGIN, {
+      return await rpc<LoginResponse>(METHODS.EMP_LOGIN, {
         password: data.password,
         emp_cd: data.emp_cd,
       });
