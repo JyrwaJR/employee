@@ -4,7 +4,7 @@
 
 **Goal:** Replace `AuthContext`/`AuthContextProvider` with a zustand store that persists the full `UserT` object to SecureStore.
 
-**Architecture:** A zustand v4 store with `persist` middleware wrapping `expo-secure-store` via `createJSONStorage`. The store is the single source of truth for auth state. The existing `useAuth()` hook is updated to consume from the store instead of React context. An `AuthInitializer` component calls `_hydrate()` on mount to bootstrap the session. `TokenStoreManager` continues to own JWT/refresh token storage unchanged.
+**Architecture:** A zustand v4 store with `persist` middleware wrapping `expo-secure-store` via `createJSONStorage`. The store is the single source of truth for auth state. The existing `useAuthStore()` hook is updated to consume from the store instead of React context. An `AuthInitializer` component calls `_hydrate()` on mount to bootstrap the session. `TokenStoreManager` continues to own JWT/refresh token storage unchanged.
 
 **Tech Stack:** zustand v4, expo-secure-store v15, TypeScript strict
 
@@ -178,7 +178,7 @@ git commit -m "feat: add zustand auth store with SecureStore persistence"
 ```typescript
 import { useAuthStore } from '@stores/auth.store';
 
-export function useAuth() {
+export function useAuthStore() {
   const user = useAuthStore((s) => s.user);
   const isSignedIn = useAuthStore((s) => s.isSignedIn);
   const isLoading = useAuthStore((s) => s.isAuthLoading);
@@ -199,7 +199,7 @@ Expected: No TypeScript errors
 
 ```bash
 git add src/shared/hooks/use-auth.ts
-git commit -m "refactor: update useAuth hook to consume from zustand store"
+git commit -m "refactor: update useAuthStore hook to consume from zustand store"
 ```
 
 ---
@@ -286,14 +286,14 @@ git commit -m "refactor: replace AuthContextProvider with AuthInitializer"
 
 - [ ] **Step 1: Update login mutation**
 
-Replace the `useAuth()` import and `refresh()` call with direct store access:
+Replace the `useAuthStore()` import and `refresh()` call with direct store access:
 
 Old:
 
 ```typescript
-import { useAuth } from '@hooks/use-auth';
+import { useAuthStore } from '@stores/auth.store';
 ...
-const { refresh } = useAuth();
+const { refresh } = useAuthStore();
 ...
 refresh(); // Trigger auth state update
 ```
@@ -410,7 +410,7 @@ git commit -m "chore: export auth store from barrel"
 
 **Files:**
 
-- Check: All files that import `useAuth` — they should all work without changes since the hook shape is preserved
+- Check: All files that import `useAuthStore` — they should all work without changes since the hook shape is preserved
 
 - [ ] **Step 1: Type-check the entire project**
 

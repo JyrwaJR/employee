@@ -463,7 +463,7 @@ import { Container } from '@components/layout/container';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Text } from '@components/ui/text';
 import { useThemeStore } from '@stores/theme.store';
-import { useAuthStoreStore } from '@stores/auth.store';
+import { useAuthStore } from '@stores/auth.store';
 import { ScreenHeader } from '@components/layout/screen-header';
 import { AnimationProvider, FadeInView } from '@components/fade-in-view';
 import { useHomeDashboard } from '../hooks/use-home-dashboard';
@@ -473,7 +473,7 @@ import { ActiveLeaveCard } from '../components/active-leave-card';
 import { AnnouncementsPreview } from '../components/announcements-preview';
 
 export const HomeScreen = () => {
-  const { user } = useAuthStoreStore();
+  const { user } = useAuthStore();
   const { theme } = useThemeStore();
   const { data, isFetching } = useHomeDashboard();
   const isAfterNoon = new Date().getUTCHours() >= 12;
