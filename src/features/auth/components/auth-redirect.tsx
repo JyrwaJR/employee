@@ -1,10 +1,11 @@
-import { useAuth } from '@hooks/use-auth';
+import { useAuthStore } from '@stores/auth.store';
 import { usePathname, useRouter, useLocalSearchParams, Route } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { ROUTE_ROLES, PUBLIC_ROUTES } from '@utils/constants/auth';
 import { useAccess } from '@hooks/use-access';
+import { logger } from '@utils/logger';
 
 type Props = {
   children: React.ReactNode;
@@ -12,7 +13,7 @@ type Props = {
 
 export const AuthRedirect = ({ children }: Props) => {
   const [isMounted, setIsMounted] = useState(false);
-  const { isLoading, isSignedIn, role } = useAuth();
+  const { isAuthLoading: isLoading, isSignedIn, role } = useAuthStore();
   const { checkAccess } = useAccess();
   const pathName = usePathname();
   const router = useRouter();
@@ -28,6 +29,14 @@ export const AuthRedirect = ({ children }: Props) => {
   }, [isMounted]);
 
   useEffect(() => {
+    logger.info('AuthRedirect: effect running', {
+      isLoading,
+      isSignedIn,
+      role,
+      pathName,
+      isMounted,
+      isOnPublicPage,
+    });
     if (isLoading || !isMounted) return;
 
     // Direct match or wildcard match from our route roles config
