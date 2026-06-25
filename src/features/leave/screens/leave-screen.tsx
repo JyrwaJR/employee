@@ -7,7 +7,7 @@ import { years } from '@utils/helpers/years';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { LeaveCard } from '../components/leave-card';
 import { useLeaves } from '../hooks';
-import { ScreenHeader } from '@components/layout';
+import { SectionHeader } from '@components/base/section-header';
 
 const statusOptions = [
   { label: 'Approved', value: 'APPROVED' },
@@ -25,7 +25,7 @@ export const LeaveScreen = () => {
   if (isFetching)
     return (
       <>
-        <ScreenHeader title="My Leaves" />
+        <SectionHeader variant="splash" title="My Leaves" />
         <LoadingScreen />
       </>
     );

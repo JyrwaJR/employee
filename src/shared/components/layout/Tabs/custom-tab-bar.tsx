@@ -1,7 +1,7 @@
 import { MaterialIcons } from '@expo/vector-icons';
 import { TouchableOpacity, View } from 'react-native';
-import { Text } from '../../ui/text';
-import { TabRouteT } from '@types/tab';
+import { Text } from '@components/ui/text';
+import { TabRouteT } from '@sharedTypes/tab';
 
 export const CustomTabBar = ({
   state,

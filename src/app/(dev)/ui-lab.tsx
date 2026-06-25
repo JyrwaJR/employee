@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {
   Button,
@@ -42,14 +42,12 @@ import {
 import { AnimationProvider, FadeInView } from '@components/fade-in-view';
 import { KeyboardSafeView, StackHeader } from '@components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useThemeStore } from '@stores/theme.store';
 
 export default function UILabScreen() {
   const [showDialog, setShowDialog] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [isSkeletonTrigger, setIsSkeletonTrigger] = useState(false);
   const [accordionValue, setAccordionValue] = useState('item-1');
-  const { theme, toggleTheme } = useThemeStore();
   const methods = useForm({
     defaultValues: {
       test_input: '',
@@ -75,19 +73,7 @@ export default function UILabScreen() {
       <KeyboardSafeView
         className="flex-1 bg-slate-50 dark:bg-slate-900"
         contentContainerClassName="px-6 py-8">
-        <StackHeader
-          title="🛠 UI Laboratory"
-          subtitle="Shared Component Catalog"
-          rightSlot={
-            <TouchableOpacity onPress={toggleTheme} className="p-2">
-              <Ionicons
-                name={theme === 'dark' ? 'sunny' : 'moon'}
-                size={22}
-                color={theme === 'dark' ? '#FBBF24' : '#1e293b'}
-              />
-            </TouchableOpacity>
-          }
-        />
+        <StackHeader />
 
         {/* Typography Section */}
         <Section title="Typography">

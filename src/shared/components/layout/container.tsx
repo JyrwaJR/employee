@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import { cn } from '../../utils/helpers/cn';
+import { cn } from '@utils/helpers/cn';
 
 type Props = {
   children: React.ReactNode;

@@ -9,7 +9,7 @@ import { FilterCard } from '@components/display/filter-card';
 import { toast } from '@components/ui';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { useEmployees } from '@hooks';
-import { ScreenHeader } from '@components/layout/screen-header';
+import { SectionHeader } from '@components/base/section-header';
 import { SearchInput } from '@components/search-input';
 
 // --- Screen ---
@@ -37,7 +37,7 @@ export default function EmployeeListScreen() {
   if (isFetching) {
     return (
       <>
-        <ScreenHeader title="Staff Directory" />
+        <SectionHeader variant="splash" title="Staff Directory" />
         <LoadingScreen />
       </>
     );
@@ -46,7 +46,7 @@ export default function EmployeeListScreen() {
   return (
     <Container className="flex-1">
       <StatusBar barStyle="dark-content" />
-      <ScreenHeader title="Staff Directory">
+      <SectionHeader variant="splash" title="Staff Directory">
         <SearchInput
           placeholder="Search by name or role..."
           value={search}
@@ -54,7 +54,7 @@ export default function EmployeeListScreen() {
           containerClassName="mb-4"
         />
         <FilterCard />
-      </ScreenHeader>
+      </SectionHeader>
       {/* List */}
       ...
       <FlatList

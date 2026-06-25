@@ -7,7 +7,7 @@ import { FilterCard } from '@components/display/filter-card';
 import { months, years } from '@utils/helpers/years';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { usePensions } from '../hooks';
-import { ScreenHeader } from '@components/layout';
+import { SectionHeader } from '@components/base/section-header';
 
 const statusOptions = [
   { label: 'Paid', value: 'PAID' },
@@ -25,7 +25,7 @@ const PensionScreen = () => {
   if (isFetching)
     return (
       <>
-        <ScreenHeader title="Pension History" />
+        <SectionHeader variant="splash" title="Pension History" />
         <LoadingScreen />
       </>
     );

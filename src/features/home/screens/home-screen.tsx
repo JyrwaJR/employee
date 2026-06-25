@@ -4,7 +4,7 @@ import { Container } from '@components/layout/container';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useThemeStore } from '@stores/theme.store';
 import { useAuthStore } from '@stores/auth.store';
-import { ScreenHeader } from '@components/layout/screen-header';
+import { SectionHeader } from '@components/base/section-header';
 import { AnimationProvider, FadeInView } from '@components/fade-in-view';
 import { useHomeDashboard } from '../hooks/use-home-dashboard';
 import {
@@ -37,7 +37,8 @@ export const HomeScreen = () => {
   return (
     <AnimationProvider stagger={80}>
       <Container className="flex-1">
-        <ScreenHeader
+        <SectionHeader
+          variant="splash"
           title={user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...'}
           subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.department ?? ''}`}
           rightElement={
