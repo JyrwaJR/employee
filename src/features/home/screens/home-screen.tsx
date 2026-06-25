@@ -7,21 +7,31 @@ import { useAuthStore } from '@stores/auth.store';
 import { ScreenHeader } from '@components/layout/screen-header';
 import { AnimationProvider, FadeInView } from '@components/fade-in-view';
 import { useHomeDashboard } from '../hooks/use-home-dashboard';
-import { LeaveProgressCard } from '../components/leave-progress-card';
-import { QuickActions } from '../components/quick-actions';
-import { ActiveLeaveCard } from '../components/active-leave-card';
-import { AnnouncementsPreview } from '../components/announcements-preview';
-import { LoadingScreen } from '@components/screens';
+import {
+  ActiveLeaveCard,
+  AnnouncementsPreview,
+  LeaveProgressCard,
+  QuickActions,
+} from '../components';
+import { EmptyScreen, LoadingScreen } from '@components/screens';
 
 export const HomeScreen = () => {
   const { user } = useAuthStore();
   const { theme } = useThemeStore();
-  const { data, isFetching } = useHomeDashboard();
+  const { data, isFetching, refetch } = useHomeDashboard();
   const isAfterNoon = new Date().getUTCHours() >= 12;
 
   if (isFetching) return <LoadingScreen />;
 
-  if (!data) return <LoadingScreen />;
+  if (!data)
+    return (
+      <EmptyScreen
+        title="Something went wrong"
+        message="Unable to fetch data"
+        refresh={refetch}
+        refreshLabel="Reload"
+      />
+    );
 
   return (
     <AnimationProvider stagger={80}>
