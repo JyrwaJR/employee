@@ -22,7 +22,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import * as SecureStore from 'expo-secure-store';
-import { UserT, RoleT } from '@types/auth';
+import { UserT, RoleT } from '@sharedTypes/auth';
 import { ENDPOINTS } from '@utils/constants/endpoints';
 import { http } from '@utils/api/http';
 import { TokenStoreManager } from '@stores/token.store';
