@@ -17,7 +17,7 @@ export const ActiveLeaveSchema = z
     type: z.string(),
     startDate: z.string(),
     endDate: z.string(),
-    status: z.union([z.literal('APPROVED'), z.literal('PENDING')]),
+    status: z.union([z.literal('APPROVED'), z.literal('PENDING'), z.literal('REJECTED')]),
     days: z.number(),
   })
   .strict();

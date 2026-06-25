@@ -4,7 +4,7 @@ import { Card, CardContent } from '@components/ui/card';
 import { Text } from '@components/ui/text';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { cn } from '@utils/helpers/cn';
-import { ActiveLeaveT } from '../types/dashboard';
+import { ActiveLeaveT } from '../validators';
 
 /** Props for {@link ActiveLeaveCard}. */
 interface ActiveLeaveCardProps {
@@ -35,7 +35,9 @@ export const ActiveLeaveCard = ({ leave }: ActiveLeaveCardProps) => {
   const statusColor =
     leave.status === 'APPROVED'
       ? 'text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/30'
-      : 'text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30';
+      : leave.status === 'REJECTED'
+        ? 'text-red-700 dark:text-red-400 bg-red-100 dark:bg-red-900/30'
+        : 'text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30';
 
   return (
     <Card className="mx-6">

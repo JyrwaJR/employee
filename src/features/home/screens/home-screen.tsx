@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, TouchableOpacity, View } from 'react-native';
+import { RefreshControl, ScrollView, TouchableOpacity, View } from 'react-native';
 import { Container } from '@components/layout/container';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useThemeStore } from '@stores/theme.store';
@@ -54,6 +54,7 @@ export const HomeScreen = () => {
         <ScrollView
           className="flex-1 pt-6"
           showsVerticalScrollIndicator={false}
+          refreshControl={<RefreshControl refreshing={isFetching} onRefresh={refetch} />}
           contentContainerStyle={{ paddingBottom: 100 }}>
           <FadeInView index={0}>
             <LeaveProgressCard
