@@ -25,12 +25,6 @@ export const LoadingScreen = ({ message = 'Loading...' }: LoadingScreenProps) =>
       <ActivityIndicator size="small" color={isDarkMode ? '#ffffff' : '#111827'} />
 
       <Text className={cn('mt-3 text-sm font-medium')}>{message}</Text>
-
-      <View className="absolute bottom-12">
-        <Text className="text-[10px] font-bold uppercase tracking-widest text-gray-300">
-          Secure Environment
-        </Text>
-      </View>
     </Container>
   );
 };
