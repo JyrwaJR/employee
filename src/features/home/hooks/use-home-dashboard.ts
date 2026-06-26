@@ -12,7 +12,7 @@ import { useAuthStore } from '@stores/auth.store';
 export function useHomeDashboard() {
   const { isSignedIn } = useAuthStore();
   return useQuery({
-    queryKey: QUERY_KEYS.HOME.OVERVIEW,
+    queryKey: QUERY_KEYS.HOME.OVERVIEW(),
     queryFn: () => rpc<HomeDashboardT>(METHODS.GET_OVERVIEW),
     select: (data) => data.data,
     enabled: isSignedIn,

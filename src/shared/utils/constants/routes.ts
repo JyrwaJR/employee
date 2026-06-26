@@ -19,12 +19,12 @@ export const PAGE_ROUTES = {
     SIGN_UP: '/auth/sign-up' as Route,
     /**
      * Helper for forgot password flow with query states.
-     * @param phone - Optional phone number to pre-fill
+     * @param empCode - Optional phone number to pre-fill
      * @param step - Current step in the flow ('OTP' or 'RESET')
      */
-    FORGOT_PASSWORD: (phone?: string, step?: 'OTP' | 'RESET') => {
+    FORGOT_PASSWORD: (empCode?: string, step?: 'OTP' | 'RESET') => {
       const params = new URLSearchParams();
-      if (phone) params.append('phone', phone);
+      if (empCode) params.append('phone', empCode);
       if (step) params.append('step', step);
       const query = params.toString();
       return `/auth/forgot-password${query ? `?${query}` : ''}` as Route;

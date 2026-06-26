@@ -1,7 +1,8 @@
 import { useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@utils/api/http';
-import { SALARY_ENDPOINT, SALARY_KEYS } from '@features/salary/utils/constants';
+import { SALARY_ENDPOINT } from '@features/salary/utils/constants';
+import { QUERY_KEYS } from '@utils/constants';
 import { SalarySlip } from '@features/employee/types';
 import { toast } from '@components/ui';
 
@@ -11,7 +12,7 @@ const parseAmount = (value?: string | null): number => {
 
 export const usePayslipData = (salaryId: string) => {
   const query = useQuery({
-    queryKey: SALARY_KEYS.PAYSLIP(salaryId),
+    queryKey: QUERY_KEYS.SALARY.PAYSLIP(salaryId),
     queryFn: () => http.get<SalarySlip>(SALARY_ENDPOINT.DETAILS(salaryId)),
     select: (res) => res.data,
     enabled: !!salaryId,
