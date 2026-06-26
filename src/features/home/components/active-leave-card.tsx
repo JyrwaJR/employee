@@ -4,12 +4,12 @@ import { Card, CardContent } from '@components/ui/card';
 import { Text } from '@components/ui/text';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { cn } from '@utils/helpers/cn';
-import { ActiveLeaveT } from '../validators';
+import { Leave } from '@sharedTypes/leave';
 
 /** Props for {@link ActiveLeaveCard}. */
 interface ActiveLeaveCardProps {
   /** Current active leave, or null if none. */
-  leave: ActiveLeaveT | null;
+  leave: Leave | null;
 }
 
 /**
@@ -33,9 +33,9 @@ export const ActiveLeaveCard = ({ leave }: ActiveLeaveCardProps) => {
   }
 
   const statusColor =
-    leave.status === 'APPROVED'
+    leave.verify_flg_desc === 'Verified'
       ? 'text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/30'
-      : leave.status === 'REJECTED'
+      : leave.verify_flg_desc === 'Rejected'
         ? 'text-red-700 dark:text-red-400 bg-red-100 dark:bg-red-900/30'
         : 'text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30';
 
@@ -50,20 +50,20 @@ export const ActiveLeaveCard = ({ leave }: ActiveLeaveCardProps) => {
             </Text>
           </View>
           <View className={cn('rounded-full px-3 py-1', statusColor)}>
-            <Text className="text-xs font-semibold">{leave.status}</Text>
+            <Text className="text-xs font-semibold">{leave.verify_flg_desc}</Text>
           </View>
         </View>
         <View className="flex-row items-center justify-between">
           <View>
             <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
-              {leave.type}
+              {leave.leave_cd}
             </Text>
             <Text variant="subtext" size="sm">
-              {leave.startDate} — {leave.endDate}
+              {leave.from_dt} — {leave.to_dt}
             </Text>
           </View>
           <Text className="text-lg font-bold text-gray-900 dark:text-white">
-            {leave.days} {leave.days === 1 ? 'day' : 'days'}
+            {leave.no_days} {parseInt(leave.no_days) === 1 ? 'day' : 'days'}
           </Text>
         </View>
       </CardContent>

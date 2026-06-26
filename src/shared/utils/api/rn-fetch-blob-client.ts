@@ -109,10 +109,12 @@ async function request<T = any>(
       await TokenStoreManager.removeAccessToken();
     }
 
+    const data = typeof decrypted.data === 'string' ? JSON.parse(decrypted.data) : decrypted.data;
+
     return backendResponse<T>({
       success_flag: decrypted.success_flag,
       message: decrypted.message,
-      data: decrypted.data as T,
+      data: data as T,
       status_code: decrypted.status_code,
     });
   } catch (error: any) {

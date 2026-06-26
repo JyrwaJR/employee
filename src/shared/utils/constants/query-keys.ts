@@ -16,8 +16,7 @@ export const QUERY_KEYS = {
     DETAIL: (employeeId: string, pensionId: string) => ['pension', employeeId, pensionId] as const,
   },
   LEAVE: {
-    LIST: (employeeId: string, year?: string, status?: string) =>
-      ['leaves', employeeId, year, status].filter(Boolean),
+    LIST: (...args: string[]) => ['leaves', ...args].filter(Boolean),
   },
   EMPLOYEE: {
     LIST: (page?: number) => ['employees', page] as const,

@@ -4,6 +4,7 @@ export const getStatusColor = (status: string) => {
   switch (status) {
     case 'ACTIVE':
     case 'APPROVED':
+    case 'Verified':
       return {
         bg: 'bg-green-100 dark:bg-green-900/30',
         text: 'text-green-800 dark:text-green-400',
@@ -18,6 +19,7 @@ export const getStatusColor = (status: string) => {
         iconName: 'clock-outline' as keyof typeof MaterialCommunityIcons.glyphMap,
       };
     case 'REJECTED':
+    case 'Rejected':
       return {
         bg: 'bg-red-100 dark:bg-red-900/30',
         text: 'text-red-800 dark:text-red-400',
