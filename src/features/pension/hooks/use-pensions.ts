@@ -1,5 +1,5 @@
 import { SalarySlip } from '@features/employee';
-import { useAuthStore } from '@hooks';
+import { useAuthStore } from '@stores/auth.store';
 import { useQuery } from '@tanstack/react-query';
 import { http } from '@utils/api';
 import { PENSION_ENDPOINT, PENSION_KEYS } from '../utils/constants';

@@ -10,8 +10,10 @@ import { METHODS } from '@utils/constants';
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
 type LoginResponse = {
-  message: string;
-  statusCode: string;
+  access_token: string;
+  expires_in: number;
+  scope: 'default';
+  token_type: 'Barear' | 'Basic';
 };
 
 export const useLoginMutation = () => {
@@ -28,11 +30,14 @@ export const useLoginMutation = () => {
       if (empCode) {
         setEmpCode(empCode);
       }
-      if (data.success) {
+
+      if (data.data?.access_token) {
         fetchUser();
         return data;
       }
+
       await TokenStoreManager.removeAccessToken();
+
       return data;
     },
     onError: async (error) => {

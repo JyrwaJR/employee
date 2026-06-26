@@ -17,7 +17,7 @@ import { EmptyScreen, LoadingScreen } from '@components/screens';
 
 /** Main home dashboard screen. Shows leave info, announcements, and quick actions. */
 export const HomeScreen = () => {
-  const { user } = useAuthStore();
+  const { user, logout } = useAuthStore();
   const { theme } = useThemeStore();
   const { data, isFetching, refetch } = useHomeDashboard();
   const isAfterNoon = new Date().getUTCHours() >= 12;
@@ -26,12 +26,39 @@ export const HomeScreen = () => {
 
   if (!data)
     return (
-      <EmptyScreen
-        title="Something went wrong"
-        message="Unable to fetch data"
-        refresh={refetch}
-        refreshLabel="Reload"
-      />
+      <>
+        <SectionHeader
+          variant="splash"
+          title={user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...'}
+          subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.department ?? ''}`}
+          rightElement={
+            <>
+              <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+                <MaterialCommunityIcons
+                  name="bell"
+                  size={24}
+                  color={theme === 'dark' ? 'white' : 'black'}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={logout}
+                className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+                <MaterialCommunityIcons
+                  name="logout"
+                  size={24}
+                  color={theme === 'dark' ? 'white' : 'black'}
+                />
+              </TouchableOpacity>
+            </>
+          }
+        />
+        <EmptyScreen
+          title="Something went wrong"
+          message="Unable to fetch data"
+          refresh={refetch}
+          refreshLabel="Reload"
+        />
+      </>
     );
 
   return (
@@ -42,13 +69,24 @@ export const HomeScreen = () => {
           title={user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...'}
           subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.department ?? ''}`}
           rightElement={
-            <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-              <MaterialCommunityIcons
-                name="bell"
-                size={24}
-                color={theme === 'dark' ? 'white' : 'black'}
-              />
-            </TouchableOpacity>
+            <>
+              <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+                <MaterialCommunityIcons
+                  name="bell"
+                  size={24}
+                  color={theme === 'dark' ? 'white' : 'black'}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={logout}
+                className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+                <MaterialCommunityIcons
+                  name="logout"
+                  size={24}
+                  color={theme === 'dark' ? 'white' : 'black'}
+                />
+              </TouchableOpacity>
+            </>
           }
         />
 

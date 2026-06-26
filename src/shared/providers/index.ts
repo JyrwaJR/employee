@@ -4,4 +4,3 @@ export * from './notification-provider';
 export * from './provider-wrapper';
 export * from './query-provider';
 export * from './theme-provider';
-export * from './updates-provider';

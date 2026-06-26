@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, Modal, ActivityIndicator } from 'react-native';
-import { useUpdates } from '@hooks/use-update';
+import { useUpdateStore } from '@stores/update.store';
 import { BlurView } from 'expo-blur';
 import { Ionicons } from '@expo/vector-icons';
 
 export const UpdateModal: React.FC = () => {
-  const { isUpdateReady, isDownloading, runUpdate, skipUpdate } = useUpdates();
+  const isUpdateReady = useUpdateStore((s) => s.isUpdateReady);
+  const isDownloading = useUpdateStore((s) => s.isDownloading);
+  const runUpdate = useUpdateStore((s) => s.runUpdate);
+  const skipUpdate = useUpdateStore((s) => s.skipUpdate);
+  const checkAndDownloadUpdate = useUpdateStore((s) => s.checkAndDownloadUpdate);
+
+  useEffect(() => {
+    checkAndDownloadUpdate();
+  }, [checkAndDownloadUpdate]);
 
   if (!isUpdateReady && !isDownloading) return null;
 
