@@ -18,7 +18,7 @@ type OTPInputs = z.infer<typeof OTPSchema>;
 
 export const VerifyOtpForm = () => {
   const search = useSearchParams();
-  const phone_no = search.get('phone') || '';
+  const phone_no = search.get('emp_cd') || '';
   const methods = useForm<OTPInputs>({
     resolver: zodResolver(OTPSchema),
     defaultValues: { phone_no: phone_no, otp: '' },

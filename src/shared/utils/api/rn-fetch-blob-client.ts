@@ -49,6 +49,11 @@ async function request<T = any>(
       request_data: encrypt(data),
       app_id: APP_ID,
     });
+
+    logger.log('Encrypted Body', {
+      encrypted: JSON.parse(newBody),
+      unencrypted: body,
+    });
   }
 
   const uri = `${API_URL}${url}`;
@@ -91,6 +96,14 @@ async function request<T = any>(
     const parsed = JSON.parse(response.data);
     // Encrypted backend response
     const decrypted = decrypt<DecryptedBackendResponse<T>>(parsed.response);
+
+    logger.log('Decrypted Response', {
+      success: decrypted.success_flag,
+      message: decrypted.message,
+      method: body.functionName,
+      response_status: decrypted.status_code,
+      http_status: response.respInfo.status,
+    });
 
     if (decrypted.status_code === '401' && body.functionName !== METHODS.EMP_LOGIN) {
       await TokenStoreManager.removeAccessToken();

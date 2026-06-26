@@ -9,12 +9,14 @@ import { useAuthStore } from '@stores/auth.store';
  * Automatically disabled when the user is not signed in.
  * Returns the unwrapped `data` payload via the `select` transform.
  */
-export function useHomeDashboard() {
+
+export function useEmpLeaveDetails() {
   const { isSignedIn } = useAuthStore();
+  const { emp_cd } = useAuthStore();
   return useQuery({
-    queryKey: QUERY_KEYS.HOME.OVERVIEW(),
-    queryFn: () => rpc<HomeDashboardT>(METHODS.GET_OVERVIEW),
+    queryKey: QUERY_KEYS.HOME.OVERVIEW(emp_cd),
+    queryFn: () => rpc<HomeDashboardT[]>(METHODS.GET_EMP_LEAVE_DETAILS, { emp_cd }),
     select: (data) => data.data,
-    enabled: isSignedIn,
+    enabled: isSignedIn && !!emp_cd,
   });
 }

@@ -11,6 +11,7 @@ export const NotFoundScreen = ({
   title?: string;
   message?: string;
 }) => {
+  const canGoBack = router.canGoBack();
   return (
     <View className="flex-1 flex-col items-center justify-center gap-4 bg-white p-6">
       <Text className="text-4xl font-bold text-red-500">404</Text>
@@ -20,7 +21,17 @@ export const NotFoundScreen = ({
       <Text className="text-center text-gray-500">{message}</Text>
 
       <View className="mt-4 w-full items-center justify-center gap-3">
-        <Button className="w-full" title="Go Back" onPress={() => router.back()} />
+        <Button
+          className="w-full"
+          title="Go Back"
+          onPress={() => {
+            if (canGoBack) {
+              router.back();
+            } else {
+              router.push(PAGE_ROUTES.HOME);
+            }
+          }}
+        />
         <Button title="Go Home" className="w-full" onPress={() => router.push(PAGE_ROUTES.HOME)} />
       </View>
     </View>

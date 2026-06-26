@@ -1,8 +1,10 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text } from 'react-native';
 import React from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTheme } from '@hooks/use-theme';
 import { useRouter } from 'expo-router';
+import { Button } from '@components/ui';
+import { PAGE_ROUTES } from '@utils/constants';
 
 interface UnderDevelopmentProps {
   title?: string;
@@ -37,11 +39,18 @@ export const UnderDevelopment = ({
       </Text>
 
       {showBackButton && (
-        <TouchableOpacity
-          onPress={() => router.back()}
-          className="rounded-xl bg-blue-600 px-6 py-3 active:bg-blue-700">
-          <Text className="font-medium text-white">Go Back</Text>
-        </TouchableOpacity>
+        <Button
+          size={'lg'}
+          onPress={() => {
+            const canGoBack = router.canGoBack();
+            if (canGoBack) {
+              router.back();
+            } else {
+              router.push(PAGE_ROUTES.HOME);
+            }
+          }}
+          title="Go Back"
+        />
       )}
     </View>
   );

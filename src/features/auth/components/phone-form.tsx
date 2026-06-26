@@ -14,21 +14,22 @@ import { PAGE_ROUTES } from '@utils/constants/routes';
 import { FieldInput } from '@components/ui/field-input';
 
 type ForgotPasswordInputs = z.infer<typeof ForgotPasswordSchema>;
+const empCode = process.env.EXPO_PUBLIC_EMP_CD ?? '';
 
-export const PhoneForm = () => {
+export const EmpCodeForm = () => {
   const router = useRouter();
   const methods = useForm<ForgotPasswordInputs>({
     resolver: zodResolver(ForgotPasswordSchema),
-    defaultValues: { phone_no: '' },
+    defaultValues: { emp_cd: empCode },
   });
 
-  const phone_no = methods.watch('phone_no');
+  const emp_cd = methods.watch('emp_cd');
 
   const sendOtpMutation = useMutation({
     mutationFn: async (data: ForgotPasswordInputs) => http.post(AUTH_ENDPOINT.GET_OTP, data),
     onSuccess: (data) => {
       if (data.success) {
-        router.push(PAGE_ROUTES.AUTH.FORGOT_PASSWORD(phone_no, 'OTP'));
+        router.push(PAGE_ROUTES.AUTH.FORGOT_PASSWORD(emp_cd, 'OTP'));
         toast.success('Secure Code Sent', {
           description: data.message || 'Verification code sent to your phone',
         });
@@ -46,17 +47,15 @@ export const PhoneForm = () => {
     },
   });
 
-  const onPhoneSubmit = (data: ForgotPasswordInputs) => {
-    sendOtpMutation.mutate(data);
-  };
+  const onPhoneSubmit = (data: ForgotPasswordInputs) => sendOtpMutation.mutate(data);
 
   return (
     <FormProvider {...methods}>
       <View className="w-full">
         <FieldInput
-          name="phone_no"
-          label="Phone Number"
-          placeholder="+1 234 567 8900"
+          name="emp_cd"
+          label="Employee Code"
+          placeholder="Enter Employee Code"
           keyboardType="phone-pad"
           autoComplete="tel"
           onEndEditing={methods.handleSubmit(onPhoneSubmit)}

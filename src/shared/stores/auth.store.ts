@@ -39,7 +39,9 @@ export const useAuthStore = create<AuthStore>()(
       fetchUser: async (keepStaleOnError?: boolean) => {
         const empCode = get().emp_cd;
         logger.info('AuthStore: fetchUser called', { empCode, keepStaleOnError });
-        if (empCode) {
+
+        const accessToken = await TokenStoreManager.getAccessToken();
+        if (empCode && accessToken) {
           try {
             const res = await rpc<UserT>(METHODS.GET_EMP_DETAILS, { emp_cd: empCode });
 
@@ -48,7 +50,11 @@ export const useAuthStore = create<AuthStore>()(
               // TODO: Correct the role when change if needed
               set({ user: res.data, isSignedIn: true, role: 'USER' });
             } else {
-              logger.warn('AuthStore: fetchUser returned no data', { empCode, res });
+              logger.warn('AuthStore: fetchUser returned no data', {
+                empCode,
+                message: res.message,
+                success: res.success,
+              });
               get().reset();
             }
           } catch (error) {
@@ -100,46 +106,10 @@ export const useAuthStore = create<AuthStore>()(
           isSignedIn: state.isSignedIn,
         });
         try {
-          const token = await TokenStoreManager.getAccessToken();
-          logger.info('AuthStore: access token found', { hasToken: !!token });
-          if (token) {
+          const accessToken = await TokenStoreManager.getAccessToken();
+          logger.info('AuthStore: access token found', { hasToken: !!accessToken });
+          if (accessToken) {
             await get().fetchUser();
-          } else {
-            const refreshToken = await TokenStoreManager.getRefreshToken();
-            logger.info('AuthStore: refresh token found', { hasRefreshToken: !!refreshToken });
-            if (refreshToken) {
-              const res = await http.post<{ access_token: string; refresh_token?: string }>(
-                ENDPOINTS.AUTH.REFRESH,
-                { refresh_token: refreshToken }
-              );
-              logger.info('AuthStore: refresh result', {
-                success: res.success,
-                hasAccessToken: !!res.data?.access_token,
-              });
-              if (res.success && res.data?.access_token) {
-                await TokenStoreManager.addAccessToken(res.data.access_token);
-                if (res.data.refresh_token) {
-                  await TokenStoreManager.addRefreshToken(res.data.refresh_token);
-                }
-                await get().fetchUser();
-              } else {
-                logger.warn('AuthStore: refresh failed');
-                if (state.emp_cd) {
-                  logger.info('AuthStore: trying direct fetch with stale emp_cd');
-                  await get().fetchUser();
-                } else {
-                  set({ user: null, isSignedIn: false, role: 'USER' });
-                }
-              }
-            } else {
-              if (state.emp_cd) {
-                logger.info('AuthStore: no tokens but stale emp_cd exists, trying direct fetch');
-                await get().fetchUser();
-              } else {
-                logger.info('AuthStore: no tokens and no stale data, clearing session');
-                set({ user: null, isSignedIn: false, role: 'USER', emp_cd: '' });
-              }
-            }
           }
         } catch (error) {
           logger.error('AuthStore: _hydrate failed', error);

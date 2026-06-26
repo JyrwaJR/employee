@@ -1,6 +1,5 @@
-import { phoneValidation } from '@validators/common';
 import { z } from 'zod';
 
 export const ForgotPasswordSchema = z.object({
-  phone_no: phoneValidation,
+  emp_cd: z.string().min(3, 'Employee Code must be atleast 4 in length'),
 });

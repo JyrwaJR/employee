@@ -1,33 +1,30 @@
 import React from 'react';
-import { View, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import { Link } from 'expo-router';
-import { Text } from '@components/ui/text';
+import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Container } from '@components/layout/container';
 import { Ionicons } from '@expo/vector-icons';
-import { PhoneForm } from '../components/phone-form';
+import { EmpCodeForm } from '../components/phone-form';
 import { VerifyOtpForm } from '../components/verify-otp-form';
 import { Ternary } from '@components/base/ternary';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { ResetPasswordForm } from '../components/reset-password-form';
-import { PAGE_ROUTES } from '@utils/constants/routes';
 import { StackHeader } from '@components/layout';
 import { AuthHeader } from '../components/auth-header';
 
 export const ForgotPassword = () => {
   const search = useSearchParams();
 
-  const currentStep = search?.get('step') || 'PHONE';
+  const currentStep = search?.get('step') || 'EMPCODE';
 
   const headerTitle =
-    currentStep === 'PHONE'
+    currentStep === 'EMPCODE'
       ? 'Forgot Password?'
       : currentStep === 'OTP'
         ? 'Verify OTP'
         : 'Reset Password';
 
   const headerSubtitle =
-    currentStep === 'PHONE'
-      ? 'Don’t worry! It happens. Please enter the phone number associated with your account.'
+    currentStep === 'EMPCODE'
+      ? 'Don’t worry! It happens. Please enter the Employee Code associated with your account.'
       : currentStep === 'OTP'
         ? 'Enter the verification code sent to your phone.'
         : 'Create a new strong password for your account.';
@@ -55,20 +52,10 @@ export const ForgotPassword = () => {
               <Ternary
                 condition={currentStep === 'OTP'}
                 ifTrue={<VerifyOtpForm />}
-                ifFalse={<PhoneForm />}
+                ifFalse={<EmpCodeForm />}
               />
             }
           />
-
-          {/* Back to Login */}
-          <View className="mt-8 flex-row justify-center">
-            <Link href={PAGE_ROUTES.AUTH.LOGIN} asChild>
-              <TouchableOpacity className="flex-row items-center">
-                <Ionicons name="arrow-back" size={16} color="#4B5563" style={{ marginRight: 4 }} />
-                <Text variant="subtext">Back to log in</Text>
-              </TouchableOpacity>
-            </Link>
-          </View>
         </ScrollView>
       </KeyboardAvoidingView>
     </Container>

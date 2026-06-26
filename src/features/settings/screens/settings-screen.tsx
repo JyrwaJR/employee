@@ -5,10 +5,25 @@ import { Container } from '@components/layout/container';
 import { SectionHeader } from '@components/base/section-header';
 import { useLocalAuthStore } from '@stores/local-auth.store';
 import { SettingRow } from '@components/display/setting-row';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogHeader,
+} from '@components/ui';
 
 export const SettingsScreen = () => {
   const { theme, toggleTheme } = useThemeStore();
   const { setIsEnabled, isEnabled } = useLocalAuthStore();
+  const [isOpenConfirmEnableBiometric, setIsOpenConfirmEnableBiometric] = React.useState(false);
+  const onConfirmed = () => {
+    setIsOpenConfirmEnableBiometric(false);
+    setIsEnabled(!isEnabled);
+  };
 
   return (
     <Container className="flex-1">
@@ -37,7 +52,7 @@ export const SettingsScreen = () => {
               label="Enable Biometric"
               description="Adjust the appearance of the app"
               value={isEnabled}
-              onValueChange={(val) => setIsEnabled(val)}
+              onValueChange={() => setIsOpenConfirmEnableBiometric(true)}
               showBorder={true}
             />
           </View>
@@ -47,6 +62,27 @@ export const SettingsScreen = () => {
           </View>
         </View>
       </ScrollView>
+      <AlertDialog
+        open={isOpenConfirmEnableBiometric}
+        onOpenChange={setIsOpenConfirmEnableBiometric}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone.{' '}
+              {`"${isEnabled ? 'Disable biometric' : 'Enable biometric'}"`}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onPress={() => setIsOpenConfirmEnableBiometric(false)} />
+            <AlertDialogAction
+              variant="destructive"
+              title="Continue"
+              onPress={() => onConfirmed()}
+            />
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Container>
   );
 };

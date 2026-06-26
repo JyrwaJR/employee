@@ -10,7 +10,7 @@ export const queryClient = new QueryClient({
   mutationCache: new MutationCache({
     onError: (error) => {
       toast.error('Something went wrong', { description: error.message });
-      logger.log('Something went wrong', error);
+      logger.log('Something went wrong:', { error });
       return error;
     },
   }),

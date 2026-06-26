@@ -1,5 +1,5 @@
-import PensionScreen from '@features/pension/screens/pension-screen';
+import { UnderDevelopment } from '@components/screens';
 
 export default function page() {
-  return <PensionScreen />;
+  return <UnderDevelopment />;
 }

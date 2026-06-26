@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import RNFetchBlob from 'rn-fetch-blob';
 import { TokenStoreManager } from '@stores/token.store';
+import { logger } from '@utils/logger';
 
 const BASIC_AUTH_TOKEN = process.env.EXPO_PUBLIC_BASIC_AUTH;
 
@@ -31,18 +32,26 @@ export function useGetOAuthToken() {
         'grant_type=client_credentials'
       );
 
-      console.log(response.data);
       return JSON.parse(response.data) as GetOAuthResponse;
     },
     onSuccess: (data) => {
-      console.log('HERE');
+      logger.info('Get OAuth Token Success', {
+        accessToken: !!data.access_token,
+      });
       if (data.access_token) {
+        logger.info('Setting access token');
         TokenStoreManager.addAccessToken(data.access_token);
+        logger.info('Successfully set access token');
       }
       return data as GetOAuthResponse;
     },
-    onError: () => {
+    onError: (error) => {
+      logger.info('Removing access token on error: UseGetOAuthToken', {
+        message: error.message,
+        error: error,
+      });
       TokenStoreManager.removeAccessToken();
+      logger.info('Removed access token on error');
     },
   });
 }

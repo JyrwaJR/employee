@@ -6,7 +6,7 @@ import { useThemeStore } from '@stores/theme.store';
 import { useAuthStore } from '@stores/auth.store';
 import { SectionHeader } from '@components/base/section-header';
 import { AnimationProvider, FadeInView } from '@components/fade-in-view';
-import { useHomeDashboard } from '../hooks/use-home-dashboard';
+import { useEmpLeaveDetails } from '../hooks/use-emp-leave-details';
 import {
   ActiveLeaveCard,
   AnnouncementsPreview,
@@ -19,10 +19,11 @@ import { EmptyScreen, LoadingScreen } from '@components/screens';
 export const HomeScreen = () => {
   const { user, logout } = useAuthStore();
   const { theme } = useThemeStore();
-  const { data, isFetching, refetch } = useHomeDashboard();
+  const { data, isFetching, refetch } = useEmpLeaveDetails();
   const isAfterNoon = new Date().getUTCHours() >= 12;
 
-  if (isFetching) return <LoadingScreen />;
+  console.log(JSON.stringify(data, null, 2));
+  if (!isFetching) return <LoadingScreen />;
 
   if (!data)
     return (

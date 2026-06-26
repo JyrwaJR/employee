@@ -1,11 +1,11 @@
 import { StackHeader } from '@components/layout/stack-header';
-import { SignUpScreen } from '@features/auth/screens/sign-up-screen';
+import { UnderDevelopment } from '@components/screens';
 
 export default function page() {
   return (
     <>
       <StackHeader />
-      <SignUpScreen />
+      <UnderDevelopment />
     </>
   );
 }

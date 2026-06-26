@@ -63,7 +63,7 @@ export const LoginScreen = () => {
       <AuthHeader
         emoji="✨"
         title="Welcome back"
-        subtitle="Please enter your email and password to sign in."
+        subtitle="Please enter your Employee code and password to sign in."
         iconContainerClassName="bg-blue-600"
       />
 
@@ -72,8 +72,8 @@ export const LoginScreen = () => {
         <View className="w-full">
           <FieldInput
             name="emp_cd"
-            label="Employee ID"
-            placeholder="07XXXXXXXX"
+            label="Employee Code"
+            placeholder="Please enter your Employee Code"
             keyboardType="default"
             autoCapitalize="none"
             autoCorrect={false}
