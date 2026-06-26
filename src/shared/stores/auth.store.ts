@@ -41,7 +41,6 @@ export const useAuthStore = create<AuthStore>()(
 
         const accessToken = await TokenStoreManager.getAccessToken();
 
-        console.log('accessToken', accessToken);
         if (empCode && accessToken) {
           try {
             const res = await rpc<UserT>(METHODS.GET_EMP_DETAILS, { emp_cd: empCode });

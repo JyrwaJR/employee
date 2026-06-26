@@ -18,7 +18,6 @@ export * from './screens/sign-up-screen';
 export * from './screens/login-screen';
 
 // Types
-export * from './types';
 
 // Store
 export * from '../../shared/stores';

@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import RNFetchBlob from 'rn-fetch-blob';
 import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '@utils/logger';
+import axios from 'axios';
 
 const BASIC_AUTH_TOKEN = process.env.EXPO_PUBLIC_BASIC_AUTH;
 
@@ -25,14 +25,15 @@ type GetOAuthResponse = {
 export function useGetOAuthToken() {
   return useMutation<GetOAuthResponse>({
     mutationFn: async () => {
-      const response = await RNFetchBlob.config({ trusty: true }).fetch(
-        'POST',
+      const response = await axios.post(
         url,
-        headers,
-        'grant_type=client_credentials'
+        new URLSearchParams({
+          grant_type: 'client_credentials',
+        }).toString(),
+        { headers }
       );
 
-      return JSON.parse(response.data) as GetOAuthResponse;
+      return response.data as GetOAuthResponse;
     },
     onSuccess: (data) => {
       logger.info('Get OAuth Token Success', {

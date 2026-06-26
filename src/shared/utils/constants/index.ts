@@ -1,7 +1,3 @@
-import Constants, { ExecutionEnvironment } from 'expo-constants';
-
-export const isExpoGo = Constants.executionEnvironment === ExecutionEnvironment.StoreClient;
-
 export const ACCESS_TOKEN_KEY = 'token';
 export const REFRESH_TOKEN_KEY = 'refresh_token';
 

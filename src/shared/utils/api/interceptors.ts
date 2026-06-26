@@ -64,7 +64,7 @@ export function setupInterceptors(instance: AxiosInstance) {
       return res;
     },
     async (error: AxiosError) => {
-      console.log('INTERCEPTOR ERROR', error);
+      logger.log('INTERCEPTOR ERROR', error);
       const originalRequest = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
 
       const duration = Date.now() - ((originalRequest as any)?._startTime || Date.now());

@@ -6,7 +6,6 @@ import { LoadingScreen } from '@components/screens/loading-screen';
 import { LeaveCard } from '../components/leave-card';
 import { useLeaves } from '../hooks';
 import { SectionHeader } from '@components/base/section-header';
-import { StackHeader } from '@components/layout';
 import { EmptyScreen } from '@components/screens';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 
@@ -16,7 +15,6 @@ export const LeaveScreen = () => {
   if (isFetching)
     return (
       <>
-        <SectionHeader variant="splash" title="My Leaves" />
         <LoadingScreen />
       </>
     );
@@ -24,7 +22,6 @@ export const LeaveScreen = () => {
   if (!leaves) {
     return (
       <>
-        <StackHeader />
         <EmptyScreen
           title="No Leaves Found"
           message="You have not applied for any leaves yet"

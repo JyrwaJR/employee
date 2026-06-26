@@ -2,8 +2,8 @@ import { useAuthStore } from '@stores/auth.store';
 import { useLocalAuthStore } from '@stores/local-auth.store';
 import { useCallback, useEffect } from 'react';
 import { Forbidden } from '@components/screens/forbidden';
-import { isExpoGo } from '@utils/constants';
 import { View, StyleSheet } from 'react-native';
+import { isExpo } from '@utils/helpers/expo';
 
 export const LocalAuthRedirect = ({ children }: { children: React.ReactNode }) => {
   const isAuthenticated = useLocalAuthStore((s) => s.isAuthenticated);
@@ -31,7 +31,7 @@ export const LocalAuthRedirect = ({ children }: { children: React.ReactNode }) =
   return (
     <View className="flex-1">
       {children}
-      {isEnabled && !isExpoGo && user && !isAuthenticated && (
+      {isEnabled && !isExpo() && user && !isAuthenticated && (
         <View style={StyleSheet.absoluteFill} className="bg-white dark:bg-slate-950">
           <Forbidden onPressTryAgain={() => handleTryAgain()} />
         </View>

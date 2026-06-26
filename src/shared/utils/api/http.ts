@@ -3,7 +3,7 @@ import { logger } from '../logger/logger';
 import axiosInstance from '@utils/api/axios';
 import { ApiResponse } from '@sharedTypes/api';
 import { handleResponse, handleError } from './response';
-import { rnFetchBlobClient } from './rn-fetch-blob-client';
+import { isExpo } from '@utils/helpers/expo';
 
 const isAxios = process.env.EXPO_PUBLIC_HTTP_PROVIDER === 'axios';
 
@@ -56,4 +56,10 @@ const axiosHttp = {
   },
 };
 
-export const http = isAxios ? axiosHttp : rnFetchBlobClient;
+let http = axiosHttp;
+
+if (!isAxios && !isExpo()) {
+  http = require('./rn-fetch-blob-client').rnFetchBlobClient;
+}
+
+export { http };

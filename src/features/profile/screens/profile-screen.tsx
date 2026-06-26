@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, ScrollView, StatusBar, Alert } from 'react-native';
+import { View, ScrollView, StatusBar, Alert } from 'react-native';
 import { Container } from '@components/layout/container';
 import { useAuthStore } from '@stores/auth.store';
 import { Text } from '@components/ui/text';
@@ -39,18 +39,17 @@ export const ProfileScreen = () => {
 
         {/* Identity Card Style Block */}
         <View className="flex-row items-center rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
-          <Image source={{ uri: user?.avatar }} className="h-16 w-16 rounded-md bg-gray-200" />
           <View className="ml-4 flex-1">
             <Text className="text-lg font-bold leading-tight text-gray-900 dark:text-white">
-              {user?.first_name} {user?.last_name}
+              {user?.emp_fname} {user?.emp_lname}
             </Text>
             <Text className="mt-1 text-xs font-medium uppercase text-blue-700 dark:text-blue-400">
-              {user?.role}
+              {user?.emp_role}
             </Text>
             <Text className="mt-1 text-xs text-gray-500">
-              ID:{' '}
+              Employee Code:&nbsp;
               <Text className="font-mono text-gray-700 dark:text-gray-300">
-                {user?.employee_id || user?.id}
+                {user?.emp_cd || '-'}
               </Text>
             </Text>
           </View>
@@ -64,11 +63,11 @@ export const ProfileScreen = () => {
             Employment Details
           </Text>
           <View className="rounded-lg border border-gray-200 bg-white px-4 py-2 dark:border-gray-800 dark:bg-gray-900">
-            <ProfileDetailRow label="Department" value={user?.department} />
-            <ProfileDetailRow label="Designation" value={user?.role} />
-            <ProfileDetailRow label="Location" value={user?.location} />
-            <ProfileDetailRow label="Official Email" value={user?.email} />
-            <ProfileDetailRow label="Phone" value={user?.phone} />
+            <ProfileDetailRow label="Department" value={user?.emp_dept} />
+            <ProfileDetailRow label="Designation" value={user?.emp_role} />
+            <ProfileDetailRow label="Location" value={user?.emp_address} />
+            <ProfileDetailRow label="Official Email" value={user?.emp_email} />
+            <ProfileDetailRow label="Phone" value={user?.emp_phone} />
           </View>
         </View>
 

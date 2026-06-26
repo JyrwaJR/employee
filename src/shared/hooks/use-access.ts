@@ -1,4 +1,4 @@
-import { RoleT } from '@features/auth/types';
+import { RoleT } from '@sharedTypes/auth';
 import { useAuthStore } from '@stores/auth.store';
 
 /**

@@ -29,7 +29,7 @@ const statusOptions = [
 ];
 
 export const StatementScreen = ({ idx, isTab }: Props) => {
-  const { user } = useAuthStore();
+  const { emp_cd } = useAuthStore();
 
   const [selectedYear, setSelectedYear] = useState('2026');
 
@@ -37,7 +37,7 @@ export const StatementScreen = ({ idx, isTab }: Props) => {
 
   const [selectedMonth, setSelectedMonth] = useState<string>('JANUARY');
 
-  const id = idx ? idx : user?.employee_id || '';
+  const id = idx ? idx : emp_cd || '';
 
   const { data, isFetching, isError, error } = useSalaryStatement(id, isTab);
 

@@ -7,6 +7,7 @@ import { useTheme } from '@hooks/use-theme';
 import { Text } from '@components/ui/text';
 import { cn } from '@utils/helpers/cn';
 import { PAGE_HEADERS, type PageHeaderConfig } from '@config/page-headers';
+import { DrawerToggleButton } from '@react-navigation/drawer';
 
 function useRoutePath(): string {
   const segments = useSegments();
@@ -41,25 +42,30 @@ export const StackHeader = memo(() => {
   if (!config) return null;
 
   const showBack = config.showBackButton && canGoBack;
+  const showDrawer = config.showDrawer;
 
   return (
     <View
-      className={cn('bg-white dark:bg-slate-950', config.background || '')}
+      className={cn('border-b border-gray-200 bg-white dark:bg-slate-950', config.background || '')}
       style={{ paddingTop: insets.top }}>
       <View className="min-h-[56px] flex-row items-center justify-between px-4 py-3">
         <View className="flex-1 flex-row items-center justify-start">
-          {showBack && (
-            <TouchableOpacity
-              onPress={handleBack}
-              className="mr-3"
-              hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
-              activeOpacity={0.7}>
-              <Ionicons
-                name="chevron-back"
-                size={24}
-                color={theme === 'dark' ? '#F8FAFC' : '#0F172A'}
-              />
-            </TouchableOpacity>
+          {showDrawer ? (
+            <DrawerToggleButton />
+          ) : (
+            showBack && (
+              <TouchableOpacity
+                onPress={handleBack}
+                className="mr-3"
+                hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
+                activeOpacity={0.7}>
+                <Ionicons
+                  name="chevron-back"
+                  size={24}
+                  color={theme === 'dark' ? '#F8FAFC' : '#0F172A'}
+                />
+              </TouchableOpacity>
+            )
           )}
         </View>
 

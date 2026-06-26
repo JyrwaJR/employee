@@ -7,16 +7,11 @@ import { PAGE_ROUTES } from '@utils/constants/routes';
 import { Leave } from '@sharedTypes/leave';
 import { formatDate } from '@utils/formatters/formatters';
 import { cn } from '@utils/helpers/cn';
+import { getStatusColor } from '@utils/helpers';
 
 interface HomeLeavePreviewProps {
   leave: Leave;
 }
-
-const statusStyles: Record<string, string> = {
-  Verified: 'text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/30',
-  Rejected: 'text-red-700 dark:text-red-400 bg-red-100 dark:bg-red-900/30',
-  Pending: 'text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30',
-};
 
 export const HomeLeavePreview = ({ leave }: HomeLeavePreviewProps) => (
   <TouchableOpacity
@@ -30,11 +25,7 @@ export const HomeLeavePreview = ({ leave }: HomeLeavePreviewProps) => (
           numberOfLines={1}>
           {leave.leave_desc}
         </Text>
-        <View
-          className={cn(
-            'rounded-full px-2 py-0.5',
-            statusStyles[leave.verify_flg_desc] || statusStyles.Pending
-          )}>
+        <View className={cn('rounded-full px-2 py-0.5', getStatusColor(leave.verify_flg_desc).bg)}>
           <Text className="text-xs font-semibold">{leave.verify_flg_desc}</Text>
         </View>
       </View>

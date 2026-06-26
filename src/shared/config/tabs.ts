@@ -1,5 +1,5 @@
-import { RoleT } from '@features/auth/types';
-import { TabRouteT } from '../types/tab';
+import { RoleT } from '@sharedTypes/auth';
+import { TabRouteT } from '@sharedTypes/tab';
 
 /**
  * Common tabs accessible by all roles.
@@ -7,17 +7,15 @@ import { TabRouteT } from '../types/tab';
 export const COMMON_TABS: TabRouteT[] = [
   { name: 'index', title: 'Home', icon: 'home' },
   { name: 'statement/index', title: 'Statements', icon: 'receipt' },
-  { name: 'leave/index', title: 'Leaves', icon: 'air' },
-  { name: 'pension/index', title: 'Pension', icon: 'tag' },
+  { name: 'leaves/index', title: 'Leaves', icon: 'air' },
+  // { name: 'pension/index', title: 'Pension', icon: 'tag' },
+  { name: 'profile/index', title: 'Profile', icon: 'person' },
 ];
 
 /**
  * Tabs specifically for Super Admin.
  */
-export const SUPER_ADMIN_TABS: TabRouteT[] = [
-  ...COMMON_TABS,
-  { name: 'profile', title: 'Profile', icon: 'person' },
-];
+export const SUPER_ADMIN_TABS: TabRouteT[] = [...COMMON_TABS];
 
 /**
  * Default tabs for standard users.
@@ -29,12 +27,6 @@ export const DEFAULT_USER_TABS: TabRouteT[] = [...COMMON_TABS];
  */
 export const getTabConfig = (role: RoleT): TabRouteT[] => {
   switch (role) {
-    case 'SUPER_ADMIN':
-      return SUPER_ADMIN_TABS;
-    case 'USER':
-      return DEFAULT_USER_TABS;
-    case 'ADMIN':
-      return DEFAULT_USER_TABS;
     default:
       return DEFAULT_USER_TABS;
   }

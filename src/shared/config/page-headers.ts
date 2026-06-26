@@ -4,6 +4,7 @@ export interface PageHeaderConfig {
   title: string;
   subtitle?: string;
   showBackButton?: boolean;
+  showDrawer?: boolean;
   leftSlot?: ReactNode;
   rightSlot?: ReactNode;
   bottomContent?: ReactNode;
@@ -11,8 +12,14 @@ export interface PageHeaderConfig {
 }
 
 export const PAGE_HEADERS = {
-  '/': { title: 'Home', showBackButton: true },
-  '/statement': { title: 'Statements', showBackButton: false },
+  // TABS
+  '/': { title: 'Home', showDrawer: true },
+  '/statement': { title: 'Statements', showDrawer: true },
+  '/leaves': { title: 'My Leaves', showDrawer: true },
+  '/pension': { title: 'Pensions', showDrawer: true },
+  '/profile': { title: 'My Profile', showDrawer: true },
+
+  // pages
   '/settings': { title: 'Settings', showBackButton: true },
   '/announcements': { title: 'Announcement Board', showBackButton: true },
   '/employees': { title: 'Employees', showBackButton: true },
@@ -23,7 +30,6 @@ export const PAGE_HEADERS = {
   '/auth/sign-up': { title: 'Sign Up', showBackButton: true },
   '/auth/forgot-password': { title: 'Forgot Password', showBackButton: true },
   '/dev/ui-lab': { title: 'UI Laboratory', showBackButton: true },
-  '/leaves': { title: 'My Leaves', showBackButton: true },
   '/leaves/[id]': { title: 'My Leaves', showBackButton: true },
 } as const satisfies Record<string, PageHeaderConfig>;
 

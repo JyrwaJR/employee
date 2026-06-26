@@ -35,7 +35,7 @@ export const HomeScreen = () => {
           title={user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...'}
           subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.department ?? ''}`}
           rightElement={
-            <>
+            <View className="flex-1 flex-row gap-2">
               <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
                 <MaterialCommunityIcons
                   name="bell"
@@ -52,7 +52,7 @@ export const HomeScreen = () => {
                   color={theme === 'dark' ? 'white' : 'black'}
                 />
               </TouchableOpacity>
-            </>
+            </View>
           }
         />
         <EmptyScreen
@@ -105,7 +105,7 @@ export const HomeScreen = () => {
 
           {activeLeaves?.length > 0 && (
             <FadeInView index={1}>
-              <View className="mb-4 p-2">
+              <View className="mb-4">
                 <Text variant="heading" size="lg" className="mb-4 text-gray-900 dark:text-white">
                   Active Leaves
                 </Text>
@@ -117,7 +117,7 @@ export const HomeScreen = () => {
           )}
 
           <FadeInView index={2}>
-            <View className="mb-6 px-2">
+            <View className="mb-6">
               <Text variant="heading" size="lg" className="mb-4 text-gray-900 dark:text-white">
                 Leave History
               </Text>

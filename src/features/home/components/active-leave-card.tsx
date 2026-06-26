@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { cn } from '@utils/helpers/cn';
 import { Leave } from '@sharedTypes/leave';
 import { formatDate } from '@utils/formatters/formatters';
+import { getStatusColor } from '@utils/helpers';
 
 /** Props for {@link HomeActiveLeaveCard}. */
 interface HomeActiveLeaveCardProps {
@@ -33,13 +34,6 @@ export const HomeActiveLeaveCard = ({ leave }: HomeActiveLeaveCardProps) => {
     );
   }
 
-  const statusColor =
-    leave.verify_flg_desc === 'Verified'
-      ? 'text-green-700 dark:text-green-400 bg-green-100 dark:bg-green-900/30'
-      : leave.verify_flg_desc === 'Rejected'
-        ? 'text-red-700 dark:text-red-400 bg-red-100 dark:bg-red-900/30'
-        : 'text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30';
-
   return (
     <Card>
       <CardContent className="p-5">
@@ -50,7 +44,7 @@ export const HomeActiveLeaveCard = ({ leave }: HomeActiveLeaveCardProps) => {
               Active Leave
             </Text>
           </View>
-          <View className={cn('rounded-full px-3 py-1', statusColor)}>
+          <View className={cn('rounded-full px-3 py-1', getStatusColor(leave.verify_flg_desc).bg)}>
             <Text className="text-xs font-semibold">{leave.verify_flg_desc}</Text>
           </View>
         </View>

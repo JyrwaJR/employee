@@ -11,8 +11,7 @@
     "format": "prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
     "format:check": "prettier \"**/*.{js,jsx,ts,tsx,json}\" --check",
     "build:dev": "eas build --profile development --platform android",
-    "prepare": "husky",
-    "ios": "expo run:ios"
+    "prepare": "husky"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",

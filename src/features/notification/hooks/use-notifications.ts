@@ -3,12 +3,12 @@ import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Route, router } from 'expo-router';
 import { logger } from '@utils/logger/logger';
-import { isExpoGo } from '@utils/constants';
 import { useAuthStore } from '@stores/auth.store';
 import { toast } from '@components/ui';
 import { withRetry } from '@utils/helpers/retry';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { NotificationService } from '@services/notification.service';
+import { isExpo } from '@utils/helpers/expo';
 
 /**
  * Whitelist of permitted internal routes for push-triggered navigation.
@@ -67,7 +67,7 @@ export const useNotifications = () => {
   }, [lastResponse]);
 
   useEffect(() => {
-    if (isExpoGo && !user) return;
+    if (isExpo() && !user) return;
 
     let isMounted = true;
 
