@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, FlatList } from 'react-native';
+import { router } from 'expo-router';
 import { Container } from '@components/layout/container';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { LeaveCard } from '../components/leave-card';
@@ -7,11 +8,10 @@ import { useLeaves } from '../hooks';
 import { SectionHeader } from '@components/base/section-header';
 import { StackHeader } from '@components/layout';
 import { EmptyScreen } from '@components/screens';
+import { PAGE_ROUTES } from '@utils/constants/routes';
 
 export const LeaveScreen = () => {
-  const { data, isFetching, refetch } = useLeaves();
-
-  const leaves = data?.emp_leave_data ?? [];
+  const { data: leaves, isFetching, refetch } = useLeaves();
 
   if (isFetching)
     return (
@@ -21,7 +21,7 @@ export const LeaveScreen = () => {
       </>
     );
 
-  if (!data) {
+  if (!leaves) {
     return (
       <>
         <StackHeader />
@@ -42,9 +42,11 @@ export const LeaveScreen = () => {
 
       <FlatList
         data={leaves}
-        keyExtractor={(item) => item.from_dt + item.to_dt}
-        renderItem={({ item }) => <LeaveCard item={item} onPress={() => {}} />}
-        contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <LeaveCard item={item} onPress={() => router.push(PAGE_ROUTES.LEAVE.DETAILS(item.id))} />
+        )}
+        contentContainerStyle={{ paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
       />
     </Container>

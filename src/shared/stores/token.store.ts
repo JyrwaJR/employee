@@ -13,6 +13,11 @@ export const TokenStoreManager = {
     return await setItemAsync(key, token);
   },
 
+  async removeTokens(): Promise<void> {
+    await deleteItemAsync(key);
+
+    await deleteItemAsync(refreshKey);
+  },
   async removeAccessToken(): Promise<void> {
     return await deleteItemAsync(key);
   },

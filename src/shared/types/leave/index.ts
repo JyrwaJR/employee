@@ -12,6 +12,7 @@ export type LeaveBal = {
 };
 
 export type Leave = {
+  id: string;
   leave_cd: LeaveType;
   order_dt: string;
   reason_for_leave: string;

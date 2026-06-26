@@ -1,9 +1,9 @@
 import { SalarySlip } from '@features/employee';
 import { useAuthStore } from '@stores/auth.store';
 import { useQuery } from '@tanstack/react-query';
-import { http } from '@utils/api';
+import { axioshttp } from '@utils/api';
 import { PENSION_ENDPOINT } from '../utils/constants';
-import { QUERY_KEYS } from '@utils/constants';
+import { PENSION_KEYS } from '@utils/constants';
 import { buildUrlWithQuery } from '@utils/helpers';
 
 export function usePensions(year: string, month: string, status: string) {
@@ -11,9 +11,9 @@ export function usePensions(year: string, month: string, status: string) {
   const empId = user?.employee_id || '';
 
   return useQuery({
-    queryKey: QUERY_KEYS.PENSION.LIST(empId, year, month, status),
+    queryKey: PENSION_KEYS.LIST(empId, year, month, status),
     queryFn: () =>
-      http.get<SalarySlip[]>(
+      axioshttp.get<SalarySlip[]>(
         buildUrlWithQuery(PENSION_ENDPOINT.LIST(empId), { year, month, status })
       ),
     select: (data) => data.data,

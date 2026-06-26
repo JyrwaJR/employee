@@ -1,1 +1,2 @@
-export * from './use-leaves';
+export { useLeaves } from '@hooks';
+export * from './use-leave-detail';

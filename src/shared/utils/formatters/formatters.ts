@@ -87,10 +87,7 @@ export const slugify = (value: string) =>
 const formatter = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
   month: 'long',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-  second: 'numeric',
+  day: '2-digit',
 });
 
 /**

@@ -5,9 +5,10 @@ import { Text } from '@components/ui/text';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { cn } from '@utils/helpers/cn';
 import { Leave } from '@sharedTypes/leave';
+import { formatDate } from '@utils/formatters/formatters';
 
-/** Props for {@link ActiveLeaveCard}. */
-interface ActiveLeaveCardProps {
+/** Props for {@link HomeActiveLeaveCard}. */
+interface HomeActiveLeaveCardProps {
   /** Current active leave, or null if none. */
   leave: Leave | null;
 }
@@ -16,10 +17,10 @@ interface ActiveLeaveCardProps {
  * Card displaying the user's currently active leave request.
  * Shows a fallback "No upcoming leaves" message when `leave` is null.
  */
-export const ActiveLeaveCard = ({ leave }: ActiveLeaveCardProps) => {
+export const HomeActiveLeaveCard = ({ leave }: HomeActiveLeaveCardProps) => {
   if (!leave) {
     return (
-      <Card className="mx-6">
+      <Card>
         <CardContent className="p-5">
           <View className="flex-row items-center">
             <MaterialCommunityIcons name="calendar-check" size={22} color="#9CA3AF" />
@@ -40,7 +41,7 @@ export const ActiveLeaveCard = ({ leave }: ActiveLeaveCardProps) => {
         : 'text-yellow-700 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30';
 
   return (
-    <Card className="mx-6">
+    <Card>
       <CardContent className="p-5">
         <View className="mb-3 flex-row items-center justify-between">
           <View className="flex-row items-center">
@@ -59,7 +60,7 @@ export const ActiveLeaveCard = ({ leave }: ActiveLeaveCardProps) => {
               {leave.leave_cd}
             </Text>
             <Text variant="subtext" size="sm">
-              {leave.from_dt} — {leave.to_dt}
+              {formatDate(leave.from_dt)} — {formatDate(leave.to_dt)}
             </Text>
           </View>
           <Text className="text-lg font-bold text-gray-900 dark:text-white">

@@ -2,8 +2,6 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import * as SecureStore from 'expo-secure-store';
 import { UserT, RoleT } from '../types/auth';
-import { ENDPOINTS } from '@utils/constants/endpoints';
-import { http } from '@utils/api/http';
 import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '@utils/logger';
 import { rpc } from '@utils/api';
@@ -38,9 +36,12 @@ export const useAuthStore = create<AuthStore>()(
 
       fetchUser: async (keepStaleOnError?: boolean) => {
         const empCode = get().emp_cd;
+
         logger.info('AuthStore: fetchUser called', { empCode, keepStaleOnError });
 
         const accessToken = await TokenStoreManager.getAccessToken();
+
+        console.log('accessToken', accessToken);
         if (empCode && accessToken) {
           try {
             const res = await rpc<UserT>(METHODS.GET_EMP_DETAILS, { emp_cd: empCode });
@@ -64,7 +65,7 @@ export const useAuthStore = create<AuthStore>()(
             }
           }
         } else {
-          logger.warn('AuthStore: fetchUser skipped — emp_cd is empty');
+          logger.warn('AuthStore: fetchUser skipped — emp_cd is empty', empCode, !!accessToken);
         }
       },
 
@@ -73,23 +74,21 @@ export const useAuthStore = create<AuthStore>()(
       },
 
       reset: () => {
-        set({ user: null, isSignedIn: false, role: 'USER' });
+        set({ user: null, isSignedIn: false, role: 'USER', emp_cd: '' });
       },
 
       logout: async () => {
         try {
-          const refreshToken = await TokenStoreManager.getRefreshToken();
+          const refreshToken = await TokenStoreManager.getAccessToken();
           if (refreshToken) {
-            await http.post(ENDPOINTS.AUTH.LOGOUT, { refresh_token: refreshToken });
+            // await http.post(ENDPOINTS.AUTH.LOGOUT, { refresh_token: refreshToken });
           }
         } catch (error) {
           logger.error('AuthStore: logout API call failed', error);
         }
 
-        await TokenStoreManager.removeAccessToken();
-        await TokenStoreManager.removeRefreshToken();
+        await TokenStoreManager.removeTokens();
         get().reset();
-        set({ emp_cd: '' });
 
         try {
           const { queryClient } = await import('@utils/react-query');

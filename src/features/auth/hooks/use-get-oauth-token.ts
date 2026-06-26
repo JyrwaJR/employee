@@ -51,7 +51,6 @@ export function useGetOAuthToken() {
         error: error,
       });
       TokenStoreManager.removeAccessToken();
-      logger.info('Removed access token on error');
     },
   });
 }

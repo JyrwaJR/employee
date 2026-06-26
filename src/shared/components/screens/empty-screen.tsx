@@ -8,7 +8,7 @@ import { Text } from '../ui/text';
 
 interface EmptyScreenProps {
   title: string;
-  refresh: () => void;
+  refresh?: () => void;
   message?: string;
   icon?: keyof typeof MaterialCommunityIcons.glyphMap;
   refreshLabel?: string;

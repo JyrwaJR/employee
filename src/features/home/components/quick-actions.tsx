@@ -18,14 +18,14 @@ type QuickAction = {
 
 /** Preset list of quick-action shortcuts. */
 const ACTIONS: QuickAction[] = [
-  { label: 'Apply Leave', icon: 'calendar-plus', route: PAGE_ROUTES.LEAVE },
+  { label: 'Apply Leave', icon: 'calendar-plus', route: PAGE_ROUTES.LEAVE.INDEX },
   { label: 'View Salary', icon: 'currency-inr', route: PAGE_ROUTES.STATEMENT },
   { label: 'Attendance', icon: 'clipboard-check', route: '' },
   { label: 'Pension', icon: 'bank', route: PAGE_ROUTES.PENSION },
 ];
 
 /** Displays a horizontal row of quick-action shortcut buttons. */
-export const QuickActions = () => {
+export const HomeQuickActions = () => {
   const { theme } = useThemeStore();
   const iconColor = theme === 'dark' ? '#60A5FA' : '#3B82F6';
 

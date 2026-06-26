@@ -30,12 +30,36 @@ export function setupInterceptors(instance: AxiosInstance) {
   instance.interceptors.response.use(
     (res) => {
       if (res.data?.response) {
-        const decrypted = decrypt<string>(res.data?.response);
-        try {
-          res.data = JSON.parse(decrypted);
-        } catch {
-          res.data = decrypted;
+        const decrypted = decrypt<{
+          status_code: string;
+          message: string;
+          success_flag: boolean;
+          data?: any;
+        }>(res.data?.response);
+
+        let data = decrypted.data;
+        if (typeof data === 'string') {
+          try {
+            data = JSON.parse(data);
+          } catch {}
         }
+
+        if (decrypted.status_code === '401') {
+          TokenStoreManager.removeAccessToken();
+        }
+
+        logger.log('Decrypted Response', {
+          success: decrypted.success_flag,
+          message: decrypted.message,
+          response_status: decrypted.status_code,
+          http_status: res.status,
+        });
+
+        res.data = {
+          success: decrypted.success_flag,
+          message: decrypted.message,
+          data: data,
+        };
       }
       return res;
     },

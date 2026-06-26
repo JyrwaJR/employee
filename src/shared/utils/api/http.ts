@@ -3,8 +3,11 @@ import { logger } from '../logger/logger';
 import axiosInstance from '@utils/api/axios';
 import { ApiResponse } from '@sharedTypes/api';
 import { handleResponse, handleError } from './response';
+import { rnFetchBlobClient } from './rn-fetch-blob-client';
 
-export const http = {
+const isAxios = process.env.EXPO_PUBLIC_HTTP_PROVIDER === 'axios';
+
+const axiosHttp = {
   get: async <T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
     try {
       const response = await axiosInstance.get(url, config);
@@ -52,3 +55,5 @@ export const http = {
     }
   },
 };
+
+export const http = isAxios ? axiosHttp : rnFetchBlobClient;

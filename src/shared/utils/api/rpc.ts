@@ -1,6 +1,6 @@
 import { METHODS } from '@utils/constants';
-import { rnFetchBlobClient } from './rn-fetch-blob-client';
 import { ApiResponse } from '../../types/api';
+import { http } from './http';
 
 export type RpcRequest<TParams = unknown> = {
   method: METHODS;
@@ -11,7 +11,7 @@ export const rpc = async <TResult, TParams = unknown>(
   functionName: string,
   params?: TParams
 ): Promise<ApiResponse<TResult>> => {
-  return rnFetchBlobClient.post<TResult>('/make_request', {
+  return http.post<TResult>('/make_request', {
     functionName,
     ...params,
   });

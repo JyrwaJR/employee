@@ -23,6 +23,8 @@ export const PAGE_HEADERS = {
   '/auth/sign-up': { title: 'Sign Up', showBackButton: true },
   '/auth/forgot-password': { title: 'Forgot Password', showBackButton: true },
   '/dev/ui-lab': { title: 'UI Laboratory', showBackButton: true },
+  '/leaves': { title: 'My Leaves', showBackButton: true },
+  '/leaves/[id]': { title: 'My Leaves', showBackButton: true },
 } as const satisfies Record<string, PageHeaderConfig>;
 
 export type PageHeaderRoute = keyof typeof PAGE_HEADERS;

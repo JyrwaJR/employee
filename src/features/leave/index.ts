@@ -2,12 +2,12 @@
 export * from './utils/constants/leave.endpoint';
 
 // Components
-export * from './components/leave-card';
+export * from './components';
 
 // Hooks
 
 // Screens
-export * from './screens/leave-screen';
+export * from './screens';
 
 // Types
 export * from './types';

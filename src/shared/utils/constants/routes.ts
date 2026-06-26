@@ -46,7 +46,10 @@ export const PAGE_ROUTES = {
   /** Core feature sidebar/tab links */
   PENSION: '/pension' as const,
   PROFILE: '/profile' as const,
-  LEAVE: '/leave' as const,
+  LEAVE: {
+    INDEX: '/leave' as const,
+    DETAILS: (id: string) => `/leaves/${id}` as Route,
+  },
   STATEMENT: '/statement' as const,
   ANNOUNCEMENT: '/announcements' as const,
 };

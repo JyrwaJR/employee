@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { useMutation } from '@tanstack/react-query';
 import { Button } from '@components/ui/button';
 import { toast } from '@components/ui';
-import { http } from '@utils/api/http';
+import { axioshttp } from '@utils/api/http';
 import { AUTH_ENDPOINT } from '@features/auth/utils/constants';
 import { useRouter } from 'expo-router';
 import { ForgotPasswordSchema } from '../validators/forgot-password.schema';
@@ -26,7 +26,7 @@ export const EmpCodeForm = () => {
   const emp_cd = methods.watch('emp_cd');
 
   const sendOtpMutation = useMutation({
-    mutationFn: async (data: ForgotPasswordInputs) => http.post(AUTH_ENDPOINT.GET_OTP, data),
+    mutationFn: async (data: ForgotPasswordInputs) => axioshttp.post(AUTH_ENDPOINT.GET_OTP, data),
     onSuccess: (data) => {
       if (data.success) {
         router.push(PAGE_ROUTES.AUTH.FORGOT_PASSWORD(emp_cd, 'OTP'));

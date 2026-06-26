@@ -3,6 +3,7 @@ import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '../logger/logger';
 import RNFetchBlob from 'rn-fetch-blob';
 import { METHODS } from '@utils/constants';
+import { HttpClient } from '@sharedTypes/api';
 
 const APP_ID = process.env.EXPO_PUBLIC_APP_ID;
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -122,15 +123,13 @@ async function request<T = any>(
   }
 }
 
-export const rnFetchBlobClient = {
-  get: <T = any>(url: string, headers?: Record<string, string>) => request<T>('GET', url, headers),
+export const rnFetchBlobClient: HttpClient = {
+  get: (url, config) => request('GET', url, config?.headers as Record<string, string>),
 
-  post: <T = any>(url: string, body?: any, headers?: Record<string, string>) =>
-    request<T>('POST', url, headers, body),
+  post: (url, data, config) =>
+    request('POST', url, config?.headers as Record<string, string>, data),
 
-  put: <T = any>(url: string, body?: any, headers?: Record<string, string>) =>
-    request<T>('PUT', url, headers, body),
+  put: (url, data, config) => request('PUT', url, config?.headers as Record<string, string>, data),
 
-  delete: <T = any>(url: string, headers?: Record<string, string>) =>
-    request<T>('DELETE', url, headers),
+  delete: (url, config) => request('DELETE', url, config?.headers as Record<string, string>),
 };
