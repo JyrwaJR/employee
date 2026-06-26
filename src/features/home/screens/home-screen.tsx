@@ -33,7 +33,7 @@ export const HomeScreen = () => {
         <SectionHeader
           variant="splash"
           title={user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...'}
-          subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.department ?? ''}`}
+          subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.emp_dept ?? ''}`}
           rightElement={
             <View className="flex-1 flex-row gap-2">
               <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
@@ -74,7 +74,7 @@ export const HomeScreen = () => {
           <SectionHeader
             variant="splash"
             title={user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...'}
-            subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.department ?? ''}`}
+            subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.emp_dept ?? ''}`}
             rightElement={
               <>
                 <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
