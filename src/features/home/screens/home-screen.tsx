@@ -1,12 +1,16 @@
 import React from 'react';
-import { RefreshControl, ScrollView, TouchableOpacity, View } from 'react-native';
+import { RefreshControl, ScrollView, View } from 'react-native';
 import { Container } from '@components/layout/container';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useThemeStore } from '@stores/theme.store';
 import { useAuthStore } from '@stores/auth.store';
-import { SectionHeader } from '@components/base/section-header';
 import { AnimationProvider, FadeInView } from '@components/fade-in-view';
-import { HomeActiveLeaveCard, HomeLeavePreview, HomeQuickActions } from '../components';
+import {
+  HomeActiveLeaveCard,
+  HomeHeader,
+  HomeLeaveEmptyCard,
+  HomeLeavePreview,
+  HomeQuickActions,
+} from '../components';
 import { Text } from '@components/ui/text';
 import { EmptyScreen, LoadingScreen } from '@components/screens';
 import { useLeaves } from '@hooks';
@@ -17,45 +21,26 @@ export const HomeScreen = () => {
   const { theme } = useThemeStore();
   const { data, isFetching, isLoading, refetch } = useLeaves();
   const isAfterNoon = new Date().getUTCHours() >= 12;
+  const userName = user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...';
+  const greeting = `${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.emp_dept ?? ''}`;
 
   if (isLoading) return <LoadingScreen />;
 
-  if (!data)
+  if (!data) {
     return (
-      <>
-        <SectionHeader
-          variant="splash"
-          title={user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...'}
-          subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.emp_dept ?? ''}`}
-          rightElement={
-            <View className="flex-1 flex-row gap-2">
-              <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-                <MaterialCommunityIcons
-                  name="bell"
-                  size={24}
-                  color={theme === 'dark' ? 'white' : 'black'}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={logout}
-                className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-                <MaterialCommunityIcons
-                  name="logout"
-                  size={24}
-                  color={theme === 'dark' ? 'white' : 'black'}
-                />
-              </TouchableOpacity>
-            </View>
-          }
-        />
-        <EmptyScreen
-          title="Something went wrong"
-          message="Unable to fetch data"
-          refresh={refetch}
-          refreshLabel="Reload"
-        />
-      </>
+      <AnimationProvider stagger={80}>
+        <Container className="flex-1">
+          <HomeHeader subtitle={greeting} userName={userName} theme={theme} onLogout={logout} />
+          <EmptyScreen
+            title="Something went wrong"
+            message="Unable to fetch data"
+            refresh={refetch}
+            refreshLabel="Reload"
+          />
+        </Container>
+      </AnimationProvider>
     );
+  }
 
   const activeLeaves = data.filter((l) => isActiveLeave(l));
   const otherLeaves = data.filter((l) => !isActiveLeave(l));
@@ -64,31 +49,7 @@ export const HomeScreen = () => {
     <AnimationProvider stagger={80}>
       <Container className="flex-1">
         <ScrollView refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}>
-          <SectionHeader
-            variant="splash"
-            title={user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...'}
-            subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.emp_dept ?? ''}`}
-            rightElement={
-              <>
-                <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-                  <MaterialCommunityIcons
-                    name="bell"
-                    size={24}
-                    color={theme === 'dark' ? 'white' : 'black'}
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={logout}
-                  className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
-                  <MaterialCommunityIcons
-                    name="logout"
-                    size={24}
-                    color={theme === 'dark' ? 'white' : 'black'}
-                  />
-                </TouchableOpacity>
-              </>
-            }
-          />
+          <HomeHeader subtitle={greeting} userName={userName} theme={theme} onLogout={logout} />
 
           <FadeInView index={0}>
             <View className="my-6">
@@ -115,7 +76,7 @@ export const HomeScreen = () => {
                 Leave History
               </Text>
               {otherLeaves.length === 0 ? (
-                <HomeActiveLeaveCard leave={null} />
+                <HomeLeaveEmptyCard />
               ) : (
                 otherLeaves.map((item) => <HomeLeavePreview key={item.id} leave={item} />)
               )}
