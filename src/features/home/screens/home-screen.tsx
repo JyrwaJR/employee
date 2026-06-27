@@ -10,14 +10,7 @@ import { HomeActiveLeaveCard, HomeLeavePreview, HomeQuickActions } from '../comp
 import { Text } from '@components/ui/text';
 import { EmptyScreen, LoadingScreen } from '@components/screens';
 import { useLeaves } from '@hooks';
-import { Leave } from '@sharedTypes/leave';
-
-function isActiveLeave(leave: Leave): boolean {
-  const today = new Date();
-  const from = new Date(leave.from_dt1);
-  const to = new Date(leave.to_dt1);
-  return today >= from && today <= to;
-}
+import { isActiveLeave } from '../utils';
 
 export const HomeScreen = () => {
   const { user, logout } = useAuthStore();
