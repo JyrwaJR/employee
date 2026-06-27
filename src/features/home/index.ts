@@ -1,3 +1,2 @@
-/** Home feature module. Exports screen components and shared dashboard types. */
+/** Home feature module. */
 export * from './screens/home-screen';
-export * from './types/dashboard';
