@@ -2,6 +2,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SectionHeader } from '@components/base/section-header';
+import type { ThemeType } from '@stores/theme.store';
 
 interface HomeHeaderProps {
   /** Greeting subtitle — e.g. "Good Morning · Engineering". */
@@ -9,7 +10,7 @@ interface HomeHeaderProps {
   /** User's full name — shown as the header title. */
   userName: string;
   /** Current theme for icon color selection. */
-  theme: 'light' | 'dark';
+  theme: ThemeType;
   /** Logout callback. */
   onLogout: () => void;
 }
