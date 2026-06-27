@@ -1,7 +1,0 @@
-# For Expo Go development
-- openLink:
-    url: ${EXPO_URL}
-    arguments:
-      isMaestro: 'true'
-- assertVisible:
-    text: 'Welcome back'

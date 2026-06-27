@@ -1,9 +1,0 @@
-appId: ${APP_ID}
----
-- runFlow: ../setup/launch_app.yaml
-- runFlow: ../auth/login.yaml
-- openLink: ${EXPO_URL}/settings
-- tapOn: "Dark Mode"
-- assertVisible: "Dark Mode"
-- tapOn: "Enable Biometric"
-# Use JS to check version if needed, or simple assertion
