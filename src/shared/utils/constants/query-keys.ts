@@ -1,3 +1,10 @@
+/**
+ * Centralized React Query key factory.
+ *
+ * Provides consistent, type-safe query keys for cache management across features.
+ * Each top-level key corresponds to a domain, with nested factories for specific
+ * queries (list, details, overview, etc.).
+ */
 export const QUERY_KEYS = {
   AUTH: {
     ME: ['me'] as const,

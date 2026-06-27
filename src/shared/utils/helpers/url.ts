@@ -1,12 +1,25 @@
 /**
- * URL Utilities
+ * URL Utilities.
+ *
+ * @module url
  */
 
 /**
  * Builds a URL with query parameters.
- * Handles both absolute and relative URLs.
- * Overwrites existing query parameters if they exist in the query object.
- * Filters out null or undefined values.
+ *
+ * Handles both absolute and relative URLs. Existing query parameters on the
+ * base URL are overwritten if a matching key is provided in the query object.
+ * `null` and `undefined` values are filtered out.
+ *
+ * @param url   - The base URL (absolute or relative).
+ * @param query - A record of query parameters to append.
+ * @returns The URL string with encoded query parameters appended.
+ *
+ * @example
+ * ```ts
+ * buildUrlWithQuery('/api/users', { page: 1, search: 'john' })
+ * // "/api/users?page=1&search=john"
+ * ```
  */
 export function buildUrlWithQuery(
   url: string,

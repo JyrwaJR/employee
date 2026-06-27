@@ -1,5 +1,15 @@
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+/**
+ * Returns Tailwind CSS classes and icon data for a given status label.
+ *
+ * Supports three statuses — `'Verified'`, `'Pending'`, and `'Rejected'` —
+ * each with distinct colour schemes (green, orange, red). Any unrecognised
+ * status falls back to a neutral gray theme.
+ *
+ * @param status - The status label (e.g. `'Verified'`, `'Pending'`, `'Rejected'`).
+ * @returns An object containing background/text class names, icon colour, and icon name.
+ */
 export const getStatusColor = (status: string) => {
   switch (status) {
     case 'Verified':

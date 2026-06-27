@@ -1,3 +1,9 @@
+/**
+ * Helpers barrel module.
+ *
+ * @module helpers
+ */
+
 export * from './cn';
 export * from './get-status-color';
 export * from './retry';
