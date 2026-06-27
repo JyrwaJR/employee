@@ -6,6 +6,21 @@ import { decrypt, encrypt } from '@lib/encryption';
 
 const APP_ID = process.env.EXPO_PUBLIC_APP_ID;
 
+/**
+ * Attaches request and response interceptors to an Axios instance.
+ *
+ * **Request interceptor:** Injects the Bearer token from secure storage, encrypts
+ * the request payload (unless disabled), tags the start time for latency tracking,
+ * and logs the outgoing method and path.
+ *
+ * **Response interceptor:** Decrypts the backend envelope response, handles 401
+ * status codes by clearing the session and redirecting to login, and triggers
+ * automatic token refresh on 401 errors (with a retry queue to avoid race conditions).
+ *
+ * @param instance - The Axios instance to attach interceptors to.
+ * @param options - Optional configuration.
+ * @param options.encryption - Whether to enable encryption of request/response data (default `true`).
+ */
 export function setupInterceptors(instance: AxiosInstance, options?: { encryption?: boolean }) {
   instance.interceptors.request.use(async (config) => {
     const token = await TokenStoreManager.getAccessToken();

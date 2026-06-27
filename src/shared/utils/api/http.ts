@@ -7,7 +7,19 @@ import { isExpo } from '@utils/helpers/expo';
 
 const isAxios = process.env.EXPO_PUBLIC_HTTP_PROVIDER === 'axios';
 
+/**
+ * Axios-based HTTP client with get, post, put, and delete methods.
+ * Each method handles encryption/decryption, cancellation, and error normalization internally.
+ */
 const axiosHttp = {
+  /**
+   * Sends a GET request.
+   *
+   * @typeParam T - The expected shape of the response data.
+   * @param url - The request URL (relative to the base URL).
+   * @param config - Optional Axios request configuration.
+   * @returns A normalized API response.
+   */
   get: async <T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
     try {
       const response = await axiosInstance.get(url, config);
@@ -20,6 +32,15 @@ const axiosHttp = {
     }
   },
 
+  /**
+   * Sends a POST request.
+   *
+   * @typeParam T - The expected shape of the response data.
+   * @param url - The request URL.
+   * @param data - The request body (object, FormData, or string).
+   * @param config - Optional Axios request configuration.
+   * @returns A normalized API response.
+   */
   post: async <T>(
     url: string,
     data?: object | FormData | string,
@@ -33,6 +54,15 @@ const axiosHttp = {
     }
   },
 
+  /**
+   * Sends a PUT request.
+   *
+   * @typeParam T - The expected shape of the response data.
+   * @param url - The request URL.
+   * @param data - The request body.
+   * @param config - Optional Axios request configuration.
+   * @returns A normalized API response.
+   */
   put: async <T>(
     url: string,
     data?: object,
@@ -46,6 +76,14 @@ const axiosHttp = {
     }
   },
 
+  /**
+   * Sends a DELETE request.
+   *
+   * @typeParam T - The expected shape of the response data.
+   * @param url - The request URL.
+   * @param config - Optional Axios request configuration.
+   * @returns A normalized API response.
+   */
   delete: async <T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> => {
     try {
       const response = await axiosInstance.delete(url, config);
@@ -56,6 +94,11 @@ const axiosHttp = {
   },
 };
 
+/**
+ * The active HTTP client instance.
+ * Uses `axiosHttp` by default, or falls back to `rnFetchBlobClient` on native
+ * when the `EXPO_PUBLIC_HTTP_PROVIDER` env var is not set to `'axios'`.
+ */
 let http = axiosHttp;
 
 if (!isAxios && !isExpo()) {

@@ -12,6 +12,7 @@ const BASE_CONFIG = {
   trusty: true,
 };
 
+/** Raw shape of the decrypted backend envelope. */
 type DecryptedBackendResponse<T> = {
   status_code: string;
   message: string;
@@ -19,12 +20,20 @@ type DecryptedBackendResponse<T> = {
   data?: T;
 };
 
+/** Normalised API response shape used by the native blob client. */
 type ApiResponse<T> = {
   success: boolean;
   message: string;
   data?: T;
 };
 
+/**
+ * Converts the raw decrypted backend payload into the standardised `ApiResponse` shape.
+ *
+ * @typeParam T - The type of the response data.
+ * @param data - The decrypted backend response envelope.
+ * @returns A normalised API response.
+ */
 function backendResponse<T>(data: DecryptedBackendResponse<T>): ApiResponse<T> {
   return {
     success: data.success_flag,
@@ -33,6 +42,20 @@ function backendResponse<T>(data: DecryptedBackendResponse<T>): ApiResponse<T> {
   };
 }
 
+/**
+ * Core native HTTP request function using `RNFetchBlob`.
+ *
+ * Handles encryption of the request body, Bearer token injection, response
+ * decryption, and 401 response handling (token removal). Logs encrypted
+ * payloads, request duration, and decrypted responses for debugging.
+ *
+ * @typeParam T - The expected shape of the response data.
+ * @param method - The HTTP method.
+ * @param url - The request path (relative to `EXPO_PUBLIC_API_URL`).
+ * @param headers - Additional request headers.
+ * @param body - Optional request body (will be encrypted if provided).
+ * @returns A promise resolving to the normalised API response.
+ */
 async function request<T = any>(
   method: 'GET' | 'POST' | 'PUT' | 'DELETE',
   url: string,
@@ -123,6 +146,13 @@ async function request<T = any>(
   }
 }
 
+/**
+ * Native HTTP client implementation using `RNFetchBlob`.
+ *
+ * Provides `get`, `post`, `put`, and `delete` methods that delegate to the
+ * internal encrypted `request` function. Used as a drop-in replacement for
+ * the Axios-based client when running outside Expo.
+ */
 export const rnFetchBlobClient: HttpClient = {
   get: (url, config) => request('GET', url, config?.headers as Record<string, string>),
 

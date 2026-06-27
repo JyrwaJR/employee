@@ -4,13 +4,28 @@ import { router } from 'expo-router';
 import { queryClient } from '../react-query';
 import { PAGE_ROUTES, ENDPOINTS } from '@utils/constants';
 
+/** Tracks whether a token refresh is already in-flight to prevent concurrent calls. */
 let isRefreshing = false;
+
+/** Tracks whether the app is currently performing an unauthorized exit flow. */
 let isExiting = false;
+
+/**
+ * Queue of pending requests that arrived while a token refresh was in progress.
+ * Each entry holds resolve/reject callbacks so they can be retried once the
+ * new token is obtained.
+ */
 let pendingQueue: {
   resolve: (token: string) => void;
   reject: (err: any) => void;
 }[] = [];
 
+/**
+ * Drains the pending request queue, resolving or rejecting each entry.
+ *
+ * @param error - The error to reject with, or `null` if a token was obtained.
+ * @param token - The new access token, or `null` on failure.
+ */
 function processQueue(error: any, token: string | null = null) {
   pendingQueue.forEach((prom) => {
     if (error) prom.reject(error);
@@ -19,6 +34,15 @@ function processQueue(error: any, token: string | null = null) {
   pendingQueue = [];
 }
 
+/**
+ * Determines whether the given URL should skip automatic token refresh.
+ *
+ * Auth-related endpoints (login, sign-up, refresh, logout, forgot-password,
+ * OTP flows) are excluded from the refresh logic to avoid recursive loops.
+ *
+ * @param url - The request URL to check.
+ * @returns `true` if the URL should skip refresh, `false` otherwise.
+ */
 export function shouldSkipRefresh(url?: string) {
   if (!url) return true;
   const skipUrls = [
@@ -33,6 +57,13 @@ export function shouldSkipRefresh(url?: string) {
   return skipUrls.some((path) => url.includes(path));
 }
 
+/**
+ * Performs a full sign-out: clears stored tokens, resets the auth store,
+ * clears the React Query cache, and redirects to the login page.
+ *
+ * Uses a debounce mechanism (`isExiting` flag) to prevent multiple rapid
+ * invocations from competing.
+ */
 async function handleUnauthorizedExit() {
   if (isExiting) return;
   isExiting = true;
@@ -51,6 +82,19 @@ async function handleUnauthorizedExit() {
   }
 }
 
+/**
+ * Attempts to refresh the access token using the stored refresh token.
+ *
+ * If a refresh is already in-flight, the original request is queued and
+ * retried once the new token is available. On success, the queued requests
+ * are replayed with the updated authorization header. On failure (invalid
+ * or expired refresh token), the user is signed out.
+ *
+ * @param error - The original 401 Axios error that triggered the refresh.
+ * @param originalRequest - The failed request configuration, augmented with a `_retry` flag.
+ * @param axiosInstance - The Axios instance used to retry the request.
+ * @returns A promise resolving to the retried request response or rejecting with the error.
+ */
 export async function attemptTokenRefresh(
   error: AxiosError,
   originalRequest: InternalAxiosRequestConfig & { _retry?: boolean },
