@@ -1,7 +1,18 @@
 import { http } from '@utils/api';
 
+/** Severity levels supported by the logger. */
 type ErrorType = 'ERROR' | 'INFO' | 'WARN' | 'LOG';
 
+/**
+ * Sends a log entry to the remote logging server.
+ *
+ * The entry includes the severity type, message, serialised content, and a
+ * timestamp. Failures are silently caught to avoid disrupting the app flow.
+ *
+ * @param type    - The severity level.
+ * @param message - A short identifier or summary for the log entry.
+ * @param content - The serialised log data (JSON string).
+ */
 const sendLogToServer = async (type: ErrorType, message: string, content: string) => {
   const logEntry = {
     type,
@@ -18,6 +29,16 @@ const sendLogToServer = async (type: ErrorType, message: string, content: string
   }
 };
 
+/**
+ * Formats log arguments into a structured string with timestamp and severity.
+ *
+ * Supports one or two arguments: a single value (logged as-is or JSON-stringified),
+ * or a pair consisting of a message and a data object.
+ *
+ * @param type - The severity level.
+ * @param args - One or two arguments: a value, or (message, data) pair.
+ * @returns A formatted log line.
+ */
 const formatData = (type: ErrorType, ...args: any[]): string => {
   const timestamp = new Date().toISOString();
   let content: string;
@@ -33,6 +54,16 @@ const formatData = (type: ErrorType, ...args: any[]): string => {
   return `[${timestamp}] [${type}]: ${content}`;
 };
 
+/**
+ * Core logging method that dispatches to both the console and the remote server.
+ *
+ * - In **development**, logs are written to the console.
+ * - In **production**, only non-`LOG` levels (`ERROR`, `INFO`, `WARN`) are sent
+ *   to the remote logging server.
+ *
+ * @param type - The severity level.
+ * @param args - Arguments forwarded from the public logger methods.
+ */
 const logMethod = async (type: ErrorType, ...args: any[]): Promise<void> => {
   if (process.env.NODE_ENV === 'development') {
     console.log(formatData(type, ...args));
@@ -68,9 +99,26 @@ const logMethod = async (type: ErrorType, ...args: any[]): Promise<void> => {
   }
 };
 
+/**
+ * Application-wide logger with remote server support.
+ *
+ * Provides `error`, `info`, `warn`, and `log` methods. In development mode
+ * output goes to the console; in production, `ERROR`, `INFO`, and `WARN`
+ * entries are also sent to the remote logging endpoint.
+ *
+ * @example
+ * ```ts
+ * logger.error('Payment failed', { orderId: '123' });
+ * logger.info('User logged in', userId);
+ * ```
+ */
 export const logger = {
+  /** Logs an error-level message. */
   error: (...args: any[]) => logMethod('ERROR', ...args),
+  /** Logs an info-level message. */
   info: (...args: any[]) => logMethod('INFO', ...args),
+  /** Logs a warning-level message. */
   warn: (...args: any[]) => logMethod('WARN', ...args),
+  /** Logs a debug-level message (console-only in development). */
   log: (...args: any[]) => logMethod('LOG', ...args),
 };
