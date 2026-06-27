@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { SectionHeader } from '@components/base/section-header';
 
@@ -21,7 +21,7 @@ export const HomeHeader = ({ subtitle, userName, theme, onLogout }: HomeHeaderPr
     title={userName || 'Loading...'}
     subtitle={subtitle}
     rightElement={
-      <View className="flex-1 flex-row gap-2">
+      <>
         <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
           <MaterialCommunityIcons
             name="bell"
@@ -38,7 +38,7 @@ export const HomeHeader = ({ subtitle, userName, theme, onLogout }: HomeHeaderPr
             color={theme === 'dark' ? 'white' : 'black'}
           />
         </TouchableOpacity>
-      </View>
+      </>
     }
   />
 );
