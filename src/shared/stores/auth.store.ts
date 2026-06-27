@@ -48,6 +48,7 @@ export const useAuthStore = create<AuthStore>()(
             if (res.success && res.data) {
               logger.info('AuthStore: fetchUser success', { empCode });
               // TODO: Correct the role when change if needed
+              console.log('user details', res.data);
               set({ user: res.data, isSignedIn: true, role: 'USER' });
             } else {
               logger.warn('AuthStore: fetchUser returned no data', {
@@ -108,9 +109,12 @@ export const useAuthStore = create<AuthStore>()(
           logger.info('AuthStore: access token found', { hasToken: !!accessToken });
           if (accessToken) {
             await get().fetchUser();
+          } else {
+            get().reset();
           }
         } catch (error) {
           logger.error('AuthStore: _hydrate failed', error);
+          get().reset();
         } finally {
           logger.info('AuthStore: _hydrate complete, setting isAuthLoading=false');
           set({ isAuthLoading: false });

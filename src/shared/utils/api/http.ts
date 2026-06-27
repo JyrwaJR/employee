@@ -22,7 +22,7 @@ const axiosHttp = {
 
   post: async <T>(
     url: string,
-    data?: object,
+    data?: object | FormData | string,
     config?: AxiosRequestConfig
   ): Promise<ApiResponse<T>> => {
     try {

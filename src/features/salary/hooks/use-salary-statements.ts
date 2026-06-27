@@ -1,0 +1,20 @@
+import { useAuthStore } from '@stores/auth.store';
+import { useQuery } from '@tanstack/react-query';
+import { rpc } from '@utils/api';
+import { METHODS, QUERY_KEYS } from '@utils/constants';
+import { transformData } from '@utils/helpers/transform-data';
+import { SalarySlip } from '../types';
+
+export function useSalaryStatements() {
+  const { emp_cd, isSignedIn } = useAuthStore();
+  const { data, isFetched, isError, error, refetch, isLoading, isFetching } = useQuery({
+    queryKey: QUERY_KEYS.SALARY.STATEMENTS(emp_cd),
+    queryFn: () => rpc<SalarySlip[]>(METHODS.GET_EMP_SALARY_STATEMENTS, { emp_cd }),
+    select: (data) => data?.data,
+    enabled: !!emp_cd && isSignedIn,
+  });
+
+  const transformedData = transformData<SalarySlip>(data || []);
+
+  return { data: transformedData, isFetched, isError, error, refetch, isLoading, isFetching };
+}

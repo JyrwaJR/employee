@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, TouchableOpacity } from 'react-native';
+import { View, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
 import { Container } from '@components/layout/container';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { Text } from '@components/ui/text';
@@ -7,35 +7,54 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { DetailRow } from '@components/display/detail-row';
 import { SectionHeader } from '@components/base/section-header';
 import { MoneyRow } from '@components/display/money-row';
-import { usePayslipData } from '../hooks';
+import { useSalaryStatement } from '../hooks';
 import { GovtHeader } from '@components/display/govt-header';
 import { SummaryCard } from '@components/display/summary-card';
+import { StackHeader } from '@components/layout';
 
 type Props = { salaryId: string };
 
-export const PayslipScreen = ({ salaryId }: Props) => {
-  const { data, isFetching, earningsList, deductionsList, totalEarnings, totalDeductions, netPay } =
-    usePayslipData(salaryId);
+export const SalaryStatementDetailsScreen = ({ salaryId }: Props) => {
+  const {
+    data,
+    refetch,
+    isFetching,
+    earningsList,
+    deductionsList,
+    totalEarnings,
+    totalDeductions,
+    netPay,
+  } = useSalaryStatement(salaryId);
 
-  if (isFetching) return <LoadingScreen />;
+  if (isFetching)
+    return (
+      <>
+        <StackHeader />
+        <LoadingScreen />
+      </>
+    );
 
   const summaryDetails = [
     {
       label: 'Pay Level',
-      value: data?.employee?.pay_level ? `L-${data.employee.pay_level}` : '-',
+      // value: data?.employee?.pay_level ? `L-${data.employee.pay_level}` : '-',
+      value: '1',
     },
     {
       label: 'Bank Acct',
-      value: data?.employee?.bank_account_no
-        ? `•••• ${data.employee.bank_account_no.slice(-4)}`
-        : '-',
+      // value: data?.employee?.bank_account_no
+      // ? `•••• ${data.employee.bank_account_no.slice(-4)}`
+      value: '-',
     },
     { label: 'Status', value: data?.status || 'PAID' },
   ];
 
   return (
     <Container className="flex-1">
-      <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}
+        className="flex-1 px-6 pt-6"
+        showsVerticalScrollIndicator={false}>
         <GovtHeader
           title={data?.employee?.department || 'Central Government Department'}
           subtitle={data?.employee?.office_location || 'New Delhi'}

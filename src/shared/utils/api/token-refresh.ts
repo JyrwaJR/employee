@@ -40,6 +40,8 @@ async function handleUnauthorizedExit() {
   try {
     await TokenStoreManager.removeAccessToken();
     await TokenStoreManager.removeRefreshToken();
+    const { useAuthStore } = await import('@stores/auth.store');
+    useAuthStore.getState().reset();
     queryClient.clear();
     router.replace(PAGE_ROUTES.AUTH.LOGIN);
   } finally {

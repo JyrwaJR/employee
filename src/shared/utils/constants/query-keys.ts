@@ -6,9 +6,8 @@ export const QUERY_KEYS = {
     OVERVIEW: (...args: string[]) => ['home', 'overview', ...args] as const,
   },
   SALARY: {
-    PAYSLIP: (id: string) => ['salary', id] as const,
-    STATEMENTS: (id: string, isTab?: boolean) =>
-      ['employee salary', id, isTab].filter((v) => v !== undefined),
+    PAYSLIP: (...args: string[]) => ['salary', ...args] as const,
+    STATEMENTS: (...args: string[]) => ['employee salary', ...args].filter(Boolean),
   },
   PENSION: {
     LIST: (employeeId: string, year: string, month: string, status: string) =>

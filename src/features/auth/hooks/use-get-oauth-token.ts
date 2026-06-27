@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '@utils/logger';
-import axios from 'axios';
+import { axiosInstanceWithoutEncryption } from '@utils/api/axios';
 
 const BASIC_AUTH_TOKEN = process.env.EXPO_PUBLIC_BASIC_AUTH;
 
@@ -23,35 +23,27 @@ type GetOAuthResponse = {
 };
 
 export function useGetOAuthToken() {
-  return useMutation<GetOAuthResponse>({
-    mutationFn: async () => {
-      const response = await axios.post(
+  return useMutation({
+    mutationFn: () =>
+      axiosInstanceWithoutEncryption.post<GetOAuthResponse>(
         url,
-        new URLSearchParams({
-          grant_type: 'client_credentials',
-        }).toString(),
+        new URLSearchParams({ grant_type: 'client_credentials' }).toString(),
         { headers }
-      );
+      ),
+    onSuccess: async (res) => {
+      const data = res.data;
 
-      return response.data as GetOAuthResponse;
-    },
-    onSuccess: (data) => {
-      logger.info('Get OAuth Token Success', {
-        accessToken: !!data.access_token,
-      });
+      if (!data) return;
+
+      logger.info('Get OAuth Token Success', { accessToken: !!data.access_token });
+
       if (data.access_token) {
         logger.info('Setting access token');
-        TokenStoreManager.addAccessToken(data.access_token);
+        await TokenStoreManager.addAccessToken(data.access_token);
         logger.info('Successfully set access token');
       }
+
       return data as GetOAuthResponse;
-    },
-    onError: (error) => {
-      logger.info('Removing access token on error: UseGetOAuthToken', {
-        message: error.message,
-        error: error,
-      });
-      TokenStoreManager.removeAccessToken();
     },
   });
 }

@@ -1,14 +1,87 @@
-import { SalarySlip } from '../types';
+import { useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { http } from '@utils/api';
-import { SALARY_ENDPOINT } from '../utils/constants';
-import { QUERY_KEYS } from '@utils/constants';
+import { METHODS, QUERY_KEYS } from '@utils/constants';
+import { toast } from '@components/ui';
+import { rpc } from '@utils/api';
+import { SalarySlip } from '../types';
+import { useAuthStore } from '@stores/auth.store';
 
-export function useSalaryStatement(id: string, isTab?: boolean) {
-  return useQuery({
-    queryKey: QUERY_KEYS.SALARY.STATEMENTS(id, isTab),
-    queryFn: () => http.get<SalarySlip[]>(SALARY_ENDPOINT.LIST(id)),
-    select: (data) => data.data,
-    enabled: !!id,
+const parseAmount = (value?: string | null): number => {
+  return parseFloat(value || '0');
+};
+
+export const useSalaryStatement = (salaryId: string) => {
+  const { emp_cd, isSignedIn } = useAuthStore();
+  const query = useQuery({
+    queryKey: QUERY_KEYS.SALARY.PAYSLIP(salaryId, emp_cd),
+    queryFn: () =>
+      rpc<SalarySlip>(METHODS.GET_EMP_SALARY_STATEMENTS_DETAILS, {
+        emp_cd,
+        statement_id: salaryId,
+      }),
+    select: (res) => res.data,
+    enabled: !!salaryId && isSignedIn,
   });
-}
+
+  const { data, refetch, isError, error, isFetching } = query;
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('Access Error', {
+        description: (error as any)?.message || 'Could not retrieve payroll details',
+      });
+    }
+  }, [isError, error]);
+
+  const parsedData = useMemo(() => {
+    if (!data) {
+      return {
+        earningsList: [],
+        deductionsList: [],
+        totalEarnings: 0,
+        totalDeductions: 0,
+        netPay: 0,
+      };
+    }
+
+    const earn = [
+      { label: 'Basic Pay', value: parseAmount(data.basic_pay) },
+      { label: 'Dearness Allowance (DA)', value: parseAmount(data.da) },
+      { label: 'House Rent Allowance (HRA)', value: parseAmount(data.hra) },
+      { label: 'Transport Allowance (TA)', value: parseAmount(data.transport_allow) },
+      { label: 'DA on TA', value: parseAmount(data.da_on_ta) },
+      { label: 'Non-Practicing Allowance (NPA)', value: parseAmount(data.npa) },
+      { label: 'Special Duty Allowance (SBA)', value: parseAmount(data.sba) },
+      { label: 'Arrears', value: parseAmount(data.arrears) },
+      { label: 'Bonus', value: parseAmount(data.bonus) },
+    ].filter((item) => item.value > 0);
+
+    const ded = [
+      { label: 'NPS Contribution (Tier-I)', value: parseAmount(data.nps_tier_1) },
+      { label: 'CGHS Contribution', value: parseAmount(data.cghs) },
+      { label: 'CGEGIS', value: parseAmount(data.cgegis) },
+      { label: 'License Fee (Govt Quarter)', value: parseAmount(data.license_fee) },
+      { label: 'Income Tax (TDS)', value: parseAmount(data.income_tax) },
+      { label: 'Professional Tax', value: parseAmount(data.prof_tax) },
+      { label: 'GPF', value: parseAmount(data.gpf) },
+      { label: 'Recovery/Advances', value: parseAmount(data.recovery) },
+    ].filter((item) => item.value > 0);
+
+    return {
+      earningsList: earn,
+      deductionsList: ded,
+      totalEarnings: parseAmount(data.total_earnings),
+      totalDeductions: parseAmount(data.total_deductions),
+      netPay: parseAmount(data.net_payable),
+    };
+  }, [data]);
+
+  return {
+    data,
+    isFetching,
+    refetch,
+    isError,
+    error,
+    ...parsedData,
+  };
+};

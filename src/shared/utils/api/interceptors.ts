@@ -1,19 +1,19 @@
 import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '../logger/logger';
-import { shouldSkipRefresh, attemptTokenRefresh } from './token-refresh';
+import { attemptTokenRefresh, shouldSkipRefresh } from './token-refresh';
 import { decrypt, encrypt } from '@lib/encryption';
 
 const APP_ID = process.env.EXPO_PUBLIC_APP_ID;
 
-export function setupInterceptors(instance: AxiosInstance) {
+export function setupInterceptors(instance: AxiosInstance, options?: { encryption?: boolean }) {
   instance.interceptors.request.use(async (config) => {
     const token = await TokenStoreManager.getAccessToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    if (config.data) {
+    if (config.data && options?.encryption !== false) {
       config.data = {
         request_data: encrypt(JSON.stringify(config.data)),
         app_id: APP_ID,
@@ -28,8 +28,8 @@ export function setupInterceptors(instance: AxiosInstance) {
   });
 
   instance.interceptors.response.use(
-    (res) => {
-      if (res.data?.response) {
+    async (res) => {
+      if (res.data?.response && options?.encryption !== false) {
         const decrypted = decrypt<{
           status_code: string;
           message: string;
@@ -45,7 +45,10 @@ export function setupInterceptors(instance: AxiosInstance) {
         }
 
         if (decrypted.status_code === '401') {
-          TokenStoreManager.removeAccessToken();
+          console.log('Unauthorized Removing Token');
+          await TokenStoreManager.removeAccessToken();
+          const { useAuthStore } = await import('@stores/auth.store');
+          useAuthStore.getState().reset();
         }
 
         logger.log('Decrypted Response', {

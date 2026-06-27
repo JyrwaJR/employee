@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, FlatList } from 'react-native';
 import { Container } from '@components/layout/container';
 import { router } from 'expo-router';
-import { useAuthStore } from '@stores/auth.store';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { Text } from '@components/ui/text';
 import { HistoryCard } from '@components/display/history-card';
@@ -10,12 +9,7 @@ import { FilterCard } from '@components/display/filter-card';
 import { months, years } from '@utils/helpers/years';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { toast } from '@components/ui';
-import { useSalaryStatement } from '../hooks';
-
-type Props = {
-  idx?: string;
-  isTab?: boolean;
-};
+import { useSalaryStatements } from '../hooks';
 
 const statusOptions = [
   {
@@ -28,18 +22,14 @@ const statusOptions = [
   },
 ];
 
-export const StatementScreen = ({ idx, isTab }: Props) => {
-  const { emp_cd } = useAuthStore();
-
+export const StatementScreen = () => {
   const [selectedYear, setSelectedYear] = useState('2026');
 
   const [status, setStatus] = useState<string>('PAID');
 
   const [selectedMonth, setSelectedMonth] = useState<string>('JANUARY');
 
-  const id = idx ? idx : emp_cd || '';
-
-  const { data, isFetching, isError, error } = useSalaryStatement(id, isTab);
+  const { data: statements, isFetching, isError, error } = useSalaryStatements();
 
   // Handle Query Error
   React.useEffect(() => {
@@ -49,12 +39,6 @@ export const StatementScreen = ({ idx, isTab }: Props) => {
       });
     }
   }, [isError, error]);
-
-  const filteredData =
-    data
-      ?.filter((item) => item.year.toString() === selectedYear)
-      .filter((val) => val.month === selectedMonth)
-      .filter((val) => val.status === status) || [];
 
   if (isFetching) return <LoadingScreen />;
 
@@ -78,7 +62,7 @@ export const StatementScreen = ({ idx, isTab }: Props) => {
 
       {/* Content */}
       <FlatList
-        data={filteredData}
+        data={statements}
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}

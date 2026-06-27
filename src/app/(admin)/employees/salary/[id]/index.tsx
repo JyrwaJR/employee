@@ -1,7 +1,7 @@
-import { PayslipScreen } from '@features/salary/screens/payslip-screen';
+import { SalaryStatementDetailsScreen } from '@features/salary/screens/salary-statements-details-screen';
 import { useLocalSearchParams } from 'expo-router';
 
 export default function Page() {
   const { id } = useLocalSearchParams();
-  return <PayslipScreen salaryId={id.toString()} />;
+  return <SalaryStatementDetailsScreen salaryId={id.toString()} />;
 }

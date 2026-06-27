@@ -10,6 +10,7 @@ export type EmployeeT = {
   userId: string;
   employee_id: string;
   designation: string;
+
   department: string;
   office_location: string;
   city_class: CityClass;
@@ -27,8 +28,5 @@ export type EmployeeT = {
 
   createdAt: string;
   updatedAt: string;
-
-  // salary_slips: SalarySlip[];
-  // current_structure: CurrentSalaryStructure;
   user: UserT;
 };
