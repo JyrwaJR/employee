@@ -26,7 +26,8 @@ const axiosHttp = {
       return handleResponse<T>(response);
     } catch (error) {
       if (isCancel(error)) {
-        logger.warn(`GET ${url} Request to ${url} was cancelled.`);
+        logger.warn(`GET ${url} — request was cancelled.`);
+        return { success: false, message: 'Request cancelled.' } as ApiResponse<T>;
       }
       return handleError<T>(error);
     }
@@ -50,6 +51,10 @@ const axiosHttp = {
       const response = await axiosInstance.post(url, data, config);
       return handleResponse<T>(response);
     } catch (error) {
+      if (isCancel(error)) {
+        logger.warn(`POST ${url} — request was cancelled.`);
+        return { success: false, message: 'Request cancelled.' } as ApiResponse<T>;
+      }
       return handleError<T>(error);
     }
   },
@@ -72,6 +77,10 @@ const axiosHttp = {
       const response = await axiosInstance.put(url, data, config);
       return handleResponse<T>(response);
     } catch (error) {
+      if (isCancel(error)) {
+        logger.warn(`PUT ${url} — request was cancelled.`);
+        return { success: false, message: 'Request cancelled.' } as ApiResponse<T>;
+      }
       return handleError<T>(error);
     }
   },
@@ -89,6 +98,10 @@ const axiosHttp = {
       const response = await axiosInstance.delete(url, config);
       return handleResponse<T>(response);
     } catch (error) {
+      if (isCancel(error)) {
+        logger.warn(`DELETE ${url} — request was cancelled.`);
+        return { success: false, message: 'Request cancelled.' } as ApiResponse<T>;
+      }
       return handleError<T>(error);
     }
   },
