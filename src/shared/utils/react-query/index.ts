@@ -12,24 +12,37 @@ export * from './focus-manager';
 export * from './online-manager';
 
 /**
- * Singleton React Query client configured with sensible defaults.
+ * Singleton React Query client configured for production.
  *
- * - Queries have a 5-minute stale time and retry up to 3 times.
- * - Mutation errors trigger an on-screen toast and are logged to the remote server.
+ * - 5-minute stale time with 30-minute garbage collection window.
+ * - Query errors trigger a global toast and structured log (individual queries
+ *   can opt out via `meta: { silent: true }`).
+ * - Mutation errors trigger an on-screen toast and are logged.
+ * - Refetch on reconnect is enabled; window focus refetch is disabled
+ *   (mobile uses AppState-based focus manager instead).
  */
 export const queryClient = new QueryClient({
-  queryCache: new QueryCache(),
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      if (query.meta?.silent !== true) {
+        toast.error('Something went wrong', { description: error.message });
+      }
+      logger.error('Query error', error, { queryKey: query.queryKey });
+    },
+  }),
   mutationCache: new MutationCache({
     onError: (error) => {
       toast.error('Something went wrong', { description: error.message });
       logger.error('Mutation error', error);
-      return error;
     },
   }),
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 30, // 30 min — gives persistence time to serialize
       retry: 3,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: false, // mobile: AppState-based, not visibilitychange
     },
   },
 });

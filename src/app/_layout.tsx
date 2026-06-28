@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ProviderWrapper } from '@providers/provider-wrapper';
+import { NetworkBanner } from '@components/network';
 import { Toaster } from '@components/ui';
 import './global.css';
 import { Stack } from 'expo-router';
@@ -52,6 +53,7 @@ export default function Layout() {
   return (
     <ProviderWrapper>
       <Stack screenOptions={{ headerShown: false }} />
+      <NetworkBanner />
       <Toaster />
     </ProviderWrapper>
   );

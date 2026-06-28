@@ -1,6 +1,6 @@
 import { useMemo, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { METHODS, QUERY_KEYS } from '@utils/constants';
+import { METHODS, QUERY_KEYS, STALE_TIMES } from '@utils/constants';
 import { toast } from '@components/ui';
 import { rpc } from '@utils/api';
 import { SalarySlip } from '../types';
@@ -19,6 +19,7 @@ export const useSalaryStatement = (salaryId: string) => {
         emp_cd,
         statement_id: salaryId,
       }),
+    staleTime: STALE_TIMES.SALARY,
     select: (res) => res.data,
     enabled: !!salaryId && isSignedIn,
   });

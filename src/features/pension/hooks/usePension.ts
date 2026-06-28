@@ -3,7 +3,7 @@ import { useAuthStore } from '@hooks';
 import { useQuery } from '@tanstack/react-query';
 import { axioshttp } from '@utils/api';
 import { PENSION_ENDPOINT } from '../utils/constants';
-import { QUERY_KEYS } from '@utils/constants';
+import { QUERY_KEYS, STALE_TIMES } from '@utils/constants';
 
 export function usePension(pensionId: string) {
   const { user } = useAuthStore();
@@ -11,6 +11,7 @@ export function usePension(pensionId: string) {
   return useQuery({
     queryKey: QUERY_KEYS.PENSION.DETAIL(empId, pensionId),
     queryFn: () => axioshttp.get<SalarySlip[]>(PENSION_ENDPOINT.DETAILS(empId, pensionId)),
+    staleTime: STALE_TIMES.PENSION,
     select: (data) => data.data,
     enabled: !!empId,
   });

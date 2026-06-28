@@ -34,3 +34,36 @@ export const QUERY_KEYS = {
     DETAILS: (id: string) => ['announcement_details', id] as const,
   },
 };
+
+/**
+ * Recommended stale times per domain, in milliseconds.
+ *
+ * These are presets to pass as `staleTime` in individual `useQuery` calls.
+ * They override the global default (5 minutes) where data freshness needs
+ * differ from the baseline.
+ *
+ * @example
+ * ```ts
+ * useQuery({
+ *   queryKey: QUERY_KEYS.LEAVE.LIST(emp_cd),
+ *   queryFn: ...,
+ *   staleTime: STALE_TIMES.LEAVE,
+ * });
+ * ```
+ */
+export const STALE_TIMES = {
+  /** Auth/session data — stale immediately, always check server. */
+  AUTH: 0,
+  /** Fast-changing data like leave approvals. */
+  LEAVE_FAST: 1000 * 30, // 30 seconds
+  /** Leave list/balance queries. */
+  LEAVE: 1000 * 60 * 1, // 1 minute
+  /** Moderate cadence — announcements. */
+  ANNOUNCEMENT: 1000 * 60 * 5, // 5 minutes
+  /** Slow-changing reference data — salary, payslips. */
+  SALARY: 1000 * 60 * 15, // 15 minutes
+  /** Rarely-changing — employee directory. */
+  EMPLOYEE: 1000 * 60 * 30, // 30 minutes
+  /** Static reference data — pension records. */
+  PENSION: 1000 * 60 * 15, // 15 minutes
+} as const;
