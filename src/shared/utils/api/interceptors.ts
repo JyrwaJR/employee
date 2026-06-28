@@ -1,4 +1,4 @@
-import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { AxiosError, AxiosInstance, InternalAxiosRequestConfig, isCancel } from 'axios';
 import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '../logger/logger';
 import { attemptTokenRefresh, shouldSkipRefresh } from './token-refresh';
@@ -97,6 +97,28 @@ export function setupInterceptors(instance: AxiosInstance, options?: { encryptio
         duration: `${duration}ms`,
         status: error.response?.status,
       });
+
+      // Cancelled requests are intentional — let http.ts handle the logging
+      if (isCancel(error)) {
+        return Promise.reject(error);
+      }
+
+      // Distinguish network-level failures from server responses for clearer diagnostics
+      if (!error.response) {
+        logger.warn('NETWORK_ERROR', {
+          code: error.code,
+          message: error.message,
+          method: originalRequest?.method?.toUpperCase(),
+          path: originalRequest?.url,
+        });
+      } else {
+        logger.warn('HTTP_ERROR', {
+          status: error.response.status,
+          statusText: error.response.statusText,
+          method: originalRequest?.method?.toUpperCase(),
+          path: originalRequest?.url,
+        });
+      }
 
       if (
         !error.response ||
