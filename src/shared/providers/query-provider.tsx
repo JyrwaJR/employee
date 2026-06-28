@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
-import { createAsyncStoragePersister } from '@tanstack/query-async-storage-persister';
 import { queryClient, setupFocusManager, setupOnlineManager } from '@utils/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { logger } from '@utils/logger';
 
 type Props = {
   children: React.ReactNode;
@@ -15,11 +14,6 @@ type Props = {
  * - Throttle-writes at 1-second intervals to avoid excessive I/O.
  * - Data older than 24 hours is discarded on hydration.
  */
-const asyncStoragePersister = createAsyncStoragePersister({
-  storage: AsyncStorage,
-  key: '@employee/query-cache',
-  throttleTime: 1000,
-});
 
 /**
  * Configures React Query app-wide.
@@ -37,14 +31,14 @@ export const TQueryProvider = ({ children }: Props) => {
       const cleanupFocus = setupFocusManager();
       cleanups.push(cleanupFocus);
     } catch (error) {
-      console.error('Failed to setup focus manager', error);
+      logger.error('Failed to setup focus manager', error);
     }
 
     try {
       const cleanupOnline = setupOnlineManager();
       cleanups.push(cleanupOnline);
     } catch (error) {
-      console.error('Failed to setup online manager', error);
+      logger.error('Failed to setup online manager', error);
     }
 
     return () => {
@@ -52,14 +46,5 @@ export const TQueryProvider = ({ children }: Props) => {
     };
   }, []);
 
-  return (
-    <PersistQueryClientProvider
-      client={queryClient}
-      persistOptions={{
-        persister: asyncStoragePersister,
-        maxAge: 1000 * 60 * 60 * 24, // 24 hours
-      }}>
-      {children}
-    </PersistQueryClientProvider>
-  );
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 };

@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import { Platform } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import { Route, router } from 'expo-router';
 import { logger } from '@utils/logger/logger';
@@ -20,6 +19,12 @@ const ALLOWED_PUSH_ROUTES = [
   PAGE_ROUTES.EMPLOYEES.DETAILS(''),
   PAGE_ROUTES.PROFILE,
 ];
+
+// type PushNotificationData = {
+//   url?: string;
+//   employeeId?: string;
+//   type?: 'leave' | 'salary' | 'announcement';
+// };
 
 /**
  * Global Hook for Push Notification lifecycle management.
@@ -85,7 +90,7 @@ export const useNotifications = () => {
           }
         );
 
-        if (isMounted && Platform.OS === 'android') {
+        if (isMounted) {
           await Notifications.getNotificationChannelsAsync();
           logger.info('NotificationHook: Registration & Channel Sync Complete');
         }
@@ -110,6 +115,7 @@ export const useNotifications = () => {
     });
 
     const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
+      // const data = response.notification.request.content.data as PushNotificationData;
       const url = response.notification.request.content.data?.url;
       const id = response.notification.request.identifier;
 

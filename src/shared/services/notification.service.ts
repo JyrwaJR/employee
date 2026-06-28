@@ -3,8 +3,8 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import * as Constants from 'expo-constants';
 import { logger } from '@utils/logger/logger';
-import { axioshttp } from '@utils/api/http';
 import { ENDPOINTS } from '@utils/constants/endpoints';
+import { http } from '@utils/api';
 
 type TErrorType = 'PERMISSION_DENIED' | 'NOT_A_DEVICE' | 'CONFIG_ERROR' | 'NETWORK_ERROR';
 
@@ -72,7 +72,7 @@ export const NotificationService = {
       const token = tokenResponse.data;
 
       // 2. Register with Backend
-      const res = await axioshttp.post(ENDPOINTS.NOTIFICATION.REGISTER, {
+      const res = await http.post(ENDPOINTS.NOTIFICATION.REGISTER, {
         token,
         user_id: userId,
       });
@@ -90,8 +90,6 @@ export const NotificationService = {
   },
 
   async unregister({ id }: { id: string }): Promise<void> {
-    await axioshttp.post(ENDPOINTS.NOTIFICATION.UNREGISTER, {
-      user_id: id,
-    });
+    await http.post(ENDPOINTS.NOTIFICATION.UNREGISTER, { user_id: id });
   },
 };
