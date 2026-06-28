@@ -1,58 +1,6 @@
-import { http } from '@utils/api';
-
-/** Severity levels supported by the logger. */
-type ErrorType = 'ERROR' | 'INFO' | 'WARN' | 'LOG';
-
-/**
- * Sends a log entry to the remote logging server.
- *
- * The entry includes the severity type, message, serialised content, and a
- * timestamp. Failures are silently caught to avoid disrupting the app flow.
- *
- * @param type    - The severity level.
- * @param message - A short identifier or summary for the log entry.
- * @param content - The serialised log data (JSON string).
- */
-const sendLogToServer = async (type: ErrorType, message: string, content: string) => {
-  const logEntry = {
-    type,
-    message,
-    content,
-    timestamp: new Date().toISOString(),
-  };
-
-  try {
-    console.log(logEntry);
-    await http.post('/logs', logEntry);
-  } catch (error) {
-    console.log('Failed to send logs to server', error);
-  }
-};
-
-/**
- * Formats log arguments into a structured string with timestamp and severity.
- *
- * Supports one or two arguments: a single value (logged as-is or JSON-stringified),
- * or a pair consisting of a message and a data object.
- *
- * @param type - The severity level.
- * @param args - One or two arguments: a value, or (message, data) pair.
- * @returns A formatted log line.
- */
-const formatData = (type: ErrorType, ...args: any[]): string => {
-  const timestamp = new Date().toISOString();
-  let content: string;
-  if (args.length === 1) {
-    content = typeof args[0] === 'string' ? args[0] : JSON.stringify(args[0], null, 3);
-  } else {
-    const [message, data] = args;
-    content =
-      typeof message === 'string'
-        ? `${message} ${data ? JSON.stringify(data, null, 3) : ''}`
-        : JSON.stringify(message, null, 3);
-  }
-  return `[${timestamp}] [${type}]: ${content}`;
-};
+import type { LogErrorType } from './types';
+import { formatData } from './format';
+import { logTransporter } from './transport';
 
 /**
  * Core logging method that dispatches to both the console and the remote server.
@@ -64,9 +12,10 @@ const formatData = (type: ErrorType, ...args: any[]): string => {
  * @param type - The severity level.
  * @param args - Arguments forwarded from the public logger methods.
  */
-const logMethod = async (type: ErrorType, ...args: any[]): Promise<void> => {
+const logMethod = async (type: LogErrorType, ...args: any[]): Promise<void> => {
   if (process.env.NODE_ENV === 'development') {
     console.log(formatData(type, ...args));
+    return;
   }
 
   if (process.env.NODE_ENV === 'production' && type !== 'LOG') {
@@ -92,9 +41,11 @@ const logMethod = async (type: ErrorType, ...args: any[]): Promise<void> => {
         content = JSON.stringify(data);
       }
 
-      await sendLogToServer(type, message, content);
+      await logTransporter(type, message, content);
+      return;
     } catch {
       console.log(`Failed to send ${type.toLowerCase()} logs to server`);
+      return;
     }
   }
 };
