@@ -18,6 +18,9 @@ const getIdentifier = (baseIdentifier: string) => {
   return baseIdentifier;
 };
 
+const iconAssetUrl = './src/shared/assets/icon.png';
+const splashAssetUrl = './src/shared/assets/splash.png';
+
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
   name: getAppName('Employee'),
@@ -39,7 +42,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-notifications',
       {
-        icon: './src/shared/assets/icon.png',
+        icon: iconAssetUrl,
         color: '#ffffff',
         defaultChannel: 'default',
         enableBackgroundRemoteNotifications: true,
@@ -51,10 +54,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     tsconfigPaths: true,
   },
   orientation: 'portrait',
-  icon: './src/shared/assets/icon.png',
+  icon: iconAssetUrl,
   userInterfaceStyle: 'automatic',
   splash: {
-    image: './src/shared/assets/splash.png',
+    image: splashAssetUrl,
     resizeMode: 'contain',
     backgroundColor: '#ffffff',
   },
@@ -62,11 +65,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     supportsTablet: true,
     bundleIdentifier: getIdentifier('com.jyrwaboys.employeemobile'),
+    googleServicesFile: process.env.GOOGLE_SERVICES_JSON_IOS,
   },
   android: {
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
     adaptiveIcon: {
-      foregroundImage: './src/shared/assets/adaptive-icon.png',
+      foregroundImage: iconAssetUrl,
       backgroundColor: '#ffffff',
     },
     package: getIdentifier('com.jyrwaboys.employeemobile'),
