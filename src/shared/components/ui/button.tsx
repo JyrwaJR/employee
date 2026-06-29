@@ -9,11 +9,11 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
-        primary: 'bg-blue-600',
-        secondary: 'bg-slate-100 dark:bg-slate-800 shadow-none',
-        outline: 'border border-gray-400 bg-background shadow-none dark:border-gray-800',
+        primary: 'bg-primary',
+        secondary: 'bg-secondary shadow-none',
+        outline: 'border border-input bg-background shadow-none',
         ghost: 'bg-background !shadow-none',
-        destructive: 'bg-red-500',
+        destructive: 'bg-destructive',
       },
       size: {
         default: 'py-4 px-4',
@@ -72,8 +72,8 @@ export const Button = ({
               className={cn(
                 'text-base font-semibold',
                 variant === 'outline' || variant === 'ghost' || variant === 'secondary'
-                  ? 'text-slate-900 dark:text-slate-50'
-                  : '!dark:text-black text-white'
+                  ? 'text-foreground'
+                  : 'text-primary-foreground'
               )}>
               {title}
             </Text>

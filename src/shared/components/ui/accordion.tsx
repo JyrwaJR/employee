@@ -47,7 +47,7 @@ export const AccordionItem = ({
   const isOpen = activeValue === itemValue;
 
   return (
-    <View className={cn('border-b border-slate-200 dark:border-slate-800', className)}>
+    <View className={cn('border-b border-border', className)}>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(child as React.ReactElement<any>, { isOpen, value: itemValue })

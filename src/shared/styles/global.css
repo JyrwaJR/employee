@@ -63,6 +63,25 @@
     --chart-4: 358 65% 43%;
     --chart-5: 0 0% 76%; /* steel                     */
 
+    /* HP Extended — Brand & Accent */
+    --primary-soft: 210 87% 89%; /* #c9e0fc — soft blue chips/story cards */
+    --primary-bright: 220 95% 57%; /* #296ef9 — bright variant for dark slabs */
+    --primary-deep: 224 82% 31%; /* #0e3191 — pressed state (alias)       */
+
+    /* HP Extended — Semantic Accents (bloom/storm) */
+    --bloom-coral: 0 100% 66%; /* #ff5050 — sale tags */
+    --bloom-rose: 2 68% 90%; /* #f9d4d2 — soft pink lifestyle accent   */
+    --storm-mist: 194 41% 68%; /* #8ebdce — printer-plan illustration    */
+    --storm-sea: 193 31% 59%; /* #7fadbe */
+    --storm-deep: 193 32% 30%; /* #356373 — neutral status accent        */
+
+    /* HP Extended — Text */
+    --ink-deep: 0 0% 0%; /* #000000 — wordmark, 1px hairline strokes */
+    --ink-soft: 0 0% 16%; /* #292929 — textural shift on dark slabs  */
+
+    /* HP Extended — On-dark overrides */
+    --on-dark-strong: 0 0% 100%; /* #ffffff — pure white on dark            */
+
     /* Sidebar Tokens */
     --sidebar: 0 0% 97%; /* cloud                     */
     --sidebar-foreground: 0 0% 10%;
@@ -133,6 +152,25 @@
     --chart-3: 44 100% 48%;
     --chart-4: 358 65% 43%;
     --chart-5: 0 0% 39%; /* graphite                  */
+
+    /* HP Extended — Brand & Accent (dark) */
+    --primary-soft: 210 57% 15%; /* muted soft-blue on dark */
+    --primary-bright: 220 95% 57%; /* #296ef9 — accent on dark slabs */
+    --primary-deep: 224 82% 31%; /* #0e3191 — pressed state        */
+
+    /* HP Extended — Semantic Accents (dark) */
+    --bloom-coral: 0 100% 66%; /* same #ff5050 */
+    --bloom-rose: 2 68% 90%; /* same #f9d4d2 */
+    --storm-mist: 194 20% 40%; /* dimmed for dark background      */
+    --storm-sea: 193 20% 35%;
+    --storm-deep: 193 32% 30%; /* same #356373                    */
+
+    /* HP Extended — Text (dark) */
+    --ink-deep: 0 0% 100%; /* inverted to white               */
+    --ink-soft: 0 0% 90%; /* light gray textural shift       */
+
+    /* HP Extended — On-dark overrides */
+    --on-dark-strong: 0 0% 100%; /* #ffffff                          */
 
     /* Sidebar Tokens */
     --sidebar: 0 0% 16%;

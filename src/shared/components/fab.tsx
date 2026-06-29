@@ -8,9 +8,9 @@ const fabVariants = cva('absolute items-center justify-center rounded-full shado
   variants: {
     variant: {
       primary: 'bg-primary shadow-primary/30',
-      secondary: 'bg-slate-100 dark:bg-slate-800 shadow-none',
-      outline: 'border border-gray-400 bg-background shadow-none dark:border-gray-800',
-      destructive: 'bg-red-500 shadow-red-500/30',
+      secondary: 'bg-secondary shadow-none',
+      outline: 'border border-input bg-background shadow-none',
+      destructive: 'bg-destructive shadow-destructive/30',
     },
     size: {
       default: 'h-14 w-14 bottom-6 right-6',

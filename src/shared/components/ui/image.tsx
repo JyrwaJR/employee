@@ -24,7 +24,7 @@ export const Image = ({
 
   return (
     <View
-      className={cn('relative overflow-hidden bg-slate-100 dark:bg-slate-900', containerClassName)}
+      className={cn('relative overflow-hidden bg-muted', containerClassName)}
       style={{ minHeight: 40, minWidth: 40 }}>
       {/* Image Layer */}
       <RNImage
@@ -47,9 +47,7 @@ export const Image = ({
 
       {/* Error / Placeholder Layer */}
       {status === 'error' && (
-        <View
-          style={StyleSheet.absoluteFill}
-          className="items-center justify-center bg-slate-100 dark:bg-slate-800">
+        <View style={StyleSheet.absoluteFill} className="items-center justify-center bg-muted">
           <Ionicons name={fallbackIcon} size={32} color="#94a3b8" />
         </View>
       )}

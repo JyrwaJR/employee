@@ -3,15 +3,15 @@ import { Text as RNText, TextProps as RNTextProps } from 'react-native';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@utils/helpers';
 
-const textVariants = cva('text-slate-900 dark:text-slate-50', {
+const textVariants = cva('text-foreground', {
   variants: {
     variant: {
       default: 'text-base',
       heading: 'font-bold',
-      subtext: 'text-slate-500 dark:text-slate-400',
-      error: 'text-red-500 dark:text-red-400',
-      link: 'text-blue-600 dark:text-blue-400',
-      label: 'text-sm font-medium text-slate-700 dark:text-slate-300',
+      subtext: 'text-muted-foreground',
+      error: 'text-destructive',
+      link: 'text-primary',
+      label: 'text-sm font-medium text-foreground/70',
     },
     size: {
       default: 'text-base',

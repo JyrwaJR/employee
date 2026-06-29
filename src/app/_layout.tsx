@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ProviderWrapper } from '@providers/provider-wrapper';
 import { NetworkBanner } from '@components/network';
 import { Toaster } from '@components/ui';
-import './global.css';
+import '../shared/styles/global.css';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { logger } from '../shared/utils/logger';
@@ -52,8 +52,8 @@ export default function Layout() {
 
   return (
     <ProviderWrapper>
-      <Stack screenOptions={{ headerShown: false }} />
       <NetworkBanner />
+      <Stack screenOptions={{ headerShown: false }} />
       <Toaster />
     </ProviderWrapper>
   );
