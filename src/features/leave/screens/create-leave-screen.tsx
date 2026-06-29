@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Button, FieldInput, toast } from '@components/ui';
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Container, KeyboardSafeView, StackHeader } from '@components/layout';
 import { SectionHeader } from '@components/base';
@@ -77,10 +77,18 @@ export const CreateLeaveScreen = () => {
           <FormProvider {...methods}>
             <View className="w-full gap-y-2">
               {/* Leave Type Dropdown Selector */}
-              <LeaveTypeDropdown
-                selectedType={methods.getValues('type') as LeaveTypeCode}
-                error={methods.formState.errors.type?.message}
-                onSelect={(type) => methods.setValue('type', type)}
+              <Controller
+                control={methods.control}
+                name="type"
+                render={({ field: { value, onChange }, fieldState: { error } }) => (
+                  <LeaveTypeDropdown
+                    selectedType={value as LeaveTypeCode}
+                    error={error?.message}
+                    onSelect={(type) => {
+                      onChange(type);
+                    }}
+                  />
+                )}
               />
 
               {/* From Date & To Date — side by side */}
@@ -119,12 +127,18 @@ export const CreateLeaveScreen = () => {
               />
 
               {/* Reason */}
-              <LeaveReasonDropdown
-                selectedReason={methods.getValues('reason') as LeaveReasonCode}
-                onSelect={(reason) => {
-                  methods.setValue('reason', reason, { shouldValidate: true });
-                }}
-                error={methods.formState.errors.reason?.message}
+              <Controller
+                control={methods.control}
+                name="reason"
+                render={({ field: { value, onChange }, fieldState: { error } }) => (
+                  <LeaveReasonDropdown
+                    selectedReason={value as LeaveReasonCode}
+                    onSelect={(reason) => {
+                      onChange(reason);
+                    }}
+                    error={error?.message}
+                  />
+                )}
               />
               {/* Remarks (optional) */}
               <FieldInput
