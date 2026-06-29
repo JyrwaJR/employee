@@ -39,16 +39,18 @@ function parseDDMMYYYY(dateStr: string): { day: number; month: number; year: num
 /**
  * Formats raw digit input into a `dd-mm-yyyy` mask as the user types.
  *
- * Strips all non-digit characters from the input, then inserts dashes
- * after the 2nd and 4th digits to produce the standard `dd-mm-yyyy` layout.
- * If the input contains fewer than 2 or 4 digits, dashes are omitted
- * (e.g. `"2"` → `"2"`, `"22"` → `"22"`, `"220"` → `"22-0"`).
+ * Strips all non-digit characters from the input, then groups the digits
+ * into day (2), month (2), and year (4) segments joined by dashes.
+ * Partial input produces a partial mask — no trailing dashes are added
+ * when a segment is incomplete (e.g. `"2"` → `"2"`, `"22"` → `"22"`,
+ * `"220"` → `"22-0"`).
  *
- * This is designed to be used as an `onChangeText` handler for date
- * inputs so the user never has to type the dash manually.
+ * Designed to be used as an `onChangeText` handler for date inputs so
+ * the user never has to type the dash manually.
  *
  * @param input - The raw text from the input (digits + any typed dashes).
- * @returns The formatted `dd-mm-yyyy` string (partial or complete).
+ * @returns The formatted `dd-mm-yyyy` string (partial or complete), or
+ *          an empty string when `input` is empty.
  *
  * @example
  * ```ts
@@ -59,17 +61,15 @@ function parseDDMMYYYY(dateStr: string): { day: number; month: number; year: num
  * ```
  */
 export function formatDateInput(input: string): string {
-  // Strip everything except digits
-  const digits = input.replace(/\D/g, '');
+  const digits = input.replace(/\D/g, '').slice(0, 8);
+  if (!digits) return '';
 
-  // Apply dd-mm-yyyy mask (up to 8 digits)
   const parts: string[] = [];
-  for (let i = 0; i < digits.length && i < 8; i++) {
-    if (i === 2 || i === 4) parts.push('-');
-    parts.push(digits[i]);
-  }
+  if (digits.length > 0) parts.push(digits.slice(0, 2));
+  if (digits.length > 2) parts.push(digits.slice(2, 4));
+  if (digits.length > 4) parts.push(digits.slice(4, 8));
 
-  return parts.join('');
+  return parts.join('-');
 }
 
 export function calculateDaysBetweenDates(fromDate: string, toDate: string): string | null {
