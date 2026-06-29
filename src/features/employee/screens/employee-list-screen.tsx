@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, FlatList, TouchableOpacity, StatusBar } from 'react-native';
+import { View, FlatList, StatusBar } from 'react-native';
 import { Container } from '@components/layout';
 import { EmployeeListItem } from '@components/employee-list-item';
 import { router } from 'expo-router';
@@ -11,6 +11,7 @@ import { PAGE_ROUTES } from '@utils/constants/routes';
 import { useEmployees } from '@hooks';
 import { SectionHeader } from '@components/base/section-header';
 import { SearchInput } from '@components/search-input';
+import { FAB } from '@components/fab';
 
 // --- Screen ---
 export default function EmployeeListScreen() {
@@ -75,11 +76,7 @@ export default function EmployeeListScreen() {
         }
       />
       {/* FAB */}
-      <TouchableOpacity
-        activeOpacity={0.9}
-        className="absolute bottom-8 right-6 h-14 w-14 items-center justify-center rounded-full bg-blue-600 shadow-lg shadow-blue-600/30">
-        <Text className="text-2xl font-light text-white">+</Text>
-      </TouchableOpacity>
+      <FAB icon="add" onPress={() => {}} />
     </Container>
   );
 }
