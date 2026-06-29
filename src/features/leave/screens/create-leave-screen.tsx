@@ -6,11 +6,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Container, KeyboardSafeView, StackHeader } from '@components/layout';
 import { SectionHeader } from '@components/base';
 import { CreateLeaveSchema, type CreateLeaveInputs } from '../validators';
-import type { LeaveType } from '@sharedTypes/leave';
-import { useCreateLeave } from '../hooks/use-create-leave';
-import { LeaveTypeChips } from '../components/leave-type-chips';
+import { useCreateLeave } from '../hooks';
 import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants';
+import { LeaveTypeCode } from '../types';
+import { LeaveTypeDropdown } from '../components';
 
 const defaultValues: CreateLeaveInputs = {
   type: 'SL',
@@ -26,7 +26,7 @@ const defaultValues: CreateLeaveInputs = {
  * CreateLeaveScreen provides a form for submitting a new leave request.
  *
  * Features:
- * - Chip toggle for leave type selection (COM / EL / SL / HPL)
+ * - Bottom-sheet dropdown for leave type selection (COM / EL / SL / HPL / etc.)
  * - Text inputs for date fields with `dd-mm-yyyy` format
  * - Text inputs for order number, reason, and optional remarks
  * - Zod validation via the existing `CreateLeaveSchema`
@@ -34,7 +34,8 @@ const defaultValues: CreateLeaveInputs = {
  * - On success: navigates to the leave detail screen; on failure: shows an error toast
  */
 export const CreateLeaveScreen = () => {
-  const [selectedType, setSelectedType] = useState<LeaveType>('SL');
+  const [selectedType, setSelectedType] = useState<LeaveTypeCode>('SL');
+
   const router = useRouter();
 
   const methods = useForm<CreateLeaveInputs>({
@@ -77,8 +78,8 @@ export const CreateLeaveScreen = () => {
 
           <FormProvider {...methods}>
             <View className="w-full gap-y-2">
-              {/* Leave Type Chip Selector */}
-              <LeaveTypeChips
+              {/* Leave Type Dropdown Selector */}
+              <LeaveTypeDropdown
                 selectedType={selectedType}
                 onSelect={(type) => {
                   setSelectedType(type);

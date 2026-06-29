@@ -10,3 +10,4 @@ export * from './toaster';
 export * from './image';
 export * from './card';
 export * from './accordion';
+export * from './select-sheet';
