@@ -5,15 +5,29 @@ import { cn } from '@utils/helpers/cn';
 import { Text } from '@components/ui/text';
 import { getStatusColor } from '@utils/helpers/get-status-color';
 import { Leave } from '@sharedTypes/leave';
+import { useRouter } from 'expo-router';
+import { PAGE_ROUTES } from '@utils/constants';
 
-export const LeaveCard = ({ item, onPress }: { item: Leave; onPress?: () => void }) => {
+export const LeaveCard = ({ item }: { item: Leave; onPress?: () => void }) => {
+  const router = useRouter();
   const statusStyle = getStatusColor(item.verify_flg_desc);
+  const isEnable = !!item.leave_cd && !!item.from_dt && !!item.order_dt;
+
+  const onPressLeave = () => {
+    const { leave_cd, from_dt, order_dt } = item;
+    const pageUrl = PAGE_ROUTES.LEAVE.DETAILS(leave_cd, {
+      leave_cd,
+      from_dt,
+      order_dt,
+    });
+    router.push(pageUrl);
+  };
 
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      disabled={!onPress}
-      onPress={onPress}
+      disabled={!isEnable}
+      onPress={onPressLeave}
       className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm active:bg-gray-50 dark:border-gray-800 dark:bg-slate-900 dark:active:bg-slate-800">
       <View className="mb-2 flex-row items-center justify-between">
         <View className="flex-row items-center gap-2">

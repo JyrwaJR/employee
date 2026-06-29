@@ -31,7 +31,7 @@ export const SettingsScreen = () => {
         <View className="py-6">
           {/* Appearance Section */}
           <SectionHeader title="Appearance" />
-          <View className="mb-8 overflow-hidden rounded-xl border border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-slate-900">
+          <View className="mb-8 overflow-hidden rounded-xl border border-gray-200 px-4 dark:border-gray-800">
             <SettingRow
               icon={theme === 'dark' ? 'weather-night' : 'weather-sunny'}
               label="Dark Mode"
@@ -46,7 +46,7 @@ export const SettingsScreen = () => {
           {/* Notifications Section */}
           <SectionHeader title="Security" />
 
-          <View className="mb-8 overflow-hidden rounded-xl border border-gray-200 bg-white px-4 dark:border-gray-800 dark:bg-slate-900">
+          <View className="mb-8 overflow-hidden rounded-xl border border-gray-200 px-4 dark:border-gray-800">
             <SettingRow
               icon={'security'}
               label="Enable Biometric"

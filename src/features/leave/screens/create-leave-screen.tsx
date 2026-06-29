@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Button, FieldInput, toast } from '@components/ui';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -9,8 +9,8 @@ import { CreateLeaveSchema, type CreateLeaveInputs } from '../validators';
 import { useCreateLeave } from '../hooks';
 import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants';
-import { LeaveTypeCode } from '../types';
-import { LeaveTypeDropdown } from '../components';
+import { LeaveReasonCode, LeaveTypeCode } from '../types';
+import { LeaveTypeDropdown, LeaveReasonDropdown } from '../components';
 
 const defaultValues: CreateLeaveInputs = {
   type: 'SL',
@@ -34,8 +34,6 @@ const defaultValues: CreateLeaveInputs = {
  * - On success: navigates to the leave detail screen; on failure: shows an error toast
  */
 export const CreateLeaveScreen = () => {
-  const [selectedType, setSelectedType] = useState<LeaveTypeCode>('SL');
-
   const router = useRouter();
 
   const methods = useForm<CreateLeaveInputs>({
@@ -80,12 +78,9 @@ export const CreateLeaveScreen = () => {
             <View className="w-full gap-y-2">
               {/* Leave Type Dropdown Selector */}
               <LeaveTypeDropdown
-                selectedType={selectedType}
-                onSelect={(type) => {
-                  setSelectedType(type);
-                  methods.setValue('type', type, { shouldValidate: true });
-                }}
+                selectedType={methods.getValues('type') as LeaveTypeCode}
                 error={methods.formState.errors.type?.message}
+                onSelect={(type) => methods.setValue('type', type)}
               />
 
               {/* From Date & To Date — side by side */}
@@ -124,15 +119,13 @@ export const CreateLeaveScreen = () => {
               />
 
               {/* Reason */}
-              <FieldInput
-                name="reason"
-                label="Reason"
-                placeholder="Enter reason for leave"
-                multiline
-                numberOfLines={2}
-                testID="REASON_INPUT"
+              <LeaveReasonDropdown
+                selectedReason={methods.getValues('reason') as LeaveReasonCode}
+                onSelect={(reason) => {
+                  methods.setValue('reason', reason, { shouldValidate: true });
+                }}
+                error={methods.formState.errors.reason?.message}
               />
-
               {/* Remarks (optional) */}
               <FieldInput
                 name="remarks"

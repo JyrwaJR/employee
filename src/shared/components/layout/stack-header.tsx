@@ -35,6 +35,7 @@ export const StackHeader = memo(() => {
   const navigation = useNavigation();
   const theme = useTheme();
   const isDark = theme === 'dark';
+  const iconColor = isDark ? '#FFFFFF' : '#1A1A1A';
   const insets = useSafeAreaInsets();
   const canGoBack = navigation.canGoBack();
 
@@ -46,13 +47,11 @@ export const StackHeader = memo(() => {
   const showDrawer = config.showDrawer;
 
   return (
-    <View
-      className={cn('border-b border-gray-200 bg-white dark:bg-slate-950', config.background || '')}
-      style={{ paddingTop: insets.top }}>
+    <View className={cn('bg-background')} style={{ paddingTop: insets.top }}>
       <View className="min-h-[56px] flex-row items-center justify-between px-4 py-3">
         <View className="flex-1 flex-row items-center justify-start">
           {showDrawer ? (
-            <DrawerToggleButton tintColor={isDark ? '#F8FAFC' : '#0F172A'} />
+            <DrawerToggleButton tintColor={iconColor} />
           ) : (
             showBack && (
               <TouchableOpacity
@@ -60,11 +59,7 @@ export const StackHeader = memo(() => {
                 className="mr-3"
                 hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
                 activeOpacity={0.7}>
-                <Ionicons
-                  name="chevron-back"
-                  size={24}
-                  color={theme === 'dark' ? '#F8FAFC' : '#0F172A'}
-                />
+                <Ionicons name="chevron-back" size={24} color={iconColor} />
               </TouchableOpacity>
             )
           )}

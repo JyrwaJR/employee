@@ -1,9 +1,8 @@
 import { z } from 'zod';
 import { DATE_DD_MM_YYYY_REGEX } from '@utils/constants/regex';
-import { LEAVE_TYPES } from '../utils/constants';
 
 export const CreateLeaveSchema = z.object({
-  type: z.enum(LEAVE_TYPES, 'Leave type is required'),
+  type: z.string('Leave type is required').min(1, 'Leave type is required'),
   from_date: z
     .string('Start date is required')
     .min(1, 'Start date is required')

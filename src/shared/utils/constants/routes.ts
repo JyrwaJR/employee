@@ -1,3 +1,4 @@
+import { buildUrlWithQuery } from '@utils/helpers';
 import { Route } from 'expo-router';
 
 /**
@@ -49,7 +50,8 @@ export const PAGE_ROUTES = {
   LEAVE: {
     INDEX: '/leaves' as const,
     CREATE: '/leaves/create' as const,
-    DETAILS: (id: string) => `/leaves/${id}` as Route,
+    DETAILS: (id: string, params?: Record<string, string>) =>
+      buildUrlWithQuery(`/leaves/detail`, { ...params }) as Route,
   },
   STATEMENT: '/statement' as const,
   ANNOUNCEMENT: '/announcements' as const,

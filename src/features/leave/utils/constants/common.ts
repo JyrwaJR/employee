@@ -1,8 +1,14 @@
-import { LeaveType } from '@sharedTypes/leave';
+import { LeaveTypeCode } from '@features/leave/types';
 
-export const LEAVE_TYPES: Record<LeaveType, LeaveType> = {
+export const LEAVE_TYPES: Record<LeaveTypeCode, LeaveTypeCode> = {
   COM: 'COM',
+  LND: 'LND',
+  EOL: 'EOL',
+  LPA: 'LPA',
   EL: 'EL',
-  SL: 'SL',
   HPL: 'HPL',
+  ML: 'ML',
+  SL: 'SL',
+  WPL: 'WPL',
+  PL: 'PL',
 };

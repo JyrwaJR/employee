@@ -10,9 +10,16 @@ import { LeaveDetailInfo } from '../components/leave-detail-info';
 import { LeaveBalanceCard } from '../components/leave-balance-card';
 import { StackHeader } from '@components/layout';
 
+type SearchParamsT = {
+  leave_cd: string;
+  from_dt: string;
+  order_dt: string;
+};
+
 export const LeaveDetailScreen = () => {
-  const { id } = useLocalSearchParams<{ id: string }>();
-  const { data, isLoading, refetch } = useLeaveDetail(id);
+  const { leave_cd, from_dt, order_dt } = useLocalSearchParams<SearchParamsT>();
+
+  const { data, isLoading, refetch } = useLeaveDetail({ from_dt, leave_cd, order_dt });
 
   if (isLoading)
     return (

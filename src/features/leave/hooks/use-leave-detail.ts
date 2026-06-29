@@ -8,13 +8,26 @@ interface LeaveResponse extends Leave {
   leave_bal: LeaveBal;
 }
 
-export function useLeaveDetail(id: string) {
-  const { isSignedIn } = useAuthStore();
+type Props = {
+  leave_cd: string;
+  order_dt: string;
+  from_dt: string;
+};
+
+export function useLeaveDetail({ from_dt, leave_cd, order_dt }: Props) {
+  const { isSignedIn, emp_cd } = useAuthStore();
+  const isEnable = !!emp_cd && isSignedIn && !!from_dt && !!leave_cd && !!order_dt;
   return useQuery({
-    queryKey: QUERY_KEYS.LEAVE.DETAILS(id),
-    queryFn: () => rpc<LeaveResponse>(METHODS.GET_EMP_LEAVE_DETAILS_DETAILS, { leave_id: id }),
+    queryKey: QUERY_KEYS.LEAVE.DETAILS(emp_cd, from_dt, leave_cd, order_dt),
+    queryFn: () =>
+      rpc<LeaveResponse>(METHODS.GET_EMP_LEAVE_DETAILS, {
+        emp_cd,
+        from_dt,
+        leave_cd,
+        order_dt,
+      }),
     staleTime: STALE_TIMES.LEAVE_FAST,
-    enabled: !!id && isSignedIn,
+    enabled: isEnable,
     select: (data) => data.data,
   });
 }

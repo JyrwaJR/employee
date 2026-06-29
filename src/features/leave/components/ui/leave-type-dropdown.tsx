@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { SelectSheet } from '@components/ui';
-import { LeaveTypeCode } from '../types';
-import { useLeaveType } from '../hooks';
+import { LeaveTypeCode } from '@features/leave/types';
+import { useLeaveType } from '@features/leave/hooks';
 
 interface LeaveTypeDropdownProps {
   /** Currently selected leave type */

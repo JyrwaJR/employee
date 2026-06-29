@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 import { Container } from '@components/layout/container';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { LeaveCard } from '../components/leave-card';
-import { useLeaves } from '../hooks';
+import { useLeaves } from '@hooks/use-leaves';
 import { SectionHeader } from '@components/base/section-header';
 import { EmptyScreen } from '@components/screens';
 import { PAGE_ROUTES } from '@utils/constants/routes';
@@ -44,9 +44,7 @@ export const LeaveScreen = () => {
       <FlatList
         data={leaves}
         keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <LeaveCard item={item} onPress={() => router.push(PAGE_ROUTES.LEAVE.DETAILS(item.id))} />
-        )}
+        renderItem={({ item }) => <LeaveCard item={item} />}
         contentContainerStyle={{ paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
       />

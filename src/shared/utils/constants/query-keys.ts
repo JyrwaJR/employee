@@ -23,6 +23,8 @@ export const QUERY_KEYS = {
   },
   LEAVE: {
     LIST: (...args: string[]) => ['leaves', ...args].filter(Boolean),
+    TYPE: (...args: string[]) => ['leaves', 'type', ...args].filter(Boolean),
+    REASON: (...args: string[]) => ['leaves', 'reason', ...args].filter(Boolean),
     DETAILS: (...args: string[]) => ['leaves', ...args].filter(Boolean),
   },
   EMPLOYEE: {

@@ -10,7 +10,7 @@ POST https://10.179.35.48:9443/oauth2/token
 
 ###
 # @name getMe
-POST http://localhost:3000/
+POST https://10.179.35.48:8243/eisdatafetcher_uat/1.0/make_request
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
 
