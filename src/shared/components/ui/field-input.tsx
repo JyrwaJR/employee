@@ -61,13 +61,13 @@ export const FieldInput = ({
           />
 
           {description && !error && (
-            <Text variant="subtext" size="xs" className="ml-1 mt-2">
+            <Text variant="caption-sm" className="ml-1 mt-2 text-muted-foreground">
               {description}
             </Text>
           )}
 
           {error && (
-            <Text variant="error" size="xs" className="ml-1 mt-2">
+            <Text variant="caption-sm" className="ml-1 mt-2 text-destructive">
               {error.message}
             </Text>
           )}

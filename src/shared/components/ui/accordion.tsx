@@ -34,6 +34,11 @@ export const Accordion = ({
   </AccordionContext.Provider>
 );
 
+/**
+ * AccordionItem wraps each row with HP FAQ styling:
+ * `{rounded.lg}` (8px) container, `{colors.hairline}` divider between rows,
+ * and `{spacing.lg} {spacing.xl}` internal padding.
+ */
 export const AccordionItem = ({
   children,
   value: itemValue,
@@ -47,7 +52,11 @@ export const AccordionItem = ({
   const isOpen = activeValue === itemValue;
 
   return (
-    <View className={cn('border-b border-border', className)}>
+    <View
+      className={cn(
+        'border-b border-border bg-card px-6 py-5 first:rounded-t-lg last:rounded-b-lg last:border-b-0',
+        className
+      )}>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(child as React.ReactElement<any>, { isOpen, value: itemValue })
@@ -87,11 +96,11 @@ export const AccordionTrigger = ({
         }
       }}
       className={cn('flex-row items-center justify-between py-4', className)}>
-      <Text weight="medium" className="flex-1">
+      <Text variant="body-emphasis" className="flex-1">
         {children}
       </Text>
       <Animated.View style={arrowStyle}>
-        <Ionicons name="chevron-down" size={18} color="#64748b" />
+        <Ionicons name="chevron-down" size={18} color="#636363" />
       </Animated.View>
     </TouchableOpacity>
   );

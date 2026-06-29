@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { Text } from './text';
 import { cn } from '../../utils/helpers/cn';
 
-const alertVariants = cva('relative w-full rounded-2xl border p-4 flex-row items-start gap-x-3', {
+const alertVariants = cva('relative w-full rounded-lg border p-4 flex-row items-start gap-x-3', {
   variants: {
     variant: {
       default: 'bg-secondary border-border',
@@ -38,7 +38,7 @@ const AlertTitle = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof View> & { children?: React.ReactNode }
 >(({ className, children, ...props }, ref) => (
   <View ref={ref} {...props}>
-    <Text variant="heading" size="sm" weight="semibold" className={cn('leading-tight', className)}>
+    <Text variant="caption-bold" className={cn('leading-tight', className)}>
       {children}
     </Text>
   </View>
@@ -50,7 +50,7 @@ const AlertDescription = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof View> & { children?: React.ReactNode }
 >(({ className, children, ...props }, ref) => (
   <View ref={ref} {...props}>
-    <Text variant="subtext" size="xs" className={cn('leading-relaxed opacity-90', className)}>
+    <Text variant="caption-md" className={cn('leading-relaxed text-muted-foreground', className)}>
       {children}
     </Text>
   </View>

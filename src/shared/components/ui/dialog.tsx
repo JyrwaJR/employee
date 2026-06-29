@@ -85,7 +85,7 @@ export const DialogContent = ({ children, className, onClose, ...props }: Dialog
         className="pointer-events-box-none items-center justify-center px-4">
         <Animated.View
           style={[contentStyle]}
-          className={cn('w-full max-w-sm rounded-3xl bg-card p-6 shadow-2xl', className)}
+          className={cn('w-full max-w-sm rounded-xl bg-card p-6 shadow-2xl', className)}
           {...props}>
           <Pressable onPress={(e) => e.stopPropagation()}>{children}</Pressable>
         </Animated.View>
@@ -103,9 +103,9 @@ export const DialogFooter = ({ className, ...props }: ViewProps) => (
 );
 
 export const DialogTitle = ({ className, ...props }: React.ComponentProps<typeof Text>) => (
-  <Text variant="heading" size="xl" weight="semibold" className={className} {...props} />
+  <Text variant="display-xs" className={className} {...props} />
 );
 
 export const DialogDescription = ({ className, ...props }: React.ComponentProps<typeof Text>) => (
-  <Text variant="subtext" size="sm" className={className} {...props} />
+  <Text variant="caption-md" className={cn('text-muted-foreground', className)} {...props} />
 );

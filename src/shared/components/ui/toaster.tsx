@@ -29,11 +29,11 @@ export const Toaster = () => {
       richColors={true}
       toastOptions={{
         style: {
-          borderRadius: 24,
+          borderRadius: 16,
           padding: 16,
-          backgroundColor: isDark ? '#020617' : '#FFFFFF',
+          backgroundColor: isDark ? '#1a1a1a' : '#ffffff',
           borderWidth: 1,
-          borderColor: isDark ? '#1e293b' : '#e2e8f0',
+          borderColor: isDark ? '#3d3d3d' : '#e8e8e8',
           ...Platform.select({
             android: {
               elevation: 100,
@@ -47,11 +47,11 @@ export const Toaster = () => {
         titleStyle: {
           fontSize: 14,
           fontWeight: '600',
-          color: isDark ? '#f8fafc' : '#0f172a',
+          color: isDark ? '#ffffff' : '#1a1a1a',
         },
         descriptionStyle: {
           fontSize: 12,
-          color: isDark ? '#94a3b8' : '#64748b',
+          color: isDark ? '#c2c2c2' : '#636363',
         },
       }}
     />
