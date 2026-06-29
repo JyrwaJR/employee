@@ -21,3 +21,11 @@ export const UPPERCASE_LETTER_REGEX = /[A-Z]/;
 
 /** Matches any string that contains a digit. */
 export const NUMBER_REGEX = /\d/;
+
+/**
+ * Matches a date string in `dd-mm-yyyy` format.
+ *
+ * Validates day (01-31), month (01-12), and a 4-digit year.
+ * Does not validate calendar correctness (e.g., Feb 30 would pass).
+ */
+export const DATE_DD_MM_YYYY_REGEX = /^(0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
