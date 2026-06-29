@@ -36,7 +36,7 @@ export const KeyboardSafeView: React.FC<KeyboardSafeViewProps> = ({
   const Container = useSafeArea ? SafeAreaView : View;
 
   return (
-    <Container edges={safeAreaEdges} style={styles.flex} className="bg-white dark:bg-slate-950">
+    <Container edges={safeAreaEdges} style={styles.flex}>
       <KeyboardAwareScrollView
         className={cn('flex-1', className)}
         contentContainerStyle={styles.contentContainer}
