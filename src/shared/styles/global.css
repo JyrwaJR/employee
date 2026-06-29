@@ -4,179 +4,192 @@
 
 @layer base {
   :root {
+    /* ── HP Design System (Light) ────────────────────────
+       Pure white canvas, HP Electric Blue primary, ink text,
+       cloud/fog section bands. Based on DESIGN.md.              */
+
     /* Core Semantic Tokens */
-    --background: 0 0% 100%;
-    --foreground: 220 13% 5%;
-    --card: 0 0% 100%;
-    --card-foreground: 220 13% 5%;
+    --background: 0 0% 100%; /* canvas — pure white      */
+    --foreground: 0 0% 10%; /* ink (#1a1a1a)            */
+    --card: 0 0% 100%; /* paper (#ffffff)          */
+    --card-foreground: 0 0% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 5%;
-    --primary: 221 100% 50%;
-    --primary-foreground: 0 0% 100%;
-    --primary-active: 221 100% 40%;
-    --primary-disabled: 216 26% 73%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 220 98% 43%; /* HP Electric Blue #024ad8 */
+    --primary-foreground: 0 0% 100%; /* white on blue            */
+    --primary-active: 224 82% 31%; /* primary-deep #0e3191     */
+    --primary-disabled: 0 0% 76%; /* steel (#c2c2c2)          */
     --on-primary: 0 0% 100%;
-    --on-dark: 0 0% 100%;
-    --on-dark-soft: 218 7% 68%;
-    --secondary: 216 17% 94%;
-    --secondary-foreground: 220 13% 5%;
-    --muted: 0 0% 97%;
-    --muted-foreground: 214 6% 51%;
-    --accent: 0 0% 97%;
-    --accent-foreground: 220 13% 5%;
-    --destructive: 355 73% 47%;
+    --on-dark: 0 0% 10%; /* ink on white             */
+    --on-dark-soft: 0 0% 39%; /* graphite (#636363)       */
+    --secondary: 0 0% 97%; /* cloud (#f7f7f7)          */
+    --secondary-foreground: 0 0% 10%;
+    --muted: 0 0% 91%; /* fog (#e8e8e8)            */
+    --muted-foreground: 0 0% 39%; /* graphite (#636363)       */
+    --accent: 220 95% 57%; /* primary-bright #296ef9   */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 358 65% 43%; /* bloom-deep #b3262b       */
     --destructive-foreground: 0 0% 100%;
-    --border: 218 14% 89%;
-    --input: 218 14% 89%;
-    --ring: 221 100% 50%;
+    --border: 0 0% 91%; /* fog / hairline (#e8e8e8)  */
+    --input: 0 0% 76%; /* steel (#c2c2c2)           */
+    --ring: 220 98% 43%; /* HP Electric Blue          */
     --radius: 0.5rem;
 
     /* Extended Semantic Tokens */
-    --ink: 220 13% 5%;
-    --body: 221 10% 39%;
-    --body-strong: 220 13% 5%;
-    --muted-soft: 218 7% 68%;
-    --hairline: 218 14% 89%;
-    --hairline-soft: 216 17% 94%;
+    --ink: 0 0% 10%;
+    --body: 0 0% 10%;
+    --body-strong: 0 0% 10%;
+    --charcoal: 0 0% 24%; /* #3d3d3d muted body        */
+    --graphite: 0 0% 39%; /* #636363 fine print        */
+    --muted-soft: 0 0% 39%; /* graphite                  */
+    --hairline: 0 0% 91%; /* fog (#e8e8e8)             */
+    --hairline-soft: 0 0% 97%; /* cloud (#f7f7f7)           */
     --canvas: 0 0% 100%;
-    --surface-soft: 0 0% 97%;
-    --surface-card: 0 0% 100%;
-    --surface-strong: 216 17% 94%;
-    --surface-dark: 220 13% 5%;
-    --surface-dark-elevated: 220 12% 10%;
+    --surface-soft: 0 0% 97%; /* cloud                     */
+    --surface-card: 0 0% 100%; /* paper                     */
+    --surface-strong: 0 0% 91%; /* fog                       */
+    --surface-dark: 0 0% 10%; /* ink                       */
+    --surface-dark-elevated: 0 0% 16%; /* ink-soft (#292929)     */
 
     /* Indicator Tokens */
-    --semantic-up: 155 94% 36%;
-    --semantic-down: 355 73% 47%;
+    --semantic-up: 136 83% 35%;
+    --semantic-down: 358 65% 43%;
     --accent-yellow: 44 100% 48%;
 
     /* Chart Tokens */
-    --chart-1: 221 100% 50%;
-    --chart-2: 155 94% 36%;
+    --chart-1: 220 98% 43%; /* HP Electric Blue          */
+    --chart-2: 136 83% 35%;
     --chart-3: 44 100% 48%;
-    --chart-4: 355 73% 47%;
-    --chart-5: 216 26% 73%;
+    --chart-4: 358 65% 43%;
+    --chart-5: 0 0% 76%; /* steel                     */
 
     /* Sidebar Tokens */
-    --sidebar: 0 0% 97%;
-    --sidebar-foreground: 220 13% 5%;
-    --sidebar-primary: 221 100% 50%;
+    --sidebar: 0 0% 97%; /* cloud                     */
+    --sidebar-foreground: 0 0% 10%;
+    --sidebar-primary: 220 98% 43%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 216 17% 94%;
-    --sidebar-accent-foreground: 220 13% 5%;
-    --sidebar-border: 218 14% 89%;
-    --sidebar-ring: 221 100% 50%;
+    --sidebar-accent: 0 0% 91%; /* fog                       */
+    --sidebar-accent-foreground: 0 0% 10%;
+    --sidebar-border: 0 0% 91%;
+    --sidebar-ring: 220 98% 43%;
   }
 
   .dark {
+    /* ── HP Design System (Dark) ─────────────────────────
+       Ink/navy canvas, white text, HP Electric Blue primary.
+       Based on DESIGN.md dark slab tokens.                     */
+
     /* Core Semantic Tokens */
-    --background: 220 13% 5%;
-    --foreground: 0 0% 100%;
-    --card: 220 12% 10%;
+    --background: 0 0% 10%; /* ink (#1a1a1a)            */
+    --foreground: 0 0% 100%; /* on-ink (#ffffff)         */
+    --card: 0 0% 16%; /* ink-soft (#292929)       */
     --card-foreground: 0 0% 100%;
-    --popover: 220 12% 10%;
+    --popover: 0 0% 16%;
     --popover-foreground: 0 0% 100%;
-    --primary: 221 100% 50%;
+    --primary: 220 98% 43%; /* HP Electric Blue #024ad8 */
     --primary-foreground: 0 0% 100%;
-    --primary-active: 221 100% 40%;
-    --primary-disabled: 211 23% 29%;
+    --primary-active: 224 82% 31%; /* primary-deep #0e3191     */
+    --primary-disabled: 0 0% 39%; /* graphite (#636363)       */
     --on-primary: 0 0% 100%;
-    --on-dark: 220 13% 5%;
-    --on-dark-soft: 221 10% 39%;
-    --secondary: 220 12% 10%;
+    --on-dark: 0 0% 100%; /* white on dark            */
+    --on-dark-soft: 0 0% 76%; /* steel (#c2c2c2)          */
+    --secondary: 0 0% 16%; /* ink-soft                 */
     --secondary-foreground: 0 0% 100%;
-    --muted: 220 12% 10%;
-    --muted-foreground: 218 7% 68%;
-    --accent: 220 12% 10%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 39%; /* graphite (#636363)       */
+    --accent: 220 95% 57%; /* primary-bright #296ef9   */
     --accent-foreground: 0 0% 100%;
-    --destructive: 355 73% 47%;
+    --destructive: 0 65% 21%; /* bloom-wine (#5a1313)     */
     --destructive-foreground: 0 0% 100%;
-    --border: 220 7% 18%;
-    --input: 220 7% 18%;
-    --ring: 221 100% 50%;
+    --border: 0 0% 24%; /* charcoal (#3d3d3d)        */
+    --input: 0 0% 39%; /* graphite (#636363)        */
+    --ring: 220 95% 57%; /* primary-bright            */
+    --radius: 0.5rem;
 
     /* Extended Semantic Tokens */
     --ink: 0 0% 100%;
-    --body: 218 7% 68%;
+    --body: 0 0% 100%;
     --body-strong: 0 0% 100%;
-    --muted-soft: 221 10% 39%;
-    --hairline: 220 7% 18%;
-    --hairline-soft: 220 12% 10%;
-    --canvas: 220 13% 5%;
-    --surface-soft: 220 13% 5%;
-    --surface-card: 220 12% 10%;
-    --surface-strong: 220 7% 18%;
-    --surface-dark: 0 0% 100%;
+    --charcoal: 0 0% 76%; /* steel (#c2c2c2)           */
+    --graphite: 0 0% 39%; /* #636363                   */
+    --muted-soft: 0 0% 39%;
+    --hairline: 0 0% 24%; /* charcoal                  */
+    --hairline-soft: 0 0% 16%; /* ink-soft                  */
+    --canvas: 0 0% 10%; /* ink                       */
+    --surface-soft: 0 0% 10%;
+    --surface-card: 0 0% 16%;
+    --surface-strong: 0 0% 24%; /* charcoal                  */
+    --surface-dark: 0 0% 100%; /* white on dark             */
     --surface-dark-elevated: 0 0% 97%;
 
     /* Indicator Tokens (same as light) */
-    --semantic-up: 155 94% 36%;
-    --semantic-down: 355 73% 47%;
+    --semantic-up: 136 83% 35%;
+    --semantic-down: 358 65% 43%;
     --accent-yellow: 44 100% 48%;
 
     /* Chart Tokens */
-    --chart-1: 221 100% 50%;
-    --chart-2: 155 94% 36%;
+    --chart-1: 220 95% 57%; /* primary-bright            */
+    --chart-2: 136 83% 35%;
     --chart-3: 44 100% 48%;
-    --chart-4: 355 73% 47%;
-    --chart-5: 211 23% 29%;
+    --chart-4: 358 65% 43%;
+    --chart-5: 0 0% 39%; /* graphite                  */
 
     /* Sidebar Tokens */
-    --sidebar: 220 12% 10%;
+    --sidebar: 0 0% 16%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 221 100% 50%;
+    --sidebar-primary: 220 98% 43%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 7% 18%;
+    --sidebar-accent: 0 0% 24%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 7% 18%;
-    --sidebar-ring: 221 100% 50%;
+    --sidebar-border: 0 0% 24%;
+    --sidebar-ring: 220 95% 57%;
   }
 
   .dark-alt {
-    /* ── Dark Alternative Theme ───────────────────────────
-       Deep-black canvas variant with white primary type and
-       cool-blue accent. Apply class="dark-alt" on the root
-       element to activate.                                    */
+    /* ── Dark Alternative (HP Ink Deep) ──────────────────
+       Near-black canvas variant with HP Electric Blue
+       primary. Apply class="dark-alt" on the root element
+       to activate.                                             */
 
     /* Core Semantic Tokens */
-    --background: 0 0% 0%; /* pure black canvas       */
-    --foreground: 0 0% 100%; /* white type              */
-    --card: 0 0% 10%; /* elevated surface        */
+    --background: 0 0% 0%; /* ink-deep (#000000)       */
+    --foreground: 0 0% 100%;
+    --card: 0 0% 10%; /* ink-adjacent (#1a1a1a)   */
     --card-foreground: 0 0% 100%;
     --popover: 0 0% 10%;
     --popover-foreground: 0 0% 100%;
-    --primary: 0 0% 100%; /* white primary CTA/type  */
-    --primary-foreground: 0 0% 0%; /* black text on white     */
+    --primary: 220 98% 43%; /* HP Electric Blue #024ad8 */
+    --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 73%; /* body gray              */
-    --muted: 0 0% 5%; /* soft surface            */
-    --muted-foreground: 0 0% 49%; /* muted gray text         */
-    --accent: 205 100% 35%; /* cool blue accent        */
+    --secondary-foreground: 0 0% 76%; /* steel (#c2c2c2)          */
+    --muted: 0 0% 5%;
+    --muted-foreground: 0 0% 39%; /* graphite (#636363)       */
+    --accent: 220 95% 57%; /* primary-bright #296ef9   */
     --accent-foreground: 0 0% 100%;
-    --destructive: 4 81% 49%;
+    --destructive: 358 65% 43%; /* bloom-deep #b3262b       */
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 24%; /* hairline                */
-    --input: 0 0% 24%;
-    --ring: 0 0% 100%; /* white focus ring        */
-    --radius: 0rem; /* 0px radius              */
+    --border: 0 0% 16%; /* ink-soft (#292929)        */
+    --input: 0 0% 24%; /* charcoal (#3d3d3d)        */
+    --ring: 220 95% 57%; /* primary-bright            */
+    --radius: 0rem; /* 0px radius               */
 
     /* Extended Surface Tokens */
     --canvas: 0 0% 0%;
     --surface-soft: 0 0% 5%;
     --surface-card: 0 0% 10%;
-    --surface-elevated: 0 0% 15%;
-    --hairline: 0 0% 24%;
-    --hairline-strong: 0 0% 15%;
+    --surface-elevated: 0 0% 16%;
+    --hairline: 0 0% 16%;
+    --hairline-strong: 0 0% 24%;
     --on-dark: 0 0% 100%;
-    --body: 0 0% 73%;
-    --body-strong: 0 0% 90%;
-    --muted-text: 0 0% 49%;
+    --body: 0 0% 76%;
+    --body-strong: 0 0% 100%;
+    --muted-text: 0 0% 39%;
 
     /* Brand Accent Palette */
-    --accent-blue: 205 100% 35%;
-    --accent-blue-deep: 215 77% 47%;
-    --accent-red: 4 81% 49%;
-    --accent-electric: 214 94% 37%;
+    --accent-blue: 220 98% 43%;
+    --accent-blue-deep: 224 82% 31%;
+    --accent-red: 358 65% 43%;
+    --accent-electric: 220 95% 57%;
 
     /* Semantic Indicators */
     --warning: 44 100% 48%;
@@ -184,20 +197,20 @@
 
     /* Chart Tokens */
     --chart-1: 0 0% 100%;
-    --chart-2: 205 100% 35%;
-    --chart-3: 4 81% 49%;
-    --chart-4: 0 0% 73%;
-    --chart-5: 0 0% 49%;
+    --chart-2: 220 98% 43%;
+    --chart-3: 358 65% 43%;
+    --chart-4: 0 0% 76%;
+    --chart-5: 0 0% 39%;
 
     /* Sidebar overrides */
     --sidebar: 0 0% 5%;
     --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 0 0% 100%;
-    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-primary: 220 98% 43%;
+    --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 10%;
     --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 0 0% 24%;
-    --sidebar-ring: 0 0% 100%;
+    --sidebar-border: 0 0% 16%;
+    --sidebar-ring: 220 95% 57%;
   }
 }
 @tailwind components;
