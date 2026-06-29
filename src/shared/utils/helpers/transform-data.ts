@@ -17,8 +17,9 @@ import { randomUUID } from 'expo-crypto';
  * // [{ name: "Alice", id: "..." }, { name: "Bob", id: "..." }]
  * ```
  */
-export function transformData<T extends object>(data: T[]): (T & { id: string })[] {
-  if (!data) return [];
+export function transformData<T extends object>(data: T[] | undefined): (T & { id: string })[] {
+  if (!data || data.length === 0) return [];
+
   return data?.map((item) => ({
     ...item,
     id: randomUUID(),

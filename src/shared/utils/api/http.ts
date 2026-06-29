@@ -3,15 +3,16 @@ import { logger } from '../logger/logger';
 import axiosInstance from '@utils/api/axios';
 import { ApiResponse } from '@sharedTypes/api';
 import { handleResponse, handleError } from './response';
-import { isExpo } from '@utils/helpers/expo';
+// import { isExpo } from '@utils/helpers/expo';
+import { rnFetchBlobClient } from './rn-fetch-blob-client';
 
-const isAxios = process.env.EXPO_PUBLIC_HTTP_PROVIDER === 'axios';
+// const isAxios = process.env.EXPO_PUBLIC_HTTP_PROVIDER === 'axios';
 
 /**
  * Axios-based HTTP client with get, post, put, and delete methods.
  * Each method handles encryption/decryption, cancellation, and error normalization internally.
  */
-const axiosHttp = {
+export const axiosHttp = {
   /**
    * Sends a GET request.
    *
@@ -112,10 +113,13 @@ const axiosHttp = {
  * Uses `axiosHttp` by default, or falls back to `rnFetchBlobClient` on native
  * when the `EXPO_PUBLIC_HTTP_PROVIDER` env var is not set to `'axios'`.
  */
-let http = axiosHttp;
+let http = rnFetchBlobClient;
 
-if (!isAxios && !isExpo()) {
-  http = require('./rn-fetch-blob-client').rnFetchBlobClient;
-}
+// if (!isAxios && !isExpo()) {
+//   console.log(
+//     "Warning: 'EXPO_PUBLIC_HTTP_PROVIDER' env var not set to 'axios'. Using 'rnFetchBlobClient' instead."
+//   );
+//   http = require('./rn-fetch-blob-client').rnFetchBlobClient;
+// }
 
 export { http };

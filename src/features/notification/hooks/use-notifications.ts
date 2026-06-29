@@ -20,18 +20,19 @@ const ALLOWED_PUSH_ROUTES = [
   PAGE_ROUTES.PROFILE,
 ];
 
-// type PushNotificationData = {
-//   url?: string;
-//   employeeId?: string;
-//   type?: 'leave' | 'salary' | 'announcement';
-// };
+type PushNotificationData = {
+  url?: string;
+  employeeId?: string;
+  type?: 'leave' | 'salary' | 'announcement';
+  imageUrl: string;
+};
 
 /**
  * Global Hook for Push Notification lifecycle management.
  * Handles registration, foreground listeners, and deep-linking interactions.
  */
 export const useNotifications = () => {
-  const { user } = useAuthStore();
+  const { emp_cd } = useAuthStore();
   const [notification, setNotification] = useState<Notifications.Notification | undefined>(
     undefined
   );
@@ -62,7 +63,8 @@ export const useNotifications = () => {
 
   useEffect(() => {
     if (lastResponse?.notification) {
-      const url = lastResponse.notification.request.content.data?.url;
+      const data = lastResponse.notification.request.content.data as PushNotificationData;
+      const url = data?.url;
       const id = lastResponse.notification.request.identifier;
 
       if (typeof url === 'string') {
@@ -72,7 +74,7 @@ export const useNotifications = () => {
   }, [lastResponse]);
 
   useEffect(() => {
-    if (isExpo() && !user) return;
+    if (isExpo() && !emp_cd) return;
 
     let isMounted = true;
 
@@ -81,7 +83,7 @@ export const useNotifications = () => {
         await withRetry(
           async () => {
             return await NotificationService.register({
-              userId: user?.id.toString() || '',
+              userId: emp_cd || '',
             });
           },
           {
@@ -115,8 +117,8 @@ export const useNotifications = () => {
     });
 
     const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
-      // const data = response.notification.request.content.data as PushNotificationData;
-      const url = response.notification.request.content.data?.url;
+      const data = response.notification.request.content.data as PushNotificationData;
+      const url = data.url;
       const id = response.notification.request.identifier;
 
       if (id || url) {
@@ -132,7 +134,7 @@ export const useNotifications = () => {
       notificationListener.remove();
       responseListener.remove();
     };
-  }, [user]);
+  }, [emp_cd]);
 
   return { notification };
 };

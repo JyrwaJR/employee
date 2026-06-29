@@ -48,7 +48,6 @@ export const useAuthStore = create<AuthStore>()(
             if (res.success && res.data) {
               logger.info('AuthStore: fetchUser success', { empCode });
               // TODO: Correct the role when change if needed
-              console.log('user details', res.data);
               set({ user: res.data, isSignedIn: true, role: 'USER' });
             } else {
               logger.warn('AuthStore: fetchUser returned no data', {

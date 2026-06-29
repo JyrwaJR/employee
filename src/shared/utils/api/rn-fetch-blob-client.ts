@@ -119,6 +119,18 @@ async function request<T = any>(
 
     const parsed = JSON.parse(response.data);
     // Encrypted backend response
+    if (response.respInfo.status === 401) {
+      logger.warn('401 Response', {
+        message: parsed.message,
+        status_code: parsed.status_code,
+      });
+      await TokenStoreManager.removeAccessToken();
+      return backendResponse<T>({
+        message: parsed.message || 'Unauthorized',
+        success_flag: false,
+        status_code: '401',
+      });
+    }
     const decrypted = decrypt<DecryptedBackendResponse<T>>(parsed.response);
 
     logger.log('Decrypted Response', {

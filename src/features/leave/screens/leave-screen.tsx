@@ -8,6 +8,7 @@ import { useLeaves } from '../hooks';
 import { SectionHeader } from '@components/base/section-header';
 import { EmptyScreen } from '@components/screens';
 import { PAGE_ROUTES } from '@utils/constants/routes';
+import { FAB } from '@components/fab';
 
 export const LeaveScreen = () => {
   const { data: leaves, isFetching, refetch } = useLeaves();
@@ -46,6 +47,7 @@ export const LeaveScreen = () => {
         contentContainerStyle={{ paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
       />
+      <FAB icon="add" onPress={() => router.push(PAGE_ROUTES.LEAVE.CREATE)} />
     </Container>
   );
 };

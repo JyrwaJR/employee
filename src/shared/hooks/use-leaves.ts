@@ -15,5 +15,5 @@ export function useLeaves() {
     enabled: !!emp_cd && isSignedIn,
   });
 
-  return { data: transformData<Leave>(data ?? []), isFetching, isLoading, refetch };
+  return { data: transformData<Leave>(data), isFetching, isLoading, refetch };
 }

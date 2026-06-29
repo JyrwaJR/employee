@@ -72,6 +72,12 @@ export const NotificationService = {
       const token = tokenResponse.data;
 
       // 2. Register with Backend
+      if (process.env.NODE_ENV === 'development') {
+        logger.info('NotificationService: Skipping backend registration in development', {
+          expoToken: token,
+        });
+        return { success: true, token };
+      }
       const res = await http.post(ENDPOINTS.NOTIFICATION.REGISTER, {
         token,
         user_id: userId,
@@ -85,7 +91,7 @@ export const NotificationService = {
       throw new Error(res.message || 'Backend registration failed');
     } catch (error) {
       logger.error('NotificationService: Registration lifecycle failure', error);
-      throw error;
+      return { success: false, errorType: 'NETWORK_ERROR' };
     }
   },
 

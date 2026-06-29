@@ -6,20 +6,20 @@ const isDev = APP_VARIANT === 'development';
 const isPreview = APP_VARIANT === 'preview';
 const APP_VERSION = '1.0.0';
 
+const iconAssetUrl = './src/shared/assets/icon.png';
+const splashAssetUrl = './src/shared/assets/splash.png';
+
 const getAppName = (baseName: string) => {
   if (isDev) return `${baseName} (Dev)`;
   if (isPreview) return `${baseName} (Preview)`;
   return baseName;
 };
 
-const getIdentifier = (baseIdentifier: string) => {
-  if (isDev) return `${baseIdentifier}`;
-  if (isPreview) return `${baseIdentifier}`;
-  return baseIdentifier;
+const getIdentifier = () => {
+  if (isDev) return 'com.jyrwaboys.employeemobile';
+  if (isPreview) return 'com.jyrwaboys.employeemobile';
+  return 'com.jyrwaboys.employeemobile';
 };
-
-const iconAssetUrl = './src/shared/assets/icon.png';
-const splashAssetUrl = './src/shared/assets/splash.png';
 
 export default ({ config }: ConfigContext): ExpoConfig => ({
   ...config,
@@ -64,7 +64,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   assetBundlePatterns: ['**/*'],
   ios: {
     supportsTablet: true,
-    bundleIdentifier: getIdentifier('com.jyrwaboys.employeemobile'),
+    bundleIdentifier: getIdentifier(),
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON_IOS,
   },
   android: {
@@ -73,7 +73,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       foregroundImage: iconAssetUrl,
       backgroundColor: '#ffffff',
     },
-    package: getIdentifier('com.jyrwaboys.employeemobile'),
+    package: getIdentifier(),
   },
   extra: {
     router: {},

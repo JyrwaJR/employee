@@ -34,6 +34,7 @@ export const StackHeader = memo(() => {
   const router = useRouter();
   const navigation = useNavigation();
   const theme = useTheme();
+  const isDark = theme === 'dark';
   const insets = useSafeAreaInsets();
   const canGoBack = navigation.canGoBack();
 
@@ -51,7 +52,7 @@ export const StackHeader = memo(() => {
       <View className="min-h-[56px] flex-row items-center justify-between px-4 py-3">
         <View className="flex-1 flex-row items-center justify-start">
           {showDrawer ? (
-            <DrawerToggleButton />
+            <DrawerToggleButton tintColor={isDark ? '#F8FAFC' : '#0F172A'} />
           ) : (
             showBack && (
               <TouchableOpacity

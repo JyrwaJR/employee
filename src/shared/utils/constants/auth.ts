@@ -36,7 +36,7 @@ export const ROUTE_ROLES: RouteConfigT[] = [
     role: ['SUPER_ADMIN', 'ADMIN', 'USER'],
   },
   {
-    url: '/pension/*',
+    url: '/leaves/*',
     needAuth: true,
     role: ['SUPER_ADMIN', 'ADMIN', 'USER'],
   },

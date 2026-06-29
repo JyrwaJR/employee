@@ -47,7 +47,8 @@ export const PAGE_ROUTES = {
   PENSION: '/pension' as const,
   PROFILE: '/profile' as const,
   LEAVE: {
-    INDEX: '/leave' as const,
+    INDEX: '/leaves' as const,
+    CREATE: '/leaves/create' as const,
     DETAILS: (id: string) => `/leaves/${id}` as Route,
   },
   STATEMENT: '/statement' as const,
