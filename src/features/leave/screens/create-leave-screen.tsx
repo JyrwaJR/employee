@@ -16,10 +16,10 @@ import { LeaveTypeDropdown, LeaveReasonDropdown } from '../components';
 const defaultValues: CreateLeaveInputs = {
   type: 'SL',
   number_of_days: '',
-  from_date: '',
-  to_date: '',
+  from_dt: '',
+  to_dt: '',
   order_number: '',
-  order_date: '',
+  order_dt: '',
   reason: '',
   remarks: '',
 };
@@ -46,8 +46,8 @@ export const CreateLeaveScreen = () => {
   const { mutate, isPending } = useCreateLeave();
 
   // Auto-calculate number_of_days when from_date or to_date changes
-  const fromDate = useWatch({ control: methods.control, name: 'from_date' });
-  const toDate = useWatch({ control: methods.control, name: 'to_date' });
+  const fromDate = useWatch({ control: methods.control, name: 'from_dt' });
+  const toDate = useWatch({ control: methods.control, name: 'to_dt' });
 
   useEffect(() => {
     const days = calculateDaysBetweenDates(fromDate, toDate);
@@ -109,7 +109,7 @@ export const CreateLeaveScreen = () => {
                 <View className="flex-1">
                   <Controller
                     control={methods.control}
-                    name="from_date"
+                    name="from_dt"
                     render={({ field: { value, onChange }, fieldState: { error } }) => (
                       <View className="my-2 w-full">
                         <Text
@@ -120,6 +120,7 @@ export const CreateLeaveScreen = () => {
                         </Text>
                         <Input
                           value={value}
+                          keyboardType="number-pad"
                           onChangeText={(text) => onChange(formatDateInput(text))}
                           placeholder="dd-mm-yyyy"
                           error={!!error}
@@ -137,7 +138,7 @@ export const CreateLeaveScreen = () => {
                 <View className="flex-1">
                   <Controller
                     control={methods.control}
-                    name="to_date"
+                    name="to_dt"
                     render={({ field: { value, onChange }, fieldState: { error } }) => (
                       <View className="my-2 w-full">
                         <Text
@@ -150,6 +151,7 @@ export const CreateLeaveScreen = () => {
                           value={value}
                           onChangeText={(text) => onChange(formatDateInput(text))}
                           placeholder="dd-mm-yyyy"
+                          keyboardType="number-pad"
                           error={!!error}
                           testID="TO_DATE_INPUT"
                         />
@@ -170,6 +172,7 @@ export const CreateLeaveScreen = () => {
                   <FieldInput
                     name="number_of_days"
                     label="Number of days"
+                    keyboardType="number-pad"
                     placeholder="Auto-calculated"
                     value={value}
                     editable={false}
@@ -182,6 +185,7 @@ export const CreateLeaveScreen = () => {
               <FieldInput
                 name="order_number"
                 label="Order Number"
+                keyboardType="number-pad"
                 placeholder="Enter order number"
                 testID="ORDER_NUMBER_INPUT"
               />
@@ -189,7 +193,7 @@ export const CreateLeaveScreen = () => {
               {/* Order Date */}
               <Controller
                 control={methods.control}
-                name="order_date"
+                name="order_dt"
                 render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <View className="my-2 w-full">
                     <Text variant={error ? 'error' : 'label'} weight="medium" className="mb-2 ml-1">
@@ -199,6 +203,7 @@ export const CreateLeaveScreen = () => {
                       value={value}
                       onChangeText={(text) => onChange(formatDateInput(text))}
                       placeholder="dd-mm-yyyy"
+                      keyboardType="number-pad"
                       error={!!error}
                       testID="ORDER_DATE_INPUT"
                     />
@@ -230,6 +235,7 @@ export const CreateLeaveScreen = () => {
                 name="remarks"
                 label="Remarks"
                 placeholder="Any additional remarks (optional)"
+                keyboardType="default"
                 multiline
                 numberOfLines={4}
                 testID="REMARKS_INPUT"
