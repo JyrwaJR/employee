@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
-import { Button, FieldInput, toast } from '@components/ui';
+import { Button, FieldInput, Input, Text, toast } from '@components/ui';
 import { FormProvider, useForm, useWatch, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Container, KeyboardSafeView, StackHeader } from '@components/layout';
 import { SectionHeader } from '@components/base';
-import { calculateDaysBetweenDates } from '@utils/helpers';
+import { calculateDaysBetweenDates, formatDateInput } from '@utils/helpers';
 import { CreateLeaveSchema, type CreateLeaveInputs } from '../validators';
 import { useCreateLeave } from '../hooks';
 import { useRouter } from 'expo-router';
@@ -107,19 +107,59 @@ export const CreateLeaveScreen = () => {
               {/* From Date & To Date — side by side */}
               <View className="flex-row gap-x-3">
                 <View className="flex-1">
-                  <FieldInput
+                  <Controller
+                    control={methods.control}
                     name="from_date"
-                    label="From Date"
-                    placeholder="dd-mm-yyyy"
-                    testID="FROM_DATE_INPUT"
+                    render={({ field: { value, onChange }, fieldState: { error } }) => (
+                      <View className="my-2 w-full">
+                        <Text
+                          variant={error ? 'error' : 'label'}
+                          weight="medium"
+                          className="mb-2 ml-1">
+                          From Date
+                        </Text>
+                        <Input
+                          value={value}
+                          onChangeText={(text) => onChange(formatDateInput(text))}
+                          placeholder="dd-mm-yyyy"
+                          error={!!error}
+                          testID="FROM_DATE_INPUT"
+                        />
+                        {error && (
+                          <Text variant="caption-sm" className="ml-1 mt-2 text-destructive">
+                            {error.message}
+                          </Text>
+                        )}
+                      </View>
+                    )}
                   />
                 </View>
                 <View className="flex-1">
-                  <FieldInput
+                  <Controller
+                    control={methods.control}
                     name="to_date"
-                    label="To Date"
-                    placeholder="dd-mm-yyyy"
-                    testID="TO_DATE_INPUT"
+                    render={({ field: { value, onChange }, fieldState: { error } }) => (
+                      <View className="my-2 w-full">
+                        <Text
+                          variant={error ? 'error' : 'label'}
+                          weight="medium"
+                          className="mb-2 ml-1">
+                          To Date
+                        </Text>
+                        <Input
+                          value={value}
+                          onChangeText={(text) => onChange(formatDateInput(text))}
+                          placeholder="dd-mm-yyyy"
+                          error={!!error}
+                          testID="TO_DATE_INPUT"
+                        />
+                        {error && (
+                          <Text variant="caption-sm" className="ml-1 mt-2 text-destructive">
+                            {error.message}
+                          </Text>
+                        )}
+                      </View>
+                    )}
                   />
                 </View>
               </View>
@@ -147,11 +187,28 @@ export const CreateLeaveScreen = () => {
               />
 
               {/* Order Date */}
-              <FieldInput
+              <Controller
+                control={methods.control}
                 name="order_date"
-                label="Order Date"
-                placeholder="dd-mm-yyyy"
-                testID="ORDER_DATE_INPUT"
+                render={({ field: { value, onChange }, fieldState: { error } }) => (
+                  <View className="my-2 w-full">
+                    <Text variant={error ? 'error' : 'label'} weight="medium" className="mb-2 ml-1">
+                      Order Date
+                    </Text>
+                    <Input
+                      value={value}
+                      onChangeText={(text) => onChange(formatDateInput(text))}
+                      placeholder="dd-mm-yyyy"
+                      error={!!error}
+                      testID="ORDER_DATE_INPUT"
+                    />
+                    {error && (
+                      <Text variant="caption-sm" className="ml-1 mt-2 text-destructive">
+                        {error.message}
+                      </Text>
+                    )}
+                  </View>
+                )}
               />
 
               {/* Reason */}
