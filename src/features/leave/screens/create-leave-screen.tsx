@@ -76,7 +76,7 @@ export const CreateLeaveScreen = () => {
           </View>
 
           <FormProvider {...methods}>
-            <View className="w-full">
+            <View className="w-full gap-y-2">
               {/* Leave Type Chip Selector */}
               <LeaveTypeChips
                 selectedType={selectedType}
