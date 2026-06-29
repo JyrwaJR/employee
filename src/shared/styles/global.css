@@ -132,40 +132,39 @@
     --sidebar-ring: 221 100% 50%;
   }
 
-  .dark-bmw {
-    /* ── BMW M Design System ──────────────────────────────
-       Based on DESIGN.md — pure black canvas, white primary
-       type, M tricolor brand accents, 0px radius.
-       Apply class="dark-bmw" on the root element to activate. */
+  .dark-alt {
+    /* ── Dark Alternative Theme ───────────────────────────
+       Deep-black canvas variant with white primary type and
+       cool-blue accent. Apply class="dark-alt" on the root
+       element to activate.                                    */
 
     /* Core Semantic Tokens */
-    --background: 0 0% 0%; /* canvas — pure black       */
-    --foreground: 0 0% 100%; /* on-dark — white type      */
-    --card: 0 0% 10%; /* surface-card (#1a1a1a)    */
-    --card-foreground: 0 0% 100%; /* white text on card        */
-    --popover: 0 0% 10%; /* surface-card              */
-    --popover-foreground: 0 0% 100%; /* white text                */
-    --primary: 0 0% 100%; /* primary — white CTA/type  */
-    --primary-foreground: 0 0% 0%; /* black text on white CTA   */
-    --secondary: 0 0% 10%; /* surface-card (#1a1a1a)    */
-    --secondary-foreground: 0 0% 73%; /* body text (#bbb)          */
-    --muted: 0 0% 5%; /* surface-soft (#0d0d0d)    */
-    --muted-foreground: 0 0% 49%; /* muted text (#7e7e7e)      */
-    --accent: 205 100% 35%; /* M Blue Light (#0066b1)    */
-    --accent-foreground: 0 0% 100%; /* white text on accent      */
-    --destructive: 4 81% 49%; /* M Red (#e22718)           */
+    --background: 0 0% 0%; /* pure black canvas       */
+    --foreground: 0 0% 100%; /* white type              */
+    --card: 0 0% 10%; /* elevated surface        */
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%; /* white primary CTA/type  */
+    --primary-foreground: 0 0% 0%; /* black text on white     */
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 0 0% 73%; /* body gray              */
+    --muted: 0 0% 5%; /* soft surface            */
+    --muted-foreground: 0 0% 49%; /* muted gray text         */
+    --accent: 205 100% 35%; /* cool blue accent        */
+    --accent-foreground: 0 0% 100%;
+    --destructive: 4 81% 49%;
     --destructive-foreground: 0 0% 100%;
-    --border: 0 0% 24%; /* hairline (#3c3c3c)        */
-    --input: 0 0% 24%; /* hairline                  */
-    --ring: 0 0% 100%; /* white focus ring          */
-    --radius: 0rem; /* rounded.none — BMW 0px   */
+    --border: 0 0% 24%; /* hairline                */
+    --input: 0 0% 24%;
+    --ring: 0 0% 100%; /* white focus ring        */
+    --radius: 0rem; /* 0px radius              */
 
-    /* Extended BMW M Surface Tokens */
+    /* Extended Surface Tokens */
     --canvas: 0 0% 0%;
     --surface-soft: 0 0% 5%;
     --surface-card: 0 0% 10%;
     --surface-elevated: 0 0% 15%;
-    --carbon-gray: 0 0% 17%;
     --hairline: 0 0% 24%;
     --hairline-strong: 0 0% 15%;
     --on-dark: 0 0% 100%;
@@ -173,22 +172,22 @@
     --body-strong: 0 0% 90%;
     --muted-text: 0 0% 49%;
 
-    /* BMW M Brand Palette (tricolor + heritage) */
-    --m-blue-light: 205 100% 35%; /* #0066b1 — first stripe   */
-    --m-blue-dark: 215 77% 47%; /* #1c69d4 — middle stripe  */
-    --m-red: 4 81% 49%; /* #e22718 — third stripe   */
-    --electric-blue: 214 94% 37%; /* #0653b6 — EV accent      */
+    /* Brand Accent Palette */
+    --accent-blue: 205 100% 35%;
+    --accent-blue-deep: 215 77% 47%;
+    --accent-red: 4 81% 49%;
+    --accent-electric: 214 94% 37%;
 
     /* Semantic Indicators */
-    --warning: 44 100% 48%; /* #f4b400                  */
-    --success: 136 83% 35%; /* #0fa336                  */
+    --warning: 44 100% 48%;
+    --success: 136 83% 35%;
 
-    /* Chart Tokens (monochromatic grays from the palette) */
-    --chart-1: 0 0% 100%; /* white                    */
-    --chart-2: 205 100% 35%; /* m-blue-light             */
-    --chart-3: 4 81% 49%; /* m-red                    */
-    --chart-4: 0 0% 73%; /* body                     */
-    --chart-5: 0 0% 49%; /* muted                    */
+    /* Chart Tokens */
+    --chart-1: 0 0% 100%;
+    --chart-2: 205 100% 35%;
+    --chart-3: 4 81% 49%;
+    --chart-4: 0 0% 73%;
+    --chart-5: 0 0% 49%;
 
     /* Sidebar overrides */
     --sidebar: 0 0% 5%;
