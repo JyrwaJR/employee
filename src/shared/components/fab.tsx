@@ -7,8 +7,9 @@ import { cva, type VariantProps } from 'class-variance-authority';
 const fabVariants = cva('absolute items-center justify-center rounded-full shadow-lg', {
   variants: {
     variant: {
-      primary: 'bg-blue-600 shadow-blue-600/30',
+      primary: 'bg-primary shadow-primary/30',
       secondary: 'bg-slate-100 dark:bg-slate-800 shadow-none',
+      outline: 'border border-gray-400 bg-background shadow-none dark:border-gray-800',
       destructive: 'bg-red-500 shadow-red-500/30',
     },
     size: {

@@ -1,279 +1,380 @@
 ## Overview
 
-BMW M's marketing surface is a near-pure black canvas (`{colors.canvas}` — #000) holding white BMW Type Next Latin headlines in **confident UPPERCASE**. The system has no decorative voltage of its own; brand energy comes from **full-bleed automotive photography** — cars cornering at speed, carbon-fiber wheel detail, driver cockpit shots, motorsport pit lanes — placed as edge-to-edge content that fills entire bands. UI chrome around the photography stays minimal: thin sans-serif copy, dividers as 1px hairlines (`{colors.hairline}`), all-caps button labels with no fill until hovered.
+HP reads like a long-running consumer-electronics catalog crossed with an enterprise-software product page. The whole system sits on **pure white** (`{colors.canvas}` — `#ffffff`) with thin gray panels (`{colors.cloud}` / `{colors.fog}`) for alternating section bands. There is one chromatic action color — **HP Electric Blue** (`{colors.primary}` — `#024ad8`) — and one ink color (`{colors.ink}` — `#1a1a1a`); together they do ninety percent of the work. Type is a single family across every surface: **Forma DJR Micro**, HP's bespoke geometric grotesque, set at weight 500 for headlines and 400 for body — clean, neutral, slightly mechanical.
 
-The **M tricolor stripe** — `{colors.m-blue-light}` (#0066b1) → `{colors.m-blue-dark}` (#1c69d4) → `{colors.m-red}` (#e22718) — appears sparingly as the brand's signature accent, used on the M wordmark, motorsport chrome, vehicle-tech callouts, and model badges. It is never a CTA color and never used as a background fill — the tricolor is exclusively a brand-identity marker.
+The signature gesture is **angular blue chevrons** — sharp 0-radius slashes derived from the HP wordmark's pair of parallel slashes — that anchor the homepage hero, the laptop-page hero, and the printer pricing page. They appear on the left and right edges of the primary banner card, layered behind product photography. Outside those decorative slashes, every other surface is rectilinear with **soft 8–16px corners** on cards and a 4px corner on buttons.
 
-Type voice runs **BMW Type Next Latin** in two cuts: regular for display + nav labels and Light for body + secondary copy. Display sizes use weight 700 (BMW's signature heavy-but-tight setting), while body type drops to weight 300 (Light). The contrast between heavy display and light body is the system's editorial signature.
+The system breaks into three voice modes: a **white commercial body** for product browsing (cards, category icons, pricing tiers); a **dark navy slab** (`{colors.ink}` near-black) for testimonial bands, the closing "How can we help?" footer-prelude, and the page footer; and a **light fog band** (`{colors.cloud}` / `{colors.fog}`) for utility sections like comparison strips and FAQ accordions. The blue accent appears only on filled CTAs, link text, the chevron decorations, and the active price-stamp on a featured tier — never as a section background.
 
 **Key Characteristics:**
 
-- Near-pure black canvas (`{colors.canvas}` — #000) with white type. The system inverts almost nothing — there is no light-mode marketing surface.
-- Display headlines in UPPERCASE BMW Type Next Latin at weight 700. Sub-heads stay sentence-case at lighter weight.
-- M tricolor (`{colors.m-blue-light}` / `{colors.m-blue-dark}` / `{colors.m-red}`) used as 4px brand-stripe dividers, M-wordmark accents, and motorsport chrome — never as buttons or fills.
-- Photography fills entire bands edge-to-edge. Cars are always the visual subject; UI chrome backs off to small white labels overlaid on photography.
-- Buttons are flat with `{rounded.none}` (0px) corners and uppercase letterspaced labels. The "industrial precision" rectangular silhouette IS the brand.
-- Border radius is mostly zero across the system. The few exceptions: `{rounded.full}` on circular icon buttons (carousel arrows, chatbot launcher) and `{rounded.sm}` on a handful of small toggle pills.
-- Spacing is generous and grid-aligned: `{spacing.section}` (96px) between major bands; `{spacing.xxl}` (64px) inside hero photo bands; `{spacing.xl}` (40px) inside content cards.
+- Pure white canvas (`{colors.canvas}`) with deep ink (`{colors.ink}`) running every body surface; light fog bands (`{colors.cloud}`, `{colors.fog}`) alternate for section rhythm
+- HP Electric Blue (`{colors.primary}`) is the lone CTA fill and link color; it appears at most twice per viewport
+- Bespoke Forma DJR Micro across every surface — display, body, button, caption — at weights 400 / 500 / 600 / 700
+- Cards round at `{rounded.xl}` (16px) for product/pricing tiles; buttons sit at `{rounded.md}` (4px) with capitalize labels
+- Geometric blue chevrons (`{colors.primary}` rectangles cut at 45°) frame hero photography and reinforce the wordmark
+- Dark-navy slabs (`{colors.ink}`) close every page rhythm — testimonial bands, "how can we help?" prelude, and the footer
+- Section rhythm: utility-strip → top nav → white body → cloud-band → ink slab → cloud-band → ink footer
 
 ## Colors
 
+> **No Interaction sub-section.** Hover colors are silently filtered. Allowed sub-sections: Brand & Accent, Surface, Text, Semantic.
+
 ### Brand & Accent
 
-- **Primary** (`{colors.primary}` — #ffffff): The system's primary type and CTA color. Used for h1/h2/h3 display, body text on dark, and primary button labels (the buttons themselves are transparent or canvas-colored — the white text + outline IS the button).
-- **M Blue Light** (`{colors.m-blue-light}` — #0066b1): The first stop in the M tricolor stripe. Used on M-badge accents and motorsport chrome.
-- **M Blue Dark** (`{colors.m-blue-dark}` — #1c69d4): The middle stop. The same hex as `{colors.bmw-blue}` — BMW's heritage corporate blue, repurposed as the middle band of the M stripe.
-- **M Red** (`{colors.m-red}` — #e22718): The third stop. The signature M-power red, used in the stripe and on motorsport-pace callouts.
-- **Electric Blue** (`{colors.electric-blue}` — #0653b6): A separate electric-vehicle accent used on M xDrive electric model pages. Distinct from the heritage blue — feels colder, more digital.
+- **HP Electric Blue** (`{colors.primary}` — `#024ad8`): the system's lone signal — primary CTA fill, link color, chevron-decoration fill, active sub-nav indicator. Reserved.
+- **Bright Blue** (`{colors.primary-bright}` — `#296ef9`): a slightly lighter variant used inside dark slabs (testimonial-card buttons, dark-band CTA links) where the deeper blue would muddy.
+- **Deep Navy** (`{colors.primary-deep}` — `#0e3191`): pressed state for the primary CTA and the visited-link color.
+- **Soft Blue** (`{colors.primary-soft}` — `#c9e0fc`): pale-blue surface used inside customer-story cards and selection chips.
 
 ### Surface
 
-- **Canvas** (`{colors.canvas}` — #000000): The default page floor across every marketing surface. True black.
-- **Surface Soft** (`{colors.surface-soft}` — #0d0d0d): A barely-different-from-black used for spec table cells and footer-adjacent strips.
-- **Surface Card** (`{colors.surface-card}` — #1a1a1a): Cards, secondary buttons, icon-button backgrounds.
-- **Surface Elevated** (`{colors.surface-elevated}` — #262626): One step lighter, used for nested cards inside dark bands.
-- **Carbon Gray** (`{colors.carbon-gray}` — #2b2b2b): Carbon-fiber-inspired surface tone used on technical-spec cards.
-
-### Hairlines & Borders
-
-- **Hairline** (`{colors.hairline}` — #3c3c3c): The 1px divider tone on dark surfaces. Used between body sections, between table rows, around card outlines.
-- **Hairline Strong** (`{colors.hairline-strong}` — #262626): Same hex as `{colors.surface-elevated}` — borders feel like one-step elevations rather than ink lines.
+- **Canvas** (`{colors.canvas}` — `#ffffff`): the universal page background. White, full opacity.
+- **Paper** (`{colors.paper}` — `#ffffff`): card surfaces — same white as canvas, with hairline borders or shadows providing the lift.
+- **Cloud** (`{colors.cloud}` — `#f7f7f7`): the lightest gray section band, used for alternating-row backgrounds and product-feature card groups.
+- **Fog** (`{colors.fog}` — `#e8e8e8`): a slightly darker gray surface band, used for FAQ outer panels and the "Trending laptops" header strip.
+- **Steel** (`{colors.steel}` — `#c2c2c2`): hairline border used on outlined elements with stronger emphasis (focus states, active filter).
+- **Bloom Coral / Bloom Rose** (`{colors.bloom-coral}` / `{colors.bloom-rose}` — `#ff5050`, `#f9d4d2`): the "Get 25% off" sale-tag chip + soft pink lifestyle accent on the sale hero.
+- **Storm Mist / Sea / Deep** (`{colors.storm-mist}`, `{colors.storm-sea}`, `{colors.storm-deep}` — `#8ebdce`, `#7fadbe`, `#356373`): the teal-storm tones reserved for the printer-plan illustration backdrop and supporting infographic accents.
 
 ### Text
 
-- **Ink / On Dark** (`{colors.on-dark}` — #ffffff): All headline and primary text on dark canvas.
-- **Body** (`{colors.body}` — #bbbbbb): Default running-text color (slightly cooler than pure white). Used for body paragraphs and secondary metadata.
-- **Body Strong** (`{colors.body-strong}` — #e6e6e6): Emphasized body / lead paragraph.
-- **Muted** (`{colors.muted}` — #7e7e7e): Footer links, breadcrumbs, captions.
+- **Ink** (`{colors.ink}` — `#1a1a1a`): the universal text color on white surfaces — headlines, body, button labels, navigation.
+- **Ink Deep** (`{colors.ink-deep}` — `#000000`): pure black used for the wordmark and 1px hairline strokes around badge outlines.
+- **Ink Soft** (`{colors.ink-soft}` — `#292929`): an alternate near-black used inside dark-navy slabs as a subtle textural shift.
+- **On Ink** (`{colors.on-ink}` — `#ffffff`): pure white used for headline and body text on every dark-navy slab.
+- **Charcoal** (`{colors.charcoal}` — `#3d3d3d`): muted body color on white surfaces — secondary descriptions, fine-print disclaimers.
+- **Graphite** (`{colors.graphite}` — `#636363`): smaller-print color, used for legal lines and timestamp metadata.
 
 ### Semantic
 
-- **Warning** (`{colors.warning}` — #f4b400): Used very sparingly on technical-warning callouts.
-- **Success** (`{colors.success}` — #0fa336): Order-confirmation states (rare on marketing surfaces).
+- **Bloom Deep** (`{colors.bloom-deep}` — `#b3262b`) + **Bloom Wine** (`{colors.bloom-wine}` — `#5a1313`): error and discount-emphasis colors. The deep brick reads as "sale" or "destructive" depending on placement.
+- **Storm Deep** (`{colors.storm-deep}` — `#356373`): used as a neutral status accent (e.g., printer-plan tier "Versatile" tier color).
 
 ## Typography
 
 ### Font Family
 
-**BMW Type Next Latin** is BMW's licensed display + body typeface. The system uses two cuts: regular and Light. The fallback stack walks `-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`.
+The voice is **single-family**: Forma DJR Micro (HP's bespoke geometric grotesque, fallback Arial) across every surface — display, body, button, caption. Forma DJR Micro is a wide, slightly rounded grotesque designed at small optical sizes to stay legible at UI-chrome scale. HP runs it at weight 400 for body, 500 for display headlines, 600/700 for emphasis and button labels.
 
-The split is a deliberate weight-pair:
-
-- Display (700) for headlines, navigation labels, button text, and category labels — the "stamped" voice
-- Light (300) for body paragraphs, descriptive copy, and secondary metadata — the "engineered" voice
-
-The contrast between heavy display and light body is BMW's editorial signature — never blur it by using regular (400) display or medium (500) body.
+The 16/14/12-px caption tier carries the catalog metadata — model numbers, spec rows, fine print — at weight 400 with a 1.4–1.5 line-height. Button labels lift to weight 600/700 with positive 0.5–1.1px letter-spacing and uppercase transform — the only place the system tracks letters.
 
 ### Hierarchy
 
-| Token                          | Size | Weight      | Line Height | Letter Spacing | Use                                         |
-| ------------------------------ | ---- | ----------- | ----------- | -------------- | ------------------------------------------- |
-| `{typography.display-xl}`      | 80px | 700         | 1.0         | 0              | Hero h1 ("THE ULTIMATE", "MORE BMW M.")     |
-| `{typography.display-lg}`      | 56px | 700         | 1.05        | 0              | Section heads ("MORE FROM BMW M MAGAZINE.") |
-| `{typography.display-md}`      | 40px | 700         | 1.1         | 0              | Sub-section heads, model names              |
-| `{typography.display-sm}`      | 32px | 700         | 1.15        | 0              | CTA-band heads, category page titles        |
-| `{typography.title-lg}`        | 24px | 700         | 1.3         | 0              | Card titles in 3-up grids                   |
-| `{typography.title-md}`        | 20px | 400         | 1.4         | 0              | Card sub-titles, lead paragraphs            |
-| `{typography.title-sm}`        | 18px | 400         | 1.4         | 0              | Spec callouts, intro paragraphs             |
-| `{typography.label-uppercase}` | 14px | 700         | 1.3         | 1.5px          | Category tabs, "VIEW MORE" inline labels    |
-| `{typography.body-md}`         | 16px | 300 (Light) | 1.5         | 0              | Default body — BMW Type Next Latin Light    |
-| `{typography.body-sm}`         | 14px | 300 (Light) | 1.5         | 0              | Footer body, cookie consent, fine print     |
-| `{typography.caption}`         | 12px | 400         | 1.4         | 0.5px          | Photo captions, image-credit lines          |
-| `{typography.button}`          | 14px | 700         | 1.0         | 1.5px          | All button labels — uppercase, letterspaced |
-| `{typography.nav-link}`        | 14px | 400         | 1.4         | 0.5px          | Top-nav menu items                          |
+| Token                        | Size   | Weight | Line Height | Letter Spacing | Use                                         |
+| ---------------------------- | ------ | ------ | ----------- | -------------- | ------------------------------------------- |
+| `{typography.display-xxl}`   | 72px   | 500    | 1.0         | 0              | Hero headline (homepage, laptop hub)        |
+| `{typography.display-xl}`    | 56px   | 500    | 1.0         | 0              | Section headlines on landing pages          |
+| `{typography.display-lg}`    | 44px   | 500    | 1.0         | 0              | Sub-section headlines on shop pages         |
+| `{typography.display-md}`    | 32px   | 500    | 1.0         | 0              | Promo strip headlines, FAQ section headers  |
+| `{typography.display-sm}`    | 24px   | 500    | 1.17        | 0              | Card titles, pricing-tier names             |
+| `{typography.display-xs}`    | 20px   | 500    | 1.0         | 0              | Inline list headers, accordion labels       |
+| `{typography.body-lg}`       | 18px   | 400    | 1.33        | 0              | Lead paragraphs                             |
+| `{typography.body-md}`       | 16px   | 400    | 1.38        | 0              | Default body                                |
+| `{typography.body-emphasis}` | 16px   | 500    | 1.38        | 0              | Bolded run-in copy                          |
+| `{typography.caption-md}`    | 14px   | 400    | 1.5         | 0              | Specs, metadata, captions                   |
+| `{typography.caption-bold}`  | 14px   | 700    | 1.3         | 0              | Sale tags, in-card highlights               |
+| `{typography.caption-sm}`    | 12px   | 400    | 1.33        | 0              | Footnotes, legal lines                      |
+| `{typography.link-md}`       | 16px   | 500    | 1.38        | 0              | Inline link emphasis                        |
+| `{typography.button-md}`     | 14px   | 600    | 1.4         | 0.7px          | Primary/secondary button labels (uppercase) |
+| `{typography.button-sm}`     | 12.6px | 700    | 1.0         | 0.126px        | Compact button labels in tight cells        |
+| `{typography.price-md}`      | 24px   | 500    | 1.17        | 0              | Tier and product price stamps               |
 
 ### Principles
 
-The system contrasts heavy headlines (700) against very light body (300) at all times — the gap is the editorial signature. Letter-spacing is non-trivial: button labels and category labels carry 1.5px tracking that makes them feel "machined" rather than "typed." Display headlines stay at 0 letter-spacing — BMW Type's natural cap-height handles spacing on large sizes.
+The typographic decision worth flagging: HP runs **weight 500 for every display size**, including the largest 72px hero headline. Most editorial systems jump to 600/700 at hero scale; HP doesn't. The result feels open and approachable rather than commanding — appropriate for a brand that sells across consumer, SMB, and enterprise audiences in the same catalog.
 
-UPPERCASE display is the default voice for h1/h2 — sentence case appears on body and intro paragraphs but rarely on headlines. The all-caps treatment is a brand-voice signal, not a stylistic choice.
+Forma DJR Micro's rounded-grotesque shapes do most of the warmth. There's no italic in the system except inside legal disclaimers; emphasis is carried by weight (500 → body-emphasis, 700 → caption-bold) instead.
 
 ### Note on Font Substitutes
 
-If BMW Type Next Latin is unavailable, **Inter** (variable) at 700/300 is the closest open-source substitute. Adjust display headline tracking to -0.5px to match BMW Type's tighter spacing at large sizes. **Saira Condensed** is an alternative for headlines if a slightly more compressed feel is desired.
+Forma DJR Micro is proprietary (Commercial Type / Mark Caneso). Closest open-source substitutes:
+
+- **Inter** at weights 400 / 500 / 600 / 700 — slightly narrower than Forma DJR Micro; bump font-size by ~3% to compensate
+- **Manrope** at weights 400 / 500 / 600 / 700 — closer in proportion, gentler curves; use directly with no metric adjustment
+- **Roboto** at weights 400 / 500 / 700 — flatter character; use as last-resort fallback
+
+When swapping, set body line-height to 1.4 and display line-height to 1.0 explicitly — the Forma DJR Micro line-height numbers are tight, and most substitutes default looser.
 
 ## Layout
 
 ### Spacing System
 
-- **Base unit:** 4px.
-- **Tokens:** `{spacing.xxs}` 4px · `{spacing.xs}` 8px · `{spacing.sm}` 12px · `{spacing.md}` 16px · `{spacing.lg}` 24px · `{spacing.xl}` 40px · `{spacing.xxl}` 64px · `{spacing.section}` 96px.
-- **Section padding (vertical):** `{spacing.section}` (96px) between major editorial bands.
-- **Hero photo bands:** `{spacing.xxl}` (64px) internal vertical padding around the hero h1 + sub-headline pair.
-- **Card internal padding:** `{spacing.lg}` (24px) for content and model cards; `{spacing.xl}` (40px) for spec-cell tables.
-- **Gutters:** `{spacing.lg}` (24px) between cards in 3-up grids; `{spacing.md}` (16px) inside footer columns.
+- **Base unit**: 8px. Smaller half-step at 4px. The scale is gentle — most card padding lands at 16px or 24px; section gap at 80px.
+- **Tokens (front matter)**: `{spacing.xxs}` 4px · `{spacing.xs}` 8px · `{spacing.sm}` 12px · `{spacing.md}` 16px · `{spacing.lg}` 20px · `{spacing.xl}` 24px · `{spacing.xxl}` 32px · `{spacing.section}` 80px
+- **Section padding**: `{spacing.section}` (80px) vertical between major bands on desktop; collapses to ~48px on mobile.
+- **Card internal padding**: `{spacing.xl}` (24px) for product cards; `{spacing.xxl}` (32px) for promo strips and feature cards; `{spacing.md}` (16px) for compact article tiles.
+- **Gutter**: `{spacing.xl}` (24px) between grid columns at desktop; `{spacing.md}` (16px) on tablet/mobile.
+
+The 80px section gap is the universal rhythm constant — it appears between every major homepage band, between the hero and the comparison table on the printer-plan page, and between feature rows on the laptop-shop page.
 
 ### Grid & Container
 
-- **Max content width:** ~1440px centered on marketing pages — wider than typical SaaS to give photography breathing room.
-- **Editorial body:** Single 12-column grid; photo bands bleed full-bleed (no max-width).
-- **Card grids:** 3-up at desktop, 2-up at tablet, 1-up at mobile.
-- **Footer:** 4-column link list at desktop, 2-up at tablet, 1-up at mobile.
+- **Desktop max-width**: 1366px content container with full-bleed-on-canvas section backgrounds.
+- **Hero**: a single full-width photo card (homepage and laptop-hub hero) with the headline overlay positioned upper-left or upper-right.
+- **Product family grid**: 4 columns at >1200px, 3 at 1024–1199px, 2 at 768–1023px, 1 below 768px.
+- **Pricing tiers**: 4 columns at >1024px, 2x2 grid at 768–1023px, single-column accordion below 768px.
+- **Footer**: 5-column link grid at >1024px, collapsing to 2-column then accordion on mobile.
 
 ### Whitespace Philosophy
 
-BMW M trusts photography to do the visual work. Whitespace around photography is restrained — the cars fill the frame, and copy sits below or beside them in tightly-aligned columns. Where whitespace appears (between body sections, around CTAs), it's always uniform `{spacing.section}` (96px). The system never adds atmospheric backdrops, gradients, or decoration — empty space stays as empty black canvas.
+Whitespace is **commercial-clean** — generous around hero photography, tight around catalog spec rows. Product cards leave breathing room above and below the photo (≥32px) so the laptop or printer reads as a hero shot rather than a thumbnail. The fine-print disclaimer regions (legal, footnote rows) tighten line-height to 1.3 and shrink type to 11–12px so the bulk of fine print stays compact.
 
 ## Elevation & Depth
 
-| Level              | Treatment                                                  | Use                                                                    |
-| ------------------ | ---------------------------------------------------------- | ---------------------------------------------------------------------- |
-| Flat               | No shadow, no border                                       | Body sections, top nav, footer, photo bands                            |
-| Soft hairline      | 1px `{colors.hairline}` border                             | Section dividers, card outlines, table rows                            |
-| Card surface       | `{colors.surface-card}` background over canvas — no shadow | Feature photo cards, magazine cards, chatbot launcher                  |
-| Photographic depth | Full-bleed photography with edge-to-edge crop              | Hero bands, motorsport features — depth via subject matter, not chrome |
+| Level              | Treatment                                                    | Use                                                            |
+| ------------------ | ------------------------------------------------------------ | -------------------------------------------------------------- |
+| 0 — Flat           | No border, no shadow.                                        | Section bands (white, cloud, fog), full-bleed photo heroes     |
+| 1 — Hairline       | 1px solid `{colors.hairline}` (`#e8e8e8`) border, no shadow. | Outlined buttons, comparison-table cells, FAQ accordion outers |
+| 2 — Soft Lift      | `0 2px 8px rgba(26, 26, 26, 0.08)`.                          | Product cards, pricing-tier columns, customer-story tiles      |
+| 3 — Floating Modal | `0 8px 24px rgba(26, 26, 26, 0.12)`.                         | Add-to-cart drawer, mobile-nav sheet, image zoom modal         |
 
-The system uses no drop shadows and no layered chrome. Depth comes entirely from photography (subject + lens + lighting) and the contrast between black canvas and slightly-elevated `{colors.surface-card}`.
+The system is mostly flat — depth is communicated by **color contrast** (cloud-band vs. white card on the same band) rather than shadow elevation. The Soft Lift level is the workhorse for the catalog — every product tile and pricing column gets it; nothing else does. Modal-floating is rare and reserved for transient overlays.
 
 ### Decorative Depth
 
-- **M Stripe Divider** (`{component.m-stripe-divider}`): A 4px-tall horizontal divider carrying the M tricolor (`{colors.m-blue-light}` → `{colors.m-blue-dark}` → `{colors.m-red}`). Used on motorsport chrome, model-detail headers, and brand-identity moments. The stripe is the system's only true "decorative" element — used sparingly to mark significance.
-- **Carbon-fiber surfaces**: The technical-spec page uses `{colors.carbon-gray}` (#2b2b2b) cells with subtle texture overlay. This is a single-page treatment, not a system-wide pattern.
-- **Photographic depth**: Full-bleed cars are the depth. Lighting in the photography (track lights, sunset rim-light) does the elevation work that drop shadows would do in a SaaS system.
+The system's most distinctive depth gesture is the **HP blue chevron pair** — two angular `{colors.primary}` slashes (no radius, no shadow) that sit on the left and right of the homepage hero card and the laptop-shop hero. They're not decorative noise; they're a literal echo of the HP wordmark's two parallel slashes, scaled up to architectural size. Treat them as a brand artifact, not a generic geometric flourish.
+
+Photography on the homepage and laptop-shop pages frames product imagery inside `{rounded.xl}` (16px) containers with a soft 1px hairline. Lifestyle photography (testimonials, "How HP works for X") sits full-bleed inside dark-navy slabs without rounding.
 
 ## Shapes
 
 ### Border Radius Scale
 
-| Token            | Value        | Use                                                                            |
-| ---------------- | ------------ | ------------------------------------------------------------------------------ |
-| `{rounded.none}` | 0px          | All buttons, cards, photo containers, spec cells, inputs — the dominant radius |
-| `{rounded.xs}`   | 2px          | Almost no use — reserved for legal CTAs                                        |
-| `{rounded.sm}`   | 4px          | Small toggle pills on configurator surfaces                                    |
-| `{rounded.md}`   | 6px          | Rare — small dropdown menu items                                               |
-| `{rounded.full}` | 9999px / 50% | Circular icon buttons, carousel arrows, chatbot launcher                       |
+| Token            | Value  | Use                                                               |
+| ---------------- | ------ | ----------------------------------------------------------------- |
+| `{rounded.none}` | 0px    | Hero chevron decorations, full-bleed photo heroes, marquee strips |
+| `{rounded.xs}`   | 2px    | Secondary chip backgrounds, sale-tag pills                        |
+| `{rounded.sm}`   | 3px    | Default secondary CTA radius (small touch zones)                  |
+| `{rounded.md}`   | 4px    | Primary buttons, secondary buttons, text inputs                   |
+| `{rounded.lg}`   | 8px    | Badge pills, category-icon cards, FAQ row containers              |
+| `{rounded.xl}`   | 16px   | Product cards, pricing tiers, customer-story tiles, photo frames  |
+| `{rounded.pill}` | 9999px | Category sub-nav tabs, search-pill input, filter chips            |
 
-The radius hierarchy is "almost always 0, sometimes circular." This binary radius decision is a deliberate brand-language choice — sharp rectangles read as engineered precision; circles read as functional controls. Nothing in between.
+The system maintains a clear two-tier philosophy: **buttons stay sharp** (4px, almost rectilinear) while **cards and photo frames stay soft** (16px). This split is the visual signature — sharp interactive elements against softer container surfaces.
 
 ### Photography Geometry
 
-Hero photography fills full-width with no rounding. Photo cards inside grids retain `{rounded.none}` corners, edge-to-edge images. Carbon-wheel detail shots and motorsport-pit photos use 16:9 or 21:9 cinema-aspect ratios. Driver portraits in racing-team grids use 4:5 portrait crops, also with sharp corners.
+Hero photography sits in `{rounded.xl}` (16px) frames with no border. Product family thumbnails inside the laptop-grid are 1:1 (square) on a `{colors.canvas}` background, padded so the laptop is shown at ~70% of the frame. Customer-story photography uses 16:9 inside the same `{rounded.xl}` frame. There are no full-bleed circular avatars; testimonial avatars are 4px-rounded squares.
 
 ## Components
 
-### Top Navigation
-
-**`top-nav`** — Black nav bar pinned to the top of every page. 64px tall, `{colors.canvas}` background. Carries the BMW M logo at left (M tricolor + BMW roundel + "M" wordmark), primary horizontal menu (Models, Topics, Magazine, Configurator, Fastlane), right-side cluster with language selector, search icon, account icon. Menu items render in `{typography.nav-link}` with sentence-case labels.
+> **No hover states documented.** Every component spec below documents only Default and Active/Pressed states. Variants live as separate front-matter entries.
 
 ### Buttons
 
-**`button-primary`** — The signature primary CTA. Background `{colors.canvas}` (or transparent over photography), text `{colors.on-dark}` (white), 1px white border outline, rounded `{rounded.none}` (0px), padding 16px × 32px, height 48px. Type `{typography.button}` — uppercase 14px / 700 / 1.5px tracking. The rectangular silhouette and uppercase letterspaced label IS the brand button.
+**`button-primary`** — the lone HP Electric Blue CTA
 
-**`button-primary-outline`** — Same shape as primary but with transparent background and white outline only. Used over photography where a filled button would clash with the image.
+- Background `{colors.primary}`, text `{colors.on-primary}`, type `{typography.button-md}` (uppercase, 0.7px tracking), padding `{spacing.sm} {spacing.xl}` (12 × 24), height 44px, rounded `{rounded.md}`
+- Pressed state `button-primary-pressed` — background `{colors.primary-deep}`, same text
+- Disabled state `button-primary-disabled` — background `{colors.steel}`, white text
+- Used for: "Buy now", "Shop now", "Get a printer", primary form submit
 
-**`button-on-light`** — Used on rare light-surface contexts (configurator, account dialogs). Background `{colors.canvas}`, text `{colors.on-dark}` — black button with white text, inverted from the dark-canvas default.
+**`button-ink`** — black filled CTA
 
-**`button-icon`** — Circular icon buttons (carousel controls, share, favorite). 48 × 48px, background `{colors.surface-card}`, white icon centered, rounded `{rounded.full}`. The only non-rectangular button shape in the system.
+- Background `{colors.ink}`, text `{colors.on-primary}`, padding `{spacing.sm} {spacing.xl}`, height 44px, rounded `{rounded.md}`, type `{typography.button-md}`
+- Used for: "Buy now" on dark photo overlays, secondary primary actions where the blue would clash with imagery
 
-**`carousel-arrow`** — Specific 48 × 48 circular arrow used in photo carousels. Same shape as `{component.button-icon}` with chevron glyph.
+**`button-outline`** — blue-text outlined CTA
 
-**`text-link`** — Inline uppercase letterspaced links ("VIEW ALL MODELS", "READ MORE"). `{typography.label-uppercase}`, white on dark, no underline. The chevron arrow → glyph appears next to most link labels.
+- Background `{colors.canvas}`, text `{colors.primary}`, 1px `{colors.primary}` border, padding `{spacing.sm} {spacing.xl}`, height 44px, rounded `{rounded.md}`
+- Used for: "Compare", "Customize", "Learn more" — secondary actions on white surfaces
+
+**`button-outline-ink`** — black-text outlined CTA
+
+- Background `{colors.canvas}`, text `{colors.ink}`, 1px `{colors.ink}` border, padding `{spacing.sm} {spacing.xl}`, height 44px, rounded `{rounded.md}`
+- Used for: "View" buttons inside product family card grids — neutral against the blue primary
+
+**`button-text-link`** — inline blue link with underline
+
+- Background `{colors.canvas}`, text `{colors.primary}`, type `{typography.link-md}`, padding `{spacing.xxs} 0`
+- Used for: "See details", "Read more" inside cards and disclaimer rows
 
 ### Cards & Containers
 
-**`hero-photo-band`** — Full-width black band with full-bleed automotive photography filling most of the frame. The h1 uses `{typography.display-xl}` (80px / 700) and sits left-aligned over the photo, often with a small subtitle in `{typography.body-md}` below. Vertical padding `{spacing.xxl}` (64px). No card frame — the photo IS the band.
+**`card-product`** — the workhorse product tile
 
-**`feature-photo-card`** — Used in 3-up grids for "MORE FROM BMW M MAGAZINE" and similar editorial sections. Background `{colors.surface-card}`, rounded `{rounded.none}`, internal padding `{spacing.lg}` (24px). Top half of the card is a 16:9 photo (full-bleed within the card); below the photo, a category tag in `{typography.label-uppercase}`, a `{typography.title-lg}` title, and a short body description.
+- Background `{colors.canvas}`, rounded `{rounded.xl}` (16px), padding `{spacing.xl}` (24px), Soft Lift shadow
+- Layout: hero photo (1:1 ratio) on top, title in `{typography.display-xs}`, spec rows in `{typography.caption-md}`, price in `{typography.price-md}`, CTA pinned to bottom
+- Used for: laptop catalog cards, desktop catalog cards
 
-**`model-card`** — Used in the "MORE NEW M MODELS" 3-up grid. Background `{colors.canvas}` (no card surface — just photo on black), rounded `{rounded.none}`. Top: 16:10 hero shot of the model. Below: model name in `{typography.display-md}` (40px / 700), short specs line in `{typography.body-sm}`, a `{component.text-link}` ("EXPLORE THIS MODEL").
+**`card-product-feature`** — full-row feature card with photo + copy
 
-**`magazine-article-card`** — A more text-forward card variant used on the magazine overview page. Background `{colors.canvas}` with hairline border, rounded `{rounded.none}`. Carries a small thumbnail at top, a category label in `{typography.label-uppercase}`, headline in `{typography.title-lg}`, and a body excerpt.
+- Background `{colors.cloud}`, rounded `{rounded.xl}`, padding `{spacing.xxl}` (32px)
+- Layout: photo on the left (50% width), copy on the right with section eyebrow + title + body + CTA pair
+- Used for: "Trending laptops" feature rows, "Shop these must haves"
 
-**`spec-cell`** — Technical specification cells used on model-detail pages (engine specs, weight, top speed, 0-100 time). Background `{colors.surface-soft}` (#0d0d0d), rounded `{rounded.none}`, padding `{spacing.lg}` (24px). Each cell holds a value in `{typography.display-sm}` (32px / 700) at top and a label in `{typography.label-uppercase}` below.
+**`card-pricing-tier`** + **`card-pricing-tier-featured`**
 
-**`motorsport-photo-card`** — Edge-to-edge photo cards used in the racing-team / motorsport sections. No card surface — just a full-bleed photograph with a small overlay caption in white text at the bottom-left. The photography IS the brand here.
+- Background `{colors.canvas}`, rounded `{rounded.xl}`, padding `{spacing.xl}`, Soft Lift shadow
+- Tier name in `{typography.display-sm}`, monthly price in `{typography.display-md}` with `{typography.caption-md}` cadence, page count caption, full feature list, primary CTA
+- Featured tier carries `{colors.primary}` text accent on the price-stamp + a `{colors.primary}` thin top border instead of a colored card background — never inverted to dark
 
-**`chatbot-launcher`** — A right-side card-style entry point ("BMW M CHATBOT") on the homepage. Background `{colors.surface-card}`, rounded `{rounded.none}`, padding `{spacing.lg}` (24px). Carries an h3 title, a short prompt, and a `{component.button-primary}` to launch.
+**`card-customer-story`** — the three-up testimonial tile
 
-**`category-tab`** + **`category-tab-active`** — The category selector tabs used on the magazine and topics pages (e.g., "ALL · MAGAZINE · MODELS · LIFESTYLE · MOTORSPORT"). Tabs render as text-only labels in `{typography.label-uppercase}`. Active state changes text color from `{colors.body}` to `{colors.on-dark}` and adds a 2px white underline below the label. No background fill, no rounded corners.
+- Background `{colors.canvas}`, rounded `{rounded.xl}`, padding `{spacing.md}` (16px), Soft Lift shadow
+- 16:9 photo at top in `{rounded.xl}` frame, quote excerpt in `{typography.body-md}`, attribution row at the bottom
+- Used in the "See what our customers say" homepage section
+
+**`card-article-tile`** — the four-up "Latest from HP" tile
+
+- Background `{colors.canvas}`, rounded `{rounded.xl}`, padding `{spacing.md}`, Soft Lift shadow
+- 16:9 thumbnail at top, date eyebrow in `{typography.caption-sm}`, title in `{typography.body-emphasis}`, "Read more" link
+
+**`card-category-icon`** — the small icon-and-label card in the homepage "Our Products" row
+
+- Background `{colors.canvas}`, rounded `{rounded.lg}` (8px), padding `{spacing.md}`
+- 48px icon at top, label in `{typography.body-emphasis}` below
+- Used for: Laptops, Desktops, Printers, Computer Tools, Accessories, Enterprise Solutions
+
+**`hero-promo-card`** — the homepage hero card with chevron decorations
+
+- Background `{colors.canvas}`, rounded `{rounded.xl}`, padding `{spacing.xxl}` (32px)
+- Photography occupies left half; copy block (eyebrow + headline + price stamp + CTA pair) occupies right half
+- Flanked by `chevron-decoration` blue slashes outside the card's bounding box on left and right edges
+
+**`promo-strip-dark`** — the inline dark navy promo block
+
+- Background `{colors.ink}`, text `{colors.on-ink}`, rounded `{rounded.xl}`, padding `{spacing.xxl} 48px`
+- Used for: "When did work start getting in the way of work?" mid-page promo, the SMB testimonial slab
 
 ### Inputs & Forms
 
-**`text-input`** — Standard text input on dark surfaces. Background `{colors.surface-card}`, text `{colors.on-dark}`, type `{typography.body-md}`, rounded `{rounded.none}` (0px), padding 12px × 16px, height 48px. 1px hairline border. Focus state thickens the border to white.
+**`text-input`** + **`text-input-focused`**
 
-**`cookie-consent-card`** — A right-side cookie-banner card visible on the homepage. Background `{colors.canvas}` with 1px hairline, rounded `{rounded.none}`, padding `{spacing.lg}` (24px). Body text in `{typography.body-sm}` (14px / 300) — Light weight even for legal text. Two buttons stacked at bottom: primary outline + text-link.
+- Background `{colors.canvas}`, text `{colors.ink}`, rounded `{rounded.md}`, padding `{spacing.sm} {spacing.md}`, height 44px
+- 1px `{colors.steel}` border in default; gains 1px `{colors.ink}` border on focus (no halo)
+
+**`text-input-search`** — pill search in the top nav
+
+- Background `{colors.canvas}`, rounded `{rounded.md}`, padding `{spacing.sm} {spacing.md}`, height 40px, 1px `{colors.steel}` border, magnifying-glass icon at right
+
+**`badge-pill-ink`** — filled tag pill
+
+- Background `{colors.ink}`, text `{colors.on-primary}`, rounded `{rounded.lg}`, padding 6px 12px, type `{typography.body-md}`
+- Used inline next to product titles to mark "New" or featured indicators
+
+**`badge-pill-outline`** — outlined tag pill
+
+- Background `{colors.canvas}`, text `{colors.ink}`, 1px `{colors.ink}` border, rounded `{rounded.lg}`, padding 6px 12px
+
+**`badge-sale-coral`** — the sale price-stamp
+
+- Background `{colors.bloom-coral}`, text `{colors.on-primary}`, rounded `{rounded.sm}`, padding `{spacing.xxs} {spacing.xs}`, type `{typography.caption-bold}`
+- Used for: "Save $200", "25% off" overlay tags on hero promo cards
+
+### Navigation
+
+**`utility-strip`** — the top-of-page utility bar
+
+- Background `{colors.ink}`, text `{colors.on-primary}`, height 36px, padding 0 {spacing.xl}, type `{typography.caption-md}`
+- Holds: country/locale picker, "For Business / For Home" toggle, "Sign in" link, cart link
+
+**`nav-bar-top`** — desktop top nav (sits below utility strip)
+
+- Background `{colors.canvas}`, height 64px, padding 0 32px
+- Layout: HP wordmark logo flush left → middle category list (Laptops / Desktops / Printers / Accessories / Solutions / Support) → right slot with Search field, Sign-in link, Cart icon
+- 1px `{colors.hairline}` bottom border separates nav from page
+
+**`nav-link`**
+
+- Background `{colors.canvas}`, text `{colors.ink}`, type `{typography.body-md}`, padding `{spacing.xs} {spacing.md}`
+- Active page draws a 2px `{colors.primary}` underline below the text baseline
+
+**Top Nav (Mobile)**
+
+- Same height, hamburger icon replaces the middle category list, Search and Cart stay visible
+- Drawer expands as a full-canvas sheet with `{typography.body-lg}` link list and a sticky Sign-in CTA at bottom
+
+**`category-tab`** + **`category-tab-active`** — the pill sub-nav
+
+- Default: background `{colors.canvas}`, text `{colors.ink}`, type `{typography.body-emphasis}`, rounded `{rounded.pill}`, padding `{spacing.xs} {spacing.lg}`
+- Active: background `{colors.ink}`, text `{colors.on-primary}`, same rounding
+- Used on the laptop-shop page for "All / Trending / On Sale" filtering, and on the homepage "How can we help?" closing band
 
 ### Signature Components
 
-**`m-stripe-divider`** — The 4px horizontal stripe carrying the M tricolor (`{colors.m-blue-light}` → `{colors.m-blue-dark}` → `{colors.m-red}`). Used as a divider on motorsport chrome, between brand-identity sections, and as a hover-state indicator on category tabs. The most distinctive non-typographic element in the system.
+**`chevron-decoration`** — the geometric blue slash motif
 
-**`cta-band-photo`** — A pre-footer "Drive an M" CTA band carrying full-bleed photography of a car cornering on a track, with a centered headline in `{typography.display-md}` and a `{component.button-primary-outline}` below. Vertical padding 80px. The CTA inherits the editorial gravity of the rest of the page through full-bleed photography rather than chrome.
+- Background `{colors.primary}`, rounded `{rounded.none}`, no shadow
+- Renders as a sharp parallelogram cut at ~60° angle, sized to the height of the hero card it flanks
+- Reserved for hero bands and full-page banners — never decorative noise inside cards
 
-### Footer
+**`faq-row`** — the accordion row on the printer-plan FAQ
 
-**`footer`** — Black footer that closes every page. Background `{colors.canvas}`, text `{colors.body}`. 4-column link list at desktop covering BMW M Models / BMW M Lifestyle / Owners / Company. Vertical padding 64px. Bottom row carries the BMW corporate disclaimer in `{typography.caption}` and language selector. The footer never inverts — it stays black even when the body might transition.
+- Background `{colors.canvas}`, rounded `{rounded.lg}`, padding `{spacing.lg} {spacing.xl}`, type `{typography.body-emphasis}`
+- 1px `{colors.hairline}` divider between rows; chevron-down icon on the right collapsed, chevron-up when expanded
+- Body answer renders inside the same row container in `{typography.body-md}` after expansion
+
+**`help-band-dark`** — the closing "How can we help?" prelude band
+
+- Background `{colors.ink}`, text `{colors.on-primary}`, padding 64px {spacing.xl}
+- Layout: large lifestyle photograph as the band background (low-opacity) with chip-style category tabs centered: Browse Topics / Live Chat / Contact / Diagnose / Order Status
+
+**`footer-dark`**
+
+- Background `{colors.ink}`, text `{colors.on-primary}`, type `{typography.body-md}`, padding 64px {spacing.xl}
+- 5-column link grid (Company / Shop / Support / Resources / Connect) with `{typography.body-emphasis}` headers and `{typography.caption-md}` link rows
+- Bottom strip carries social icons, language picker, and legal lines in `{typography.caption-sm}` muted to `{colors.steel}`
 
 ## Do's and Don'ts
 
 ### Do
 
-- Anchor every page with full-bleed automotive photography. The cars are the brand voltage; chrome backs off.
-- Use UPPERCASE display headlines in `{typography.display-xl}` or `{typography.display-lg}`. Sentence-case display reads as off-brand.
-- Pair heavy display (700) with light body (300). The weight contrast is the editorial signature.
-- Reserve the M tricolor stripe for brand-identity moments — wordmark accents, motorsport chrome, model badges. Never as a button fill or surface.
-- Use `{rounded.none}` (0px) by default. Reserve `{rounded.full}` for circular icon buttons only.
-- Letter-space all-caps labels at 1.5px. The "machined" feel is non-negotiable.
-- Use `{spacing.section}` (96px) between major editorial bands for grid-aligned vertical rhythm.
+- Reserve `{colors.primary}` for the primary CTA, link color, and `chevron-decoration` motif — at most twice per viewport
+- Set every headline in Forma DJR Micro at weight 500 with line-height 1.0 — resist the urge to bump weight at hero scale
+- Use `{rounded.xl}` (16px) for cards and photo frames; `{rounded.md}` (4px) for buttons and inputs — keep the two-tier split sharp
+- Pair white `{colors.canvas}` body bands with `{colors.cloud}` (`#f7f7f7`) alternating bands; let the gray do the breathing
+- Close every page rhythm with a dark-navy `{colors.ink}` slab — the "How can we help?" prelude + footer
+- Set button labels in uppercase with `{typography.button-md}` (0.7px tracking) — the only place the system tracks letters
+- Use Soft Lift shadow exclusively for product cards and pricing tiers — leave section bands flat
+- Frame product photography inside `{rounded.xl}` containers; never use full-bleed circular masks
 
 ### Don't
 
-- Don't introduce a brand color outside the M tricolor (`{colors.m-blue-light}` / `{colors.m-blue-dark}` / `{colors.m-red}`) and the heritage `{colors.bmw-blue}`.
-- Don't bold body type. Body stays at 300 (Light) — bumping to 400 or 500 makes the page feel marketing-bombastic instead of European-engineered.
-- Don't use rounded buttons. The rectangular silhouette IS the brand. Rounded corners read as consumer-tech, not motorsport.
-- Don't put gradient backdrops behind hero type. The hero IS the photography — the page floor stays pure black, and the photo provides the depth.
-- Don't repeat the same surface mode in two consecutive bands. Rhythm: photo band → spec table → photo band → magazine grid → photo band. Two text-only bands in a row read as a corporate site.
-- Don't use the M stripe as a button fill. The stripe is a divider / accent — never an action surface.
-- Don't bold uppercase tracking under 1.5px on button labels — the spacing is what makes them feel "machined."
+- Don't introduce secondary saturated colors outside `{colors.primary}` family + the `bloom-coral` sale-tag and `storm` printer-plan accents
+- Don't apply heavy material shadows — depth is via color contrast (cloud vs. white) and Soft Lift only
+- Don't round buttons above `{rounded.md}` (4px); a soft 8px+ button reads as a different brand
+- Don't run Forma DJR Micro below 12px — small caption at 11px is the floor
+- Don't use the chevron decoration as inline noise; it is a hero-only architectural element tied to the wordmark
+- Don't drop ink text opacity to create hierarchy — switch surface or shift to `{colors.charcoal}` / `{colors.graphite}` instead
+- Don't replace the HP wordmark with a generic sans lockup; the wordmark is a custom mark with its own ratio
 
 ## Responsive Behavior
 
 ### Breakpoints
 
-| Name    | Width       | Key Changes                                                                                            |
-| ------- | ----------- | ------------------------------------------------------------------------------------------------------ |
-| Mobile  | < 768px     | Hamburger nav; hero h1 scales 80→48px; demo grid 1-up; photo cards stack full-width; footer 4 cols → 1 |
-| Tablet  | 768–1024px  | Top nav stays horizontal but tightens; 2-up card grids; spec tables 2-up                               |
-| Desktop | 1024–1440px | Full top-nav; 3-up card grids; spec tables 4-up                                                        |
-| Wide    | > 1440px    | Same as desktop with more breathing room; max content 1440px                                           |
+| Name          | Width       | Key Changes                                                                                    |
+| ------------- | ----------- | ---------------------------------------------------------------------------------------------- |
+| Mobile        | < 480px     | Single-column stack; hamburger nav; section padding drops to ~48px; hero serif scales to ~36px |
+| Mobile-Large  | 480–767px   | Same column count; hero scales to ~44px; pricing tiers stack vertically                        |
+| Tablet        | 768–1023px  | 2-column product grid; pricing 2x2; nav still full text labels                                 |
+| Desktop       | 1024–1279px | 3-column product grid; 4-column pricing; full nav                                              |
+| Desktop-Large | ≥ 1280px    | 4-column product grid; 1366px content max-width with full-bleed bands                          |
 
 ### Touch Targets
 
-- `{component.button-primary}` renders at 48 × 48px minimum — meets WCAG AAA.
-- `{component.button-icon}` and `{component.carousel-arrow}` are exactly 48 × 48 — comfortably above the 44 × 44 minimum.
-- `{component.text-input}` height is 48px.
-- Category tabs render as text-only labels with 12px vertical padding; effective tap area meets 44px with surrounding spacing.
+Every interactive element clears 44×44px on mobile. `button-primary` at 44px height + 24px horizontal padding meets WCAG-AAA touch target. `category-tab` at 8px 20px padding bumps to 12px 24px on touch screens. Nav-link tap areas extend invisibly beyond the text run to the full 44px row height. Sticky cart/sign-in icons in the top nav use 44×44 invisible hit boxes around their visible 24×24 glyph.
 
 ### Collapsing Strategy
 
-- Top nav collapses to a hamburger sheet at < 768px; the menu opens as a full-screen black overlay with the M tricolor stripe at the top.
-- Photography stays full-bleed at every breakpoint — never collapses to a margin'd container.
-- Card grids reduce columns rather than scaling cards down; photography retains its native aspect ratio.
-- Spec tables collapse from 4-up to 2-up to 1-up; spec values stay at `{typography.display-sm}` regardless of column count.
-- The M-stripe divider stays at 4px height across all breakpoints.
+- **Utility strip**: stays visible on every breakpoint; dropdowns collapse into a single "Account" icon below 768px
+- **Top nav**: middle category list collapses into a hamburger drawer below 1024px; the right-side Search + Sign-in + Cart stay visible
+- **Hero**: stays single-column at every breakpoint; chevron decorations shrink to ~60% size on tablet and disappear entirely on mobile
+- **Product family grid**: 4 → 3 → 2 → 1 column as breakpoints shrink; cards keep `{rounded.xl}` corners at every size
+- **Pricing comparison table**: 4-column grid on desktop collapses to 2x2 on tablet, then stacks into individual accordion-style cards on mobile
+- **Footer**: 5-column link grid → 2-column tablet → single-column accordion on mobile; HP wordmark stays flush left
 
 ### Image Behavior
 
-- Hero photography crops responsively — wider crops at desktop, vertical crops on mobile.
-- Lifestyle and motorsport photos retain native aspect ratios; the system never letterboxes or pillarboxes.
-- The M wordmark + tricolor logo scales proportionally with viewport width.
+Hero photography uses `{rounded.xl}` containers at every breakpoint. The chevron decorations vanish on mobile; the underlying photo card centers in the viewport. Lifestyle photography in the testimonial and "how-can-we-help" bands maintains 16:9 ratio with horizontal cropping rather than letterboxing on mobile. There are no art-direction crop swaps between desktop and mobile — the same image is used at every size.
 
 ## Iteration Guide
 
-1. Focus on ONE component at a time. Reference its YAML key (`{component.hero-photo-band}`, `{component.spec-cell}`).
-2. New components default to `{rounded.none}` (0px). Only use `{rounded.full}` if it's a circular icon button.
-3. Variants (`-active`, `-disabled`) live as separate entries in `components:`.
-4. Use `{token.refs}` everywhere — never inline hex.
-5. Never document hover states. Default and Active/Pressed only.
-6. Display headlines stay UPPERCASE 700; body stays sentence-case 300. Never blur the contrast.
-7. The M tricolor is brand-identity-only — never extend it to system tokens for "primary action."
-8. When in doubt about emphasis: bigger photography before bigger type.
-
-## Known Gaps
-
-- The dembrandt frequency analyzer captured the white text (count 955) as the highest-frequency token. The black canvas was inferred from screenshot — dembrandt's body-background sampling didn't surface it as a top palette entry, but the page is unambiguously black-on-white-text.
-- The exact M tricolor stops are documented from public BMW brand guidelines; the screenshots show the stripe as a small element but pixel-sampling at this resolution doesn't reliably distinguish #0066b1 from #1c69d4. Treat the documented stops as canonical based on BMW Design Works' published brand spec.
-- BMW Type Next Latin weight axis values beyond Light (300) and regular (700) are not documented — only the static weights observed in screenshots.
-- Animation and transition timings (photo carousel transitions, hover-reveal effects, configurator interactions) are not in scope.
-- Form validation states beyond `{component.text-input}` defaults are not extracted — error / success input variants would need a configurator or order flow to confirm.
-- The configurator surface (vehicle build pages with color / wheel / interior pickers) was not in the analyzed URL set; its swatch grid, comparison panels, and price-summary card are not documented here.
-- The cookie consent overlay obscured part of the homepage hero in the captured screenshot; secondary hero treatments (different car models cycling through the hero band) may carry variations not captured.
+1. Focus on ONE component at a time; resist refactoring an entire section in one pass
+2. Reference component names and tokens directly (`{colors.primary}`, `{typography.display-xxl}`, `{rounded.xl}`, `card-product`) — do not paraphrase to hex/px in prose
+3. Run `npx @google/design.md lint DESIGN.md` after edits — `broken-ref`, `contrast-ratio`, and `orphaned-tokens` warnings flag issues automatically
+4. Add new variants as separate component entries (`-pressed`, `-disabled`, `-focused`); never bury state inside prose
+5. Default body to `{typography.body-md}`; reach for `{typography.body-emphasis}` for run-in bolds; keep display sizes for true heading roles
+6. Keep `{colors.primary}` scarce — at most two flame elements per viewport (one CTA + one chevron decoration). Three flame items in one viewport is over-saturation
+7. When introducing a new section band, choose from `{colors.canvas}` / `{colors.cloud}` / `{colors.fog}` / `{colors.ink}` — six pre-defined surface modes is the entire surface vocabulary

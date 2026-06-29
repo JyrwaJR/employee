@@ -13,13 +13,14 @@ import { FAB } from '@components/fab';
 export const LeaveScreen = () => {
   const { data: leaves, isFetching, refetch } = useLeaves();
 
-  if (isFetching)
+  if (isFetching) {
     return (
       <>
         <LoadingScreen />
         <FAB icon="add" onPress={() => router.push(PAGE_ROUTES.LEAVE.CREATE)} />
       </>
     );
+  }
 
   if (!leaves || leaves.length === 0) {
     return (
