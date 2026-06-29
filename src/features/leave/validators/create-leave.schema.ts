@@ -1,8 +1,12 @@
 import { z } from 'zod';
-import { DATE_DD_MM_YYYY_REGEX } from '@utils/constants/regex';
+import { DATE_DD_MM_YYYY_REGEX, ONLY_NUMBER_REGEX } from '@utils/constants/regex';
 
 export const CreateLeaveSchema = z.object({
   type: z.string('Leave type is required').min(1, 'Leave type is required'),
+  number_of_days: z
+    .string()
+    .min(1, 'Number of days is required')
+    .regex(ONLY_NUMBER_REGEX, 'Invalid number'),
   from_date: z
     .string('Start date is required')
     .min(1, 'Start date is required')
