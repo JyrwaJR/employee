@@ -1,5 +1,5 @@
 import { CreateLeaveScreen } from '@features/leave';
 
-export async function page() {
+export default function page() {
   return <CreateLeaveScreen />;
 }

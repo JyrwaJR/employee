@@ -18,5 +18,7 @@ export const CreateLeaveSchema = z.object({
     .min(1, 'Order date is required')
     .regex(DATE_DD_MM_YYYY_REGEX, 'Order date must be in dd-mm-yyyy format'),
   reason: z.string('Reason is required').min(1, 'Reason is required'),
-  remarks: z.string().optional(),
+  remarks: z.string().optional().nullable(),
 });
+
+export type CreateLeaveInputs = z.infer<typeof CreateLeaveSchema>;

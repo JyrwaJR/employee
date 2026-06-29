@@ -38,7 +38,7 @@ export default function EmployeeListScreen() {
   if (isFetching) {
     return (
       <>
-        <SectionHeader variant="splash" title="Staff Directory" />
+        <SectionHeader variant="section" title="Staff Directory" />
         <LoadingScreen />
       </>
     );
@@ -47,7 +47,7 @@ export default function EmployeeListScreen() {
   return (
     <Container className="flex-1">
       <StatusBar barStyle="dark-content" />
-      <SectionHeader variant="splash" title="Staff Directory">
+      <SectionHeader variant="section" title="Staff Directory">
         <SearchInput
           placeholder="Search by name or role..."
           value={search}

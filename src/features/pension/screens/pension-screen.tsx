@@ -25,7 +25,7 @@ const PensionScreen = () => {
   if (isFetching)
     return (
       <>
-        <SectionHeader variant="splash" title="Pension History" />
+        <SectionHeader variant="section" title="Pension History" />
         <LoadingScreen />
       </>
     );

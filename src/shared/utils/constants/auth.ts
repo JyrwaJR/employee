@@ -25,19 +25,8 @@ export const PUBLIC_ROUTES = ['/auth', '/auth/sign-up', '/auth/forgot-password',
  */
 export const ROUTE_ROLES: RouteConfigT[] = [
   {
-    url: '/(admin)/*',
+    url: '/*',
     needAuth: true,
-    role: ['SUPER_ADMIN', 'ADMIN'],
-    redirect: '/forbidden',
-  },
-  {
-    url: '/settings/*',
-    needAuth: true,
-    role: ['SUPER_ADMIN', 'ADMIN', 'USER'],
-  },
-  {
-    url: '/leaves/*',
-    needAuth: true,
-    role: ['SUPER_ADMIN', 'ADMIN', 'USER'],
+    role: ['USER'],
   },
 ];

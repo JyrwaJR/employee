@@ -1,1 +1,1 @@
-export * from './create-leave';
+export * from './create-leave.schema';

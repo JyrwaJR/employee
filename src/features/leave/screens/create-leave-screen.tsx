@@ -1,34 +1,20 @@
 import React, { useState } from 'react';
-import { View, ScrollView, TouchableOpacity } from 'react-native';
-import { Button, FieldInput, Text } from '@components/ui';
+import { View, ScrollView } from 'react-native';
+import { Button, FieldInput, toast } from '@components/ui';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { Container, KeyboardSafeView, StackHeader } from '@components/layout';
 import { SectionHeader } from '@components/base';
-import { CreateLeaveSchema } from '../validators';
-import { cn } from '@utils/helpers/cn';
-import { LEAVE_TYPES } from '../utils/constants';
+import { CreateLeaveSchema, type CreateLeaveInputs } from '../validators';
 import type { LeaveType } from '@sharedTypes/leave';
+import { useCreateLeave } from '../hooks/use-create-leave';
+import { LeaveTypeChips } from '../components/leave-type-chips';
+import { useRouter } from 'expo-router';
+import { PAGE_ROUTES } from '@utils/constants';
 
-const LEAVE_TYPE_LIST = Object.keys(LEAVE_TYPES) as LeaveType[];
-
-type CreateLeaveFormInputs = z.infer<typeof CreateLeaveSchema>;
-
-/**
- * Returns today's date formatted as `dd-mm-yyyy`.
- */
-const getTodayFormatted = (): string => {
-  const today = new Date();
-  const day = String(today.getDate()).padStart(2, '0');
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const year = today.getFullYear();
-  return `${day}-${month}-${year}`;
-};
-
-const defaultValues: CreateLeaveFormInputs = {
+const defaultValues: CreateLeaveInputs = {
   type: 'SL',
-  from_date: getTodayFormatted(),
+  from_date: '',
   to_date: '',
   order_number: '',
   order_date: '',
@@ -44,94 +30,82 @@ const defaultValues: CreateLeaveFormInputs = {
  * - Text inputs for date fields with `dd-mm-yyyy` format
  * - Text inputs for order number, reason, and optional remarks
  * - Zod validation via the existing `CreateLeaveSchema`
- * - Defaults: leave type to "SL" and from_date to today's date
- *
- * On submit the form data is logged to the console.
+ * - Defaults: leave type to "SL"
+ * - On success: navigates to the leave detail screen; on failure: shows an error toast
  */
 export const CreateLeaveScreen = () => {
   const [selectedType, setSelectedType] = useState<LeaveType>('SL');
+  const router = useRouter();
 
-  const methods = useForm<CreateLeaveFormInputs>({
+  const methods = useForm<CreateLeaveInputs>({
     resolver: zodResolver(CreateLeaveSchema),
     defaultValues,
   });
 
-  const onSubmit = (data: CreateLeaveFormInputs) => {
-    console.log('Create Leave Payload:', JSON.stringify(data, null, 2));
+  const { mutate, isPending } = useCreateLeave();
+
+  const onSubmit = (data: CreateLeaveInputs) => {
+    mutate(data, {
+      onSuccess: (data) => {
+        if (data.success) {
+          toast.success(data.message);
+          if (data?.data?.id) {
+            router.push(PAGE_ROUTES.LEAVE.DETAILS(data?.data?.id));
+            return;
+          }
+          router.back();
+          return data;
+        }
+        toast.error(data.message);
+        return data;
+      },
+    });
   };
 
   return (
     <Container className="flex-1">
       <StackHeader />
+      {/* KeyboardSafeView ensures the ScrollView remains visible when the soft keyboard opens */}
       <KeyboardSafeView className="flex-1">
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
           className="px-4">
           <View className="mt-4">
-            <SectionHeader title="Create Leave" />
+            <SectionHeader subtitle="Create a new leave request" title="Create Leave" />
           </View>
 
           <FormProvider {...methods}>
-            <View className="w-full gap-y-1">
+            <View className="w-full">
               {/* Leave Type Chip Selector */}
-              <View className="my-2 w-full">
-                <Text variant="label" weight="medium" className="mb-2 ml-1">
-                  Leave Type
-                </Text>
-                <View className="flex-row flex-wrap gap-2">
-                  {LEAVE_TYPE_LIST.map((type) => {
-                    const isSelected = selectedType === type;
-                    return (
-                      <TouchableOpacity
-                        key={type}
-                        activeOpacity={0.7}
-                        onPress={() => {
-                          setSelectedType(type);
-                          methods.setValue('type', type, { shouldValidate: true });
-                        }}
-                        className={cn(
-                          'rounded-xl border-2 px-5 py-3',
-                          isSelected
-                            ? 'border-blue-500 bg-blue-50 dark:border-blue-400 dark:bg-blue-900/20'
-                            : 'border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-900'
-                        )}>
-                        <Text
-                          weight="semibold"
-                          className={cn(
-                            isSelected
-                              ? 'text-blue-600 dark:text-blue-400'
-                              : 'text-gray-600 dark:text-gray-400'
-                          )}>
-                          {type}
-                        </Text>
-                      </TouchableOpacity>
-                    );
-                  })}
+              <LeaveTypeChips
+                selectedType={selectedType}
+                onSelect={(type) => {
+                  setSelectedType(type);
+                  methods.setValue('type', type, { shouldValidate: true });
+                }}
+                error={methods.formState.errors.type?.message}
+              />
+
+              {/* From Date & To Date — side by side */}
+              <View className="flex-row gap-x-3">
+                <View className="flex-1">
+                  <FieldInput
+                    name="from_date"
+                    label="From Date"
+                    placeholder="dd-mm-yyyy"
+                    testID="FROM_DATE_INPUT"
+                  />
                 </View>
-                {methods.formState.errors.type && (
-                  <Text variant="error" size="xs" className="ml-1 mt-2">
-                    {methods.formState.errors.type.message}
-                  </Text>
-                )}
+                <View className="flex-1">
+                  <FieldInput
+                    name="to_date"
+                    label="To Date"
+                    placeholder="dd-mm-yyyy"
+                    testID="TO_DATE_INPUT"
+                  />
+                </View>
               </View>
-
-              {/* From Date */}
-              <FieldInput
-                name="from_date"
-                label="From Date"
-                placeholder="dd-mm-yyyy"
-                testID="FROM_DATE_INPUT"
-              />
-
-              {/* To Date */}
-              <FieldInput
-                name="to_date"
-                label="To Date"
-                placeholder="dd-mm-yyyy"
-                testID="TO_DATE_INPUT"
-              />
-
               {/* Order Number */}
               <FieldInput
                 name="order_number"
@@ -154,8 +128,7 @@ export const CreateLeaveScreen = () => {
                 label="Reason"
                 placeholder="Enter reason for leave"
                 multiline
-                numberOfLines={3}
-                style={{ minHeight: 80, textAlignVertical: 'top' }}
+                numberOfLines={2}
                 testID="REASON_INPUT"
               />
 
@@ -165,12 +138,11 @@ export const CreateLeaveScreen = () => {
                 label="Remarks"
                 placeholder="Any additional remarks (optional)"
                 multiline
-                numberOfLines={2}
-                style={{ minHeight: 60, textAlignVertical: 'top' }}
+                numberOfLines={4}
                 testID="REMARKS_INPUT"
               />
 
-              {/* Spacer */}
+              {/* Spacer before button */}
               <View className="h-4" />
 
               {/* Submit Button */}
@@ -178,6 +150,7 @@ export const CreateLeaveScreen = () => {
                 testID="CREATE_LEAVE_BUTTON"
                 title="Submit Leave Request"
                 onPress={methods.handleSubmit(onSubmit)}
+                disabled={isPending}
               />
 
               {/* Bottom Spacer */}
