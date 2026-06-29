@@ -1,3 +1,204 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    /* Core Semantic Tokens */
+    --background: 0 0% 100%;
+    --foreground: 220 13% 5%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 5%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 5%;
+    --primary: 221 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-active: 221 100% 40%;
+    --primary-disabled: 216 26% 73%;
+    --on-primary: 0 0% 100%;
+    --on-dark: 0 0% 100%;
+    --on-dark-soft: 218 7% 68%;
+    --secondary: 216 17% 94%;
+    --secondary-foreground: 220 13% 5%;
+    --muted: 0 0% 97%;
+    --muted-foreground: 214 6% 51%;
+    --accent: 0 0% 97%;
+    --accent-foreground: 220 13% 5%;
+    --destructive: 355 73% 47%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 218 14% 89%;
+    --input: 218 14% 89%;
+    --ring: 221 100% 50%;
+    --radius: 0.5rem;
+
+    /* Extended Semantic Tokens */
+    --ink: 220 13% 5%;
+    --body: 221 10% 39%;
+    --body-strong: 220 13% 5%;
+    --muted-soft: 218 7% 68%;
+    --hairline: 218 14% 89%;
+    --hairline-soft: 216 17% 94%;
+    --canvas: 0 0% 100%;
+    --surface-soft: 0 0% 97%;
+    --surface-card: 0 0% 100%;
+    --surface-strong: 216 17% 94%;
+    --surface-dark: 220 13% 5%;
+    --surface-dark-elevated: 220 12% 10%;
+
+    /* Indicator Tokens */
+    --semantic-up: 155 94% 36%;
+    --semantic-down: 355 73% 47%;
+    --accent-yellow: 44 100% 48%;
+
+    /* Chart Tokens */
+    --chart-1: 221 100% 50%;
+    --chart-2: 155 94% 36%;
+    --chart-3: 44 100% 48%;
+    --chart-4: 355 73% 47%;
+    --chart-5: 216 26% 73%;
+
+    /* Sidebar Tokens */
+    --sidebar: 0 0% 97%;
+    --sidebar-foreground: 220 13% 5%;
+    --sidebar-primary: 221 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 216 17% 94%;
+    --sidebar-accent-foreground: 220 13% 5%;
+    --sidebar-border: 218 14% 89%;
+    --sidebar-ring: 221 100% 50%;
+  }
+
+  .dark {
+    /* Core Semantic Tokens */
+    --background: 220 13% 5%;
+    --foreground: 0 0% 100%;
+    --card: 220 12% 10%;
+    --card-foreground: 0 0% 100%;
+    --popover: 220 12% 10%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 221 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    --primary-active: 221 100% 40%;
+    --primary-disabled: 211 23% 29%;
+    --on-primary: 0 0% 100%;
+    --on-dark: 220 13% 5%;
+    --on-dark-soft: 221 10% 39%;
+    --secondary: 220 12% 10%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 220 12% 10%;
+    --muted-foreground: 218 7% 68%;
+    --accent: 220 12% 10%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 355 73% 47%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 7% 18%;
+    --input: 220 7% 18%;
+    --ring: 221 100% 50%;
+
+    /* Extended Semantic Tokens */
+    --ink: 0 0% 100%;
+    --body: 218 7% 68%;
+    --body-strong: 0 0% 100%;
+    --muted-soft: 221 10% 39%;
+    --hairline: 220 7% 18%;
+    --hairline-soft: 220 12% 10%;
+    --canvas: 220 13% 5%;
+    --surface-soft: 220 13% 5%;
+    --surface-card: 220 12% 10%;
+    --surface-strong: 220 7% 18%;
+    --surface-dark: 0 0% 100%;
+    --surface-dark-elevated: 0 0% 97%;
+
+    /* Indicator Tokens (same as light) */
+    --semantic-up: 155 94% 36%;
+    --semantic-down: 355 73% 47%;
+    --accent-yellow: 44 100% 48%;
+
+    /* Chart Tokens */
+    --chart-1: 221 100% 50%;
+    --chart-2: 155 94% 36%;
+    --chart-3: 44 100% 48%;
+    --chart-4: 355 73% 47%;
+    --chart-5: 211 23% 29%;
+
+    /* Sidebar Tokens */
+    --sidebar: 220 12% 10%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 221 100% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 7% 18%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 220 7% 18%;
+    --sidebar-ring: 221 100% 50%;
+  }
+
+  .dark-bmw {
+    /* ── BMW M Design System ──────────────────────────────
+       Based on DESIGN.md — pure black canvas, white primary
+       type, M tricolor brand accents, 0px radius.
+       Apply class="dark-bmw" on the root element to activate. */
+
+    /* Core Semantic Tokens */
+    --background: 0 0% 0%; /* canvas — pure black       */
+    --foreground: 0 0% 100%; /* on-dark — white type      */
+    --card: 0 0% 10%; /* surface-card (#1a1a1a)    */
+    --card-foreground: 0 0% 100%; /* white text on card        */
+    --popover: 0 0% 10%; /* surface-card              */
+    --popover-foreground: 0 0% 100%; /* white text                */
+    --primary: 0 0% 100%; /* primary — white CTA/type  */
+    --primary-foreground: 0 0% 0%; /* black text on white CTA   */
+    --secondary: 0 0% 10%; /* surface-card (#1a1a1a)    */
+    --secondary-foreground: 0 0% 73%; /* body text (#bbb)          */
+    --muted: 0 0% 5%; /* surface-soft (#0d0d0d)    */
+    --muted-foreground: 0 0% 49%; /* muted text (#7e7e7e)      */
+    --accent: 205 100% 35%; /* M Blue Light (#0066b1)    */
+    --accent-foreground: 0 0% 100%; /* white text on accent      */
+    --destructive: 4 81% 49%; /* M Red (#e22718)           */
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 24%; /* hairline (#3c3c3c)        */
+    --input: 0 0% 24%; /* hairline                  */
+    --ring: 0 0% 100%; /* white focus ring          */
+    --radius: 0rem; /* rounded.none — BMW 0px   */
+
+    /* Extended BMW M Surface Tokens */
+    --canvas: 0 0% 0%;
+    --surface-soft: 0 0% 5%;
+    --surface-card: 0 0% 10%;
+    --surface-elevated: 0 0% 15%;
+    --carbon-gray: 0 0% 17%;
+    --hairline: 0 0% 24%;
+    --hairline-strong: 0 0% 15%;
+    --on-dark: 0 0% 100%;
+    --body: 0 0% 73%;
+    --body-strong: 0 0% 90%;
+    --muted-text: 0 0% 49%;
+
+    /* BMW M Brand Palette (tricolor + heritage) */
+    --m-blue-light: 205 100% 35%; /* #0066b1 — first stripe   */
+    --m-blue-dark: 215 77% 47%; /* #1c69d4 — middle stripe  */
+    --m-red: 4 81% 49%; /* #e22718 — third stripe   */
+    --electric-blue: 214 94% 37%; /* #0653b6 — EV accent      */
+
+    /* Semantic Indicators */
+    --warning: 44 100% 48%; /* #f4b400                  */
+    --success: 136 83% 35%; /* #0fa336                  */
+
+    /* Chart Tokens (monochromatic grays from the palette) */
+    --chart-1: 0 0% 100%; /* white                    */
+    --chart-2: 205 100% 35%; /* m-blue-light             */
+    --chart-3: 4 81% 49%; /* m-red                    */
+    --chart-4: 0 0% 73%; /* body                     */
+    --chart-5: 0 0% 49%; /* muted                    */
+
+    /* Sidebar overrides */
+    --sidebar: 0 0% 5%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 24%;
+    --sidebar-ring: 0 0% 100%;
+  }
+}
+@tailwind components;
