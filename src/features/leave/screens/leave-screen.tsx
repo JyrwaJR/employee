@@ -17,10 +17,11 @@ export const LeaveScreen = () => {
     return (
       <>
         <LoadingScreen />
+        <FAB icon="add" onPress={() => router.push(PAGE_ROUTES.LEAVE.CREATE)} />
       </>
     );
 
-  if (!leaves) {
+  if (!leaves || leaves.length === 0) {
     return (
       <>
         <EmptyScreen
@@ -28,6 +29,7 @@ export const LeaveScreen = () => {
           message="You have not applied for any leaves yet"
           refresh={refetch}
         />
+        <FAB icon="add" onPress={() => router.push(PAGE_ROUTES.LEAVE.CREATE)} />
       </>
     );
   }

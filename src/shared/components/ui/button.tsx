@@ -4,7 +4,7 @@ import { Text, TouchableOpacity, ActivityIndicator, TouchableOpacityProps } from
 import { useDelay } from '@hooks/use-delay';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-const buttonVariants = cva(
+export const buttonVariants = cva(
   'flex-row disabled:opacity-70 items-center justify-center rounded-xl shadow-sm',
   {
     variants: {

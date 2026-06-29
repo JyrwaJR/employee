@@ -17,7 +17,7 @@ export function useCreateLeave() {
     onSuccess: (data, _v, _, context) => {
       if (data.success) {
         queryClient.invalidateQueries({ queryKey: context.mutationKey });
-        return data;
+        return data.data;
       }
       return data;
     },
