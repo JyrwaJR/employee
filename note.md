@@ -15,7 +15,7 @@
     emp_sex: 'M' | 'F' | 'O';
 
     // New Fields
-    emp_status: string;
+    // emp_status: string;
     emp_available_leaves_days: number;
     emp_designation: Designation;
     emp_dept: string;

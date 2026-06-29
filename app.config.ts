@@ -55,7 +55,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   orientation: 'portrait',
   icon: iconAssetUrl,
-  userInterfaceStyle: 'automatic',
+  userInterfaceStyle: 'light',
   splash: {
     image: splashAssetUrl,
     resizeMode: 'contain',

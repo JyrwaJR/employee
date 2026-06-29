@@ -11,10 +11,12 @@ import { useSalaryStatement } from '../hooks';
 import { GovtHeader } from '@components/display/govt-header';
 import { SummaryCard } from '@components/display/summary-card';
 import { StackHeader } from '@components/layout';
+import { useAuthStore } from '@stores/auth.store';
 
 type Props = { salaryId: string };
 
 export const SalaryStatementDetailsScreen = ({ salaryId }: Props) => {
+  const { user } = useAuthStore();
   const {
     data,
     refetch,
@@ -37,14 +39,11 @@ export const SalaryStatementDetailsScreen = ({ salaryId }: Props) => {
   const summaryDetails = [
     {
       label: 'Pay Level',
-      // value: data?.employee?.pay_level ? `L-${data.employee.pay_level}` : '-',
-      value: '1',
+      value: user?.pay_scale ?? '-',
     },
     {
       label: 'Bank Acct',
-      // value: data?.employee?.bank_account_no
-      // ? `•••• ${data.employee.bank_account_no.slice(-4)}`
-      value: '-',
+      value: user?.emp_bank_account_no ? `•••• ${user.emp_bank_account_no.slice(-4)}` : '-',
     },
     { label: 'Status', value: data?.status || 'PAID' },
   ];
@@ -56,8 +55,8 @@ export const SalaryStatementDetailsScreen = ({ salaryId }: Props) => {
         className="flex-1 px-6 pt-6"
         showsVerticalScrollIndicator={false}>
         <GovtHeader
-          title={data?.employee?.department || 'Central Government Department'}
-          subtitle={data?.employee?.office_location || 'New Delhi'}
+          title={user?.emp_dept || 'Central Government Department'}
+          subtitle={user?.emp_date_of_joining || 'New Delhi'}
           badge={`${data?.month} ${data?.year}`}
         />
         <SummaryCard
@@ -74,12 +73,12 @@ export const SalaryStatementDetailsScreen = ({ salaryId }: Props) => {
           <DetailRow
             label="Name"
             // Assuming user object has first_name/last_name as strings based on typical auth context
-            value={`${data?.employee?.user?.first_name || ''} ${data?.employee?.user?.last_name || ''}`}
+            value={`${user?.emp_fname || ''} ${user?.emp_lname || ''}`}
           />
-          <DetailRow label="Designation" value={data?.employee?.designation || '-'} />
-          <DetailRow label="Emp ID" value={data?.employee?.employee_id || '-'} />
-          <DetailRow label="PAN No" value={data?.employee?.pan_number || '-'} />
-          <DetailRow label="PRAN (NPS)" value={data?.employee?.pran_number || '-'} />
+          <DetailRow label="Designation" value={user?.emp_designation || '-'} />
+          <DetailRow label="Emp Code" value={user?.emp_cd || '-'} />
+          <DetailRow label="PAN No" value={user?.emp_pan_number || '-'} />
+          <DetailRow label="Scale | Level" value={user?.pay_scale || '-'} />
         </View>
         {/* Earnings Section */}
         <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">

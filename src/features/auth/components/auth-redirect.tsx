@@ -1,7 +1,6 @@
 import { useAuthStore } from '@stores/auth.store';
 import { usePathname, useRouter, useLocalSearchParams, Route } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { ROUTE_ROLES, PUBLIC_ROUTES } from '@utils/constants/auth';
 import { useAccess } from '@hooks/use-access';
@@ -83,15 +82,11 @@ export const AuthRedirect = ({ children }: Props) => {
     redirectTo,
     checkAccess,
   ]);
+  const isShowLoadingScreen = (isLoading || !isMounted || (isSignedIn && !role)) && !isOnPublicPage;
 
-  return (
-    <View className="flex-1">
-      {(isLoading || !isMounted || (isSignedIn && !role)) && !isOnPublicPage && (
-        <View style={StyleSheet.absoluteFill} className="bg-white dark:bg-slate-950">
-          <LoadingScreen />
-        </View>
-      )}
-      {children}
-    </View>
-  );
+  if (isShowLoadingScreen) {
+    return <LoadingScreen />;
+  }
+
+  return <>{children}</>;
 };

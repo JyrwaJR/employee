@@ -57,7 +57,9 @@ export const LoginScreen = () => {
       },
     });
   };
+
   const isPending = isAuthLoading || isLoginPending || isTokenPending;
+
   return (
     <KeyboardSafeView contentContainerClassName="px-6 justify-center">
       <AuthHeader

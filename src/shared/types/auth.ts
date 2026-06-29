@@ -13,6 +13,12 @@ export type UserT = {
   emp_email: string;
   emp_address: string;
   emp_phone: string;
-  // Need Leave Avialable in days
-  // Attendance current month in percentage
+  emp_status: string;
+  emp_designation: string;
+  emp_date_of_joining: string;
+  emp_city_class: 'B ';
+  emp_bank_account_no: string | null;
+  emp_bank_ifsc: string | null;
+  emp_pan_number: string | null;
+  pay_scale: string | null;
 };
