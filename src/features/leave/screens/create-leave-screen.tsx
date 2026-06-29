@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { View, ScrollView } from 'react-native';
 import { Button, FieldInput, toast } from '@components/ui';
-import { FormProvider, useForm, Controller } from 'react-hook-form';
+import { FormProvider, useForm, useWatch, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Container, KeyboardSafeView, StackHeader } from '@components/layout';
 import { SectionHeader } from '@components/base';
@@ -14,6 +14,7 @@ import { LeaveTypeDropdown, LeaveReasonDropdown } from '../components';
 
 const defaultValues: CreateLeaveInputs = {
   type: 'SL',
+  number_of_days: '',
   from_date: '',
   to_date: '',
   order_number: '',
@@ -42,6 +43,34 @@ export const CreateLeaveScreen = () => {
   });
 
   const { mutate, isPending } = useCreateLeave();
+
+  // Auto-calculate number_of_days when from_date or to_date changes
+  const fromDate = useWatch({ control: methods.control, name: 'from_date' });
+  const toDate = useWatch({ control: methods.control, name: 'to_date' });
+
+  const calculateDaysFromDate = useCallback(
+    (from: string, to: string) => {
+      if (!from || !to) return;
+      // Parse dd-mm-yyyy into parts
+      const [fromDay, fromMonth, fromYear] = from.split('-').map(Number);
+      const [toDay, toMonth, toYear] = to.split('-').map(Number);
+      if (!fromDay || !fromMonth || !fromYear || !toDay || !toMonth || !toYear) return;
+
+      const fromDateObj = new Date(fromYear, fromMonth - 1, fromDay);
+      const toDateObj = new Date(toYear, toMonth - 1, toDay);
+      const diffMs = toDateObj.getTime() - fromDateObj.getTime();
+      const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24)) + 1; // inclusive
+
+      if (diffDays >= 1) {
+        methods.setValue('number_of_days', String(diffDays), { shouldValidate: true });
+      }
+    },
+    [methods]
+  );
+
+  useEffect(() => {
+    calculateDaysFromDate(fromDate, toDate);
+  }, [fromDate, toDate, calculateDaysFromDate]);
 
   const onSubmit = (data: CreateLeaveInputs) => {
     mutate(data, {
@@ -110,6 +139,13 @@ export const CreateLeaveScreen = () => {
                   />
                 </View>
               </View>
+              <FieldInput
+                name="number_of_days"
+                label="Number of days"
+                placeholder="Auto-calculated"
+                editable={false}
+                testID="NUMBER_OF_DAYS_INPUT"
+              />
               {/* Order Number */}
               <FieldInput
                 name="order_number"
