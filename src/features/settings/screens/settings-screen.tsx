@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
-import { useThemeStore } from '@stores/theme.store';
 import { Container } from '@components/layout/container';
 import { SectionHeader } from '@components/base/section-header';
 import { useLocalAuthStore } from '@stores/local-auth.store';
@@ -17,7 +16,6 @@ import {
 } from '@components/ui';
 
 export const SettingsScreen = () => {
-  const { theme, toggleTheme } = useThemeStore();
   const { setIsEnabled, isEnabled } = useLocalAuthStore();
   const [isOpenConfirmEnableBiometric, setIsOpenConfirmEnableBiometric] = React.useState(false);
   const onConfirmed = () => {
@@ -31,17 +29,6 @@ export const SettingsScreen = () => {
         <View className="py-6">
           {/* Appearance Section */}
           <SectionHeader title="Appearance" />
-          <View className="mb-8 overflow-hidden rounded-xl border border-gray-200 px-4 dark:border-gray-800">
-            <SettingRow
-              icon={theme === 'dark' ? 'weather-night' : 'weather-sunny'}
-              label="Dark Mode"
-              description="Adjust the appearance of the app"
-              value={theme === 'dark'}
-              onValueChange={toggleTheme}
-              showBorder={false}
-              iconColor={theme === 'dark' ? '#9CA3AF' : '#4B5563'}
-            />
-          </View>
 
           {/* Notifications Section */}
           <SectionHeader title="Security" />
