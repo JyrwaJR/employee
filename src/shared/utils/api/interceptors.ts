@@ -61,7 +61,7 @@ export function setupInterceptors(instance: AxiosInstance, options?: { encryptio
         }
 
         if (decrypted.status_code === '401') {
-          console.log('Unauthorized Removing Token');
+          logger.log('Unauthorized Removing Token');
           await cleanupSession();
         }
 
