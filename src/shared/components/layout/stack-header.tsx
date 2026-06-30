@@ -47,7 +47,9 @@ export const StackHeader = memo(() => {
   const showDrawer = config.showDrawer;
 
   return (
-    <View className={cn('bg-background')} style={{ paddingTop: insets.top }}>
+    <View
+      className={cn('border border-b border-gray-200 bg-background dark:border-gray-800')}
+      style={{ paddingTop: insets.top }}>
       <View className="min-h-[56px] flex-row items-center justify-between px-4 py-3">
         <View className="flex-1 flex-row items-center justify-start">
           {showDrawer ? (
