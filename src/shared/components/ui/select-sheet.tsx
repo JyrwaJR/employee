@@ -162,6 +162,7 @@ const SelectSheetModal = ({
   selectedValue: string;
   onSelect: (value: string) => void;
   onClose: () => void;
+  isLoading?: boolean;
 }) => {
   const insets = useSafeAreaInsets();
   const progress = useSharedValue(0);

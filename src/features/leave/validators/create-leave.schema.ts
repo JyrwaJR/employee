@@ -6,7 +6,8 @@ import { ZodIssueCode } from 'zod/v3';
 const dateField = (label: string) =>
   z
     .string()
-    .min(1, `${label} is required`)
+    .min(10, `${label} is required`)
+    .max(10, `${label} must be 10 characters long`)
     .regex(DATE_DD_MM_YYYY_REGEX, `${label} must be in dd-mm-yyyy format`);
 
 export const CreateLeaveSchema = z

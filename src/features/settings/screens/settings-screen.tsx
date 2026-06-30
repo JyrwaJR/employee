@@ -15,9 +15,30 @@ import {
   AlertDialogHeader,
 } from '@components/ui';
 
+/**
+ * Settings screen for the app.
+ *
+ * Displays configuration sections including Appearance and Security. The Security
+ * section provides a biometric toggle that requires user confirmation via an alert
+ * dialog before enabling or disabling local authentication. A version label is
+ * rendered at the bottom of the screen.
+ *
+ * Navigation is handled by Expo Router; this screen is registered at the
+ * `(app)/settings` route.
+ *
+ * @example
+ * ```tsx
+ * <SettingsScreen />
+ * ```
+ */
 export const SettingsScreen = () => {
   const { setIsEnabled, isEnabled } = useLocalAuthStore();
   const [isOpenConfirmEnableBiometric, setIsOpenConfirmEnableBiometric] = React.useState(false);
+
+  /**
+   * Handles the user's confirmation to toggle biometric authentication.
+   * Closes the confirmation dialog and flips the biometric enabled state.
+   */
   const onConfirmed = () => {
     setIsOpenConfirmEnableBiometric(false);
     setIsEnabled(!isEnabled);

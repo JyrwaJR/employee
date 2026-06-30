@@ -10,6 +10,7 @@ interface LeaveTypeDropdownProps {
   onSelect: (type: LeaveTypeCode) => void;
   /** Optional validation error message */
   error?: string;
+  title?: string;
 }
 
 /**
@@ -28,7 +29,12 @@ interface LeaveTypeDropdownProps {
  * />
  * ```
  */
-export const LeaveTypeDropdown = ({ selectedType, onSelect, error }: LeaveTypeDropdownProps) => {
+export const LeaveTypeDropdown = ({
+  selectedType,
+  title = 'Leave Type',
+  onSelect,
+  error,
+}: LeaveTypeDropdownProps) => {
   const { data: leaveTypes } = useLeaveType();
 
   const options = useMemo(
@@ -42,7 +48,7 @@ export const LeaveTypeDropdown = ({ selectedType, onSelect, error }: LeaveTypeDr
 
   return (
     <SelectSheet
-      label="Leave Type"
+      label={title}
       placeholder="Select leave type"
       title="Select Leave Type"
       options={options}

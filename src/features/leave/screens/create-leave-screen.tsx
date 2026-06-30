@@ -12,6 +12,7 @@ import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants';
 import { LeaveReasonCode, LeaveTypeCode } from '../types';
 import { LeaveTypeDropdown, LeaveReasonDropdown } from '../components';
+import { useRateLimit } from '@hooks';
 
 const defaultValues: CreateLeaveInputs = {
   type: 'SL',
@@ -44,6 +45,11 @@ export const CreateLeaveScreen = () => {
   });
 
   const { mutate, isPending } = useCreateLeave();
+
+  const { isLimited, secondsRemaining } = useRateLimit('CREATE_LEAVE_SUBMIT', {
+    limit: 1,
+    ms: 5000,
+  });
 
   // Auto-calculate number_of_days when from_date or to_date changes
   const fromDate = useWatch({ control: methods.control, name: 'from_dt' });
@@ -249,9 +255,15 @@ export const CreateLeaveScreen = () => {
               {/* Submit Button */}
               <Button
                 testID="CREATE_LEAVE_BUTTON"
-                title="Submit Leave Request"
+                title={
+                  isPending
+                    ? 'Creating Leave...'
+                    : isLimited
+                      ? `Please wait ${secondsRemaining}`
+                      : 'Create Leave'
+                }
                 onPress={methods.handleSubmit(onSubmit)}
-                disabled={isPending}
+                disabled={isPending || isLimited || !methods.formState.isDirty}
               />
 
               {/* Bottom Spacer */}

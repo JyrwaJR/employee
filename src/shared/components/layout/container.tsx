@@ -25,7 +25,5 @@ type Props = {
  * ```
  */
 export const Container = ({ children, className }: Props) => {
-  return (
-    <View className={cn('flex-1 bg-background p-2 dark:bg-[#1A1A1A]', className)}>{children}</View>
-  );
+  return <View className={cn('flex-1 bg-background p-2', className)}>{children}</View>;
 };

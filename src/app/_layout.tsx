@@ -53,7 +53,7 @@ export default function Layout() {
   return (
     <ProviderWrapper>
       <NetworkBanner />
-      <Stack screenOptions={{ headerShown: false }} />
+      <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right' }} />
       <Toaster />
     </ProviderWrapper>
   );

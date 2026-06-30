@@ -40,7 +40,6 @@ export const LeaveReasonDropdown = ({
       (leaveReason ?? []).map((reason) => ({
         label: reason.code_text,
         value: reason.code_value,
-        subtitle: reason.code_value,
       })),
     [leaveReason]
   );
