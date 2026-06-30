@@ -56,7 +56,6 @@ export function useCreateLeave() {
         emp_cd,
       }),
     onSuccess: (data, _v, _, context) => {
-      console.log('useCreateLeave', data);
       if (data.success) {
         queryClient.invalidateQueries({ queryKey: context.mutationKey });
         return data.data;
