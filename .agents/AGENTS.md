@@ -262,14 +262,14 @@ Every file and every folder in the project uses `kebab-case`. There are no excep
 
 While **file names are always kebab-case**, the exports inside those files follow their own conventions:
 
-| File Type            | File Convention | Export Convention       | Example                                                       |
-| -------------------- | --------------- | ----------------------- | ------------------------------------------------------------- |
-| React components     | `kebab-case`    | `PascalCase`            | `file: training-list-page.tsx` → `export function TrainingListPage` |
-| Hooks                | `kebab-case`    | `camelCase` with `use`  | `file: use-training-modules.ts` → `export function useTrainingModules` |
-| Services             | `kebab-case`    | `camelCase`             | `file: create-module.ts` → `export async function createModule` |
-| Validators           | `kebab-case`    | `PascalCase` Zod schema | `file: create-module.validator.ts` → `export const CreateModuleSchema` |
-| Types                | `kebab-case`    | `PascalCase`            | `file: training-module.ts` → `export interface TrainingModule` |
-| Constants            | `kebab-case`    | `SCREAMING_SNAKE_CASE`  | `file: routes.ts` → `export const ADMIN_ROUTES = [...]`      |
+| File Type        | File Convention | Export Convention       | Example                                                                |
+| ---------------- | --------------- | ----------------------- | ---------------------------------------------------------------------- |
+| React components | `kebab-case`    | `PascalCase`            | `file: training-list-page.tsx` → `export function TrainingListPage`    |
+| Hooks            | `kebab-case`    | `camelCase` with `use`  | `file: use-training-modules.ts` → `export function useTrainingModules` |
+| Services         | `kebab-case`    | `camelCase`             | `file: create-module.ts` → `export async function createModule`        |
+| Validators       | `kebab-case`    | `PascalCase` Zod schema | `file: create-module.validator.ts` → `export const CreateModuleSchema` |
+| Types            | `kebab-case`    | `PascalCase`            | `file: training-module.ts` → `export interface TrainingModule`         |
+| Constants        | `kebab-case`    | `SCREAMING_SNAKE_CASE`  | `file: routes.ts` → `export const ADMIN_ROUTES = [...]`                |
 
 ---
 
