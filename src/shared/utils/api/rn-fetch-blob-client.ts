@@ -2,9 +2,9 @@ import { encrypt, decrypt } from '@lib/encryption';
 import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '../logger/logger';
 import RNFetchBlob from 'rn-fetch-blob';
-import { METHODS, PAGE_ROUTES } from '@utils/constants';
+import { METHODS } from '@utils/constants';
 import { HttpClient } from '@sharedTypes/api';
-import { router } from 'expo-router';
+import { cleanupSession } from './session-cleanup';
 
 const APP_ID = process.env.EXPO_PUBLIC_APP_ID;
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -125,8 +125,7 @@ async function request<T = any>(
         message: parsed.message,
         status_code: parsed.status_code,
       });
-      await TokenStoreManager.removeAccessToken();
-      router.replace(PAGE_ROUTES.AUTH.LOGIN);
+      await cleanupSession();
       return backendResponse<T>({
         message: parsed.message || 'Unauthorized',
         success_flag: false,
@@ -143,8 +142,8 @@ async function request<T = any>(
       http_status: response.respInfo.status,
     });
 
-    if (decrypted.status_code === '401' && body.functionName !== METHODS.EMP_LOGIN) {
-      await TokenStoreManager.removeAccessToken();
+    if (decrypted.status_code === '401' && body?.functionName !== METHODS.EMP_LOGIN) {
+      await cleanupSession();
     }
 
     const data = typeof decrypted.data === 'string' ? JSON.parse(decrypted.data) : decrypted.data;

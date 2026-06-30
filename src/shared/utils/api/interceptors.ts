@@ -3,6 +3,7 @@ import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '../logger/logger';
 import { attemptTokenRefresh, shouldSkipRefresh } from './token-refresh';
 import { decrypt, encrypt } from '@lib/encryption';
+import { cleanupSession } from './session-cleanup';
 
 const APP_ID = process.env.EXPO_PUBLIC_APP_ID;
 
@@ -61,9 +62,7 @@ export function setupInterceptors(instance: AxiosInstance, options?: { encryptio
 
         if (decrypted.status_code === '401') {
           console.log('Unauthorized Removing Token');
-          await TokenStoreManager.removeAccessToken();
-          const { useAuthStore } = await import('@stores/auth.store');
-          useAuthStore.getState().reset();
+          await cleanupSession();
         }
 
         logger.log('Decrypted Response', {

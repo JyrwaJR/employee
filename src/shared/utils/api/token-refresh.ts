@@ -1,14 +1,11 @@
 import axios, { AxiosError, InternalAxiosRequestConfig, AxiosInstance } from 'axios';
 import { TokenStoreManager } from '@stores/token.store';
-import { router } from 'expo-router';
 import { queryClient } from '../react-query';
-import { PAGE_ROUTES, ENDPOINTS } from '@utils/constants';
+import { ENDPOINTS } from '@utils/constants';
+import { cleanupSession } from './session-cleanup';
 
 /** Tracks whether a token refresh is already in-flight to prevent concurrent calls. */
 let isRefreshing = false;
-
-/** Tracks whether the app is currently performing an unauthorized exit flow. */
-let isExiting = false;
 
 /**
  * Queue of pending requests that arrived while a token refresh was in progress.
@@ -61,25 +58,11 @@ export function shouldSkipRefresh(url?: string) {
  * Performs a full sign-out: clears stored tokens, resets the auth store,
  * clears the React Query cache, and redirects to the login page.
  *
- * Uses a debounce mechanism (`isExiting` flag) to prevent multiple rapid
- * invocations from competing.
+ * Delegates to the shared {@link cleanupSession} which uses its own
+ * debounce guard to prevent rapid concurrent invocations.
  */
 async function handleUnauthorizedExit() {
-  if (isExiting) return;
-  isExiting = true;
-
-  try {
-    await TokenStoreManager.removeAccessToken();
-    await TokenStoreManager.removeRefreshToken();
-    const { useAuthStore } = await import('@stores/auth.store');
-    useAuthStore.getState().reset();
-    queryClient.clear();
-    router.replace(PAGE_ROUTES.AUTH.LOGIN);
-  } finally {
-    setTimeout(() => {
-      isExiting = false;
-    }, 2000);
-  }
+  await cleanupSession();
 }
 
 /**
