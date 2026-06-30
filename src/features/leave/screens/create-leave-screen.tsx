@@ -95,6 +95,7 @@ export const CreateLeaveScreen = () => {
                 name="type"
                 render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <LeaveTypeDropdown
+                    title="Type"
                     selectedType={value as LeaveTypeCode}
                     error={error?.message}
                     onSelect={(type) => {
@@ -165,6 +166,7 @@ export const CreateLeaveScreen = () => {
                   />
                 </View>
               </View>
+
               <Controller
                 control={methods.control}
                 name="number_of_days"
