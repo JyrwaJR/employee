@@ -56,4 +56,36 @@ export interface Leave {
   /** Verification / approval status description (e.g. `Approved`, `Pending`). */
   verify_flg_desc: string;
 }
-export type LeaveBal = {};
+
+/**
+ * The employee's current leave balance snapshot for a single leave type.
+ *
+ * Returned alongside leave details to show how many days remain after
+ * accounting for usage and recent credits.
+ *
+ * @example
+ * ```ts
+ * const bal: LeaveBal = {
+ *   type: 'SL',
+ *   leave_desc: 'Sick Leave',
+ *   opening_bal: 10,
+ *   no_days_credited: 1,
+ *   closing_bal: 8,
+ *   closing_bal_as_on: '01/06/2026',
+ * };
+ * ```
+ */
+export type LeaveBal = {
+  /** Remaining leave days after applying credits and deductions. */
+  closing_bal: number;
+  /** The date (in `DD/MM/YYYY`) for which the closing balance is valid. */
+  closing_bal_as_on: string;
+  /** Human-readable leave type description (e.g. `Sick Leave`). */
+  leave_desc: string;
+  /** Leave type code (e.g. `SL` for Sick Leave, `VL` for Vacation Leave). */
+  type: string;
+  /** Number of leave days credited to the employee in this period. */
+  no_days_credited: number;
+  /** Leave balance at the start of the period before any activity. */
+  opening_bal: number;
+};
