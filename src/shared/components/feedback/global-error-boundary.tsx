@@ -26,7 +26,9 @@ export class GlobalErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    logger.error('[GlobalErrorBoundary] caught error:', error, errorInfo);
+    if (process.env.NODE_ENV === 'production') {
+      logger.error('[GlobalErrorBoundary] caught error:', error, errorInfo);
+    }
   }
 
   private handleReset = async () => {

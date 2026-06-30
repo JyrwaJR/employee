@@ -35,7 +35,6 @@ export function useGetOAuthToken() {
 
       logger.info('Get OAuth Token Success', { accessToken: !!data.access_token });
 
-      console.log('TOKEN', data);
       if (data.access_token) {
         logger.info('Setting access token');
         await TokenStoreManager.addAccessToken(data.access_token);

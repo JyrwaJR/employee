@@ -22,7 +22,7 @@
  * };
  * ```
  */
-export interface Leave {
+export interface Leave extends LeaveBal {
   /** Leave start date in `DD/MM/YYYY` display format. */
   from_dt: string;
 

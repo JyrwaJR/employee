@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
+import { Redirect, useLocalSearchParams } from 'expo-router';
 import { Container } from '@components/layout/container';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { EmptyScreen } from '@components/screens';
@@ -9,6 +9,7 @@ import { LeaveDetailHeader } from '../components/leave-detail-header';
 import { LeaveDetailInfo } from '../components/leave-detail-info';
 import { LeaveBalanceCard } from '../components/leave-balance-card';
 import { StackHeader } from '@components/layout';
+import { PAGE_ROUTES } from '@utils/constants';
 
 type SearchParamsT = {
   leave_cd: string;
@@ -18,9 +19,10 @@ type SearchParamsT = {
 
 export const LeaveDetailScreen = () => {
   const { leave_cd, from_dt, order_dt } = useLocalSearchParams<SearchParamsT>();
+  const isValidQuery = leave_cd && from_dt && order_dt;
 
   const { data, isLoading, refetch } = useLeaveDetail({ from_dt, leave_cd, order_dt });
-
+  if (!isValidQuery) return <Redirect href={PAGE_ROUTES.LEAVE.INDEX} />;
   if (isLoading)
     return (
       <>
@@ -51,7 +53,7 @@ export const LeaveDetailScreen = () => {
           contentContainerStyle={{ paddingBottom: 100 }}>
           <LeaveDetailHeader leave={data} />
           <LeaveDetailInfo leave={data} />
-          <LeaveBalanceCard balance={data.leave_bal} />
+          <LeaveBalanceCard balance={data} />
         </ScrollView>
       </Container>
     </>

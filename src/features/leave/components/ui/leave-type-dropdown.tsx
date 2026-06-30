@@ -36,7 +36,6 @@ export const LeaveTypeDropdown = ({ selectedType, onSelect, error }: LeaveTypeDr
       (leaveTypes ?? []).map((type) => ({
         label: type.leave_desc,
         value: type.leave_cd,
-        subtitle: type.leave_cd,
       })),
     [leaveTypes]
   );

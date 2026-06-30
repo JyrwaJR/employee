@@ -4,17 +4,6 @@ import { rpc } from '@utils/api';
 import { useAuthStore } from '@stores/auth.store';
 import { Leave, LeaveBal } from '@sharedTypes/leave';
 
-/**
- * Shape returned by the `GET_EMP_LEAVE_DETAILS` RPC.
- *
- * Extends the base {@link Leave} record with a `leave_bal` property
- * containing the employee's current leave balance for that leave type.
- */
-interface LeaveResponse extends Leave {
-  /** Leave balance information for the associated leave type. */
-  leave_bal: LeaveBal;
-}
-
 /** Identifies which leave record to fetch from the backend. */
 type Props = {
   /** Leave type code (e.g. `SL` for Sick Leave). */
@@ -42,9 +31,10 @@ type Props = {
  * @param leave_cd - Leave type code used as part of the composite key.
  * @param order_dt - Order / approval date used as part of the composite key.
  *
- * @returns A React Query result whose `data` is a single `Leave` record
- *          with an additional `leave_bal` field, or `undefined` when the
- *          query is disabled or still loading.
+ * @returns A React Query result whose `data` is a single {@link Leave}
+ *          record (which includes balance fields from the extended
+ *          {@link LeaveBal} type), or `undefined` when the query is
+ *          disabled or still loading.
  *
  * @example
  * ```tsx
@@ -61,7 +51,7 @@ export function useLeaveDetail({ from_dt, leave_cd, order_dt }: Props) {
   return useQuery({
     queryKey: QUERY_KEYS.LEAVE.DETAILS(emp_cd, from_dt, leave_cd, order_dt),
     queryFn: () =>
-      rpc<LeaveResponse>(METHODS.GET_EMP_LEAVE_DETAILS, {
+      rpc<Leave>(METHODS.GET_EMP_LEAVE_DETAILS, {
         emp_cd,
         from_dt,
         leave_cd,
