@@ -11,3 +11,4 @@ export * from './text';
 export * from './url';
 export * from './years';
 export * from './date';
+export * from './match-page-header';
