@@ -4,10 +4,24 @@ import { Text } from '@components/ui/text';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Leave } from '@sharedTypes/leave';
 
+/**
+ * Props accepted by the {@link LeaveDetailInfo} component.
+ */
 interface LeaveDetailInfoProps {
+  /** The full leave record whose detail fields to render. */
   leave: Leave;
 }
 
+/**
+ * Renders a single labelled row inside the leave details card.
+ *
+ * Each row consists of a {@link MaterialCommunityIcons} icon on the
+ * left, a label (uppercase, subtle) above the value on the right.
+ *
+ * @param icon - Name of the MaterialCommunityIcons glyph to display.
+ * @param label - Short label text (e.g. `From`, `To`, `Duration`).
+ * @param value - The value text shown below the label.
+ */
 const InfoRow = ({
   icon,
   label,
@@ -43,7 +57,7 @@ export const LeaveDetailInfo = ({ leave }: LeaveDetailInfoProps) => (
       value={`${leave.no_days} ${parseInt(leave.no_days) === 1 ? 'day' : 'days'}`}
     />
     <InfoRow icon="clipboard-text" label="Leave Type" value={leave.leave_desc} />
-    <InfoRow icon="calendar-clock" label="Applied On" value={leave.order_dt} />
+    <InfoRow icon="calendar-clock" label="Order Date" value={leave.order_dt} />
     {leave.reason_for_leave && (
       <View className="mt-2 rounded-xl bg-gray-50 p-4 dark:bg-gray-800/50">
         <Text variant="subtext" size="xs" className="mb-1.5 font-medium uppercase tracking-wide">
