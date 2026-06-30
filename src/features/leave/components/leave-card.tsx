@@ -14,11 +14,11 @@ export const LeaveCard = ({ item }: { item: Leave; onPress?: () => void }) => {
   const isEnable = !!item.leave_cd && !!item.from_dt && !!item.order_dt;
 
   const onPressLeave = () => {
-    const { leave_cd, from_dt, order_dt } = item;
+    const { leave_cd, from_dt1, order_dt1 } = item;
     const pageUrl = PAGE_ROUTES.LEAVE.DETAILS(leave_cd, {
       leave_cd,
-      from_dt,
-      order_dt,
+      from_dt: from_dt1,
+      order_dt: order_dt1,
     });
     router.push(pageUrl);
   };

@@ -55,6 +55,7 @@ export const QUERY_KEYS = {
  */
 export const STALE_TIMES = {
   /** Auth/session data — stale immediately, always check server. */
+  GLOBAL: 1000 * 60 * 15, // less than a second
   AUTH: 0,
   /** Fast-changing data like leave approvals. */
   LEAVE_FAST: 1000 * 30, // 30 seconds

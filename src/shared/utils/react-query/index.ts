@@ -1,4 +1,5 @@
 import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
+import { STALE_TIMES } from '@utils/constants';
 import { logger } from '@utils/logger';
 import { toast } from 'sonner-native';
 
@@ -38,7 +39,7 @@ export const queryClient = new QueryClient({
   }),
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
+      staleTime: STALE_TIMES.GLOBAL, // 5 minutes
       gcTime: 1000 * 60 * 30, // 30 min — gives persistence time to serialize
       retry: 3,
       refetchOnReconnect: true,
