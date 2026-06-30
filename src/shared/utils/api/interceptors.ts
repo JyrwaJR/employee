@@ -8,19 +8,55 @@ import { cleanupSession } from './session-cleanup';
 const APP_ID = process.env.EXPO_PUBLIC_APP_ID;
 
 /**
+ * Shape of a decrypted backend response envelope.
+ *
+ * The backend wraps all responses in a standard envelope containing a status
+ * code, a human-readable message, a success flag, and optional payload data.
+ * After decryption the envelope is unwrapped and the inner data (if any) is
+ * passed through as-is.
+ */
+type DecryptedData = {
+  status_code: string;
+  message: string;
+  success_flag: boolean;
+  data?: any;
+};
+
+/**
  * Attaches request and response interceptors to an Axios instance.
  *
- * **Request interceptor:** Injects the Bearer token from secure storage, encrypts
- * the request payload (unless disabled), tags the start time for latency tracking,
- * and logs the outgoing method and path.
+ * **Request interceptor** (fulfilled handler):
+ * - Reads the access token from secure storage and injects it as a `Bearer`
+ *   Authorization header.
+ * - Encrypts the outgoing payload body using the app's encryption key, wrapping
+ *   it in a `{ request_data, app_id }` envelope. Encryption is skipped when
+ *   `options.encryption` is explicitly `false`.
+ * - Tags the config with `_startTime` for end-to-end latency tracking.
+ * - Logs the HTTP method and path at the `log` level.
  *
- * **Response interceptor:** Decrypts the backend envelope response, handles 401
- * status codes by clearing the session and redirecting to login, and triggers
- * automatic token refresh on 401 errors (with a retry queue to avoid race conditions).
+ * **Response interceptor — fulfilled handler:**
+ * - Decrypts the backend envelope (`res.data.response`) using the app's
+ *   decryption key.
+ * - If the decrypted envelope contains a `status_code` of `'401'`, clears the
+ *   session (token + persisted state) to force re-authentication.
+ * - Unwraps the envelope into `{ success, message, data }` and replaces
+ *   `res.data` with the unwrapped shape.
+ * - Logs the decrypted status, HTTP status, and success flag.
  *
- * @param instance - The Axios instance to attach interceptors to.
- * @param options - Optional configuration.
- * @param options.encryption - Whether to enable encryption of request/response data (default `true`).
+ * **Response interceptor — rejected handler:**
+ * - Passes through cancelled requests (`isCancel`) without further processing.
+ * - Distinguishes **network-level failures** (no `error.response`) from
+ *   **server HTTP errors** and logs them separately at the `warn` level with
+ *   diagnostic context (method, path, status, trace ID, duration).
+ * - On **401 responses**, attempts an automatic token refresh via
+ *   `attemptTokenRefresh`. Non-401 errors, missing configs, and URLs that
+ *   should skip refresh (e.g. the refresh endpoint itself) are re-thrown.
+ *
+ * @param instance - The Axios instance to attach request and response
+ *   interceptors to. The instance is mutated in place.
+ * @param options - Optional configuration object.
+ * @param options.encryption - Toggles encryption of request payloads and
+ *   decryption of response data. Pass `false` to disable. Defaults to `true`.
  */
 export function setupInterceptors(instance: AxiosInstance, options?: { encryption?: boolean }) {
   instance.interceptors.request.use(async (config) => {
@@ -46,12 +82,7 @@ export function setupInterceptors(instance: AxiosInstance, options?: { encryptio
   instance.interceptors.response.use(
     async (res) => {
       if (res.data?.response && options?.encryption !== false) {
-        const decrypted = decrypt<{
-          status_code: string;
-          message: string;
-          success_flag: boolean;
-          data?: any;
-        }>(res.data?.response);
+        const decrypted = decrypt<DecryptedData>(res.data?.response);
 
         let data = decrypted.data;
         if (typeof data === 'string') {
