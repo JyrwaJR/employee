@@ -1,7 +1,6 @@
 import { cn } from '@utils/helpers/cn';
 import React from 'react';
 import { Text, TouchableOpacity, ActivityIndicator, TouchableOpacityProps } from 'react-native';
-import { useDelay } from '@hooks/use-delay';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 /**
@@ -102,41 +101,42 @@ export const Button = ({
   size = 'default',
   isLoading,
   testID,
-  loadingDelay = 2000,
   children,
   ...props
 }: ButtonProps) => {
-  const { trigger, isDelayed } = useDelay(loadingDelay);
-  const isDisabled = isDelayed || isLoading || props.disabled;
+  const isDisabled = isLoading || props.disabled;
   const colors = getVariantColors(variant!);
 
   return (
     <TouchableOpacity
       testID={testID}
-      onPress={() => {
-        trigger();
-        onPress();
-      }}
-      disabled={isDisabled}
+      onPress={onPress}
+      disabled={isLoading || isDisabled}
       activeOpacity={0.7}
       className={cn(buttonVariants({ variant, size, className }), isLoading && 'opacity-70')}
       accessibilityRole="button"
       {...props}>
       {isLoading ? (
         <ActivityIndicator color={colors.spinnerColor} />
+      ) : children ? (
+        typeof children === 'string' ? (
+          // Wrap raw string children in <Text> — RN requires text nodes
+          // to live inside a <Text> component or they are dropped silently
+          <Text className={cn('text-button-md uppercase tracking-wide', colors.textClass)}>
+            {children}
+          </Text>
+        ) : (
+          children
+        )
       ) : (
-        <>
-          {children || (
-            <Text
-              className={cn(
-                'text-button-md uppercase tracking-wide',
-                colors.textClass,
-                variant === 'link' && 'underline'
-              )}>
-              {title}
-            </Text>
-          )}
-        </>
+        <Text
+          className={cn(
+            'text-button-md uppercase tracking-wide',
+            colors.textClass,
+            variant === 'link' && 'underline'
+          )}>
+          {title}
+        </Text>
       )}
     </TouchableOpacity>
   );

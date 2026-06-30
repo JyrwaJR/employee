@@ -16,16 +16,62 @@ import { AuthHeader } from '../components/auth-header';
 import { AuthFooter } from '../components/auth-footer';
 import { useGetOAuthToken } from '../hooks/use-get-oauth-token';
 import { toast } from 'sonner-native';
+import { useRateLimit } from '@hooks';
 
+/** Form field values inferred from the `LoginSchema` Zod validation schema. */
 type LoginFormInputs = z.infer<typeof LoginSchema>;
 
+/**
+ * Default values for the login form.
+ *
+ * Reads pre-filled credentials from environment variables for development
+ * convenience (`EXPO_PUBLIC_EMP_CD` and `EXPO_PUBLIC_PASSWORD`). Falls back
+ * to empty strings when the environment variables are not set.
+ */
 const formDefaultValue: LoginFormInputs = {
   emp_cd: process.env.EXPO_PUBLIC_EMP_CD || '',
   password: process.env.EXPO_PUBLIC_PASSWORD || '',
 };
 
+/**
+ * The primary login screen displayed to unauthenticated users.
+ *
+ * Orchestrates a two-step authentication flow:
+ *   1. **OAuth token acquisition** — Fetches an OAuth bearer token via
+ *      `useGetOAuthToken`. This step is required before the credentials
+ *      can be submitted.
+ *   2. **Credential validation** — Submits the employee code and password
+ *      via `useLoginMutation` using the acquired OAuth token.
+ *
+ * ### Rate limiting
+ *
+ * A sliding-window rate limiter guards the submit handler, allowing only
+ * **1 submission per 5 seconds**. When the limit is active the button
+ * displays a "Please wait N" label and the handler returns early.
+ *
+ * ### Edge cases
+ *
+ * - **Already signed in** — The submit button is disabled when
+ *   `isSignedIn` is `true` to prevent duplicate submissions.
+ * - **Pending mutations** — Both the OAuth token and login mutations
+ *   contribute to `isPending`, which shows a loading spinner on the
+ *   button and disables interaction.
+ * - **API errors** — Backend validation errors returned from the login
+ *   mutation are surfaced via `toast.error()`.
+ * - **Developer mode** — A link to the UI Laboratory is rendered below
+ *   the form when `__DEV__` is `true`, toggled via `EXPO_PUBLIC_APP_ENV`.
+ *
+ * @example
+ * ```tsx
+ * <LoginScreen />
+ * ```
+ */
 export const LoginScreen = () => {
   const { isSignedIn, isAuthLoading } = useAuthStore();
+  const { startCooldown, isLimited, secondsRemaining } = useRateLimit('LOGIN_BUTTON_RATE_LIMIT', {
+    limit: 1,
+    ms: 5000,
+  });
 
   const methods = useForm<LoginFormInputs>({
     resolver: zodResolver(LoginSchema),
@@ -39,21 +85,23 @@ export const LoginScreen = () => {
   const { mutate, isPending: isTokenPending } = useGetOAuthToken();
 
   const onSubmit = (data: LoginFormInputs) => {
+    if (isLimited) {
+      return;
+    }
+
+    startCooldown();
+
     mutate(undefined, {
       onSuccess: async () => {
         loginMutate(data, {
           onSuccess: (sData) => {
             if (sData.success) {
-              toast.success('Welcome Back', { description: sData.message });
               return sData;
             }
             toast.error(sData.message);
             return sData;
           },
         });
-      },
-      onError: (error) => {
-        toast.error('Something went wrong', { description: error.message });
       },
     });
   };
@@ -99,7 +147,9 @@ export const LoginScreen = () => {
 
           <View className="mb-8 items-end">
             <Link href={PAGE_ROUTES.AUTH.FORGOT_PASSWORD()} asChild>
-              <TouchableOpacity>
+              <TouchableOpacity
+                className="mt-2"
+                hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}>
                 <Text variant={'link'}>Forgot password?</Text>
               </TouchableOpacity>
             </Link>
@@ -109,9 +159,9 @@ export const LoginScreen = () => {
             testID="SIGN_IN_BUTTON"
             onPress={methods.handleSubmit(onSubmit)}
             isLoading={isPending}
-            title="Continue"
-            disabled={isSignedIn}
-          />
+            disabled={isSignedIn}>
+            {isLimited ? `Please wait ${secondsRemaining}` : 'Continue'}
+          </Button>
         </View>
       </FormProvider>
 
