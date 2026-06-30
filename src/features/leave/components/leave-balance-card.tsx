@@ -3,17 +3,12 @@ import { View } from 'react-native';
 import { Text } from '@components/ui/text';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LeaveBal } from '@sharedTypes/leave';
+import { LeaveTypeCode } from '../types';
+import { LEAVE_ICONS } from '../utils/constants';
 
 interface LeaveBalanceCardProps {
   balance: LeaveBal;
 }
-
-const leaveIcons: Record<string, keyof typeof MaterialCommunityIcons.glyphMap> = {
-  EL: 'umbrella',
-  SL: 'medical-bag',
-  COM: 'heart',
-  HPL: 'clock-outline',
-};
 
 export const LeaveBalanceCard = ({ balance }: LeaveBalanceCardProps) => (
   <View className="mt-4">
@@ -25,7 +20,7 @@ export const LeaveBalanceCard = ({ balance }: LeaveBalanceCardProps) => (
         <View className="flex-row items-center gap-3">
           <View className="rounded-xl bg-blue-100 p-2 dark:bg-blue-900/30">
             <MaterialCommunityIcons
-              name={leaveIcons[balance.leave_type] || 'calendar-blank'}
+              name={LEAVE_ICONS[balance?.type as LeaveTypeCode] ?? 'calendar-blank'}
               size={20}
               color="#3B82F6"
             />

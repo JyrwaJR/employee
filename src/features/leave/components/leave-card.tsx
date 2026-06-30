@@ -5,6 +5,8 @@ import { cn } from '@utils/helpers/cn';
 import { Text } from '@components/ui/text';
 import { getStatusColor } from '@utils/helpers/get-status-color';
 import { Leave } from '@sharedTypes/leave';
+import { LeaveTypeCode } from '../types';
+import { LEAVE_ICONS } from '../utils/constants';
 import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants';
 
@@ -32,7 +34,11 @@ export const LeaveCard = ({ item }: { item: Leave; onPress?: () => void }) => {
       <View className="mb-2 flex-row items-center justify-between">
         <View className="flex-row items-center gap-2">
           <View className="rounded-lg bg-purple-100 p-2 dark:bg-purple-900/30">
-            <MaterialCommunityIcons name="calendar-account" size={24} color="#7C3AED" />
+            <MaterialCommunityIcons
+              name={LEAVE_ICONS[item.leave_cd as LeaveTypeCode] ?? 'calendar-account'}
+              size={24}
+              color="#7C3AED"
+            />
           </View>
           <View>
             <Text className="text-lg font-bold text-slate-900 dark:text-white">

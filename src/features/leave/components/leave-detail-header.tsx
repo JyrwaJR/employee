@@ -5,6 +5,8 @@ import { cn } from '@utils/helpers/cn';
 import { Text } from '@components/ui/text';
 import { getStatusColor } from '@utils/helpers/get-status-color';
 import { Leave } from '@sharedTypes/leave';
+import { LeaveTypeCode } from '../types';
+import { LEAVE_ICONS } from '../utils/constants';
 
 interface LeaveDetailHeaderProps {
   leave: Leave;
@@ -18,7 +20,11 @@ export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
       <View className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
         <View className="mb-4 flex-row items-center justify-between">
           <View className="rounded-2xl bg-purple-100 p-3 dark:bg-purple-900/30">
-            <MaterialCommunityIcons name="calendar-account" size={32} color="#7C3AED" />
+            <MaterialCommunityIcons
+              name={LEAVE_ICONS[leave.leave_cd as LeaveTypeCode] ?? 'calendar-account'}
+              size={32}
+              color="#7C3AED"
+            />
           </View>
           <View
             className={cn(
