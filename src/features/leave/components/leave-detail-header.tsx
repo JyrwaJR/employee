@@ -8,10 +8,32 @@ import { Leave } from '@sharedTypes/leave';
 import { LeaveTypeCode } from '../types';
 import { LEAVE_ICONS } from '../utils/constants';
 
+/**
+ * Props accepted by the {@link LeaveDetailHeader} component.
+ */
 interface LeaveDetailHeaderProps {
+  /** The full leave record to render the header for. */
   leave: Leave;
 }
 
+/**
+ * Displays the top section of the leave detail screen.
+ *
+ * Renders a card containing the leave-type icon (dynamically selected
+ * via {@link LEAVE_ICONS} based on `leave.leave_cd`), the leave
+ * description as the title, the duration in days, and a status badge
+ * coloured by {@link getStatusColor} according to the verification
+ * status (`leave.verify_flg_desc`).
+ *
+ * The status badge uses the icon and colour scheme returned by
+ * `getStatusColor` to provide a quick visual indication of whether
+ * the leave is approved, pending, or rejected.
+ *
+ * @example
+ * ```tsx
+ * <LeaveDetailHeader leave={leave} />
+ * ```
+ */
 export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
   const statusStyle = getStatusColor(leave.verify_flg_desc);
 
