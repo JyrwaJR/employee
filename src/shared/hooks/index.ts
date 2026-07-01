@@ -7,3 +7,4 @@ export * from './use-rate-limit';
 export * from './use-leaves';
 export * from './use-online-status';
 export * from './use-route-path';
+export * from './use-debounced';

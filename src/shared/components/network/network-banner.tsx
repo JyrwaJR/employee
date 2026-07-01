@@ -6,7 +6,7 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useOnlineStatus } from '@hooks';
+import { useDebouncedValue, useOnlineStatus } from '@hooks';
 
 const BANNER_HEIGHT = 32;
 const DEBOUNCE_MS = 1000; // 1s debounce to avoid flicker on flaky connections
