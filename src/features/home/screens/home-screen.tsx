@@ -11,8 +11,9 @@ import {
   HomeQuickActions,
 } from '../components';
 import { Text } from '@components/ui/text';
-import { EmptyScreen, LoadingScreen } from '@components/screens';
+import { EmptyScreen } from '@components/screens';
 import { useLeaves } from '@hooks';
+import { HomeScreenSkeleton } from '@features/skeleton/components';
 import { isActiveLeave } from '../utils';
 
 export const HomeScreen = () => {
@@ -23,7 +24,7 @@ export const HomeScreen = () => {
   const userName = user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...';
   const greeting = `${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.emp_dept ?? ''}`;
 
-  if (isLoading) return <LoadingScreen />;
+  if (isLoading) return <HomeScreenSkeleton />;
 
   if (!data) {
     return (
