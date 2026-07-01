@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { ProviderWrapper } from '@providers/provider-wrapper';
 import { NetworkBanner } from '@components/network';
 import { Toaster, SnackbarProvider } from '@components/ui';
@@ -26,15 +26,11 @@ SplashScreen.setOptions({
 
 /** Root layout that wraps every screen with global providers and UI shell. */
 export default function Layout() {
-  const [_, setAppIsReady] = useState(false);
-
   useEffect(() => {
     let cancelled = false;
 
     const initialize = async () => {
       // --- Async startup work (fonts, auth token hydration, etc.) goes here ---
-
-      setAppIsReady(true);
 
       // Brief delay lets React commit the first frame before we tear down
       // the native splash screen, preventing a white flash.

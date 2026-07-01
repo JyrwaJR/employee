@@ -33,7 +33,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     'expo-router',
     'expo-splash-screen',
     'expo-font',
-    'expo-web-browser',
     [
       'expo-local-authentication',
       {
@@ -78,9 +77,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     router: {},
-    eas: {
-      projectId: '274cfcf8-439f-4622-ab99-76fa09023690',
-    },
+    eas: { projectId: '274cfcf8-439f-4622-ab99-76fa09023690' },
   },
   owner: 'jyrwajr',
   updates: {

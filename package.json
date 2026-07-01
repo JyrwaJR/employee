@@ -6,13 +6,10 @@
     "android": "APP_VARIANT=development expo run:android",
     "dev": "APP_VARIANT=development expo start --clear",
     "start": "expo start",
-    "prebuild": "expo prebuild",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx}\" --fix",
     "format": "prettier \"**/*.{js,jsx,ts,tsx,json}\" --write",
     "format:check": "prettier \"**/*.{js,jsx,ts,tsx,json}\" --check",
-    "build:dev": "eas build --profile development --platform android",
-    "prepare": "husky",
-    "ios": "expo run:ios"
+    "prepare": "husky"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
@@ -43,7 +40,6 @@
     "expo-status-bar": "~3.0.8",
     "expo-system-ui": "~6.0.7",
     "expo-updates": "~29.0.18",
-    "expo-web-browser": "~15.0.11",
     "http": "0.0.1-security",
     "lodash": "^4.18.1",
     "nativewind": "4.2.3",
