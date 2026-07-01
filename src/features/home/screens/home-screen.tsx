@@ -17,14 +17,14 @@ import { HomeScreenSkeleton } from '@features/skeleton/components';
 import { isActiveLeave } from '../utils';
 
 export const HomeScreen = () => {
-  const { user, logout } = useAuthStore();
+  const { user, isAuthLoading, logout } = useAuthStore();
   const { theme } = useThemeStore();
   const { data, isFetching, isLoading, refetch } = useLeaves();
   const isAfterNoon = new Date().getUTCHours() >= 12;
   const userName = user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...';
   const greeting = `${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.emp_dept ?? ''}`;
 
-  if (isLoading) return <HomeScreenSkeleton />;
+  if (isLoading || isAuthLoading) return <HomeScreenSkeleton />;
 
   if (!data) {
     return (
