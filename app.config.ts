@@ -7,6 +7,7 @@ const isPreview = APP_VARIANT === 'preview';
 const APP_VERSION = '1.0.0';
 
 const iconAssetUrl = './src/shared/assets/icon.png';
+const adaptiveIcon = './src/shared/assets/icon-android.png';
 const splashAssetUrl = './src/shared/assets/splash.png';
 
 const getAppName = (baseName: string) => {
@@ -70,7 +71,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
     adaptiveIcon: {
-      foregroundImage: iconAssetUrl,
+      foregroundImage: adaptiveIcon,
       backgroundColor: '#ffffff',
     },
     package: getIdentifier(),

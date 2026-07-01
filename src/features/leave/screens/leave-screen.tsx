@@ -1,8 +1,8 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl } from 'react-native';
 import { router } from 'expo-router';
 import { Container } from '@components/layout/container';
-import { LoadingScreen } from '@components/screens/loading-screen';
+import { LeaveListSkeleton } from '../components/skeleton';
 import { LeaveCard } from '../components/leave-card';
 import { useLeaves } from '@hooks/use-leaves';
 import { SectionHeader } from '@components/base/section-header';
@@ -11,12 +11,12 @@ import { PAGE_ROUTES } from '@utils/constants/routes';
 import { FAB } from '@components/fab';
 
 export const LeaveScreen = () => {
-  const { data: leaves, isFetching, refetch } = useLeaves();
+  const { data: leaves, isLoading, isFetching, refetch } = useLeaves();
 
-  if (isFetching) {
+  if (isLoading) {
     return (
       <>
-        <LoadingScreen />
+        <LeaveListSkeleton />
         <FAB icon="add" onPress={() => router.push(PAGE_ROUTES.LEAVE.CREATE)} />
       </>
     );
@@ -42,8 +42,9 @@ export const LeaveScreen = () => {
       <FlatList
         data={leaves}
         keyExtractor={(item) => item.id}
+        refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}
         renderItem={({ item }) => <LeaveCard item={item} />}
-        contentContainerStyle={{ paddingBottom: 100 }}
+        contentContainerClassName="pb-20"
         showsVerticalScrollIndicator={false}
       />
       <FAB icon="add" onPress={() => router.push(PAGE_ROUTES.LEAVE.CREATE)} />

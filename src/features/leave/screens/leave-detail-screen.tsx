@@ -2,13 +2,12 @@ import React from 'react';
 import { RefreshControl, ScrollView } from 'react-native';
 import { Redirect, useLocalSearchParams } from 'expo-router';
 import { Container } from '@components/layout/container';
-import { LoadingScreen } from '@components/screens/loading-screen';
+import { LeaveDetailSkeleton } from '../components/skeleton';
 import { EmptyScreen } from '@components/screens';
 import { useLeaveDetail } from '../hooks/use-leave-detail';
 import { LeaveDetailHeader } from '../components/leave-detail-header';
 import { LeaveDetailInfo } from '../components/leave-detail-info';
 import { LeaveBalanceCard } from '../components/leave-balance-card';
-import { StackHeader } from '@components/layout';
 import { PAGE_ROUTES } from '@utils/constants';
 import { LeaveTypeCode } from '../types';
 
@@ -61,30 +60,20 @@ export const LeaveDetailScreen = () => {
 
   if (!isValidQueries) return <Redirect href={PAGE_ROUTES.LEAVE.INDEX} />;
 
-  if (isLoading)
-    return (
-      <>
-        <StackHeader />
-        <LoadingScreen />
-      </>
-    );
+  if (isLoading || isFetching) return <LeaveDetailSkeleton />;
 
   if (!data) {
     return (
-      <>
-        <StackHeader />
-        <EmptyScreen
-          refresh={refetch}
-          title="Leave Not Found"
-          message="The leave you're looking for doesn't exist"
-        />
-      </>
+      <EmptyScreen
+        refresh={refetch}
+        title="Leave Not Found"
+        message="The leave you're looking for doesn't exist"
+      />
     );
   }
 
   return (
     <>
-      <StackHeader />
       <Container className="flex-1">
         <ScrollView
           showsVerticalScrollIndicator={false}

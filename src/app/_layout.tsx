@@ -6,7 +6,6 @@ import '../shared/styles/global.css';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { logger } from '../shared/utils/logger';
-import { useDoubleBackExit } from '@hooks';
 
 // Handle initial route settings
 export const unstable_settings = {
@@ -27,7 +26,6 @@ SplashScreen.setOptions({
 
 export default function Layout() {
   const [appIsReady, setAppIsReady] = useState(false);
-  useDoubleBackExit({ rootRoutes: ['/'] });
 
   useEffect(() => {
     // Any async initialization (fonts, auth checks) should happen here.

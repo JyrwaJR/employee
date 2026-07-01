@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 import { Button, FieldInput, Input, Text } from '@components/ui';
 import { FormProvider, useForm, useWatch, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Container, KeyboardSafeView, StackHeader } from '@components/layout';
+import { Container, KeyboardSafeView } from '@components/layout';
 import { SectionHeader } from '@components/base';
 import { calculateDaysBetweenDates, formatDateInput } from '@utils/helpers';
 import { CreateLeaveSchema, type CreateLeaveInputs } from '../validators';
@@ -11,7 +11,7 @@ import { useCreateLeave } from '../hooks';
 import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants';
 import { LeaveReasonCode, LeaveTypeCode } from '../types';
-import { LeaveTypeDropdown, LeaveReasonDropdown } from '../components';
+import { LeaveTypeDropdown, LeaveReasonDropdown, CreateLeaveSkeleton } from '../components';
 import { useRateLimit } from '@hooks';
 import { useSnackbar } from '@hooks/use-snackbar';
 
@@ -89,9 +89,12 @@ export const CreateLeaveScreen = () => {
     });
   };
 
+  if (isPending) {
+    return <CreateLeaveSkeleton />;
+  }
+
   return (
     <Container className="flex-1">
-      <StackHeader />
       {/* KeyboardSafeView ensures the ScrollView remains visible when the soft keyboard opens */}
       <KeyboardSafeView className="flex-1">
         <ScrollView

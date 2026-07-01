@@ -172,7 +172,7 @@ export const LoginScreen = () => {
 
         <AuthFooter
           text="Don't have an account?"
-          linkText="Sign up"
+          linkText="Register here"
           linkHref={PAGE_ROUTES.AUTH.SIGN_UP}
           testID="SIGNUP_BUTTON"
         />
