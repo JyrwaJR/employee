@@ -3,11 +3,12 @@ import { QUERY_KEYS, METHODS, STALE_TIMES } from '@utils/constants';
 import { rpc } from '@utils/api';
 import { useAuthStore } from '@stores/auth.store';
 import { Leave, LeaveBal } from '@sharedTypes/leave';
+import { LeaveTypeCode } from '../types';
 
 /** Identifies which leave record to fetch from the backend. */
 type Props = {
   /** Leave type code (e.g. `SL` for Sick Leave). */
-  leave_cd: string;
+  leave_cd: LeaveTypeCode;
   /** Order / approval date in `DD/MM/YYYY` format. */
   order_dt: string;
   /** Leave start date in `DD/MM/YYYY` format. */

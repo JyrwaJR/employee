@@ -3,6 +3,8 @@ import { rpc } from '@utils/api';
 import { METHODS, QUERY_KEYS } from '@utils/constants';
 import { CreateLeaveInputs } from '../validators';
 import { useAuthStore } from '@stores/auth.store';
+import { LeaveTypeCode } from '../types';
+import { ApiResponse } from '@sharedTypes/api';
 
 /**
  * Creates a leave request via the `create_leave_request` RPC.
@@ -12,11 +14,11 @@ import { useAuthStore } from '@stores/auth.store';
  *
  * ### State transitions
  *
- * | State          | Meaning                                    |
- * |----------------|--------------------------------------------|
- * | `isPending`    | The RPC request is in-flight               |
- * | `isSuccess`    | The RPC returned `success: true`           |
- * | `isError`      | The RPC threw or returned network error    |
+ * | State       | Meaning                                 |
+ * |-------------|-----------------------------------------|
+ * | `isPending` | The RPC request is in-flight            |
+ * | `isSuccess` | The RPC returned `success: true`        |
+ * | `isError`   | The RPC threw or returned network error |
  *
  * ### Cache invalidation
  *
@@ -28,9 +30,15 @@ import { useAuthStore } from '@stores/auth.store';
  * the `message` field for user-facing feedback.
  *
  * @param data - Form payload validated against `CreateLeaveSchema`.
- *                Required fields: `type`, `number_of_days`, `from_dt`,
- *                `to_dt`, `order_number`, `order_dt`, `reason`.
- *                Optional: `remarks`.
+ *   Required fields: `type`, `number_of_days`, `from_dt`, `to_dt`,
+ *   `order_number`, `order_dt`, `reason`. Optional: `remarks`.
+ * @returns A React Query `UseMutationResult` with:
+ *   - `mutate(data, options?)` — Triggers the RPC call
+ *   - `isPending` — `true` while the request is in-flight
+ *   - `isSuccess` — `true` when the RPC returns `success: true`
+ *   - `isError` — `true` when the RPC throws or returns a network error
+ *   - `data` — Resolves to `ApiResponse<CreateEmployeeResponse>`
+ *   - `error` — Resolves to `ApiResponse<unknown>`
  *
  * @example
  * ```tsx
@@ -45,13 +53,19 @@ import { useAuthStore } from '@stores/auth.store';
  * };
  * ```
  */
+type CreateEmployeeResponse = {
+  leave_cd: LeaveTypeCode;
+  from_dt: string;
+  order_dt: string;
+};
+
 export function useCreateLeave() {
   const queryClient = useQueryClient();
   const { emp_cd } = useAuthStore();
-  return useMutation({
+  return useMutation<ApiResponse<CreateEmployeeResponse>, ApiResponse<unknown>, CreateLeaveInputs>({
     mutationKey: QUERY_KEYS.LEAVE.LIST(emp_cd),
     mutationFn: (data: CreateLeaveInputs) =>
-      rpc<{ id: string }>(METHODS.CREATE_LEAVE_REQUEST, {
+      rpc<CreateEmployeeResponse>(METHODS.CREATE_LEAVE_REQUEST, {
         ...data,
         emp_cd,
       }),
@@ -61,9 +75,6 @@ export function useCreateLeave() {
         return data.data;
       }
       return data;
-    },
-    onError: (error) => {
-      return error;
     },
   });
 }
