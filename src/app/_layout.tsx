@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { ProviderWrapper } from '@providers/provider-wrapper';
 import { NetworkBanner } from '@components/network';
-import { Toaster } from '@components/ui';
+import { Toaster, SnackbarProvider } from '@components/ui';
 import '../shared/styles/global.css';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { logger } from '../shared/utils/logger';
+import { useDoubleBackExit } from '@hooks';
 
 // Handle initial route settings
 export const unstable_settings = {
@@ -26,6 +27,7 @@ SplashScreen.setOptions({
 
 export default function Layout() {
   const [appIsReady, setAppIsReady] = useState(false);
+  useDoubleBackExit({ rootRoutes: ['/'] });
 
   useEffect(() => {
     // Any async initialization (fonts, auth checks) should happen here.
@@ -55,6 +57,7 @@ export default function Layout() {
       <NetworkBanner />
       <Stack screenOptions={{ headerShown: false, animation: 'slide_from_right' }} />
       <Toaster />
+      <SnackbarProvider />
     </ProviderWrapper>
   );
 }
