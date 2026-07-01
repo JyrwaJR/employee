@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
+import { FlatList } from 'react-native';
 import { router } from 'expo-router';
 import { Container } from '@components/layout/container';
 import { LoadingScreen } from '@components/screens/loading-screen';
@@ -9,9 +9,11 @@ import { SectionHeader } from '@components/base/section-header';
 import { EmptyScreen } from '@components/screens';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { FAB } from '@components/fab';
+import { useDoubleBackExit } from '@hooks';
 
 export const LeaveScreen = () => {
   const { data: leaves, isFetching, refetch } = useLeaves();
+  useDoubleBackExit({ rootRoutes: ['/', '/leaves'] });
 
   if (isFetching) {
     return (
@@ -37,9 +39,7 @@ export const LeaveScreen = () => {
 
   return (
     <Container className="flex-1">
-      <View className="mt-4 px-4">
-        <SectionHeader title="My Leaves" />
-      </View>
+      <SectionHeader title="My Leaves" />
 
       <FlatList
         data={leaves}
