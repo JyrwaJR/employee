@@ -4,25 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useThemeStore } from '@stores/theme.store';
 import { Text } from '@components/ui/text';
 import { Route, router } from 'expo-router';
-import { PAGE_ROUTES } from '@utils/constants/routes';
-
-/** A single quick-action shortcut item. */
-type QuickAction = {
-  /** Display label. */
-  label: string;
-  /** MaterialCommunityIcons icon name. */
-  icon: keyof typeof MaterialCommunityIcons.glyphMap;
-  /** App route to navigate to on press. */
-  route: string;
-};
-
-/** Preset list of quick-action shortcuts. */
-const ACTIONS: QuickAction[] = [
-  { label: 'Apply Leave', icon: 'calendar-plus', route: PAGE_ROUTES.LEAVE.CREATE },
-  { label: 'Leaves', icon: 'calendar-check', route: PAGE_ROUTES.LEAVE.INDEX },
-  { label: 'View Salary', icon: 'currency-inr', route: PAGE_ROUTES.STATEMENT },
-  { label: 'Attendance', icon: 'clipboard-check', route: '' },
-];
+import { HOME_QUICK_ACTIONS } from '@features/home/utils/constants';
 
 /** Displays a horizontal row of quick-action shortcut buttons. */
 export const HomeQuickActions = () => {
@@ -35,7 +17,7 @@ export const HomeQuickActions = () => {
         Quick Actions
       </Text>
       <View className="flex-row justify-between">
-        {ACTIONS.map((action) => (
+        {HOME_QUICK_ACTIONS.map((action) => (
           <TouchableOpacity
             key={action.label}
             onPress={() => action.route && router.push(action.route as Route)}

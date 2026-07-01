@@ -1,5 +1,7 @@
 import { Leave } from '@sharedTypes/leave';
 
+export * from './constants';
+
 export function isActiveLeave(leave: Leave): boolean {
   const today = new Date();
   const from = new Date(leave.from_dt1);
