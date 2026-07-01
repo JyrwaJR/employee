@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -49,39 +48,10 @@ export const NetworkBanner = () => {
   }
 
   return (
-    <Animated.View style={[styles.container, animatedStyle, { top: insets.top }]}>
-      <Animated.Text style={styles.text}>You are offline</Animated.Text>
+    <Animated.View
+      style={[animatedStyle, { top: insets.top, elevation: 10 }]}
+      className="absolute left-0 right-0 z-50 h-8 items-center justify-center bg-amber-500">
+      <Animated.Text className="text-xs font-semibold text-white">You are offline</Animated.Text>
     </Animated.View>
   );
 };
-
-/** Simple debounce hook — waits `delay` ms before committing the value. */
-function useDebouncedValue<T>(value: T, delay: number): T {
-  const [debounced, setDebounced] = React.useState(value);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(timer);
-  }, [value, delay]);
-
-  return debounced;
-}
-
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    height: BANNER_HEIGHT,
-    backgroundColor: '#F59E0B', // amber-500
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 999,
-    elevation: 10,
-  },
-  text: {
-    color: '#FFFFFF',
-    fontSize: 13,
-    fontWeight: '600',
-  },
-});
