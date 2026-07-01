@@ -34,11 +34,11 @@ export const LeaveCard = ({ item }: { item: Leave; onPress?: () => void }) => {
       className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm active:bg-gray-50 dark:border-gray-800 dark:bg-slate-900 dark:active:bg-slate-800">
       <View className="mb-2 flex-row items-center justify-between">
         <View className="flex-row items-center gap-2">
-          <View className="rounded-lg bg-purple-100 p-2 dark:bg-purple-900/30">
+          <View className={cn('rounded-lg p-2', statusStyle.bg)}>
             <MaterialCommunityIcons
               name={LEAVE_ICONS[item.leave_cd as LeaveTypeCode] ?? 'calendar-account'}
               size={24}
-              color="#7C3AED"
+              color={statusStyle.icon}
             />
           </View>
           <View>

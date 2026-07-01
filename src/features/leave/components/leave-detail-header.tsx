@@ -41,7 +41,7 @@ export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
     <View className="mt-4">
       <View className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
         <View className="mb-4 flex-row items-center justify-between">
-          <View className="rounded-2xl bg-purple-100 p-3 dark:bg-purple-900/30">
+          <View className={cn('rounded-lg p-2', statusStyle.bg)}>
             <MaterialCommunityIcons
               name={LEAVE_ICONS[leave.leave_cd as LeaveTypeCode] ?? 'calendar-account'}
               size={32}
