@@ -42,8 +42,10 @@ import {
 import { AnimationProvider, FadeInView } from '@components/fade-in-view';
 import { KeyboardSafeView, StackHeader } from '@components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useSnackbar } from '@hooks/use-snackbar';
 
 export default function UILabScreen() {
+  const { showSnackbar } = useSnackbar();
   const [showDialog, setShowDialog] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [isSkeletonTrigger, setIsSkeletonTrigger] = useState(false);
@@ -324,6 +326,21 @@ export default function UILabScreen() {
                     'This is a very long error message that should be truncated to prevent it from filling the entire screen and blocking other UI elements. It contains more than enough characters to trigger our safety caps. This is a very long error message that should be truncated to prevent it from filling the entire screen and blocking other UI elements.',
                 })
               }
+            />
+          </View>
+
+          <View className="mt-4 flex-row flex-wrap gap-2">
+            <Button
+              title="Snackbar: With Icon"
+              variant="outline"
+              className="flex-1"
+              onPress={() => showSnackbar('Profile updated successfully', 'checkmark-circle')}
+            />
+            <Button
+              title="Snackbar: Plain"
+              variant="outline"
+              className="flex-1"
+              onPress={() => showSnackbar('No internet connection')}
             />
           </View>
 
