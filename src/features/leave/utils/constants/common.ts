@@ -1,4 +1,3 @@
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LeaveTypeCode } from '@features/leave/types';
 
 export const LEAVE_TYPES: Record<LeaveTypeCode, LeaveTypeCode> = {
@@ -22,7 +21,7 @@ export const LEAVE_TYPES: Record<LeaveTypeCode, LeaveTypeCode> = {
  * Falls back to `'calendar-blank'` when the type is unknown (e.g.
  * during loading or a new server-side type not yet in the union).
  */
-export const LEAVE_ICONS: Record<LeaveTypeCode, keyof typeof MaterialCommunityIcons.glyphMap> = {
+export const LEAVE_ICONS: Record<LeaveTypeCode, string> = {
   /** Compensatory Off */
   COM: 'heart',
   /** Leave Not Due */

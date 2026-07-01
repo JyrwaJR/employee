@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, Modal, ActivityIndicator } from 'react-native';
 import { useUpdateStore } from '@stores/update.store';
 import { BlurView } from 'expo-blur';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 
 export const UpdateModal: React.FC = () => {
   const isUpdateReady = useUpdateStore((s) => s.isUpdateReady);
@@ -25,7 +25,7 @@ export const UpdateModal: React.FC = () => {
           className="w-full overflow-hidden rounded-3xl border border-white/20 bg-white/70 p-8 shadow-2xl">
           <View className="items-center">
             <View className="mb-4 h-16 w-16 items-center justify-center rounded-full bg-blue-500/10">
-              <Ionicons name="rocket-outline" size={32} color="#3b82f6" />
+              <Icon family="ionicons" name="rocket-outline" size={32} color="#3b82f6" />
             </View>
 
             <Text className="mb-2 text-center text-2xl font-bold text-gray-900">

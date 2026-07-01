@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { SalarySlip } from '@features/employee/types';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { cn } from '@utils/helpers/cn';
 import { Text } from '@components/ui/text';
 
@@ -13,7 +13,7 @@ export const HistoryCard = ({ item, onPress }: { item: SalarySlip; onPress: () =
     <View className="mb-2 flex-row items-center justify-between">
       <View className="flex-row items-center gap-2">
         <View className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900/30">
-          <MaterialCommunityIcons name="file-document-outline" size={24} color="#2563EB" />
+          <Icon name="file-document-outline" size={24} color="#2563EB" />
         </View>
         <View>
           <Text className="text-lg font-bold text-slate-900 dark:text-white">
@@ -28,7 +28,7 @@ export const HistoryCard = ({ item, onPress }: { item: SalarySlip; onPress: () =
           </Text>
         </View>
       </View>
-      <MaterialCommunityIcons name="chevron-right" size={24} color="#94A3B8" />
+      <Icon name="chevron-right" size={24} color="#94A3B8" />
     </View>
 
     <View className="my-2 h-[1px] bg-gray-100 dark:bg-gray-800" />
@@ -48,7 +48,7 @@ export const HistoryCard = ({ item, onPress }: { item: SalarySlip; onPress: () =
               ? 'bg-green-100 dark:bg-green-900/30'
               : 'bg-orange-100 dark:bg-orange-900/30'
           )}>
-          <MaterialCommunityIcons
+          <Icon
             name={item.status === 'PAID' ? 'check-circle' : 'clock-outline'}
             size={12}
             color={item.status === 'PAID' ? '#166534' : '#C2410C'}

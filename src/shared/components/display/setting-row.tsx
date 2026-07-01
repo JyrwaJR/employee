@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, TouchableOpacity, Switch } from 'react-native';
 import { Text } from '@components/ui/text';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { cn } from '@utils/helpers/cn';
-
 interface SettingRowProps {
-  icon: keyof typeof MaterialCommunityIcons.glyphMap;
+  icon: string;
   label: string;
   description?: string;
   isDestructive?: boolean;
@@ -41,7 +40,7 @@ export const SettingRow = ({
             'items-center justify-center rounded-full p-2',
             isDestructive ? 'bg-red-50 dark:bg-red-900/20' : 'bg-gray-100 dark:bg-slate-800'
           )}>
-          <MaterialCommunityIcons
+          <Icon
             name={icon}
             size={20}
             color={iconColor || (isDestructive ? '#EF4444' : '#64748B')}
@@ -72,7 +71,7 @@ export const SettingRow = ({
           style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
         />
       ) : (
-        <MaterialCommunityIcons name="chevron-right" size={20} color="#CBD5E1" />
+        <Icon name="chevron-right" size={20} color="#CBD5E1" />
       )}
     </View>
   );

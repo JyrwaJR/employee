@@ -3,7 +3,7 @@ import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Container } from '@components/layout/container';
 import { Text } from '@components/ui/text';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { MoneyRow } from '@components/display/money-row';
 import { SectionHeader } from '@components/base/section-header';
 import { DetailRow } from '@components/display/detail-row';
@@ -101,7 +101,7 @@ export const PensionDetailScreen = () => {
         {/* Actions */}
         <View className="mb-10 flex-row gap-4">
           <TouchableOpacity className="flex-1 flex-row items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white p-4 dark:border-gray-700 dark:bg-slate-800">
-            <MaterialCommunityIcons name="download-outline" size={20} color="#3B82F6" />
+            <Icon name="download-outline" size={20} color="#3B82F6" />
             <Text className="font-semibold text-blue-600 dark:text-blue-400">Download PDF</Text>
           </TouchableOpacity>
         </View>

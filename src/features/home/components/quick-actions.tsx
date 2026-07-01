@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { useThemeStore } from '@stores/theme.store';
 import { Text } from '@components/ui/text';
 import { Route, router } from 'expo-router';
@@ -24,7 +24,7 @@ export const HomeQuickActions = () => {
             activeOpacity={0.7}
             className="items-center">
             <View className="mb-2 h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 dark:bg-blue-900/20">
-              <MaterialCommunityIcons name={action.icon} size={26} color={iconColor} />
+              <Icon name={action.icon} size={26} color={iconColor} />
             </View>
             <Text variant="subtext" size="xs" className="text-center font-medium">
               {action.label}

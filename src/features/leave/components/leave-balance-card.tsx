@@ -1,10 +1,10 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from '@components/ui/text';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LeaveBal } from '@sharedTypes/leave';
 import { LeaveTypeCode } from '../types';
 import { LEAVE_ICONS } from '../utils/constants';
+import { Icon } from '@components/ui/icon';
 
 interface LeaveBalanceCardProps {
   item: LeaveBal;
@@ -19,7 +19,7 @@ export const LeaveBalanceCard = ({ item }: LeaveBalanceCardProps) => (
       <View className="flex-row items-center justify-between py-3">
         <View className="flex-row items-center gap-3">
           <View className="rounded-xl bg-blue-100 p-2 dark:bg-blue-900/30">
-            <MaterialCommunityIcons
+            <Icon
               name={LEAVE_ICONS[item?.type as LeaveTypeCode] ?? 'calendar-blank'}
               size={20}
               color="#3B82F6"

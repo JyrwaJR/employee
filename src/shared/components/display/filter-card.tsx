@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { Text } from '@components/ui/text';
 import { cn } from '@utils/helpers/cn';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 
 export interface FilterOption {
   label: string;
@@ -119,14 +119,10 @@ export const FilterCard = ({
         onPress={handleToggle}
         className="flex-row items-center justify-between rounded-t-2xl bg-gray-50/50 p-4 dark:bg-white/5">
         <View className="flex-row items-center gap-2">
-          <MaterialCommunityIcons name="filter-variant" size={16} color="#64748B" />
+          <Icon name="filter-variant" size={16} color="#64748B" />
           <Text className="text-sm font-semibold text-gray-700 dark:text-gray-200">Filters</Text>
         </View>
-        <MaterialCommunityIcons
-          name={showContent ? 'chevron-up' : 'chevron-down'}
-          size={20}
-          color="#94A3B8"
-        />
+        <Icon name={showContent ? 'chevron-up' : 'chevron-down'} size={20} color="#94A3B8" />
       </TouchableOpacity>
 
       {/* Collapsible Content */}

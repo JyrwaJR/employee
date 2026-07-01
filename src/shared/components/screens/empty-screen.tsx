@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { useTheme } from '@hooks/use-theme';
 import { cn } from '@utils/helpers/cn';
 import { Container } from '../layout/container';
@@ -10,7 +10,7 @@ interface EmptyScreenProps {
   title: string;
   refresh?: () => void;
   message?: string;
-  icon?: keyof typeof MaterialCommunityIcons.glyphMap;
+  icon?: string;
   refreshLabel?: string;
 }
 
@@ -31,7 +31,7 @@ export const EmptyScreen = ({
           'mb-6 h-24 w-24 items-center justify-center rounded-full',
           'bg-gray-100 dark:bg-gray-800'
         )}>
-        <MaterialCommunityIcons name={icon} size={48} color={isDarkMode ? '#9CA3AF' : '#6B7280'} />
+        <Icon name={icon} size={48} color={isDarkMode ? '#9CA3AF' : '#6B7280'} />
       </View>
 
       <Text variant="heading" className={cn('mb-2 text-center text-gray-900 dark:text-white')}>

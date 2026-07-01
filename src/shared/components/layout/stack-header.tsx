@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo } from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { useRouter, useNavigation } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTheme } from '@hooks/use-theme';
 import { useRoutePath } from '@hooks/use-route-path';
@@ -43,7 +43,7 @@ export const StackHeader = memo(() => {
                 className="mr-3"
                 hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
                 activeOpacity={0.7}>
-                <Ionicons name="chevron-back" size={24} color={iconColor} />
+                <Icon family="ionicons" name="chevron-back" size={24} color={iconColor} />
               </TouchableOpacity>
             )
           )}

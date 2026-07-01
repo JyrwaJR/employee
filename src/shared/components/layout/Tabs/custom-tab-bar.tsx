@@ -1,6 +1,6 @@
-import { MaterialIcons } from '@expo/vector-icons';
 import { TouchableOpacity, View } from 'react-native';
 import { Text } from '@components/ui/text';
+import { Icon } from '@components/ui/icon';
 import { TabRouteT } from '@sharedTypes/tab';
 
 export const CustomTabBar = ({
@@ -42,11 +42,11 @@ export const CustomTabBar = ({
             activeOpacity={0.7}
             testID={`TAB_${route.name.toUpperCase().replace('INDEX', 'HOME')}`}
             className="flex-1 items-center justify-center p-2">
-            <MaterialIcons
+            <Icon
+              family="material"
               name={iconName}
               size={24}
               color={isFocused ? '#2563EB' : '#9CA3AF'}
-              style={{ marginBottom: 4 }}
             />
             <Text
               variant="subtext"

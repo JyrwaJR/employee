@@ -9,7 +9,7 @@ import Animated, {
   Extrapolate,
   runOnJS,
 } from 'react-native-reanimated';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text } from './text';
 import { cn } from '../../utils/helpers/cn';
@@ -121,7 +121,7 @@ export const SelectSheet = ({
           )}>
           {displayText}
         </Text>
-        <Ionicons name="chevron-down" size={18} color="#9ca3af" />
+        <Icon family="ionicons" name="chevron-down" size={18} color="#9ca3af" />
       </TouchableOpacity>
 
       {error && (
@@ -266,7 +266,9 @@ const SelectSheetModal = ({
                       </Text>
                     )}
                   </View>
-                  {isSelected && <Ionicons name="checkmark-circle" size={22} color="#3b82f6" />}
+                  {isSelected && (
+                    <Icon family="ionicons" name="checkmark-circle" size={22} color="#3b82f6" />
+                  )}
                 </TouchableOpacity>
               );
             })}

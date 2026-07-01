@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { cn } from '@utils/helpers/cn';
 import { Text } from '@components/ui/text';
 import { getStatusColor } from '@utils/helpers/get-status-color';
@@ -10,6 +9,7 @@ import { LEAVE_ICONS } from '../utils/constants';
 import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants';
 import { formatDate } from '@utils/formatters/formatters';
+import { Icon } from '@components/ui/icon';
 
 export const LeaveCard = ({ item }: { item: Leave; onPress?: () => void }) => {
   const router = useRouter();
@@ -35,7 +35,7 @@ export const LeaveCard = ({ item }: { item: Leave; onPress?: () => void }) => {
       <View className="mb-2 flex-row items-center justify-between">
         <View className="flex-row items-center gap-2">
           <View className={cn('rounded-lg p-2', statusStyle.bg)}>
-            <MaterialCommunityIcons
+            <Icon
               name={LEAVE_ICONS[item.leave_cd as LeaveTypeCode] ?? 'calendar-account'}
               size={24}
               color={statusStyle.icon}
@@ -51,7 +51,7 @@ export const LeaveCard = ({ item }: { item: Leave; onPress?: () => void }) => {
           </View>
         </View>
         <View className={cn('flex-row items-center gap-1 rounded-full px-2 py-1', statusStyle.bg)}>
-          <MaterialCommunityIcons name={statusStyle.iconName} size={12} color={statusStyle.icon} />
+          <Icon name={statusStyle.iconName} size={12} color={statusStyle.icon} />
           <Text className={cn('text-xs font-medium', statusStyle.text)}>
             {item.verify_flg_desc}
           </Text>

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, Image as RNImage, ImageProps as RNImageProps, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { Skeleton } from './skeleton';
+import { Icon } from '@components/ui/icon';
 import { cn } from '../../utils/helpers/cn';
 
 interface ImageProps extends RNImageProps {
   containerClassName?: string;
-  fallbackIcon?: keyof typeof Ionicons.glyphMap;
+  fallbackIcon?: string;
 }
 
 /**
@@ -48,7 +48,7 @@ export const Image = ({
       {/* Error / Placeholder Layer */}
       {status === 'error' && (
         <View style={StyleSheet.absoluteFill} className="items-center justify-center bg-muted">
-          <Ionicons name={fallbackIcon} size={32} color="#94a3b8" />
+          <Icon family="ionicons" name={fallbackIcon} size={32} color="#94a3b8" />
         </View>
       )}
     </View>

@@ -1,12 +1,13 @@
 import { useThemeStore } from '@stores/theme.store';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { TouchableOpacity } from 'react-native';
 
 export const ThemeToggle = () => {
   const { theme, toggleTheme } = useThemeStore();
   return (
     <TouchableOpacity onPress={toggleTheme}>
-      <Ionicons
+      <Icon
+        family="ionicons"
         name={theme === 'dark' ? 'moon' : 'sunny'}
         size={24}
         color={theme === 'dark' ? '#FFFFFF' : '#000000'}

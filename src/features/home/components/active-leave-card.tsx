@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Card, CardContent } from '@components/ui/card';
 import { Text } from '@components/ui/text';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { cn } from '@utils/helpers/cn';
 import { Leave } from '@sharedTypes/leave';
 import { formatDate } from '@utils/formatters/formatters';
@@ -17,7 +17,7 @@ export const HomeActiveLeaveCard = ({ leave }: HomeActiveLeaveCardProps) => (
     <CardContent className="p-5">
       <View className="mb-3 flex-row items-center justify-between">
         <View className="flex-row items-center">
-          <MaterialCommunityIcons name="umbrella" size={22} color="#3B82F6" />
+          <Icon name="umbrella" size={22} color="#3B82F6" />
           <Text variant="heading" size="lg" className="ml-2 text-gray-900 dark:text-white">
             Active Leave
           </Text>

@@ -9,7 +9,7 @@ import Animated, {
   useAnimatedRef,
   runOnUI,
 } from 'react-native-reanimated';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { Text } from './text';
 import { cn } from '../../utils/helpers/cn';
 
@@ -100,7 +100,7 @@ export const AccordionTrigger = ({
         {children}
       </Text>
       <Animated.View style={arrowStyle}>
-        <Ionicons name="chevron-down" size={18} color="#636363" />
+        <Icon family="ionicons" name="chevron-down" size={18} color="#636363" />
       </Animated.View>
     </TouchableOpacity>
   );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text } from '@components/ui/text';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { router } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { Leave } from '@sharedTypes/leave';
@@ -29,7 +29,7 @@ export const HomeLeavePreview = ({ leave }: HomeLeavePreviewProps) => (
           <Text className="text-xs font-semibold">{leave.verify_flg_desc}</Text>
         </View>
       </View>
-      <MaterialCommunityIcons name="chevron-right" size={18} color="#9CA3AF" />
+      <Icon name="chevron-right" size={18} color="#9CA3AF" />
     </View>
     <Text variant="subtext" size="xs" className="mb-1">
       {formatDate(leave.from_dt1)} — {formatDate(leave.to_dt1)}

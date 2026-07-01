@@ -1,7 +1,7 @@
 import React from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Container } from '@components/layout/container';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { EmpCodeForm } from '../components/phone-form';
 import { VerifyOtpForm } from '../components/verify-otp-form';
 import { Ternary } from '@components/base/ternary';
@@ -39,7 +39,7 @@ export const ForgotPassword = () => {
           contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
           showsVerticalScrollIndicator={false}>
           <AuthHeader
-            icon={<Ionicons name="lock-closed" size={32} color="#2563eb" />}
+            icon={<Icon family="ionicons" name="lock-closed" size={32} color="#2563eb" />}
             title={headerTitle}
             subtitle={headerSubtitle}
           />

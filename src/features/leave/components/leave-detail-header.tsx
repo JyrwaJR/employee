@@ -1,12 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { cn } from '@utils/helpers/cn';
 import { Text } from '@components/ui/text';
 import { getStatusColor } from '@utils/helpers/get-status-color';
 import { Leave } from '@sharedTypes/leave';
 import { LeaveTypeCode } from '../types';
 import { LEAVE_ICONS } from '../utils/constants';
+import { Icon } from '@components/ui/icon';
 
 /**
  * Props accepted by the {@link LeaveDetailHeader} component.
@@ -42,7 +42,7 @@ export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
       <View className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
         <View className="mb-4 flex-row items-center justify-between">
           <View className={cn('rounded-lg p-2', statusStyle.bg)}>
-            <MaterialCommunityIcons
+            <Icon
               name={LEAVE_ICONS[leave.leave_cd as LeaveTypeCode] ?? 'calendar-account'}
               size={32}
               color={statusStyle.icon}
@@ -53,11 +53,7 @@ export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
               'flex-row items-center gap-1.5 rounded-full px-3 py-1.5',
               statusStyle.bg
             )}>
-            <MaterialCommunityIcons
-              name={statusStyle.iconName}
-              size={14}
-              color={statusStyle.icon}
-            />
+            <Icon name={statusStyle.iconName} size={14} color={statusStyle.icon} />
             <Text className={cn('text-xs font-semibold', statusStyle.text)}>
               {leave.verify_flg_desc}
             </Text>

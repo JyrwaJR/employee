@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import {
   Button,
   Text,
@@ -91,14 +91,15 @@ export default function UILabScreen() {
 
         {/* Alerts Section */}
         <Section title="Alerts (Inline Feedback)">
-          <Alert icon={<Ionicons name="information-circle" size={24} color="#3b82f6" />}>
+          <Alert
+            icon={<Icon family="ionicons" name="information-circle" size={24} color="#3b82f6" />}>
             <AlertTitle>Information</AlertTitle>
             <AlertDescription>Your profile has been updated successfully.</AlertDescription>
           </Alert>
 
           <Alert
             variant="destructive"
-            icon={<Ionicons name="alert-circle" size={24} color="#ef4444" />}>
+            icon={<Icon family="ionicons" name="alert-circle" size={24} color="#ef4444" />}>
             <AlertTitle>Error Warning</AlertTitle>
             <AlertDescription>
               We were unable to save your changes. Please try again.
@@ -203,7 +204,7 @@ export default function UILabScreen() {
             <View className="mt-4 flex-row items-center gap-x-4 rounded-2xl border border-gray-100 bg-white p-4 dark:border-gray-800 dark:bg-slate-900">
               <SkeletonItem className="rounded-full">
                 <View className="h-16 w-16 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
-                  <Ionicons name="person" size={32} color="#3b82f6" />
+                  <Icon family="ionicons" name="person" size={32} color="#3b82f6" />
                 </View>
               </SkeletonItem>
 
@@ -261,7 +262,7 @@ export default function UILabScreen() {
                   className="mb-4 rounded-2xl bg-slate-50 p-6 dark:bg-slate-800">
                   <View className="flex-row items-center gap-x-3">
                     <View className="h-10 w-10 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900/30">
-                      <Ionicons name="flash" size={20} color="#3b82f6" />
+                      <Icon family="ionicons" name="flash" size={20} color="#3b82f6" />
                     </View>
                     <View className="flex-1">
                       <Text weight="bold">Item Sequence {i}</Text>

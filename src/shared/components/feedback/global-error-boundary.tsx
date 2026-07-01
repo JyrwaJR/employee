@@ -1,7 +1,7 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { BlurView } from 'expo-blur';
-import { Ionicons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import * as Updates from 'expo-updates';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { logger } from '@utils/logger';
@@ -55,7 +55,7 @@ export class GlobalErrorBoundary extends Component<Props, State> {
               className="w-full overflow-hidden rounded-3xl border border-white/40 bg-white/60 p-8 shadow-2xl">
               <View className="items-center">
                 <View className="mb-6 h-20 w-20 items-center justify-center rounded-full bg-red-100">
-                  <Ionicons name="alert-circle-outline" size={48} color="#ef4444" />
+                  <Icon family="ionicons" name="alert-circle-outline" size={48} color="#ef4444" />
                 </View>
 
                 <Text className="mb-3 text-center text-2xl font-bold text-gray-900">

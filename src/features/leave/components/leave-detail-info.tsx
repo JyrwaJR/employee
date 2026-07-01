@@ -1,8 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from '@components/ui/text';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Leave } from '@sharedTypes/leave';
+import { Icon } from '@components/ui/icon';
 
 /**
  * Props accepted by the {@link LeaveDetailInfo} component.
@@ -15,25 +15,17 @@ interface LeaveDetailInfoProps {
 /**
  * Renders a single labelled row inside the leave details card.
  *
- * Each row consists of a {@link MaterialCommunityIcons} icon on the
+ * Each row consists of an {@link Icon} icon on the
  * left, a label (uppercase, subtle) above the value on the right.
  *
- * @param icon - Name of the MaterialCommunityIcons glyph to display.
+ * @param icon - Name of the Icon glyph to display.
  * @param label - Short label text (e.g. `From`, `To`, `Duration`).
  * @param value - The value text shown below the label.
  */
-const InfoRow = ({
-  icon,
-  label,
-  value,
-}: {
-  icon: keyof typeof MaterialCommunityIcons.glyphMap;
-  label: string;
-  value: string;
-}) => (
+const InfoRow = ({ icon, label, value }: { icon: string; label: string; value: string }) => (
   <View className="mb-4 flex-row items-start">
     <View className="mr-3 mt-0.5 w-6 items-center">
-      <MaterialCommunityIcons name={icon} size={20} color="#6B7280" />
+      <Icon name={icon} size={20} color="#6B7280" />
     </View>
     <View className="flex-1">
       <Text variant="subtext" size="xs" className="mb-0.5 font-medium uppercase tracking-wide">

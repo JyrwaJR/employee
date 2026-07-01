@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text } from '@components/ui/text';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Icon } from '@components/ui/icon';
 import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 
@@ -31,7 +31,7 @@ export const Forbidden = ({
   return (
     <View className="flex-1 items-center justify-center p-6">
       <View className="mb-6 h-24 w-24 items-center justify-center rounded-full bg-red-50 dark:bg-red-900/20">
-        <MaterialCommunityIcons name="shield-lock-outline" size={48} color="#EF4444" />
+        <Icon name="shield-lock-outline" size={48} color="#EF4444" />
       </View>
 
       <Text variant="heading" size="3xl" className="mb-2 text-center text-gray-900 dark:text-white">
