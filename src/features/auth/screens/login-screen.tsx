@@ -5,7 +5,7 @@ import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Text } from '@components/ui/text';
-import { KeyboardSafeView } from '@components/layout';
+import { Container, KeyboardSafeView } from '@components/layout';
 import { LoginSchema } from '../validators/login.schema';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { FieldInput } from '@components/ui/field-input';
@@ -109,84 +109,86 @@ export const LoginScreen = () => {
   const isPending = isAuthLoading || isLoginPending || isTokenPending;
 
   return (
-    <KeyboardSafeView contentContainerClassName="px-6 justify-center">
-      <AuthHeader
-        emoji="✨"
-        title="Welcome back"
-        subtitle="Please enter your Employee code and password to sign in."
-        iconContainerClassName="bg-blue-600"
-      />
+    <Container>
+      <KeyboardSafeView contentContainerClassName="px-6 justify-center">
+        <AuthHeader
+          emoji="✨"
+          title="Welcome back"
+          subtitle="Please enter your Employee code and password to sign in."
+          iconContainerClassName="bg-blue-600"
+        />
 
-      {/* Form Section */}
-      <FormProvider {...methods}>
-        <View className="w-full">
-          <FieldInput
-            name="emp_cd"
-            label="Employee Code"
-            placeholder="Please enter your Employee Code"
-            keyboardType="default"
-            autoCapitalize="none"
-            autoCorrect={false}
-            testID="PHONE_INPUT"
-            returnKeyType="next"
-          />
+        {/* Form Section */}
+        <FormProvider {...methods}>
+          <View className="w-full">
+            <FieldInput
+              name="emp_cd"
+              label="Employee Code"
+              placeholder="Please enter your Employee Code"
+              keyboardType="default"
+              autoCapitalize="none"
+              autoCorrect={false}
+              testID="PHONE_INPUT"
+              returnKeyType="next"
+            />
 
-          <FieldInput
-            name="password"
-            testID="PASSWORD_INPUT"
-            secureTextEntry
-            label="Password"
-            placeholder="••••••••"
-            autoCapitalize="none"
-            autoCorrect={false}
-            spellCheck={false}
-            autoComplete="password"
-            returnKeyType="done"
-            onSubmitEditing={methods.handleSubmit(onSubmit)}
-          />
+            <FieldInput
+              name="password"
+              testID="PASSWORD_INPUT"
+              secureTextEntry
+              label="Password"
+              placeholder="••••••••"
+              autoCapitalize="none"
+              autoCorrect={false}
+              spellCheck={false}
+              autoComplete="password"
+              returnKeyType="done"
+              onSubmitEditing={methods.handleSubmit(onSubmit)}
+            />
 
-          <View className="mb-8 items-end">
-            <Link href={PAGE_ROUTES.AUTH.FORGOT_PASSWORD()} asChild>
-              <TouchableOpacity
-                className="mt-2"
-                hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}>
-                <Text variant={'link'}>Forgot password?</Text>
+            <View className="mb-8 items-end">
+              <Link href={PAGE_ROUTES.AUTH.FORGOT_PASSWORD()} asChild>
+                <TouchableOpacity
+                  className="mt-2"
+                  hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}>
+                  <Text variant={'link'}>Forgot password?</Text>
+                </TouchableOpacity>
+              </Link>
+            </View>
+
+            <Button
+              testID="SIGN_IN_BUTTON"
+              onPress={methods.handleSubmit(onSubmit)}
+              isLoading={isPending}
+              disabled={isSignedIn}>
+              {isLimited ? `Please wait ${secondsRemaining}` : 'Continue'}
+            </Button>
+          </View>
+        </FormProvider>
+
+        <AuthFooter
+          text="Don't have an account?"
+          linkText="Sign up"
+          linkHref={PAGE_ROUTES.AUTH.SIGN_UP}
+          testID="SIGNUP_BUTTON"
+        />
+
+        {/* Developer UI Laboratory Entrance */}
+        {__DEV__ ? (
+          <View className="mt-12 items-center border-t border-slate-100 pt-8 dark:border-slate-800">
+            <Link href="/(dev)/ui-lab" asChild>
+              <TouchableOpacity className="flex-row items-center rounded-full bg-slate-100 px-4 py-2 dark:bg-slate-800">
+                <Text className="text-sm font-medium text-slate-600 dark:text-slate-400">
+                  🛠 Open UI Laboratory
+                </Text>
               </TouchableOpacity>
             </Link>
+            <Text variant="subtext" size="xs" className="mt-2">
+              Visible in Development only
+            </Text>
           </View>
-
-          <Button
-            testID="SIGN_IN_BUTTON"
-            onPress={methods.handleSubmit(onSubmit)}
-            isLoading={isPending}
-            disabled={isSignedIn}>
-            {isLimited ? `Please wait ${secondsRemaining}` : 'Continue'}
-          </Button>
-        </View>
-      </FormProvider>
-
-      <AuthFooter
-        text="Don't have an account?"
-        linkText="Sign up"
-        linkHref={PAGE_ROUTES.AUTH.SIGN_UP}
-        testID="SIGNUP_BUTTON"
-      />
-
-      {/* Developer UI Laboratory Entrance */}
-      {__DEV__ ? (
-        <View className="mt-12 items-center border-t border-slate-100 pt-8 dark:border-slate-800">
-          <Link href="/(dev)/ui-lab" asChild>
-            <TouchableOpacity className="flex-row items-center rounded-full bg-slate-100 px-4 py-2 dark:bg-slate-800">
-              <Text className="text-sm font-medium text-slate-600 dark:text-slate-400">
-                🛠 Open UI Laboratory
-              </Text>
-            </TouchableOpacity>
-          </Link>
-          <Text variant="subtext" size="xs" className="mt-2">
-            Visible in Development only
-          </Text>
-        </View>
-      ) : null}
-    </KeyboardSafeView>
+        ) : null}
+      </KeyboardSafeView>
+    </Container>
   );
 };

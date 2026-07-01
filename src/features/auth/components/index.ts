@@ -6,3 +6,4 @@ export * from './local-auth-redirect';
 export * from './phone-form';
 export * from './reset-password-form';
 export * from './verify-otp-form';
+export * from './auth-term-text';

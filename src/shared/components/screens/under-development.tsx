@@ -5,6 +5,7 @@ import { useTheme } from '@hooks/use-theme';
 import { useRouter } from 'expo-router';
 import { Button } from '@components/ui';
 import { PAGE_ROUTES } from '@utils/constants';
+import { Container } from '@components/layout';
 
 interface UnderDevelopmentProps {
   title?: string;
@@ -21,7 +22,7 @@ export const UnderDevelopment = ({
   const router = useRouter();
 
   return (
-    <View className="flex-1 items-center justify-center bg-white px-6 dark:bg-slate-950">
+    <Container className="flex-1 items-center justify-center">
       <View className="mb-6 items-center justify-center rounded-full bg-blue-50 p-6 dark:bg-blue-900/20">
         <MaterialCommunityIcons
           name="hammer-wrench"
@@ -40,7 +41,7 @@ export const UnderDevelopment = ({
 
       {showBackButton && (
         <Button
-          size={'lg'}
+          variant={'outline'}
           onPress={() => {
             const canGoBack = router.canGoBack();
             if (canGoBack) {
@@ -48,10 +49,10 @@ export const UnderDevelopment = ({
             } else {
               router.push(PAGE_ROUTES.HOME);
             }
-          }}
-          title="Go Back"
-        />
+          }}>
+          Go Back
+        </Button>
       )}
-    </View>
+    </Container>
   );
 };

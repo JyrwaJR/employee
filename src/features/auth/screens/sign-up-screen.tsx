@@ -9,10 +9,7 @@ import { SignUpSchema } from '../validators/signup.schema';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { useSignUpMutation } from '../hooks/use-sign-up-mutation';
 import { KeyboardSafeView } from '@components/layout';
-import { AuthHeader } from '../components/auth-header';
-import { AuthFooter } from '../components/auth-footer';
-import { AuthDivider } from '../components/auth-divider';
-import { Text } from '@components/ui/text';
+import { AuthTermsText, AuthDivider, AuthFooter, AuthHeader } from '../components';
 
 type SignUpFormInputs = z.infer<typeof SignUpSchema>;
 
@@ -23,22 +20,6 @@ const defaultValues: SignUpFormInputs = {
   password: '',
   confirm_password: '',
 };
-
-const TermsText = () => (
-  <View className="p-2">
-    <Text variant="subtext" size="xs">
-      By creating an account, you agree to our{' '}
-      <Text variant="link" size="xs">
-        Terms of Service
-      </Text>{' '}
-      and{' '}
-      <Text variant="link" size="xs">
-        Privacy Policy
-      </Text>
-      .
-    </Text>
-  </View>
-);
 
 export const SignUpScreen = () => {
   const signUpMutation = useSignUpMutation();
@@ -109,7 +90,7 @@ export const SignUpScreen = () => {
                 testID="CONFIRM_PASSWORD_INPUT"
               />
 
-              <TermsText />
+              <AuthTermsText />
 
               <Button
                 testID="CREATE_ACCOUNT_BUTTON"
