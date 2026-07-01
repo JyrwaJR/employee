@@ -18,10 +18,10 @@ type QuickAction = {
 
 /** Preset list of quick-action shortcuts. */
 const ACTIONS: QuickAction[] = [
-  { label: 'Apply Leave', icon: 'calendar-plus', route: PAGE_ROUTES.LEAVE.INDEX },
+  { label: 'Apply Leave', icon: 'calendar-plus', route: PAGE_ROUTES.LEAVE.CREATE },
+  { label: 'Leaves', icon: 'calendar-check', route: PAGE_ROUTES.LEAVE.INDEX },
   { label: 'View Salary', icon: 'currency-inr', route: PAGE_ROUTES.STATEMENT },
   { label: 'Attendance', icon: 'clipboard-check', route: '' },
-  { label: 'Pension', icon: 'bank', route: PAGE_ROUTES.PENSION },
 ];
 
 /** Displays a horizontal row of quick-action shortcut buttons. */
