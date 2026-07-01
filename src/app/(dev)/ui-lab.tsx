@@ -150,7 +150,7 @@ export default function UILabScreen() {
               />
             </CardContent>
             <CardFooter className="justify-end gap-x-2">
-              <Button title="Cancel" variant="secondary" onPress={() => {}} />
+              <Button title="Cancel" variant="ghost" onPress={() => {}} />
               <Button title="Deploy" onPress={() => {}} />
             </CardFooter>
           </Card>
@@ -159,7 +159,7 @@ export default function UILabScreen() {
         {/* Buttons Section */}
         <Section title="Buttons">
           <Button title="Primary Button" onPress={() => {}} />
-          <Button title="Secondary Button" variant="secondary" onPress={() => {}} />
+          <Button title="Secondary Button" variant="ghost" onPress={() => {}} />
           <Button title="Outline Button" variant="outline" onPress={() => {}} />
           <Button title="Destructive Action" variant="destructive" onPress={() => {}} />
           <Button title="Loading State" isLoading onPress={() => {}} />
@@ -196,7 +196,7 @@ export default function UILabScreen() {
         <Section title="Contextual Skeleton (The Ghost Wrapper)">
           <Button
             title={isSkeletonTrigger ? 'Stop Loading' : 'Trigger Context Loading'}
-            variant="secondary"
+            variant="ghost"
             onPress={() => setIsSkeletonTrigger(!isSkeletonTrigger)}
           />
 
@@ -344,16 +344,8 @@ export default function UILabScreen() {
 
           <View className="h-4" />
 
-          <Button
-            title="Open General Dialog"
-            variant="secondary"
-            onPress={() => setShowDialog(true)}
-          />
-          <Button
-            title="Open Alert Dialog"
-            variant="secondary"
-            onPress={() => setShowAlert(true)}
-          />
+          <Button title="Open General Dialog" variant="ghost" onPress={() => setShowDialog(true)} />
+          <Button title="Open Alert Dialog" variant="outline" onPress={() => setShowAlert(true)} />
         </Section>
 
         <View className="h-20" />

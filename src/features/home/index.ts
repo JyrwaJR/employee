@@ -1,2 +1,13 @@
 /** Home feature module. */
-export * from './screens/home-screen';
+
+// Components
+export * from './components';
+
+// Screens
+export * from './screens';
+
+// Types
+export * from './types';
+
+// Utils
+export * from './utils';
