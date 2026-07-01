@@ -12,43 +12,49 @@ export const unstable_settings = {
   initialRouteName: '/auth',
 };
 
-// Prevent the splash screen from auto-hiding immediately.
-SplashScreen.preventAutoHideAsync().catch((e) => {
-  /* ignore error */
-  logger.warn('Failed to prevent splash screen from hiding', e);
+// Prevent the splash screen from auto-hiding before JS has mounted.
+// This is intentionally module-level – must run before any component renders.
+SplashScreen.preventAutoHideAsync().catch(() => {
+  /* Non-critical; splash will hide via the timeout fallback in Layout */
 });
 
-// Configure splash screen animation
+// Configure the splash screen hide animation.
 SplashScreen.setOptions({
   duration: 1000,
   fade: true,
 });
 
+/** Root layout that wraps every screen with global providers and UI shell. */
 export default function Layout() {
-  const [appIsReady, setAppIsReady] = useState(false);
+  const [_, setAppIsReady] = useState(false);
 
   useEffect(() => {
-    // Any async initialization (fonts, auth checks) should happen here.
-    // For now, we signal readiness immediately on mount.
-    setAppIsReady(true);
+    let cancelled = false;
+
+    const initialize = async () => {
+      // --- Async startup work (fonts, auth token hydration, etc.) goes here ---
+
+      setAppIsReady(true);
+
+      // Brief delay lets React commit the first frame before we tear down
+      // the native splash screen, preventing a white flash.
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      if (cancelled) return;
+
+      try {
+        await SplashScreen.hideAsync();
+      } catch (e) {
+        logger.warn('Failed to hide splash screen:', e);
+      }
+    };
+
+    initialize();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
-
-  useEffect(() => {
-    if (appIsReady) {
-      // Hide the splash screen once the initial render has happened.
-      // A small delay (e.g., 300ms) ensures the UI has painted properly.
-      const hideSplash = async () => {
-        try {
-          await SplashScreen.hideAsync();
-        } catch (e) {
-          logger.warn('Failed to hide splash screen:', e);
-        }
-      };
-
-      const timer = setTimeout(hideSplash, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [appIsReady]);
 
   return (
     <ProviderWrapper>
