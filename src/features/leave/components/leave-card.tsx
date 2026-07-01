@@ -18,7 +18,7 @@ export const LeaveCard = ({ item }: { item: Leave; onPress?: () => void }) => {
 
   const onPressLeave = () => {
     const { leave_cd, from_dt1, order_dt1 } = item;
-    const pageUrl = PAGE_ROUTES.LEAVE.DETAILS(leave_cd, {
+    const pageUrl = PAGE_ROUTES.LEAVE.DETAILS({
       leave_cd,
       from_dt: from_dt1,
       order_dt: order_dt1,

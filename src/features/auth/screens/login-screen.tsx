@@ -17,6 +17,7 @@ import { AuthFooter } from '../components/auth-footer';
 import { useGetOAuthToken } from '../hooks/use-get-oauth-token';
 import { toast } from 'sonner-native';
 import { useRateLimit } from '@hooks';
+import { useSnackbar } from '@hooks/use-snackbar';
 
 /** Form field values inferred from the `LoginSchema` Zod validation schema. */
 type LoginFormInputs = z.infer<typeof LoginSchema>;
@@ -73,6 +74,8 @@ export const LoginScreen = () => {
     ms: 5000,
   });
 
+  const { showSnackbar } = useSnackbar();
+
   const methods = useForm<LoginFormInputs>({
     resolver: zodResolver(LoginSchema),
     defaultValues: formDefaultValue,
@@ -96,6 +99,7 @@ export const LoginScreen = () => {
         loginMutate(data, {
           onSuccess: (sData) => {
             if (sData.success) {
+              showSnackbar(sData.message);
               return sData;
             }
             toast.error(sData.message);

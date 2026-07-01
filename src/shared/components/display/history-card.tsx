@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import { SalarySlip } from '@features/employee/types';
 import { Icon } from '@components/ui/icon';
 import { cn } from '@utils/helpers/cn';
 import { Text } from '@components/ui/text';
+import { SalarySlip } from '@sharedTypes/satatement';
 
 export const HistoryCard = ({ item, onPress }: { item: SalarySlip; onPress: () => void }) => (
   <TouchableOpacity

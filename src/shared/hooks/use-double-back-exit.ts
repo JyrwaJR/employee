@@ -1,6 +1,6 @@
 import { useCallback, useRef } from 'react';
 import { BackHandler, ToastAndroid as Toast } from 'react-native';
-import { useFocusEffect, usePathname } from 'expo-router';
+import { Route, useFocusEffect, usePathname } from 'expo-router';
 
 type UseDoubleBackExitOptions = {
   /**
@@ -14,7 +14,7 @@ type UseDoubleBackExitOptions = {
    *
    * @default ['/']
    */
-  rootRoutes?: string[];
+  rootRoutes?: Route[];
 };
 
 /**

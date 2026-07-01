@@ -50,7 +50,7 @@ export const PAGE_ROUTES = {
   LEAVE: {
     INDEX: '/leaves' as const,
     CREATE: '/leaves/create' as const,
-    DETAILS: (id: string, params?: Record<string, string>) =>
+    DETAILS: (params?: Record<string, string>) =>
       buildUrlWithQuery(`/leaves/detail`, { ...params }) as Route,
   },
   STATEMENT: '/statement' as const,

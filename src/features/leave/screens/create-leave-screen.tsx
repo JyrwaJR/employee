@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
-import { Button, FieldInput, Input, Text, toast } from '@components/ui';
+import { Button, FieldInput, Input, Text } from '@components/ui';
 import { FormProvider, useForm, useWatch, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Container, KeyboardSafeView, StackHeader } from '@components/layout';
@@ -13,6 +13,7 @@ import { PAGE_ROUTES } from '@utils/constants';
 import { LeaveReasonCode, LeaveTypeCode } from '../types';
 import { LeaveTypeDropdown, LeaveReasonDropdown } from '../components';
 import { useRateLimit } from '@hooks';
+import { useSnackbar } from '@hooks/use-snackbar';
 
 const defaultValues: CreateLeaveInputs = {
   type: 'SL',
@@ -38,6 +39,7 @@ const defaultValues: CreateLeaveInputs = {
  */
 export const CreateLeaveScreen = () => {
   const router = useRouter();
+  const { showSnackbar } = useSnackbar();
 
   const methods = useForm<CreateLeaveInputs>({
     resolver: zodResolver(CreateLeaveSchema),
@@ -66,15 +68,22 @@ export const CreateLeaveScreen = () => {
     mutate(data, {
       onSuccess: (data) => {
         if (data.success) {
-          toast.success(data.message);
-          if (data?.data?.id) {
-            router.push(PAGE_ROUTES.LEAVE.DETAILS(data?.data?.id));
+          const leave = data.data;
+          showSnackbar(data.message);
+          if (leave) {
+            const { leave_cd, from_dt, order_dt } = leave;
+            const pageUrl = PAGE_ROUTES.LEAVE.DETAILS({
+              leave_cd,
+              from_dt,
+              order_dt,
+            });
+            router.push(pageUrl);
             return;
           }
           router.back();
           return data;
         }
-        toast.error(data.message);
+        showSnackbar(data.message);
         return data;
       },
     });

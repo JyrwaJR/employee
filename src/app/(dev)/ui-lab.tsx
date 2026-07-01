@@ -40,7 +40,7 @@ import {
   AccordionContent,
 } from '@components/ui';
 import { AnimationProvider, FadeInView } from '@components/fade-in-view';
-import { KeyboardSafeView, StackHeader } from '@components/layout';
+import { KeyboardSafeView } from '@components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSnackbar } from '@hooks/use-snackbar';
 
@@ -75,8 +75,6 @@ export default function UILabScreen() {
       <KeyboardSafeView
         className="flex-1 bg-slate-50 dark:bg-slate-900"
         contentContainerClassName="px-6 py-8">
-        <StackHeader />
-
         {/* Typography Section */}
         <Section title="Typography">
           <Text variant="heading" size="3xl">

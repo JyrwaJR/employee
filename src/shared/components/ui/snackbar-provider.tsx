@@ -8,7 +8,7 @@ import { Icon } from '@components/ui/icon';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const BANNER_MAX_WIDTH = SCREEN_WIDTH * 0.9;
 const ANIMATION_DURATION = 250;
-const AUTO_DISMISS_MS = 4000;
+const AUTO_DISMISS_MS = 2000;
 
 /**
  * A lightweight snackbar banner that slides in from the bottom of the screen.
@@ -169,7 +169,7 @@ export const SnackbarProvider = () => {
               fontWeight: '500',
               color: isDark ? '#1a1a1a' : '#ffffff',
             }}>
-            {message}
+            {message?.slice(0, 120)}
           </Text>
         </View>
       </TouchableOpacity>

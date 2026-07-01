@@ -9,11 +9,9 @@ import { SectionHeader } from '@components/base/section-header';
 import { EmptyScreen } from '@components/screens';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { FAB } from '@components/fab';
-import { useDoubleBackExit } from '@hooks';
 
 export const LeaveScreen = () => {
   const { data: leaves, isFetching, refetch } = useLeaves();
-  useDoubleBackExit({ rootRoutes: ['/', '/leaves'] });
 
   if (isFetching) {
     return (

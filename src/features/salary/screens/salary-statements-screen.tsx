@@ -1,65 +1,22 @@
-import React, { useState } from 'react';
-import { View, FlatList } from 'react-native';
+import React from 'react';
+import { FlatList } from 'react-native';
 import { Container } from '@components/layout/container';
 import { router } from 'expo-router';
 import { LoadingScreen } from '@components/screens/loading-screen';
-import { Text } from '@components/ui/text';
 import { HistoryCard } from '@components/display/history-card';
-import { FilterCard } from '@components/display/filter-card';
-import { months, years } from '@utils/helpers/years';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { toast } from '@components/ui';
 import { useSalaryStatements } from '../hooks';
-
-const statusOptions = [
-  {
-    label: 'Pending',
-    value: 'PENDING',
-  },
-  {
-    label: 'Paid',
-    value: 'PAID',
-  },
-];
+import { EmptyScreen } from '@components/screens';
+import { SectionHeader } from '@components/base';
 
 export const StatementScreen = () => {
-  const [selectedYear, setSelectedYear] = useState('2026');
-
-  const [status, setStatus] = useState<string>('PAID');
-
-  const [selectedMonth, setSelectedMonth] = useState<string>('JANUARY');
-
-  const { data: statements, isFetching, isError, error } = useSalaryStatements();
-
-  // Handle Query Error
-  React.useEffect(() => {
-    if (isError) {
-      toast.error('Access Error', {
-        description: (error as any)?.message || 'Could not retrieve payroll details',
-      });
-    }
-  }, [isError, error]);
+  const { data: statements, isFetching } = useSalaryStatements();
 
   if (isFetching) return <LoadingScreen />;
 
   return (
     <Container>
-      {/* Header */}
-
-      <View className="mt-4 bg-transparent p-4">
-        <FilterCard
-          year={selectedYear}
-          years={years}
-          onYearChange={(value) => setSelectedYear(value)}
-          month={selectedMonth}
-          months={months}
-          onMonthChange={(value) => setSelectedMonth(value)}
-          status={status}
-          onStatusChange={(value) => setStatus(value)}
-          statusOptions={statusOptions}
-        />
-      </View>
-
+      <SectionHeader title="Salary Statements" />
       {/* Content */}
       <FlatList
         data={statements}
@@ -67,12 +24,10 @@ export const StatementScreen = () => {
         contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
-          <View className="mt-20 items-center justify-center">
-            <Text className="mb-4 text-4xl">📂</Text>
-            <Text variant="subtext" className="text-center font-medium">
-              No records found for {selectedYear}
-            </Text>
-          </View>
+          <EmptyScreen
+            title="No Statements Found"
+            message="You have not created any statements yet"
+          />
         }
         renderItem={({ item }) => (
           <HistoryCard
