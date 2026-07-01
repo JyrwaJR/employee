@@ -7,10 +7,10 @@ import { LeaveTypeCode } from '../types';
 import { LEAVE_ICONS } from '../utils/constants';
 
 interface LeaveBalanceCardProps {
-  balance: LeaveBal;
+  item: LeaveBal;
 }
 
-export const LeaveBalanceCard = ({ balance }: LeaveBalanceCardProps) => (
+export const LeaveBalanceCard = ({ item }: LeaveBalanceCardProps) => (
   <View className="mt-4">
     <Text variant="heading" size="lg" className="mb-3 text-gray-900 dark:text-white">
       Leave Balance
@@ -20,23 +20,21 @@ export const LeaveBalanceCard = ({ balance }: LeaveBalanceCardProps) => (
         <View className="flex-row items-center gap-3">
           <View className="rounded-xl bg-blue-100 p-2 dark:bg-blue-900/30">
             <MaterialCommunityIcons
-              name={LEAVE_ICONS[balance?.type as LeaveTypeCode] ?? 'calendar-blank'}
+              name={LEAVE_ICONS[item?.type as LeaveTypeCode] ?? 'calendar-blank'}
               size={20}
               color="#3B82F6"
             />
           </View>
           <View>
             <Text className="text-sm font-semibold text-gray-900 dark:text-white">
-              {balance.leave_desc}
+              {item.leave_desc}
             </Text>
             <Text variant="subtext" size="xs">
-              Closing as of {balance.closing_bal_as_on}
+              Closing as of {item.closing_bal_as_on}
             </Text>
           </View>
         </View>
-        <Text className="text-lg font-bold text-gray-900 dark:text-white">
-          {balance.closing_bal}
-        </Text>
+        <Text className="text-lg font-bold text-gray-900 dark:text-white">{item.closing_bal}</Text>
       </View>
     </View>
   </View>

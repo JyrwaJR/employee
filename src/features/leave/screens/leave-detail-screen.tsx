@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { RefreshControl, ScrollView } from 'react-native';
 import { Redirect, useLocalSearchParams } from 'expo-router';
 import { Container } from '@components/layout/container';
 import { LoadingScreen } from '@components/screens/loading-screen';
@@ -10,6 +10,7 @@ import { LeaveDetailInfo } from '../components/leave-detail-info';
 import { LeaveBalanceCard } from '../components/leave-balance-card';
 import { StackHeader } from '@components/layout';
 import { PAGE_ROUTES } from '@utils/constants';
+import { LeaveTypeCode } from '../types';
 
 /**
  * Route search parameters expected by the leave detail screen.
@@ -18,9 +19,9 @@ import { PAGE_ROUTES } from '@utils/constants';
  * {@link useLocalSearchParams} and serve as the composite key to
  * identify a single leave record on the backend.
  */
-type SearchParamsT = {
+type LeaveDetailSearchParamsT = {
   /** Leave type code (e.g. `SL` for Sick Leave). */
-  leave_cd: string;
+  leave_cd: LeaveTypeCode;
   /** Leave start date in `DD/MM/YYYY` display format. */
   from_dt: string;
   /** Order / approval date in `DD/MM/YYYY` display format. */
@@ -53,12 +54,12 @@ type SearchParamsT = {
  * ```
  */
 export const LeaveDetailScreen = () => {
-  const { leave_cd, from_dt, order_dt } = useLocalSearchParams<SearchParamsT>();
-  const isValidQuery = leave_cd && from_dt && order_dt;
+  const { leave_cd, from_dt, order_dt } = useLocalSearchParams<LeaveDetailSearchParamsT>();
+  const isValidQueries = !!leave_cd && !!from_dt && !!order_dt;
 
-  const { data, isLoading, refetch } = useLeaveDetail({ from_dt, leave_cd, order_dt });
+  const { data, isLoading, isFetching, refetch } = useLeaveDetail({ from_dt, leave_cd, order_dt });
 
-  if (!isValidQuery) return <Redirect href={PAGE_ROUTES.LEAVE.INDEX} />;
+  if (!isValidQueries) return <Redirect href={PAGE_ROUTES.LEAVE.INDEX} />;
 
   if (isLoading)
     return (
@@ -87,10 +88,12 @@ export const LeaveDetailScreen = () => {
       <Container className="flex-1">
         <ScrollView
           showsVerticalScrollIndicator={false}
+          overScrollMode="never"
+          refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}
           contentContainerStyle={{ paddingBottom: 100 }}>
           <LeaveDetailHeader leave={data} />
           <LeaveDetailInfo leave={data} />
-          <LeaveBalanceCard balance={data} />
+          <LeaveBalanceCard item={data} />
         </ScrollView>
       </Container>
     </>

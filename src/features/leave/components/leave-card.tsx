@@ -9,6 +9,7 @@ import { LeaveTypeCode } from '../types';
 import { LEAVE_ICONS } from '../utils/constants';
 import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants';
+import { formatDate } from '@utils/formatters/formatters';
 
 export const LeaveCard = ({ item }: { item: Leave; onPress?: () => void }) => {
   const router = useRouter();
@@ -45,11 +46,7 @@ export const LeaveCard = ({ item }: { item: Leave; onPress?: () => void }) => {
               {item.leave_desc}
             </Text>
             <Text variant="subtext" className="text-xs font-medium">
-              Applied on{' '}
-              {new Date(item.order_dt1).toLocaleString('default', {
-                month: 'long',
-                day: '2-digit',
-              })}
+              Applied on {formatDate(item.order_dt1)}
             </Text>
           </View>
         </View>
@@ -68,21 +65,15 @@ export const LeaveCard = ({ item }: { item: Leave; onPress?: () => void }) => {
           <Text className="mb-1 text-xs text-slate-500 dark:text-slate-400">Duration</Text>
           <View className="flex-row items-center">
             <Text className="font-semibold text-slate-900 dark:text-white">
-              {new Date(item.from_dt1).toLocaleString('default', {
-                month: 'long',
-                day: '2-digit',
-              })}
+              {formatDate(item.from_dt1)}
             </Text>
             <Text className="mx-2 text-slate-400">→</Text>
             <Text className="font-semibold text-slate-900 dark:text-white">
-              {new Date(item.to_dt1).toLocaleString('default', {
-                month: 'long',
-                day: '2-digit',
-              })}
+              {formatDate(item.to_dt1)}
             </Text>
           </View>
           <Text className="mt-1 text-xs font-medium text-blue-600 dark:text-blue-400">
-            {item.no_days} Days
+            {parseInt(item.no_days)} Days
           </Text>
         </View>
       </View>

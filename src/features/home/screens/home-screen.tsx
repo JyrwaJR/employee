@@ -3,7 +3,6 @@ import { RefreshControl, ScrollView, View } from 'react-native';
 import { Container } from '@components/layout/container';
 import { useThemeStore } from '@stores/theme.store';
 import { useAuthStore } from '@stores/auth.store';
-import { AnimationProvider, FadeInView } from '@components/fade-in-view';
 import {
   HomeActiveLeaveCard,
   HomeHeader,
@@ -28,17 +27,15 @@ export const HomeScreen = () => {
 
   if (!data) {
     return (
-      <AnimationProvider stagger={80}>
-        <Container className="flex-1">
-          <HomeHeader subtitle={greeting} userName={userName} theme={theme} onLogout={logout} />
-          <EmptyScreen
-            title="Something went wrong"
-            message="Unable to fetch data"
-            refresh={refetch}
-            refreshLabel="Reload"
-          />
-        </Container>
-      </AnimationProvider>
+      <Container className="flex-1">
+        <HomeHeader subtitle={greeting} userName={userName} theme={theme} onLogout={logout} />
+        <EmptyScreen
+          title="Something went wrong"
+          message="Unable to fetch data"
+          refresh={refetch}
+          refreshLabel="Reload"
+        />
+      </Container>
     );
   }
 
@@ -46,44 +43,36 @@ export const HomeScreen = () => {
   const otherLeaves = data.filter((l) => !isActiveLeave(l));
 
   return (
-    <AnimationProvider stagger={80}>
-      <Container className="flex-1">
-        <ScrollView refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}>
-          <HomeHeader subtitle={greeting} userName={userName} theme={theme} onLogout={logout} />
+    <Container className="flex-1">
+      <ScrollView refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}>
+        <HomeHeader subtitle={greeting} userName={userName} theme={theme} onLogout={logout} />
 
-          <FadeInView index={0}>
-            <View className="my-6">
-              <HomeQuickActions />
-            </View>
-          </FadeInView>
+        <View className="my-6">
+          <HomeQuickActions />
+        </View>
 
-          {activeLeaves?.length > 0 && (
-            <FadeInView index={1}>
-              <View className="mb-4">
-                <Text variant="heading" size="lg" className="mb-4 text-gray-900 dark:text-white">
-                  Active Leaves
-                </Text>
-                {activeLeaves.map((item) => (
-                  <HomeActiveLeaveCard key={item.id} leave={item} />
-                ))}
-              </View>
-            </FadeInView>
+        {activeLeaves?.length > 0 && (
+          <View className="mb-4">
+            <Text variant="heading" size="lg" className="mb-4 text-gray-900 dark:text-white">
+              Active Leaves
+            </Text>
+            {activeLeaves.map((item) => (
+              <HomeActiveLeaveCard key={item.id} leave={item} />
+            ))}
+          </View>
+        )}
+
+        <View className="mb-6">
+          <Text variant="heading" size="lg" className="mb-4 text-gray-900 dark:text-white">
+            Leave History
+          </Text>
+          {otherLeaves.length === 0 ? (
+            <HomeLeaveEmptyCard />
+          ) : (
+            otherLeaves.map((item) => <HomeLeavePreview key={item.id} leave={item} />)
           )}
-
-          <FadeInView index={2}>
-            <View className="mb-6">
-              <Text variant="heading" size="lg" className="mb-4 text-gray-900 dark:text-white">
-                Leave History
-              </Text>
-              {otherLeaves.length === 0 ? (
-                <HomeLeaveEmptyCard />
-              ) : (
-                otherLeaves.map((item) => <HomeLeavePreview key={item.id} leave={item} />)
-              )}
-            </View>
-          </FadeInView>
-        </ScrollView>
-      </Container>
-    </AnimationProvider>
+        </View>
+      </ScrollView>
+    </Container>
   );
 };

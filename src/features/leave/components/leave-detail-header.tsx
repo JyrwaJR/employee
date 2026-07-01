@@ -45,7 +45,7 @@ export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
             <MaterialCommunityIcons
               name={LEAVE_ICONS[leave.leave_cd as LeaveTypeCode] ?? 'calendar-account'}
               size={32}
-              color="#7C3AED"
+              color={statusStyle.icon}
             />
           </View>
           <View
