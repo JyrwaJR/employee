@@ -53,7 +53,7 @@ import { ApiResponse } from '@sharedTypes/api';
  * };
  * ```
  */
-type CreateEmployeeResponse = {
+type CreateLeaveResponse = {
   leave_cd: LeaveTypeCode;
   from_dt: string;
   order_dt: string;
@@ -62,19 +62,19 @@ type CreateEmployeeResponse = {
 export function useCreateLeave() {
   const queryClient = useQueryClient();
   const { emp_cd } = useAuthStore();
-  return useMutation<ApiResponse<CreateEmployeeResponse>, ApiResponse<unknown>, CreateLeaveInputs>({
+  return useMutation<ApiResponse<CreateLeaveResponse>, ApiResponse<unknown>, CreateLeaveInputs>({
     mutationKey: QUERY_KEYS.LEAVE.LIST(emp_cd),
     mutationFn: (data: CreateLeaveInputs) =>
-      rpc<CreateEmployeeResponse>(METHODS.CREATE_LEAVE_REQUEST, {
+      rpc<CreateLeaveResponse>(METHODS.CREATE_LEAVE_REQUEST, {
         ...data,
         emp_cd,
       }),
     onSuccess: (data, _v, _, context) => {
       if (data.success) {
         queryClient.invalidateQueries({ queryKey: context.mutationKey });
-        return data.data;
+        return data?.data;
       }
-      return data;
+      return data?.data;
     },
   });
 }
