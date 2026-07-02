@@ -3,6 +3,7 @@ import * as Notifications from 'expo-notifications';
 import { Route, router } from 'expo-router';
 import { logger } from '@utils/logger/logger';
 import { useAuthStore } from '@stores/auth.store';
+import { useNotificationStore } from '@stores/notification.store';
 import { toast } from '@components/ui';
 import { withRetry } from '@utils/helpers/retry';
 import { PAGE_ROUTES } from '@utils/constants/routes';
@@ -79,6 +80,12 @@ export const useNotifications = () => {
     let isMounted = true;
 
     const register = async () => {
+      const { registeredEmpCd } = useNotificationStore.getState();
+      if (registeredEmpCd === emp_cd) {
+        logger.info('NotificationHook: Skipping registration — already registered', { emp_cd });
+        return;
+      }
+
       try {
         await withRetry(
           async () => {
@@ -91,6 +98,8 @@ export const useNotifications = () => {
             onRetry: (err) => logger.warn('NotificationHook: Registration attempt failed', err),
           }
         );
+
+        useNotificationStore.getState().setRegisteredEmpCd(emp_cd || '');
 
         if (isMounted) {
           await Notifications.getNotificationChannelsAsync();
