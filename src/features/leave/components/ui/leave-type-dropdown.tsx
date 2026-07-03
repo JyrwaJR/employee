@@ -37,7 +37,7 @@ export const LeaveTypeDropdown = ({
   error,
   disabled,
 }: LeaveTypeDropdownProps) => {
-  const { data: leaveTypes } = useLeaveType();
+  const { data: leaveTypes, isFetching, isLoading, refetch } = useLeaveType();
 
   const options = useMemo(
     () =>
@@ -50,7 +50,8 @@ export const LeaveTypeDropdown = ({
 
   return (
     <SelectSheet
-      disabled={disabled}
+      disabled={disabled || isFetching || isLoading}
+      refetch={refetch}
       label={title}
       placeholder="Select leave type"
       title="Select Leave Type"

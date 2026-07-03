@@ -11,7 +11,9 @@ export type AnnouncementT = z.infer<typeof AnnouncementSchema>;
 
 export interface AnnouncementResponseT {
   items: AnnouncementT[];
-  total: number;
-  page: number;
-  hasMore: boolean;
+  meta: {
+    total: number;
+    page: number;
+    hasMore: boolean;
+  };
 }

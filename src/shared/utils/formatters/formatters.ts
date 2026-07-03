@@ -215,20 +215,6 @@ export const truncateText = ({ text, maxLength = 20, options }: TruncateProps): 
   }
 };
 
-export const parseDDMMYYYY = (value: string): Date | null => {
-  const [day, month, year] = value.split('-').map(Number);
-
-  const date = new Date(year, month - 1, day);
-
-  // Ensure the date is valid (e.g. reject 31-02-2026)
-  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
-    return null;
-  }
-
-  date.setHours(0, 0, 0, 0);
-  return date;
-};
-
 export const parseYYYYMMDD = (value: string): Date | null => {
   const [year, month, day] = value.split('-').map(Number);
 

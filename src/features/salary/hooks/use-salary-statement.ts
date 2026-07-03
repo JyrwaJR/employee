@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { METHODS, QUERY_KEYS, STALE_TIMES } from '@utils/constants';
 import { toast } from '@components/ui';
 import { rpc } from '@utils/api';
-import { SalarySlip } from '../types';
 import { useAuthStore } from '@stores/auth.store';
+import { SalaryStatement } from '@sharedTypes/satatement';
 
 const parseAmount = (value?: string | null): number => {
   return parseFloat(value || '0');
@@ -12,10 +12,11 @@ const parseAmount = (value?: string | null): number => {
 
 export const useSalaryStatement = (salaryId: string) => {
   const { emp_cd, isSignedIn } = useAuthStore();
+
   const query = useQuery({
     queryKey: QUERY_KEYS.SALARY.PAYSLIP(salaryId, emp_cd),
     queryFn: () =>
-      rpc<SalarySlip>(METHODS.GET_EMP_SALARY_STATEMENTS_DETAILS, {
+      rpc<SalaryStatement>(METHODS.GET_EMP_SALARY_STATEMENTS_DETAILS, {
         emp_cd,
         statement_id: salaryId,
       }),

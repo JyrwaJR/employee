@@ -50,7 +50,7 @@ const PensionScreen = () => {
         <FlatList
           data={PENSION_DATA}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <SalaryStatementListItem onPress={() => {}} item={item} />}
+          renderItem={({ item }) => <SalaryStatementListItem item={item} />}
           contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
