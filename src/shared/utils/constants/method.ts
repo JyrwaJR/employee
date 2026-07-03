@@ -13,7 +13,7 @@ export const METHODS = {
   GET_LEAVE_REASON: 'get_leave_reason',
   GET_EMP_SALARY_STATEMENTS: 'get_employee_salary_statements',
   GET_EMP_SALARY_STATEMENTS_DETAILS: 'get_employee_salary_statements_DETAILS',
-  CREATE_LEAVE_REQUEST: 'create_leave_request',
+  CREATE_LEAVE_REQUEST: 'create_employee_leave',
 } as const;
 
 /**
