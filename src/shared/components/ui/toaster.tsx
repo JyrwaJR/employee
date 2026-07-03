@@ -3,7 +3,7 @@ import { Toaster as SonnerToaster, toast as originalToast } from 'sonner-native'
 import { useThemeStore } from '@stores/theme.store';
 import { Appearance, Platform } from 'react-native';
 import { cssInterop } from 'nativewind';
-import { truncateText } from '@utils/helpers/text';
+import { truncateText } from '@utils/formatters';
 
 /**
  * Configure sonner-native to be tailwind-aware in v4
