@@ -1,4 +1,4 @@
-import { parseDDMMYYYY } from '@utils/formatters/formatters';
+import { parseYYYYMMDD } from '@utils/formatters/formatters';
 
 /**
  * Formats raw digit input into a `dd-mm-yyyy` mask as the user types.
@@ -29,9 +29,9 @@ export function formatDateInput(input: string): string {
   if (!digits) return '';
 
   const parts: string[] = [];
-  if (digits.length > 0) parts.push(digits.slice(0, 2)); // dd
-  if (digits.length > 2) parts.push(digits.slice(2, 4)); // mm
-  if (digits.length > 4) parts.push(digits.slice(4, 8)); // yyyy
+  if (digits.length > 4) parts.push(digits.slice(0, 4)); // dd
+  if (digits.length > 2) parts.push(digits.slice(4, 6)); // mm
+  if (digits.length > 2) parts.push(digits.slice(6, 8)); // yyyy
 
   return parts.join('-');
 }
@@ -56,8 +56,8 @@ export function formatDateInput(input: string): string {
 export function calculateDaysBetweenDates(fromDate: string, toDate: string): string | null {
   if (!fromDate || !toDate) return null;
 
-  const from = parseDDMMYYYY(fromDate);
-  const to = parseDDMMYYYY(toDate);
+  const from = parseYYYYMMDD(fromDate);
+  const to = parseYYYYMMDD(toDate);
   if (!from || !to) return null;
 
   const diffMs = to.getTime() - from.getTime();

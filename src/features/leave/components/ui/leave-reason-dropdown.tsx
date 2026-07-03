@@ -35,7 +35,7 @@ export const LeaveReasonDropdown = ({
   error,
   disabled,
 }: LeaveReasonDropdownProps) => {
-  const { data: leaveReason } = useLeaveReason();
+  const { data: leaveReason, refetch, isFetching, isLoading } = useLeaveReason();
 
   const options = useMemo(
     () =>
@@ -52,10 +52,11 @@ export const LeaveReasonDropdown = ({
       placeholder="Select leave reason"
       title="Select Leave Reason"
       options={options}
+      refetch={refetch}
       selectedValue={selectedReason}
       onSelect={(value) => onSelect(value as LeaveReasonCode)}
       error={error}
-      disabled={disabled}
+      disabled={disabled || isFetching || isLoading}
     />
   );
 };
