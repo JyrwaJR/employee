@@ -96,7 +96,7 @@ export const AuthRedirect = ({ children }: Props) => {
     // 1. If user is signed in and on a public-only page (like login)
     if (isSignedIn && isOnPublicPage) {
       // Redirect to the originally intended page OR home
-      router.replace((redirectTo as any) || '/');
+      router.replace((redirectTo as Route) || '/');
       return;
     }
 
@@ -127,6 +127,7 @@ export const AuthRedirect = ({ children }: Props) => {
     redirectTo,
     checkAccess,
   ]);
+
   const isShowLoadingScreen = (isLoading || !isMounted || (isSignedIn && !role)) && !isOnPublicPage;
 
   if (isShowLoadingScreen) {
