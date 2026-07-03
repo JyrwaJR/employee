@@ -41,7 +41,10 @@ interface SelectSheetProps {
   onSelect: (value: string) => void;
   /** Optional validation error message shown below the trigger. */
   error?: string;
+
   disabled?: boolean;
+
+  refetch?: () => void;
 }
 
 /**
@@ -79,6 +82,7 @@ export const SelectSheet = ({
   onSelect,
   error,
   disabled,
+  refetch,
 }: SelectSheetProps) => {
   const [open, setOpen] = useState(false);
 
@@ -141,6 +145,7 @@ export const SelectSheet = ({
         selectedValue={selectedValue}
         onSelect={handleSelect}
         onClose={handleClose}
+        refetch={refetch}
       />
     </View>
   );
@@ -158,6 +163,7 @@ const SelectSheetModal = ({
   selectedValue,
   onSelect,
   onClose,
+  refetch,
 }: {
   open: boolean;
   title: string;
@@ -166,6 +172,7 @@ const SelectSheetModal = ({
   onSelect: (value: string) => void;
   onClose: () => void;
   isLoading?: boolean;
+  refetch?: () => void;
 }) => {
   const insets = useSafeAreaInsets();
   const progress = useSharedValue(0);
@@ -224,57 +231,80 @@ const SelectSheetModal = ({
             {title}
           </Text>
 
-          {/* Options */}
+          {/* Options / Empty State */}
           <ScrollView
             className="max-h-80"
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: insets.bottom + 16 }}>
-            {options.map((option) => {
-              const isSelected = selectedValue === option.value;
-              return (
-                <TouchableOpacity
-                  key={option.value}
-                  activeOpacity={0.6}
-                  onPress={() => {
-                    runOnJS(onSelect)(option.value);
-                  }}
-                  className={cn(
-                    'mx-3 flex-row items-center justify-between rounded-xl px-4 py-4',
-                    isSelected
-                      ? 'bg-blue-50 dark:bg-blue-900/20'
-                      : 'active:bg-gray-50 dark:active:bg-gray-800'
-                  )}
-                  accessibilityRole="button"
-                  accessibilityLabel={`${option.label}${isSelected ? ', selected' : ''}`}>
-                  <View className="flex-1">
-                    <Text
-                      weight={isSelected ? 'semibold' : 'medium'}
-                      className={cn(
-                        'text-base',
-                        isSelected
-                          ? 'text-blue-600 dark:text-blue-400'
-                          : 'text-gray-900 dark:text-gray-100'
-                      )}>
-                      {option.label}
+            {options.length === 0 ? (
+              <View className="items-center justify-center px-5 py-10">
+                <Icon
+                  family="ionicons"
+                  name="information-circle-outline"
+                  size={32}
+                  color="#9ca3af"
+                />
+                <Text className="mt-3 text-center text-muted-foreground">No options available</Text>
+                {refetch && (
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={refetch}
+                    className="mt-4 flex-row items-center gap-x-2 rounded-lg bg-blue-50 px-6 py-2.5 dark:bg-blue-900/20">
+                    <Icon family="ionicons" name="refresh" size={18} color="#3b82f6" />
+                    <Text weight="semibold" className="text-blue-600 dark:text-blue-400">
+                      Retry
                     </Text>
-                    {option.subtitle && (
-                      <Text
-                        variant="caption-sm"
-                        className={
-                          isSelected
-                            ? 'text-blue-500/70 dark:text-blue-400/70'
-                            : 'text-gray-500 dark:text-gray-400'
-                        }>
-                        {option.subtitle}
-                      </Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            ) : (
+              options.map((option) => {
+                const isSelected = selectedValue === option.value;
+                return (
+                  <TouchableOpacity
+                    key={option.value}
+                    activeOpacity={0.6}
+                    onPress={() => {
+                      runOnJS(onSelect)(option.value);
+                    }}
+                    className={cn(
+                      'mx-3 flex-row items-center justify-between rounded-xl px-4 py-4',
+                      isSelected
+                        ? 'bg-blue-50 dark:bg-blue-900/20'
+                        : 'active:bg-gray-50 dark:active:bg-gray-800'
                     )}
-                  </View>
-                  {isSelected && (
-                    <Icon family="ionicons" name="checkmark-circle" size={22} color="#3b82f6" />
-                  )}
-                </TouchableOpacity>
-              );
-            })}
+                    accessibilityRole="button"
+                    accessibilityLabel={`${option.label}${isSelected ? ', selected' : ''}`}>
+                    <View className="flex-1">
+                      <Text
+                        weight={isSelected ? 'semibold' : 'medium'}
+                        className={cn(
+                          'text-base',
+                          isSelected
+                            ? 'text-blue-600 dark:text-blue-400'
+                            : 'text-gray-900 dark:text-gray-100'
+                        )}>
+                        {option.label}
+                      </Text>
+                      {option.subtitle && (
+                        <Text
+                          variant="caption-sm"
+                          className={
+                            isSelected
+                              ? 'text-blue-500/70 dark:text-blue-400/70'
+                              : 'text-gray-500 dark:text-gray-400'
+                          }>
+                          {option.subtitle}
+                        </Text>
+                      )}
+                    </View>
+                    {isSelected && (
+                      <Icon family="ionicons" name="checkmark-circle" size={22} color="#3b82f6" />
+                    )}
+                  </TouchableOpacity>
+                );
+              })
+            )}
           </ScrollView>
         </Animated.View>
       </View>
