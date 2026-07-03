@@ -5,7 +5,7 @@ import { FormProvider, useForm, useWatch, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Container, KeyboardSafeView } from '@components/layout';
 import { SectionHeader } from '@components/base';
-import { calculateDaysBetweenDates, formatDateInput } from '@utils/helpers';
+import { calculateDaysBetweenDatesWithoutWeekends, formatDateInput } from '@utils/helpers';
 import { UpdateLeaveSchema, type UpdateLeaveInput } from '../validators';
 import { useLeaveDetail, useLeaveReason } from '../hooks';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -114,7 +114,7 @@ export const UpdateLeaveScreen = () => {
   const reasonCode = useWatch({ control: methods.control, name: 'reason_cd' });
 
   useEffect(() => {
-    const days = calculateDaysBetweenDates(fromDate, toDate);
+    const days = calculateDaysBetweenDatesWithoutWeekends(fromDate, toDate);
     if (days) {
       methods.setValue('no_days', days, { shouldValidate: true });
     }

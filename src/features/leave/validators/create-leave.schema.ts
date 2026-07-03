@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { DATE_YYYY_MM_DD_REGEX, ONLY_NUMBER_REGEX } from '@utils/constants/regex';
 import { parseYYYYMMDD } from '@utils/formatters/formatters';
 import { ZodIssueCode } from 'zod/v3';
+import { calculateDaysBetweenDatesWithoutWeekends } from '@utils/helpers';
 
 const dateValidation = (label: string) =>
   z
@@ -36,6 +37,15 @@ export const CreateLeaveSchema = z
     const from = parseYYYYMMDD(data.from_dt);
     const to = parseYYYYMMDD(data.to_dt);
     const order = parseYYYYMMDD(data.order_dt);
+    const noDays = calculateDaysBetweenDatesWithoutWeekends(data.from_dt, data.to_dt);
+
+    if (noDays !== data.no_days) {
+      ctx.addIssue({
+        code: ZodIssueCode.custom,
+        path: ['no_days'],
+        message: `Number of days must be ${noDays}`,
+      });
+    }
 
     if (!from) {
       ctx.addIssue({
@@ -115,6 +125,7 @@ export const UpdateLeaveSchema = z
   .superRefine((data, ctx) => {
     const from = parseYYYYMMDD(data.from_dt);
     const to = parseYYYYMMDD(data.to_dt);
+    const noDays = calculateDaysBetweenDatesWithoutWeekends(data.from_dt, data.to_dt);
 
     if (!from) {
       ctx.addIssue({
@@ -158,6 +169,14 @@ export const UpdateLeaveSchema = z
         code: ZodIssueCode.custom,
         path: ['from_dt'],
         message: 'Start date must be before end date',
+      });
+    }
+
+    if (noDays !== data.no_days) {
+      ctx.addIssue({
+        code: ZodIssueCode.custom,
+        path: ['no_days'],
+        message: `Number of days must be ${noDays}`,
       });
     }
   });
