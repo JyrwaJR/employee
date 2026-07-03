@@ -1,5 +1,5 @@
 import { METHODS } from '@utils/constants';
-import { ApiResponse } from '../../types/api';
+import { ApiResponse } from '@sharedTypes/api';
 import { http } from './http';
 
 /**
