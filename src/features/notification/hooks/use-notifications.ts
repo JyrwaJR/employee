@@ -77,7 +77,7 @@ export const useNotifications = () => {
         await withRetry(
           async () => {
             return await NotificationService.register({
-              userId: emp_cd || '',
+              emp_cd: emp_cd || '',
             });
           },
           {
