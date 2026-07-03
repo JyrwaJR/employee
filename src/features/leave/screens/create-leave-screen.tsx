@@ -1,28 +1,33 @@
 import React, { useEffect } from 'react';
 import { View, ScrollView } from 'react-native';
-import { Button, FieldInput, Input, Text } from '@components/ui';
+import { FieldInput, Input, Text } from '@components/ui';
 import { FormProvider, useForm, useWatch, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Container, KeyboardSafeView } from '@components/layout';
 import { SectionHeader } from '@components/base';
 import { calculateDaysBetweenDates, formatDateInput } from '@utils/helpers';
 import { CreateLeaveSchema, type CreateLeaveInputs } from '../validators';
-import { useCreateLeave } from '../hooks';
+import { useCreateUpdateLeave, useLeaveReason } from '../hooks';
 import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants';
 import { LeaveReasonCode, LeaveTypeCode } from '../types';
-import { LeaveTypeDropdown, LeaveReasonDropdown, CreateLeaveSkeleton } from '../components';
-import { useRateLimit } from '@hooks';
+import {
+  LeaveTypeDropdown,
+  LeaveReasonDropdown,
+  CreateLeaveSkeleton,
+  CreateLeaveSubmitButton,
+} from '../components';
 import { useSnackbar } from '@hooks/use-snackbar';
 
 const defaultValues: CreateLeaveInputs = {
-  type: 'SL',
-  number_of_days: '',
+  leave_cd: 'SL',
   from_dt: '',
   to_dt: '',
-  order_number: '',
+  no_days: '',
+  order_no: '',
   order_dt: '',
-  reason: '',
+  reason_text: '',
+  reason_cd: '',
   remarks: '',
 };
 
@@ -46,23 +51,27 @@ export const CreateLeaveScreen = () => {
     defaultValues,
   });
 
-  const { mutate, isPending } = useCreateLeave();
-
-  const { isLimited, secondsRemaining } = useRateLimit('CREATE_LEAVE_SUBMIT', {
-    limit: 1,
-    ms: 5000,
-  });
+  const { mutate, isPending } = useCreateUpdateLeave();
+  const { data: LeaveReason } = useLeaveReason();
 
   // Auto-calculate number_of_days when from_date or to_date changes
   const fromDate = useWatch({ control: methods.control, name: 'from_dt' });
   const toDate = useWatch({ control: methods.control, name: 'to_dt' });
+  const reasonCode = useWatch({ control: methods.control, name: 'reason_cd' });
 
   useEffect(() => {
     const days = calculateDaysBetweenDates(fromDate, toDate);
     if (days) {
-      methods.setValue('number_of_days', days, { shouldValidate: true });
+      methods.setValue('no_days', days, { shouldValidate: true });
     }
   }, [fromDate, toDate, methods]);
+
+  useEffect(() => {
+    const selectedReason = LeaveReason?.find((reason) => reason.code_value === reasonCode);
+    if (selectedReason) {
+      methods.setValue('reason_text', selectedReason.code_text, { shouldValidate: true });
+    }
+  }, [reasonCode, LeaveReason, methods]);
 
   const onSubmit = (data: CreateLeaveInputs) => {
     mutate(data, {
@@ -110,7 +119,7 @@ export const CreateLeaveScreen = () => {
               {/* Leave Type Dropdown Selector */}
               <Controller
                 control={methods.control}
-                name="type"
+                name="leave_cd"
                 render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <LeaveTypeDropdown
                     title="Type"
@@ -187,10 +196,10 @@ export const CreateLeaveScreen = () => {
 
               <Controller
                 control={methods.control}
-                name="number_of_days"
+                name="no_days"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <FieldInput
-                    name="number_of_days"
+                    name="no_days"
                     label="Number of days"
                     keyboardType="number-pad"
                     placeholder="Auto-calculated"
@@ -203,7 +212,7 @@ export const CreateLeaveScreen = () => {
               />
               {/* Order Number */}
               <FieldInput
-                name="order_number"
+                name="order_no"
                 label="Order Number"
                 keyboardType="number-pad"
                 placeholder="Enter order number"
@@ -239,7 +248,7 @@ export const CreateLeaveScreen = () => {
               {/* Reason */}
               <Controller
                 control={methods.control}
-                name="reason"
+                name="reason_cd"
                 render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <LeaveReasonDropdown
                     selectedReason={value as LeaveReasonCode}
@@ -249,6 +258,13 @@ export const CreateLeaveScreen = () => {
                     error={error?.message}
                   />
                 )}
+              />
+
+              <FieldInput
+                name="reason_text"
+                label="Reason text"
+                placeholder="Enter order number"
+                readOnly
               />
               {/* Remarks (optional) */}
               <FieldInput
@@ -264,18 +280,11 @@ export const CreateLeaveScreen = () => {
               {/* Spacer before button */}
               <View className="h-4" />
 
-              {/* Submit Button */}
-              <Button
-                testID="CREATE_LEAVE_BUTTON"
-                title={
-                  isPending
-                    ? 'Creating Leave...'
-                    : isLimited
-                      ? `Please wait ${secondsRemaining}`
-                      : 'Create Leave'
-                }
+              {/* Submit Button with built-in rate limiting */}
+              <CreateLeaveSubmitButton
                 onPress={methods.handleSubmit(onSubmit)}
-                disabled={isPending || isLimited || !methods.formState.isDirty}
+                isDirty={methods.formState.isDirty}
+                isPending={isPending}
               />
 
               {/* Bottom Spacer */}
