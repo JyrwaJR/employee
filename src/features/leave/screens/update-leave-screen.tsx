@@ -6,19 +6,20 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Container, KeyboardSafeView, StackHeader } from '@components/layout';
 import { SectionHeader } from '@components/base';
 import { calculateDaysBetweenDates, formatDateInput } from '@utils/helpers';
-import { CreateLeaveSchema, type CreateLeaveInputs } from '../validators';
-import { useCreateUpdateLeave, useLeaveDetail, useLeaveReason } from '../hooks';
+import { UpdateLeaveSchema, type UpdateLeaveInput } from '../validators';
+import { useLeaveDetail, useLeaveReason } from '../hooks';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants';
 import { LeaveReasonCode, LeaveTypeCode } from '../types';
 import {
   LeaveTypeDropdown,
   LeaveReasonDropdown,
-  CreateLeaveSkeleton,
+  UpdateLeaveSkeleton,
   CreateLeaveSubmitButton,
 } from '../components';
 import { useSnackbar } from '@hooks/use-snackbar';
 import { LoadingScreen } from '@components/screens/loading-screen';
+import { useUpdateLeave } from '../hooks/use-update-leave';
 
 /**
  * Route search parameters expected by the update leave screen.
@@ -35,13 +36,11 @@ type UpdateLeaveSearchParamsT = {
   order_dt: string;
 };
 
-const defaultValues: CreateLeaveInputs = {
+const defaultValues: UpdateLeaveInput = {
   leave_cd: 'SL',
   from_dt: '',
   to_dt: '',
   no_days: '',
-  order_no: '',
-  order_dt: '',
   reason_text: '',
   reason_cd: '',
   remarks: '',
@@ -73,6 +72,7 @@ const defaultValues: CreateLeaveInputs = {
  * );
  * ```
  */
+
 export const UpdateLeaveScreen = () => {
   const router = useRouter();
   const { showSnackbar } = useSnackbar();
@@ -85,11 +85,13 @@ export const UpdateLeaveScreen = () => {
     order_dt,
   });
 
-  const { mutate, isPending } = useCreateUpdateLeave({ flag: 'F' });
+  const isVerified = existingLeave?.verify_flg_desc === 'Verified';
+
+  const { mutate, isPending } = useUpdateLeave();
   const { data: LeaveReason } = useLeaveReason();
 
-  const methods = useForm<CreateLeaveInputs>({
-    resolver: zodResolver(CreateLeaveSchema),
+  const methods = useForm<UpdateLeaveInput>({
+    resolver: zodResolver(UpdateLeaveSchema),
     defaultValues,
   });
 
@@ -101,11 +103,8 @@ export const UpdateLeaveScreen = () => {
         from_dt: existingLeave.from_dt,
         to_dt: existingLeave.to_dt,
         no_days: existingLeave.no_days,
-        order_no: '',
-        order_dt: existingLeave.order_dt,
-        reason_text: '',
-        reason_cd: '',
-        remarks: '',
+        reason_cd: existingLeave.leave_reason_cd.toString(),
+        remarks: existingLeave.remakrs,
       });
     }
   }, [existingLeave, methods]);
@@ -131,7 +130,7 @@ export const UpdateLeaveScreen = () => {
     }
   }, [reasonCode, LeaveReason, methods]);
 
-  const onSubmit = (data: CreateLeaveInputs) => {
+  const onSubmit = (data: UpdateLeaveInput) => {
     mutate(data, {
       onSuccess: (response) => {
         if (response.success) {
@@ -165,7 +164,7 @@ export const UpdateLeaveScreen = () => {
   }
 
   if (isPending) {
-    return <CreateLeaveSkeleton />;
+    return <UpdateLeaveSkeleton />;
   }
 
   return (
@@ -188,6 +187,7 @@ export const UpdateLeaveScreen = () => {
                 render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <LeaveTypeDropdown
                     title="Type"
+                    disabled={isVerified}
                     selectedType={value as LeaveTypeCode}
                     error={error?.message}
                     onSelect={(type) => {
@@ -216,6 +216,7 @@ export const UpdateLeaveScreen = () => {
                           keyboardType="number-pad"
                           onChangeText={(text) => onChange(formatDateInput(text))}
                           placeholder="dd-mm-yyyy"
+                          readOnly={isVerified}
                           error={!!error}
                           testID="FROM_DATE_INPUT"
                         />
@@ -245,6 +246,7 @@ export const UpdateLeaveScreen = () => {
                           onChangeText={(text) => onChange(formatDateInput(text))}
                           placeholder="dd-mm-yyyy"
                           keyboardType="number-pad"
+                          readOnly={isVerified}
                           error={!!error}
                           testID="TO_DATE_INPUT"
                         />
@@ -264,6 +266,7 @@ export const UpdateLeaveScreen = () => {
                 name="no_days"
                 render={({ field: { value }, fieldState: { error } }) => (
                   <FieldInput
+                    readOnly={isVerified}
                     name="no_days"
                     label="Number of days"
                     keyboardType="number-pad"
@@ -275,40 +278,6 @@ export const UpdateLeaveScreen = () => {
                   />
                 )}
               />
-              {/* Order Number */}
-              <FieldInput
-                name="order_no"
-                label="Order Number"
-                keyboardType="number-pad"
-                placeholder="Enter order number"
-                testID="ORDER_NUMBER_INPUT"
-              />
-
-              {/* Order Date */}
-              <Controller
-                control={methods.control}
-                name="order_dt"
-                render={({ field: { value, onChange }, fieldState: { error } }) => (
-                  <View className="my-2 w-full">
-                    <Text variant={error ? 'error' : 'label'} weight="medium" className="mb-2 ml-1">
-                      Order Date
-                    </Text>
-                    <Input
-                      value={value}
-                      onChangeText={(text) => onChange(formatDateInput(text))}
-                      placeholder="dd-mm-yyyy"
-                      keyboardType="number-pad"
-                      error={!!error}
-                      testID="ORDER_DATE_INPUT"
-                    />
-                    {error && (
-                      <Text variant="caption-sm" className="ml-1 mt-2 text-destructive">
-                        {error.message}
-                      </Text>
-                    )}
-                  </View>
-                )}
-              />
 
               {/* Reason */}
               <Controller
@@ -316,6 +285,7 @@ export const UpdateLeaveScreen = () => {
                 name="reason_cd"
                 render={({ field: { value, onChange }, fieldState: { error } }) => (
                   <LeaveReasonDropdown
+                    disabled={isVerified}
                     selectedReason={value as LeaveReasonCode}
                     onSelect={(reason) => {
                       onChange(reason);
@@ -334,6 +304,7 @@ export const UpdateLeaveScreen = () => {
                 multiline
                 numberOfLines={4}
                 testID="REMARKS_INPUT"
+                readOnly={isVerified}
               />
 
               {/* Spacer before button */}
@@ -343,10 +314,9 @@ export const UpdateLeaveScreen = () => {
               <CreateLeaveSubmitButton
                 onPress={methods.handleSubmit(onSubmit)}
                 isDirty={methods.formState.isDirty}
-                isPending={isPending}
-                rateLimitKey="UPDATE_LEAVE_SUBMIT"
+                isPending={isPending || isVerified}
                 label="Update Leave"
-                loadingText="Updating Leave..."
+                loadingText={isVerified ? 'Leave Verified' : 'Updating Leave...'}
               />
 
               {/* Bottom Spacer */}
