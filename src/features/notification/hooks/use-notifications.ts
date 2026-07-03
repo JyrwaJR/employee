@@ -6,7 +6,6 @@ import { useAuthStore } from '@stores/auth.store';
 import { useNotificationStore } from '@stores/notification.store';
 import { toast } from '@components/ui';
 import { withRetry } from '@utils/helpers/retry';
-import { PAGE_ROUTES } from '@utils/constants/routes';
 import { NotificationService } from '@services/notification.service';
 import { isExpo } from '@utils/helpers/expo';
 
@@ -14,16 +13,10 @@ import { isExpo } from '@utils/helpers/expo';
  * Whitelist of permitted internal routes for push-triggered navigation.
  * Prevents unauthorized redirection to sensitive or spoofed screens.
  */
-const ALLOWED_PUSH_ROUTES = [
-  PAGE_ROUTES.HOME,
-  PAGE_ROUTES.STATEMENT,
-  PAGE_ROUTES.EMPLOYEES.DETAILS(''),
-  PAGE_ROUTES.PROFILE,
-];
 
 type PushNotificationData = {
   url?: string;
-  employeeId?: string;
+  emp_cd?: string;
   type?: 'leave' | 'salary' | 'announcement';
   imageUrl: string;
 };
@@ -51,20 +44,14 @@ export const useNotifications = () => {
       processedResponseId.current = responseId;
     }
 
-    const isAllowed = ALLOWED_PUSH_ROUTES.some((route) => url.startsWith(route));
-
-    if (isAllowed) {
-      logger.info(`NotificationHook: Navigating to ${url}`, { responseId });
-      router.push(url as Route);
-    } else {
-      logger.warn(`NotificationHook: Blocked unauthorized redirect to [${url}]. Falling back.`);
-      router.push(PAGE_ROUTES.PROFILE as Route);
-    }
+    logger.info(`NotificationHook: Navigating to ${url}`, { responseId });
+    router.push(url as Route);
   };
 
   useEffect(() => {
     if (lastResponse?.notification) {
-      const data = lastResponse.notification.request.content.data as PushNotificationData;
+      const data: PushNotificationData = lastResponse.notification.request.content
+        .data as PushNotificationData;
       const url = data?.url;
       const id = lastResponse.notification.request.identifier;
 
@@ -126,7 +113,8 @@ export const useNotifications = () => {
     });
 
     const responseListener = Notifications.addNotificationResponseReceivedListener((response) => {
-      const data = response.notification.request.content.data as PushNotificationData;
+      const data: PushNotificationData = response.notification.request.content
+        .data as PushNotificationData;
       const url = data.url;
       const id = response.notification.request.identifier;
 
