@@ -298,8 +298,10 @@ const SelectSheetModal = ({
                         </Text>
                       )}
                     </View>
-                    {isSelected && (
+                    {isSelected ? (
                       <Icon family="ionicons" name="checkmark-circle" size={22} color="#3b82f6" />
+                    ) : (
+                      <Icon family="ionicons" name="ellipse-outline" size={22} color="#d1d5db" />
                     )}
                   </TouchableOpacity>
                 );
