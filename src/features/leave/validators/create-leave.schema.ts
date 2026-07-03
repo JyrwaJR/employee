@@ -88,6 +88,7 @@ export const CreateLeaveSchema = z
         message: 'Start date must be before end date',
       });
     }
-  });
+  })
+  .strict();
 
 export type CreateLeaveInputs = z.infer<typeof CreateLeaveSchema>;
