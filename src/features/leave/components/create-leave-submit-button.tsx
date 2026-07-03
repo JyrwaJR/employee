@@ -12,10 +12,16 @@ interface CreateLeaveSubmitButtonProps {
   isDirty: boolean;
   /** Whether the mutation is currently in flight. */
   isPending?: boolean;
+  /** Rate-limit key to isolate countdown state per-screen. */
+  rateLimitKey?: string;
+  /** Text shown while the mutation is in flight. */
+  loadingText?: string;
+  /** Default label shown when not rate-limited and not pending. */
+  label?: string;
 }
 
 /**
- * Submit button for the create-leave form with built-in rate limiting.
+ * Submit button for leave forms with built-in rate limiting.
  *
  * Isolates the rate-limit hook (which ticks every second to update the
  * countdown display) inside this small component so the rest of the form
@@ -23,10 +29,21 @@ interface CreateLeaveSubmitButtonProps {
  *
  * @example
  * ```tsx
+ * // Create mode
  * <CreateLeaveSubmitButton
  *   onPress={methods.handleSubmit(onSubmit)}
  *   isDirty={methods.formState.isDirty}
  *   isPending={isPending}
+ * />
+ *
+ * // Update mode
+ * <CreateLeaveSubmitButton
+ *   onPress={methods.handleSubmit(onSubmit)}
+ *   isDirty={methods.formState.isDirty}
+ *   isPending={isPending}
+ *   rateLimitKey="UPDATE_LEAVE_SUBMIT"
+ *   label="Update Leave"
+ *   loadingText="Updating Leave..."
  * />
  * ```
  */
@@ -34,22 +51,19 @@ export const CreateLeaveSubmitButton = ({
   onPress,
   isDirty,
   isPending,
+  rateLimitKey = 'CREATE_LEAVE_SUBMIT',
+  loadingText = 'Creating Leave...',
+  label = 'Create Leave',
 }: CreateLeaveSubmitButtonProps) => {
-  const { isLimited, secondsRemaining } = useRateLimit('CREATE_LEAVE_SUBMIT', {
+  const { isLimited, secondsRemaining } = useRateLimit(rateLimitKey, {
     limit: 1,
     ms: 5000,
   });
 
   return (
     <Button
-      testID="CREATE_LEAVE_BUTTON"
-      title={
-        isPending
-          ? 'Creating Leave...'
-          : isLimited
-            ? `Please wait ${secondsRemaining}`
-            : 'Create Leave'
-      }
+      testID="LEAVE_SUBMIT_BUTTON"
+      title={isPending ? loadingText : isLimited ? `Please wait ${secondsRemaining}` : label}
       onPress={onPress}
       disabled={isPending || isLimited || !isDirty}
     />
