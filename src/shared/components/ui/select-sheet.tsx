@@ -12,7 +12,7 @@ import Animated, {
 import { Icon } from '@components/ui/icon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text } from './text';
-import { cn } from '../../utils/helpers/cn';
+import { cn } from '@utils/helpers/cn';
 
 /**
  * A single option shape for the {@link SelectSheet} component.
@@ -215,9 +215,7 @@ const SelectSheetModal = ({
 
       {/* Sheet Container */}
       <View style={StyleSheet.absoluteFill} className="pointer-events-box-none justify-end">
-        <Animated.View
-          style={[sheetStyle]}
-          className="rounded-t-2xl bg-white pb-2 shadow-2xl dark:bg-gray-900">
+        <Animated.View style={[sheetStyle]} className="rounded-lg bg-background pb-2">
           {/* Handle bar */}
           <View className="items-center py-3">
             <View className="h-1.5 w-10 rounded-full bg-gray-300 dark:bg-gray-600" />
