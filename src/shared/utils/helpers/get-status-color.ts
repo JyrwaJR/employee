@@ -10,6 +10,7 @@
  */
 export const getStatusColor = (status: string) => {
   switch (status) {
+    case 'PAID':
     case 'Verified':
       return {
         bg: 'bg-green-100 dark:bg-green-900/30',

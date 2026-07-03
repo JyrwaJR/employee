@@ -27,7 +27,6 @@ export const StatementScreen = () => {
   return (
     <Container className="flex-1">
       <SectionHeader title="Salary Statements" />
-
       <FlatList
         data={statements}
         keyExtractor={(item) => item.id}

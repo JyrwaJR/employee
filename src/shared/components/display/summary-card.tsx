@@ -4,13 +4,13 @@ import { Text } from '../ui/text';
 import { cn } from '@utils/helpers/cn';
 import { useAuthStore } from '@stores/auth.store';
 import { getStatusColor } from '@utils/helpers';
-import { SalarySlipStatus } from '@sharedTypes/satatement';
+import { SalaryStatementStatus } from '@sharedTypes/satatement';
 
 interface SummaryCardProps {
   label: string;
   amount: string;
   className?: string;
-  status?: SalarySlipStatus;
+  status?: SalaryStatementStatus;
 }
 
 export const SummaryCard = ({ label, amount, className, status = 'PENDING' }: SummaryCardProps) => {

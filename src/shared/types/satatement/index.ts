@@ -1,13 +1,13 @@
 import { MonthT } from '@sharedTypes/common';
 
-export type SalarySlipStatus = 'PENDING' | 'PROCESSED' | 'PAID' | 'FAILED' | 'HELD';
+export type SalaryStatementStatus = 'PENDING' | 'PROCESSED' | 'PAID' | 'FAILED' | 'HELD';
 
-export type SalarySlip = {
+export type SalaryStatement = {
   id: string;
   employee_id: string;
   month: MonthT;
   year: number;
-  status: SalarySlipStatus;
+  status: SalaryStatementStatus;
   payment_date: string | null;
 
   basic_pay: string;
@@ -35,10 +35,10 @@ export type SalarySlip = {
   remarks: string;
   generated_by: string | null;
   created_at: string; // ISO date
-  structure: CurrentSalaryStructure;
+  structure: SalaryStructure;
 };
 
-export type CurrentSalaryStructure = {
+export type SalaryStructure = {
   id: string;
   employee_id: string;
   basic_pay: string;
