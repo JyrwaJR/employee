@@ -1,15 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
 import { METHODS, QUERY_KEYS } from '@utils/constants';
-import { AnnouncementResponseT } from '../types';
+import { AnnouncementT } from '../types';
 import { rpc } from '@utils/api';
+import { transformData } from '@utils/helpers';
 
 /**
  * Hook to manage paginated announcement data.
  */
 export const useAnnouncements = () => {
-  return useQuery({
+  const { data, isFetching, isLoading, refetch } = useQuery({
     queryKey: QUERY_KEYS.ANNOUNCEMENT.LIST(),
-    queryFn: () => rpc<AnnouncementResponseT>(METHODS.GET_ANNOUNCEMENTS),
+    queryFn: () => rpc<AnnouncementT[]>(METHODS.GET_ANNOUNCEMENTS),
     select: (res) => res.data,
   });
+  const announcement = transformData<AnnouncementT>(data);
+
+  return { data: announcement, isFetching, isLoading, refetch };
 };

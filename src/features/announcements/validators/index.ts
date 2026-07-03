@@ -14,7 +14,6 @@ export const AnnouncementPrioritySchema = z.enum(['LOW', 'MEDIUM', 'HIGH']);
  * Announcement Core Model
  */
 export const AnnouncementSchema = z.object({
-  id: z.string(),
   title: z.string(),
   description: z.string(),
   category: AnnouncementCategorySchema,

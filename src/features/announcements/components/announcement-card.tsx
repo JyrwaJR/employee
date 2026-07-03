@@ -10,7 +10,7 @@ export const AnnouncementCard = ({ item }: { item: AnnouncementT }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
-      className="mb-4 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      className="mb-4 rounded-lg border border-gray-100  p-5 dark:border-gray-800">
       <View className="mb-3 flex-row items-center justify-between">
         {!item.isRead && <View className="h-2 w-2 rounded-full bg-blue-500" />}
       </View>

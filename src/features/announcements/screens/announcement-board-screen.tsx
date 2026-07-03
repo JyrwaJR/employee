@@ -4,7 +4,8 @@ import { useAnnouncements } from '../hooks/use-announcements';
 import { AnnouncementCard } from '../components/announcement-card';
 import { Container } from '@components/layout';
 import { EmptyScreen } from '@components/screens';
-import { AnnouncementBoardSkeleton } from '@features/skeleton';
+import { AnnouncementBoardSkeleton, AnnouncementCardSkeleton } from '@features/skeleton';
+import { Ternary } from '@components/base';
 
 /**
  * Announcement Board Screen
@@ -29,7 +30,9 @@ export const AnnouncementBoardScreen = () => {
         refreshControl={
           <RefreshControl refreshing={isFetching} onRefresh={refetch} tintColor="#3b82f6" />
         }
-        onEndReachedThreshold={0.5}
+        ListFooterComponent={() => (
+          <Ternary condition={isFetching} ifTrue={<AnnouncementCardSkeleton />} ifFalse={null} />
+        )}
       />
     </Container>
   );

@@ -9,7 +9,7 @@ import { Skeleton } from '@components/ui/skeleton';
  * Renders a card with an unread dot skeleton, title line, two description
  * lines, a divider, and a footer with date + priority badge placeholders.
  */
-const AnnouncementCardSkeleton = () => (
+export const AnnouncementCardSkeleton = () => (
   <View className="mb-4 rounded-lg border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     {/* Unread dot */}
     <View className="mb-3">
@@ -51,7 +51,7 @@ const AnnouncementCardSkeleton = () => (
  */
 export const AnnouncementBoardSkeleton = () => (
   <Container className="flex-1">
-    <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ padding: 16 }}>
+    <ScrollView showsVerticalScrollIndicator={false}>
       <AnnouncementCardSkeleton />
       <AnnouncementCardSkeleton />
       <AnnouncementCardSkeleton />

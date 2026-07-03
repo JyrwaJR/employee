@@ -15,6 +15,7 @@ import { AuthRedirect } from '@features/auth/components/auth-redirect';
 import { LocalAuthRedirect } from '@features/auth/components/local-auth-redirect';
 import { UpdateModal } from '@components/display/update-modal';
 import { GlobalErrorBoundary } from '@components/feedback/global-error-boundary';
+import { AnimationProvider } from '@components/fade-in-view';
 
 type Props = {
   children: React.ReactNode;
@@ -37,21 +38,23 @@ export const ProviderWrapper = ({ children }: Props) => {
         <SafeAreaProvider className="flex-1">
           <TQueryProvider>
             <QueryErrorResetBoundary>
-              <ThemeProvider>
-                <AuthInitializer>
-                  <NotificationProvider>
-                    <LocalAuthProvider>
-                      <LocalAuthRedirect>
-                        <AuthRedirect>
-                          <StatusBar style="auto" animated translucent />
-                          {children}
-                          <UpdateModal />
-                        </AuthRedirect>
-                      </LocalAuthRedirect>
-                    </LocalAuthProvider>
-                  </NotificationProvider>
-                </AuthInitializer>
-              </ThemeProvider>
+              <AnimationProvider>
+                <ThemeProvider>
+                  <AuthInitializer>
+                    <NotificationProvider>
+                      <LocalAuthProvider>
+                        <LocalAuthRedirect>
+                          <AuthRedirect>
+                            <StatusBar style="auto" animated translucent />
+                            {children}
+                            <UpdateModal />
+                          </AuthRedirect>
+                        </LocalAuthRedirect>
+                      </LocalAuthProvider>
+                    </NotificationProvider>
+                  </AuthInitializer>
+                </ThemeProvider>
+              </AnimationProvider>
             </QueryErrorResetBoundary>
           </TQueryProvider>
         </SafeAreaProvider>
