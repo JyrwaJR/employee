@@ -1,11 +1,14 @@
 // Public API
 export * from './utils/constants/salary.endpoint';
 
+// Components
+export * from './components';
+
 // Hooks
+export * from './hooks';
 
 // Screens
-export * from './screens/salary-statements-details-screen';
-export * from './screens/salary-statements-screen';
+export * from './screens';
 
 // Types
 

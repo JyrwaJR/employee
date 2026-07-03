@@ -24,7 +24,7 @@ export const useSalaryStatement = (salaryId: string) => {
     enabled: !!salaryId && isSignedIn,
   });
 
-  const { data, refetch, isError, error, isFetching } = query;
+  const { data, refetch, isError, error, isFetching, isLoading } = query;
 
   useEffect(() => {
     if (isError) {
@@ -79,6 +79,7 @@ export const useSalaryStatement = (salaryId: string) => {
 
   return {
     data,
+    isLoading,
     isFetching,
     refetch,
     isError,

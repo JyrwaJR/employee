@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, ScrollView, TouchableOpacity, RefreshControl } from 'react-native';
 import { Container } from '@components/layout/container';
-import { LoadingScreen } from '@components/screens/loading-screen';
 import { Text } from '@components/ui/text';
 import { Icon } from '@components/ui/icon';
 import { DetailRow } from '@components/display/detail-row';
@@ -12,6 +11,7 @@ import { GovtHeader } from '@components/display/govt-header';
 import { SummaryCard } from '@components/display/summary-card';
 import { StackHeader } from '@components/layout';
 import { useAuthStore } from '@stores/auth.store';
+import { SalaryStatementsDetailSkeleton } from '../components/skeleton';
 
 type Props = { salaryId: string };
 
@@ -20,6 +20,7 @@ export const SalaryStatementDetailsScreen = ({ salaryId }: Props) => {
   const {
     data,
     refetch,
+    isLoading,
     isFetching,
     earningsList,
     deductionsList,
@@ -28,11 +29,11 @@ export const SalaryStatementDetailsScreen = ({ salaryId }: Props) => {
     netPay,
   } = useSalaryStatement(salaryId);
 
-  if (isFetching)
+  if (isLoading)
     return (
       <>
         <StackHeader />
-        <LoadingScreen />
+        <SalaryStatementsDetailSkeleton />
       </>
     );
 
