@@ -15,7 +15,7 @@ export function useSalaryStatements() {
     enabled: !!emp_cd && isSignedIn,
   });
 
-  const transformedData = transformData<SalaryStatement>(data || []);
+  const transformedData = transformData<SalaryStatement>(data);
 
   return { data: transformedData, isFetched, isError, error, refetch, isLoading, isFetching };
 }

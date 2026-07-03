@@ -20,8 +20,10 @@ import { randomUUID } from 'expo-crypto';
 export function transformData<T extends object>(data: T[] | undefined): (T & { id: string })[] {
   if (!data || data.length === 0) return [];
 
+  if (!Array.isArray(data)) return [];
+
   return data?.map((item) => ({
-    ...item,
     id: randomUUID(),
+    ...item,
   }));
 }
