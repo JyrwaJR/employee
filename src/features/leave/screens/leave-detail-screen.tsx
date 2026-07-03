@@ -1,6 +1,6 @@
 import React from 'react';
-import { RefreshControl, ScrollView } from 'react-native';
-import { Redirect, useLocalSearchParams } from 'expo-router';
+import { RefreshControl, ScrollView, View } from 'react-native';
+import { Redirect, router, useLocalSearchParams } from 'expo-router';
 import { Container } from '@components/layout/container';
 import { LeaveDetailSkeleton } from '../components/skeleton';
 import { EmptyScreen } from '@components/screens';
@@ -10,6 +10,7 @@ import { LeaveDetailInfo } from '../components/leave-detail-info';
 import { LeaveBalanceCard } from '../components/leave-balance-card';
 import { PAGE_ROUTES } from '@utils/constants';
 import { LeaveTypeCode } from '../types';
+import { Button } from '@components/ui/button';
 
 /**
  * Route search parameters expected by the leave detail screen.
@@ -83,6 +84,14 @@ export const LeaveDetailScreen = () => {
           <LeaveDetailHeader leave={data} />
           <LeaveDetailInfo leave={data} />
           <LeaveBalanceCard item={data} />
+
+          {/* Edit button */}
+          <View className="px-6 pt-4">
+            <Button
+              title="Edit Leave"
+              onPress={() => router.push(PAGE_ROUTES.LEAVE.UPDATE({ leave_cd, from_dt, order_dt }))}
+            />
+          </View>
         </ScrollView>
       </Container>
     </>
