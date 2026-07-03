@@ -22,6 +22,8 @@
  * };
  * ```
  */
+export type LeaveStatusI = 'Verified' | 'Pending' | 'Rejected';
+
 export interface Leave extends LeaveBal {
   /** Leave start date in `DD/MM/YYYY` display format. */
   from_dt: string;
@@ -47,6 +49,8 @@ export interface Leave extends LeaveBal {
   /** Free-text reason provided by the employee for the leave request. */
   reason_for_leave: string;
 
+  leave_reason_cd: string;
+
   /** Leave end date in `DD/MM/YYYY` display format. */
   to_dt: string;
 
@@ -54,7 +58,8 @@ export interface Leave extends LeaveBal {
   to_dt1: string;
 
   /** Verification / approval status description (e.g. `Approved`, `Pending`). */
-  verify_flg_desc: string;
+  verify_flg_desc: LeaveStatusI;
+  remakrs: string;
 }
 
 /**

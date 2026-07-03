@@ -10,6 +10,7 @@ interface LeaveReasonDropdownProps {
   onSelect: (reason: LeaveReasonCode) => void;
   /** Optional validation error message */
   error?: string;
+  disabled?: boolean;
 }
 
 /**
@@ -32,6 +33,7 @@ export const LeaveReasonDropdown = ({
   selectedReason,
   onSelect,
   error,
+  disabled,
 }: LeaveReasonDropdownProps) => {
   const { data: leaveReason } = useLeaveReason();
 
@@ -53,6 +55,7 @@ export const LeaveReasonDropdown = ({
       selectedValue={selectedReason}
       onSelect={(value) => onSelect(value as LeaveReasonCode)}
       error={error}
+      disabled={disabled}
     />
   );
 };

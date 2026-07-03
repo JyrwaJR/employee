@@ -1,9 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { rpc } from '@utils/api';
 import { METHODS, QUERY_KEYS } from '@utils/constants';
-import { CreateLeaveInputs } from '../validators';
+import { UpdateLeaveInput } from '../validators';
 import { useAuthStore } from '@stores/auth.store';
-import { LeaveTypeCode } from '../types';
 import { ApiResponse } from '@sharedTypes/api';
 
 /**
@@ -53,22 +52,17 @@ import { ApiResponse } from '@sharedTypes/api';
  * };
  * ```
  */
-type CreateLeaveResponse = {
-  leave_cd: LeaveTypeCode;
-  from_dt: string;
-  order_dt: string;
-};
 
-export function useCreateLeave() {
+export function useUpdateLeave() {
   const queryClient = useQueryClient();
   const { emp_cd } = useAuthStore();
-  return useMutation<ApiResponse<CreateLeaveResponse>, ApiResponse<unknown>, CreateLeaveInputs>({
+  return useMutation<ApiResponse<any>, ApiResponse<unknown>, UpdateLeaveInput>({
     mutationKey: QUERY_KEYS.LEAVE.LIST(emp_cd),
-    mutationFn: (data: CreateLeaveInputs) =>
-      rpc<CreateLeaveResponse>(METHODS.INSERT_UPDATE_LEAVE, {
+    mutationFn: (data: UpdateLeaveInput) =>
+      rpc(METHODS.INSERT_UPDATE_LEAVE, {
         ...data,
         emp_cd,
-        flag: 'N',
+        flag: 'E',
       }),
     onSuccess: (data, _v, _, context) => {
       if (data.success) {

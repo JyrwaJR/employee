@@ -7,7 +7,7 @@ import { Container, KeyboardSafeView } from '@components/layout';
 import { SectionHeader } from '@components/base';
 import { calculateDaysBetweenDates, formatDateInput } from '@utils/helpers';
 import { CreateLeaveSchema, type CreateLeaveInputs } from '../validators';
-import { useCreateUpdateLeave, useLeaveReason } from '../hooks';
+import { useCreateLeave, useLeaveReason } from '../hooks';
 import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants';
 import { LeaveReasonCode, LeaveTypeCode } from '../types';
@@ -19,16 +19,18 @@ import {
 } from '../components';
 import { useSnackbar } from '@hooks/use-snackbar';
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const defaultValues: CreateLeaveInputs = {
   leave_cd: 'SL',
-  from_dt: '',
-  to_dt: '',
-  no_days: '',
-  order_no: '',
-  order_dt: '',
-  reason_text: '',
-  reason_cd: '',
-  remarks: '',
+  from_dt: isDev ? '2026-07-19' : '',
+  to_dt: isDev ? '2026-07-30' : '',
+  no_days: isDev ? '1' : '',
+  order_no: isDev ? '10' : '',
+  order_dt: isDev ? '2026-05-25' : '',
+  reason_text: isDev ? 'Test' : '',
+  reason_cd: isDev ? '10' : '',
+  remarks: isDev ? 'test' : '',
 };
 
 /**
@@ -51,7 +53,7 @@ export const CreateLeaveScreen = () => {
     defaultValues,
   });
 
-  const { mutate, isPending } = useCreateUpdateLeave();
+  const { mutate, isPending } = useCreateLeave();
   const { data: LeaveReason } = useLeaveReason();
 
   // Auto-calculate number_of_days when from_date or to_date changes
@@ -150,7 +152,7 @@ export const CreateLeaveScreen = () => {
                           value={value}
                           keyboardType="number-pad"
                           onChangeText={(text) => onChange(formatDateInput(text))}
-                          placeholder="dd-mm-yyyy"
+                          placeholder="yyyy-mm-dd"
                           error={!!error}
                           testID="FROM_DATE_INPUT"
                         />
@@ -178,7 +180,7 @@ export const CreateLeaveScreen = () => {
                         <Input
                           value={value}
                           onChangeText={(text) => onChange(formatDateInput(text))}
-                          placeholder="dd-mm-yyyy"
+                          placeholder="yyyy-mm-dd"
                           keyboardType="number-pad"
                           error={!!error}
                           testID="TO_DATE_INPUT"
@@ -231,7 +233,7 @@ export const CreateLeaveScreen = () => {
                     <Input
                       value={value}
                       onChangeText={(text) => onChange(formatDateInput(text))}
-                      placeholder="dd-mm-yyyy"
+                      placeholder="yyyy-mm-dd"
                       keyboardType="number-pad"
                       error={!!error}
                       testID="ORDER_DATE_INPUT"
@@ -260,12 +262,6 @@ export const CreateLeaveScreen = () => {
                 )}
               />
 
-              <FieldInput
-                name="reason_text"
-                label="Reason text"
-                placeholder="Enter order number"
-                readOnly
-              />
               {/* Remarks (optional) */}
               <FieldInput
                 name="remarks"
@@ -284,7 +280,6 @@ export const CreateLeaveScreen = () => {
               <CreateLeaveSubmitButton
                 onPress={methods.handleSubmit(onSubmit)}
                 isDirty={methods.formState.isDirty}
-                isPending={isPending}
               />
 
               {/* Bottom Spacer */}

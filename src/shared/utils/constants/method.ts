@@ -5,6 +5,7 @@
  * `/make_request` endpoint.
  */
 export const METHODS = {
+  GET_ANNOUNCEMENTS: 'get_announcements',
   GET_EMP_DETAILS: 'get_employee_details',
   EMP_LOGIN: 'employee_login',
   GET_EMP_LEAVES: 'get_employee_leaves',
@@ -13,7 +14,7 @@ export const METHODS = {
   GET_LEAVE_REASON: 'get_leave_reason',
   GET_EMP_SALARY_STATEMENTS: 'get_employee_salary_statements',
   GET_EMP_SALARY_STATEMENTS_DETAILS: 'get_employee_salary_statements_DETAILS',
-  CREATE_LEAVE_REQUEST: 'create_employee_leave',
+  INSERT_UPDATE_LEAVE: 'insert_update_leave',
 } as const;
 
 /**

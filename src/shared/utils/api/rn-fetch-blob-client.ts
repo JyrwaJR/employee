@@ -140,6 +140,7 @@ async function request<T = any>(
       method: body.functionName,
       response_status: decrypted.status_code,
       http_status: response.respInfo.status,
+      data: decrypted.data,
     });
 
     if (decrypted.status_code === '401' && body?.functionName !== METHODS.EMP_LOGIN) {

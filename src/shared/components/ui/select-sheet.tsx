@@ -41,6 +41,7 @@ interface SelectSheetProps {
   onSelect: (value: string) => void;
   /** Optional validation error message shown below the trigger. */
   error?: string;
+  disabled?: boolean;
 }
 
 /**
@@ -77,6 +78,7 @@ export const SelectSheet = ({
   selectedValue,
   onSelect,
   error,
+  disabled,
 }: SelectSheetProps) => {
   const [open, setOpen] = useState(false);
 
@@ -107,6 +109,7 @@ export const SelectSheet = ({
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={() => setOpen(true)}
+        disabled={disabled}
         className={cn(
           'min-h-[44px] w-full flex-row items-center justify-between rounded-md border bg-background px-4',
           error ? 'border-destructive bg-destructive/5' : 'border-input'

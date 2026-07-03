@@ -29,3 +29,5 @@ export const NUMBER_REGEX = /\d/;
  * Does not validate calendar correctness (e.g., Feb 30 would pass).
  */
 export const DATE_DD_MM_YYYY_REGEX = /^(0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
+
+export const DATE_YYYY_MM_DD_REGEX = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;

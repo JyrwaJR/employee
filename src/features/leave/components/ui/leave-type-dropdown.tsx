@@ -11,6 +11,7 @@ interface LeaveTypeDropdownProps {
   /** Optional validation error message */
   error?: string;
   title?: string;
+  disabled?: boolean;
 }
 
 /**
@@ -34,6 +35,7 @@ export const LeaveTypeDropdown = ({
   title = 'Leave Type',
   onSelect,
   error,
+  disabled,
 }: LeaveTypeDropdownProps) => {
   const { data: leaveTypes } = useLeaveType();
 
@@ -48,6 +50,7 @@ export const LeaveTypeDropdown = ({
 
   return (
     <SelectSheet
+      disabled={disabled}
       label={title}
       placeholder="Select leave type"
       title="Select Leave Type"
