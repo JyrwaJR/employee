@@ -30,43 +30,8 @@ export const SectionHeader = ({
   icon,
   subtitle,
   rightElement,
-  children,
   className,
-  variant = 'section',
 }: SectionHeaderProps) => {
-  if (variant === 'splash') {
-    return (
-      <View
-        className={cn(
-          'z-10 rounded-b-[32px] bg-white px-6 pb-7 pt-5 shadow-sm dark:bg-gray-900',
-          className
-        )}>
-        <View className="flex-row items-center justify-between">
-          <View className="flex-1">
-            {subtitle && (
-              <Text
-                variant="subtext"
-                size="sm"
-                weight="semibold"
-                className="mb-1.5 uppercase tracking-widest">
-                {subtitle}
-              </Text>
-            )}
-            <Text
-              variant="heading"
-              size="3xl"
-              weight="bold"
-              className="leading-tight text-gray-900 dark:text-white">
-              {title}
-            </Text>
-          </View>
-          {rightElement}
-        </View>
-        {children && <View className="mt-5">{children}</View>}
-      </View>
-    );
-  }
-
   return (
     <View className={cn('mb-7', className)}>
       <View className="flex-row items-center gap-x-4">

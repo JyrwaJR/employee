@@ -47,15 +47,14 @@ export default function EmployeeListScreen() {
   return (
     <Container className="flex-1">
       <StatusBar barStyle="dark-content" />
-      <SectionHeader variant="section" title="Staff Directory">
-        <SearchInput
-          placeholder="Search by name or role..."
-          value={search}
-          onChangeText={setSearch}
-          containerClassName="mb-4"
-        />
-        <FilterCard />
-      </SectionHeader>
+      <SectionHeader variant="section" title="Staff Directory" />
+      <SearchInput
+        placeholder="Search by name or role..."
+        value={search}
+        onChangeText={setSearch}
+        containerClassName="mb-4"
+      />
+      <FilterCard />
       {/* List */}
       ...
       <FlatList
