@@ -22,9 +22,9 @@ export const NotificationService = {
   /**
    * Registers the device for push notifications and syncs the token with the backend.
    */
-  async register({ userId }: { userId: string }): Promise<RegistrationResult> {
-    if (!userId) {
-      logger.info('NotificationService: No user id provided');
+  async register({ emp_cd }: { emp_cd: string }): Promise<RegistrationResult> {
+    if (!emp_cd) {
+      logger.info('NotificationService: No user id provided', { emp_cd });
       return { success: false, errorType: 'CONFIG_ERROR' };
     }
 
@@ -80,7 +80,7 @@ export const NotificationService = {
       }
       const res = await http.post(ENDPOINTS.NOTIFICATION.REGISTER, {
         token,
-        user_id: userId,
+        emp_cd,
       });
 
       if (res.success) {
@@ -95,7 +95,7 @@ export const NotificationService = {
     }
   },
 
-  async unregister({ id }: { id: string }): Promise<void> {
-    await http.post(ENDPOINTS.NOTIFICATION.UNREGISTER, { user_id: id });
+  async unregister({ emp_cd }: { emp_cd: string }): Promise<void> {
+    await http.post(ENDPOINTS.NOTIFICATION.UNREGISTER, { emp_cd });
   },
 };
