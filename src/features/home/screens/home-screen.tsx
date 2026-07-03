@@ -9,11 +9,11 @@ import {
   HomeLeaveEmptyCard,
   HomeLeavePreview,
   HomeQuickActions,
+  HomeScreenSkeleton,
 } from '../components';
 import { Text } from '@components/ui/text';
 import { EmptyScreen } from '@components/screens';
 import { useLeaves } from '@hooks';
-import { HomeScreenSkeleton } from '@features/skeleton/components';
 import { isActiveLeave } from '../utils';
 
 export const HomeScreen = () => {

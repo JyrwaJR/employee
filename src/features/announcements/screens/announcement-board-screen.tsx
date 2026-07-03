@@ -4,7 +4,10 @@ import { useAnnouncements } from '../hooks/use-announcements';
 import { AnnouncementCard } from '../components/announcement-card';
 import { Container } from '@components/layout';
 import { EmptyScreen } from '@components/screens';
-import { AnnouncementBoardSkeleton, AnnouncementCardSkeleton } from '@features/skeleton';
+import {
+  AnnouncementBoardSkeleton,
+  AnnouncementCardSkeleton,
+} from '@features/announcements/components';
 import { Ternary } from '@components/base';
 
 /**
