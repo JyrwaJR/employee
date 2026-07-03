@@ -66,3 +66,50 @@ export function calculateDaysBetweenDates(fromDate: string, toDate: string): str
   if (diffDays < 1) return null;
   return String(diffDays);
 }
+
+/**
+ * Calculates the number of weekdays (Monday–Friday) between two `yyyy-mm-dd`
+ * date strings, excluding weekends (Saturday and Sunday).
+ *
+ * Returns `null` when either date is empty, unparseable, or when `toDate` is
+ * chronologically before `fromDate`.
+ *
+ * @param fromDate - Start date in `yyyy-mm-dd` format.
+ * @param toDate   - End date in `yyyy-mm-dd` format.
+ * @returns The weekday count as a string (e.g. `"3"`), or `null` if the
+ *          inputs are invalid or `toDate` is before `fromDate`.
+ *
+ * @example
+ * ```ts
+ * // Fri 2025-01-03 to Sun 2025-01-05 → only Fri counted
+ * calculateDaysBetweenDatesWithoutWeekends('2025-01-03', '2025-01-05') // "1"
+ *
+ * // Mon 2025-01-06 to Fri 2025-01-10 → full work week
+ * calculateDaysBetweenDatesWithoutWeekends('2025-01-06', '2025-01-10') // "5"
+ * ```
+ */
+export function calculateDaysBetweenDatesWithoutWeekends(
+  fromDate: string,
+  toDate: string
+): string | null {
+  if (!fromDate || !toDate) return null;
+
+  const from = parseYYYYMMDD(fromDate);
+  const to = parseYYYYMMDD(toDate);
+  if (!from || !to) return null;
+
+  if (to.getTime() < from.getTime()) return null;
+
+  let count = 0;
+  const current = new Date(from);
+  while (current <= to) {
+    const day = current.getDay(); // 0 = Sunday, 6 = Saturday
+    if (day !== 0 && day !== 6) {
+      count++;
+    }
+    current.setDate(current.getDate() + 1);
+  }
+
+  if (count < 1) return null;
+  return String(count);
+}
