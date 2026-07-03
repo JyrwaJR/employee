@@ -49,10 +49,10 @@ export const SettingsScreen = () => {
       <ScrollView className="flex-1 px-2">
         <View className="py-6">
           {/* Appearance Section */}
-          <SectionHeader title="Appearance" />
+          <SectionHeader title="Appearance" background={false} />
 
           {/* Notifications Section */}
-          <SectionHeader title="Security" />
+          <SectionHeader title="Security" background={false} />
 
           <View className="mb-8 overflow-hidden rounded-xl border border-gray-200 px-4 dark:border-gray-800">
             <SettingRow

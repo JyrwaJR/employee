@@ -15,5 +15,5 @@ interface HomeHeaderProps {
 
 /** App header for the home screen: greeting, bell icon, and logout button. */
 export const HomeHeader = ({ subtitle, userName }: HomeHeaderProps) => (
-  <SectionHeader variant="section" title={userName || 'Loading...'} subtitle={subtitle} />
+  <SectionHeader title={userName || 'Loading...'} subtitle={subtitle} />
 );
