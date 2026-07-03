@@ -1,26 +1,26 @@
 import { parseYYYYMMDD } from '@utils/formatters/formatters';
 
 /**
- * Formats raw digit input into a `dd-mm-yyyy` mask as the user types.
+ * Formats raw digit input into a `yyyy-mm-dd` mask as the user types.
  *
  * Strips all non-digit characters from the input, then groups the digits
- * into day (2), month (2), and year (4) segments joined by dashes.
+ * into year (4), month (2), and day (2) segments joined by dashes.
  * Partial input produces a partial mask — no trailing dashes are added
- * when a segment is incomplete (e.g. `"2"` → `"2"`, `"22"` → `"22"`,
- * `"220"` → `"22-0"`).
+ * when a segment is incomplete (e.g. `"2025"` → `"2025"`,
+ * `"20250"` → `"2025-0"`).
  *
  * Designed to be used as an `onChangeText` handler for date inputs so
  * the user never has to type the dash manually.
  *
  * @param input - The raw text from the input (digits + any typed dashes).
- * @returns The formatted `dd-mm-yyyy` string (partial or complete), or
+ * @returns The formatted `yyyy-mm-dd` string (partial or complete), or
  *          an empty string when `input` is empty.
  *
  * @example
  * ```ts
- * formatDateInput('22012025')  // "22-01-2025"
- * formatDateInput('22')        // "22"
- * formatDateInput('220')       // "22-0"
+ * formatDateInput('20250122')  // "2025-01-22"
+ * formatDateInput('2025')      // "2025"
+ * formatDateInput('20250')     // "2025-0"
  * formatDateInput('')          // ""
  * ```
  */
@@ -29,28 +29,28 @@ export function formatDateInput(input: string): string {
   if (!digits) return '';
 
   const parts: string[] = [];
-  if (digits.length > 4) parts.push(digits.slice(0, 4)); // dd
-  if (digits.length > 2) parts.push(digits.slice(4, 6)); // mm
-  if (digits.length > 2) parts.push(digits.slice(6, 8)); // yyyy
+  parts.push(digits.slice(0, 4)); // yyyy — always show year digits as typed
+  if (digits.length > 4) parts.push(digits.slice(4, 6)); // mm
+  if (digits.length > 6) parts.push(digits.slice(6, 8)); // dd
 
   return parts.join('-');
 }
 
 /**
- * Calculates the inclusive number of days between two `dd-mm-yyyy` date strings.
+ * Calculates the inclusive number of days between two `yyyy-mm-dd` date strings.
  *
  * Returns `null` when either date is empty, unparseable, or when `toDate` is
  * chronologically before `fromDate` (resulting in a non-positive day count).
  *
- * @param fromDate - Start date in `dd-mm-yyyy` format.
- * @param toDate   - End date in `dd-mm-yyyy` format.
+ * @param fromDate - Start date in `yyyy-mm-dd` format.
+ * @param toDate   - End date in `yyyy-mm-dd` format.
  * @returns The inclusive day count as a string (e.g. `"3"`), or `null` if the
  *          inputs are invalid or `toDate` is before `fromDate`.
  *
  * @example
  * ```ts
- * calculateDaysBetweenDates('01-01-2025', '03-01-2025') // "3"
- * calculateDaysBetweenDates('', '03-01-2025')           // null
+ * calculateDaysBetweenDates('2025-01-01', '2025-01-03') // "3"
+ * calculateDaysBetweenDates('', '2025-01-03')           // null
  * ```
  */
 export function calculateDaysBetweenDates(fromDate: string, toDate: string): string | null {

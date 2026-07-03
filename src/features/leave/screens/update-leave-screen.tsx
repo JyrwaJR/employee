@@ -200,7 +200,7 @@ export const UpdateLeaveScreen = () => {
                           value={value}
                           keyboardType="number-pad"
                           onChangeText={(text) => onChange(formatDateInput(text))}
-                          placeholder="dd-mm-yyyy"
+                          placeholder="yyyy-mm-dd"
                           readOnly={isVerified}
                           error={!!error}
                           testID="FROM_DATE_INPUT"
@@ -229,7 +229,7 @@ export const UpdateLeaveScreen = () => {
                         <Input
                           value={value}
                           onChangeText={(text) => onChange(formatDateInput(text))}
-                          placeholder="dd-mm-yyyy"
+                          placeholder="yyyy-mm-dd"
                           keyboardType="number-pad"
                           readOnly={isVerified}
                           error={!!error}
