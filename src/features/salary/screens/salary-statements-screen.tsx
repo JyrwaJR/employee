@@ -1,9 +1,7 @@
 import React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { Container } from '@components/layout/container';
-import { router } from 'expo-router';
-import { HistoryCard } from '@components/display/history-card';
-import { PAGE_ROUTES } from '@utils/constants/routes';
+import { SalaryStatementListItem } from '@components/display/history-card';
 import { useSalaryStatements } from '../hooks';
 import { EmptyScreen } from '@components/screens';
 import { SectionHeader } from '@components/base';
@@ -36,14 +34,7 @@ export const StatementScreen = () => {
         refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}
         contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <HistoryCard
-            item={item}
-            onPress={() => {
-              router.push(PAGE_ROUTES.EMPLOYEES.SALARY_PAY_SLIP(item.id));
-            }}
-          />
-        )}
+        renderItem={({ item }) => <SalaryStatementListItem item={item} />}
       />
     </Container>
   );

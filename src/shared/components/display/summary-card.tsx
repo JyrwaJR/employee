@@ -2,41 +2,25 @@ import React from 'react';
 import { View } from 'react-native';
 import { Text } from '../ui/text';
 import { cn } from '@utils/helpers/cn';
+import { useAuthStore } from '@stores/auth.store';
+import { getStatusColor } from '@utils/helpers';
+import { SalarySlipStatus } from '@sharedTypes/satatement';
 
 interface SummaryCardProps {
   label: string;
   amount: string;
-  details: {
-    label: string;
-    value: string;
-  }[];
   className?: string;
-  variant?: 'blue' | 'green' | 'red';
+  status?: SalarySlipStatus;
 }
 
-export const SummaryCard = ({
-  label,
-  amount,
-  details,
-  className,
-  variant = 'blue',
-}: SummaryCardProps) => {
-  const bgClass =
-    variant === 'green'
-      ? 'bg-green-600 dark:bg-green-700'
-      : variant === 'red'
-        ? 'bg-red-600 dark:bg-red-700'
-        : 'bg-blue-600 dark:bg-blue-700';
+export const SummaryCard = ({ label, amount, className, status = 'PENDING' }: SummaryCardProps) => {
+  const { user } = useAuthStore();
+  const statusStyle = getStatusColor(status);
+  const bgClass = statusStyle.bg;
 
-  const textClass =
-    variant === 'green' ? 'text-green-100' : variant === 'red' ? 'text-red-100' : 'text-blue-100';
+  const textClass = statusStyle.text;
 
-  const borderClass =
-    variant === 'green'
-      ? 'bg-green-500/50'
-      : variant === 'red'
-        ? 'bg-red-500/50'
-        : 'bg-blue-500/50';
+  const borderClass = statusStyle.border;
 
   return (
     <View className={cn('mb-6 rounded-3xl p-6 shadow-xl shadow-blue-900/20', bgClass, className)}>
@@ -46,12 +30,16 @@ export const SummaryCard = ({
       <View className={cn('mb-4 h-[1px] w-full', borderClass)} />
 
       <View className="flex-row justify-between">
-        {details.map((detail, index) => (
-          <View key={index}>
-            <Text className={cn('mb-1 text-xs', textClass)}>{detail.label}</Text>
-            <Text className="font-semibold text-white">{detail.value}</Text>
-          </View>
-        ))}
+        <View>
+          <Text className={cn('mb-1 text-xs', textClass)}>Pay Level</Text>
+          <Text className="font-semibold text-white">{user?.pay_scale ?? '-'}</Text>
+        </View>
+        <View>
+          <Text className={cn('mb-1 text-xs', textClass)}>Bank Account No.</Text>
+          <Text className="font-semibold text-white">
+            ********{user?.emp_bank_account_no?.slice(4) ?? '-'}
+          </Text>
+        </View>
       </View>
     </View>
   );

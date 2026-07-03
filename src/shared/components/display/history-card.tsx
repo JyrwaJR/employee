@@ -4,11 +4,15 @@ import { Icon } from '@components/ui/icon';
 import { cn } from '@utils/helpers/cn';
 import { Text } from '@components/ui/text';
 import { SalarySlip } from '@sharedTypes/satatement';
+import { router } from 'expo-router';
+import { PAGE_ROUTES } from '@utils/constants';
 
-export const HistoryCard = ({ item, onPress }: { item: SalarySlip; onPress: () => void }) => (
+export const SalaryStatementListItem = ({ item }: { item: SalarySlip }) => (
   <TouchableOpacity
     activeOpacity={0.7}
-    onPress={onPress}
+    onPress={() => {
+      router.push(PAGE_ROUTES.EMPLOYEES.SALARY_PAY_SLIP(item.id));
+    }}
     className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm active:bg-gray-50 dark:border-gray-800 dark:bg-slate-900 dark:active:bg-slate-800">
     <View className="mb-2 flex-row items-center justify-between">
       <View className="flex-row items-center gap-2">

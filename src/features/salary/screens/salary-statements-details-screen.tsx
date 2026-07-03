@@ -37,18 +37,6 @@ export const SalaryStatementDetailsScreen = ({ salaryId }: Props) => {
       </>
     );
 
-  const summaryDetails = [
-    {
-      label: 'Pay Level',
-      value: user?.pay_scale ?? '-',
-    },
-    {
-      label: 'Bank Acct',
-      value: user?.emp_bank_account_no ? `•••• ${user.emp_bank_account_no.slice(-4)}` : '-',
-    },
-    { label: 'Status', value: data?.status || 'PAID' },
-  ];
-
   return (
     <Container className="flex-1">
       <ScrollView
@@ -63,7 +51,6 @@ export const SalaryStatementDetailsScreen = ({ salaryId }: Props) => {
         <SummaryCard
           label="Net Pay Disbursed"
           amount={`₹${netPay.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`}
-          details={summaryDetails}
         />
         {/* Employee Details Grid */}
         ...

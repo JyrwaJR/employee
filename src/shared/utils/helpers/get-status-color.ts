@@ -16,6 +16,7 @@ export const getStatusColor = (status: string) => {
         text: 'text-green-800 dark:text-green-400',
         icon: '#166534',
         iconName: 'check-circle' as string,
+        border: 'border-green-800 dark:border-green-400',
       };
     case 'Pending':
       return {
@@ -23,6 +24,7 @@ export const getStatusColor = (status: string) => {
         text: 'text-orange-800 dark:text-orange-400',
         icon: '#C2410C',
         iconName: 'clock-outline' as string,
+        border: 'border-orange-800 dark:border-orange-400',
       };
     case 'Rejected':
       return {
@@ -30,6 +32,7 @@ export const getStatusColor = (status: string) => {
         text: 'text-red-800 dark:text-red-400',
         icon: '#991B1B',
         iconName: 'close-circle' as string,
+        border: 'border-red-800 dark:border-red-400',
       };
     default:
       return {
@@ -37,6 +40,7 @@ export const getStatusColor = (status: string) => {
         text: 'text-gray-800 dark:text-gray-400',
         icon: '#4B5563',
         iconName: 'help-circle' as string,
+        border: 'border-gray-800 dark:border-gray-400',
       };
   }
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Container } from '@components/layout/container';
 import { Text } from '@components/ui/text';
-import { HistoryCard } from '@components/display/history-card';
+import { SalaryStatementListItem } from '@components/display/history-card';
 import { FilterCard } from '@components/display/filter-card';
 import { months, years } from '@utils/helpers/years';
 import { LoadingScreen } from '@components/screens/loading-screen';
@@ -50,7 +50,7 @@ const PensionScreen = () => {
         <FlatList
           data={PENSION_DATA}
           keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <HistoryCard onPress={() => {}} item={item} />}
+          renderItem={({ item }) => <SalaryStatementListItem onPress={() => {}} item={item} />}
           contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
