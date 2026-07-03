@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 import { FieldInput, Input, Text } from '@components/ui';
 import { FormProvider, useForm, useWatch, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Container, KeyboardSafeView, StackHeader } from '@components/layout';
+import { Container, KeyboardSafeView } from '@components/layout';
 import { SectionHeader } from '@components/base';
 import { calculateDaysBetweenDates, formatDateInput } from '@utils/helpers';
 import { UpdateLeaveSchema, type UpdateLeaveInput } from '../validators';
@@ -18,7 +18,6 @@ import {
   CreateLeaveSubmitButton,
 } from '../components';
 import { useSnackbar } from '@hooks/use-snackbar';
-import { LoadingScreen } from '@components/screens/loading-screen';
 import { useUpdateLeave } from '../hooks/use-update-leave';
 
 /**
@@ -137,12 +136,7 @@ export const UpdateLeaveScreen = () => {
           const leave = response.data;
           showSnackbar(response.message);
           if (leave) {
-            const { leave_cd, from_dt, order_dt } = leave;
-            const pageUrl = PAGE_ROUTES.LEAVE.DETAILS({
-              leave_cd,
-              from_dt,
-              order_dt,
-            });
+            const pageUrl = PAGE_ROUTES.LEAVE.INDEX;
             router.push(pageUrl);
             return;
           }
@@ -154,16 +148,7 @@ export const UpdateLeaveScreen = () => {
     });
   };
 
-  if (isLoadingLeave) {
-    return (
-      <>
-        <StackHeader />
-        <LoadingScreen />
-      </>
-    );
-  }
-
-  if (isPending) {
+  if (isPending || isLoadingLeave) {
     return <UpdateLeaveSkeleton />;
   }
 
