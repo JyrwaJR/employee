@@ -1,15 +1,14 @@
 // Public API
-export * from './hooks/use-announcements';
+export * from './hooks';
 
 // Components
-export * from './components/announcement-card';
-export * from './components/announcement-skeleton';
+export * from './components';
 
 // Hooks
 // (Exported above)
 
 // Screens
-export * from './screens/announcement-board-screen';
+export * from './screens';
 
 // Types
 export * from './types';

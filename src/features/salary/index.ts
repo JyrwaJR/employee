@@ -1,5 +1,5 @@
 // Public API
-export * from './utils/constants/salary.endpoint';
+export * from './utils/constants';
 
 // Components
 export * from './components';
@@ -9,7 +9,3 @@ export * from './hooks';
 
 // Screens
 export * from './screens';
-
-// Types
-
-// Validators

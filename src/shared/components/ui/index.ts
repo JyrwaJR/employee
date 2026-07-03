@@ -12,3 +12,4 @@ export * from './card';
 export * from './accordion';
 export * from './select-sheet';
 export * from './snackbar-provider';
+export * from './icon';
