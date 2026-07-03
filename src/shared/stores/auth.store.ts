@@ -78,8 +78,8 @@ export const useAuthStore = create<AuthStore>()(
 
       logout: async () => {
         try {
-          const refreshToken = await TokenStoreManager.getAccessToken();
-          if (refreshToken) {
+          const accessToken = await TokenStoreManager.getAccessToken();
+          if (accessToken) {
             // await http.post(ENDPOINTS.AUTH.LOGOUT, { refresh_token: refreshToken });
           }
         } catch (error) {
