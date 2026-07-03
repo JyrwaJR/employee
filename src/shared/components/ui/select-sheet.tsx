@@ -74,17 +74,18 @@ interface SelectSheetProps {
  * />
  * ```
  */
-export const SelectSheet = ({
-  label,
-  placeholder = 'Select an option',
-  title = 'Select',
-  options,
-  selectedValue,
-  onSelect,
-  error,
-  disabled,
-  refetch,
-}: SelectSheetProps) => {
+export const SelectSheet = (props: SelectSheetProps) => {
+  const {
+    label,
+    placeholder = 'Select an option',
+    title = 'Select',
+    options,
+    selectedValue,
+    onSelect,
+    error,
+    disabled,
+    refetch,
+  } = props;
   const [open, setOpen] = useState(false);
 
   const handleSelect = useCallback(
@@ -157,15 +158,7 @@ export const SelectSheet = ({
  * Separated from {@link SelectSheet} so the animation state resets properly
  * each time the modal opens (remount on `open` toggle).
  */
-const SelectSheetModal = ({
-  open,
-  title,
-  options,
-  selectedValue,
-  onSelect,
-  onClose,
-  refetch,
-}: {
+type SelectSheetModalProps = {
   open: boolean;
   title: string;
   options: SelectSheetOption[];
@@ -174,7 +167,10 @@ const SelectSheetModal = ({
   onClose: () => void;
   isLoading?: boolean;
   refetch?: () => void;
-}) => {
+};
+
+const SelectSheetModal = (props: SelectSheetModalProps) => {
+  const { open, title, options, selectedValue, onSelect, onClose, refetch } = props;
   const insets = useSafeAreaInsets();
   const progress = useSharedValue(0);
 
