@@ -9,3 +9,4 @@ export * from './employee-list-item';
 export * from './fab';
 export * from './fade-in-view';
 export * from './search-input';
+export * from './skeleton';
