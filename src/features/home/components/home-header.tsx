@@ -1,5 +1,5 @@
 import React from 'react';
-import { SectionHeader } from '@components/base/section-header';
+import { SectionHeader } from '@components/common/section-header';
 import type { ThemeType } from '@stores/theme.store';
 
 interface HomeHeaderProps {

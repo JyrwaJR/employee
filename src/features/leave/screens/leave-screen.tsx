@@ -5,10 +5,10 @@ import { Container } from '@components/layout/container';
 import { LeaveListSkeleton } from '../components/skeleton';
 import { LeaveCard } from '../components/leave-card';
 import { useLeaves } from '@hooks/use-leaves';
-import { SectionHeader } from '@components/base/section-header';
+import { SectionHeader } from '@components/common/section-header';
 import { EmptyScreen } from '@components/screens';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { FAB } from '@components/fab';
+import { FAB } from '@components/common';
 
 export const LeaveScreen = () => {
   const { data: leaves, isLoading, isFetching, refetch } = useLeaves();

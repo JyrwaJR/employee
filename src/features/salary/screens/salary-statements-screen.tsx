@@ -1,10 +1,10 @@
 import React from 'react';
 import { FlatList, RefreshControl } from 'react-native';
 import { Container } from '@components/layout/container';
-import { SalaryStatementListItem } from '@components/display/history-card';
+import { SalaryStatementListItem } from '@components/common/history-card';
 import { useSalaryStatements } from '../hooks';
 import { EmptyScreen } from '@components/screens';
-import { SectionHeader } from '@components/base';
+import { SectionHeader } from '@components/common';
 import { SalaryStatementsListSkeleton } from '../components/skeleton';
 
 export const StatementScreen = () => {

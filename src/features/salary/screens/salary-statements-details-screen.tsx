@@ -3,12 +3,12 @@ import { View, ScrollView, TouchableOpacity, RefreshControl } from 'react-native
 import { Container } from '@components/layout/container';
 import { Text } from '@components/ui/text';
 import { Icon } from '@components/ui/icon';
-import { DetailRow } from '@components/display/detail-row';
-import { SectionHeader } from '@components/base/section-header';
-import { MoneyRow } from '@components/display/money-row';
+import { DetailRow } from '@components/common/detail-row';
+import { SectionHeader } from '@components/common/section-header';
+import { MoneyRow } from '@components/common/money-row';
 import { useSalaryStatement } from '../hooks';
-import { GovtHeader } from '@components/display/govt-header';
-import { SummaryCard } from '@components/display/summary-card';
+import { GovtHeader } from '@components/common/govt-header';
+import { SummaryCard } from '@components/common/summary-card';
 import { StackHeader } from '@components/layout';
 import { useAuthStore } from '@stores/auth.store';
 import { SalaryStatementsDetailSkeleton } from '../components/skeleton';

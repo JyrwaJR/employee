@@ -13,9 +13,9 @@ import { ThemeProvider } from './theme-provider';
 // Shared Components & Redirects
 import { AuthRedirect } from '@features/auth/components/auth-redirect';
 import { LocalAuthRedirect } from '@features/auth/components/local-auth-redirect';
-import { UpdateModal } from '@components/display/update-modal';
-import { GlobalErrorBoundary } from '@components/feedback/global-error-boundary';
-import { AnimationProvider } from '@components/fade-in-view';
+import { UpdateModal } from '@components/common/update-modal';
+import { GlobalErrorBoundary } from '@components/common/global-error-boundary';
+import { AnimationProvider } from '@components/common';
 
 type Props = {
   children: React.ReactNode;

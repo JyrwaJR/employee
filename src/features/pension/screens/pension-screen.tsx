@@ -2,12 +2,12 @@ import React from 'react';
 import { View, FlatList } from 'react-native';
 import { Container } from '@components/layout/container';
 import { Text } from '@components/ui/text';
-import { SalaryStatementListItem } from '@components/display/history-card';
-import { FilterCard } from '@components/display/filter-card';
+import { SalaryStatementListItem } from '@components/common/history-card';
+import { FilterCard } from '@components/common/filter-card';
 import { months, years } from '@utils/helpers/years';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { usePensions } from '../hooks';
-import { SectionHeader } from '@components/base/section-header';
+import { SectionHeader } from '@components/common/section-header';
 
 const statusOptions = [
   { label: 'Paid', value: 'PAID' },

@@ -5,13 +5,12 @@ import { EmployeeListItem } from '@components/employee-list-item';
 import { router } from 'expo-router';
 import { LoadingScreen } from '@components/screens/loading-screen';
 import { Text } from '@components/ui/text';
-import { FilterCard } from '@components/display/filter-card';
+import { FilterCard } from '@components/common/filter-card';
 import { toast } from '@components/ui';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { useEmployees } from '@hooks';
-import { SectionHeader } from '@components/base/section-header';
-import { SearchInput } from '@components/search-input';
-import { FAB } from '@components/fab';
+import { SectionHeader } from '@components/common/section-header';
+import { SearchInput, FAB } from '@components/common';
 
 // --- Screen ---
 export default function EmployeeListScreen() {

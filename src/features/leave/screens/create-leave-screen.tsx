@@ -4,7 +4,7 @@ import { FieldInput, Input, Text } from '@components/ui';
 import { FormProvider, useForm, useWatch, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Container, KeyboardSafeView } from '@components/layout';
-import { SectionHeader } from '@components/base';
+import { SectionHeader } from '@components/common';
 import { calculateDaysBetweenDatesWithoutWeekends, formatDateInput } from '@utils/helpers';
 import { CreateLeaveSchema, type CreateLeaveInputs } from '../validators';
 import { useCreateLeave, useLeaveReason } from '../hooks';

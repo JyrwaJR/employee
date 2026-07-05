@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import { Container } from '@components/layout/container';
-import { SectionHeader } from '@components/base/section-header';
+import { SectionHeader } from '@components/common/section-header';
 import { useLocalAuthStore } from '@stores/local-auth.store';
-import { SettingRow } from '@components/display/setting-row';
+import { SettingRow } from '@components/common/setting-row';
 import {
   AlertDialog,
   AlertDialogContent,

@@ -4,7 +4,7 @@ import { Container } from '@components/layout/container';
 import { useAuthStore } from '@stores/auth.store';
 import { Text } from '@components/ui/text';
 import { useThemeStore } from '@stores/theme.store';
-import { SettingRow } from '@components/display/setting-row';
+import { SettingRow } from '@components/common/setting-row';
 import { ProfileDetailRow } from '../components/profile-detail-row';
 import { ConfirmLogoutAlert } from '../components';
 

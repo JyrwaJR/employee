@@ -4,7 +4,7 @@ import { Container } from '@components/layout/container';
 import { Icon } from '@components/ui/icon';
 import { EmpCodeForm } from '../components/phone-form';
 import { VerifyOtpForm } from '../components/verify-otp-form';
-import { Ternary } from '@components/base/ternary';
+import { Ternary } from '@components/common/ternary';
 import { useSearchParams } from 'expo-router/build/hooks';
 import { ResetPasswordForm } from '../components/reset-password-form';
 import { StackHeader } from '@components/layout';

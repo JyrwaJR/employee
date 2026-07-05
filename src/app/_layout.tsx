@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ProviderWrapper } from '@providers/provider-wrapper';
-import { NetworkBanner } from '@components/network';
+import { NetworkBanner } from '@components/common';
 import { Toaster, SnackbarProvider } from '@components/ui';
 import '../shared/styles/global.css';
 import { Stack } from 'expo-router';

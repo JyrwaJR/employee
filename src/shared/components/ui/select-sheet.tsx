@@ -13,7 +13,7 @@ import { Icon } from '@components/ui/icon';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Text } from './text';
 import { cn } from '@utils/helpers/cn';
-import { Ternary } from '@components/base';
+import { Ternary } from '@components/common';
 
 /**
  * A single option shape for the {@link SelectSheet} component.

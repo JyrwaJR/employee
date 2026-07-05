@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, TextInput, TextInputProps } from 'react-native';
-import { Text } from './ui/text';
+import { Text } from '../ui/text';
 import { cn } from '@utils/helpers/cn';
 
 interface SearchInputProps extends TextInputProps {

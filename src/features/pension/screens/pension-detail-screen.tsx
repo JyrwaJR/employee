@@ -4,11 +4,11 @@ import { useLocalSearchParams } from 'expo-router';
 import { Container } from '@components/layout/container';
 import { Text } from '@components/ui/text';
 import { Icon } from '@components/ui/icon';
-import { MoneyRow } from '@components/display/money-row';
-import { SectionHeader } from '@components/base/section-header';
-import { DetailRow } from '@components/display/detail-row';
-import { GovtHeader } from '@components/display/govt-header';
-import { SummaryCard } from '@components/display/summary-card';
+import { MoneyRow } from '@components/common/money-row';
+import { SectionHeader } from '@components/common/section-header';
+import { DetailRow } from '@components/common/detail-row';
+import { GovtHeader } from '@components/common/govt-header';
+import { SummaryCard } from '@components/common/summary-card';
 
 export const PensionDetailScreen = () => {
   const { id: _id } = useLocalSearchParams();

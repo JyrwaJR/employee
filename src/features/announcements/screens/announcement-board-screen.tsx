@@ -8,7 +8,7 @@ import {
   AnnouncementBoardSkeleton,
   AnnouncementCardSkeleton,
 } from '@features/announcements/components';
-import { Ternary } from '@components/base';
+import { Ternary } from '@components/common';
 
 /**
  * Announcement Board Screen
