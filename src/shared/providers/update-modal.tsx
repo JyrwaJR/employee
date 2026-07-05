@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, Modal, ActivityIndicator } from 'react-na
 import { useUpdateStore } from '@stores/update.store';
 import { BlurView } from 'expo-blur';
 import { Icon } from '@components/ui/icon';
-import { Ternary } from '../components/common/ternary';
 
 export const UpdateModal: React.FC = () => {
   const isUpdateReady = useUpdateStore((s) => s.isUpdateReady);
@@ -39,25 +38,23 @@ export const UpdateModal: React.FC = () => {
                 : 'A new version of the app is ready. Install it now to get the latest features and fixes.'}
             </Text>
 
-            <Ternary
-              condition={isDownloading}
-              ifTrue={<ActivityIndicator color="#3b82f6" size="large" />}
-              ifFalse={
-                <View className="w-full flex-row gap-4">
-                  <TouchableOpacity
-                    onPress={skipUpdate}
-                    className="flex-1 items-center justify-center rounded-2xl bg-gray-200 py-4">
-                    <Text className="text-base font-semibold text-gray-700">Remind Later</Text>
-                  </TouchableOpacity>
+            {isDownloading ? (
+              <ActivityIndicator color="#3b82f6" size="large" />
+            ) : (
+              <View className="w-full flex-row gap-4">
+                <TouchableOpacity
+                  onPress={skipUpdate}
+                  className="flex-1 items-center justify-center rounded-2xl bg-gray-200 py-4">
+                  <Text className="text-base font-semibold text-gray-700">Remind Later</Text>
+                </TouchableOpacity>
 
-                  <TouchableOpacity
-                    onPress={runUpdate}
-                    className="flex-1 items-center justify-center rounded-2xl bg-blue-600 py-4 shadow-lg shadow-blue-500/30">
-                    <Text className="text-base font-semibold text-white">Update Now</Text>
-                  </TouchableOpacity>
-                </View>
-              }
-            />
+                <TouchableOpacity
+                  onPress={runUpdate}
+                  className="flex-1 items-center justify-center rounded-2xl bg-blue-600 py-4 shadow-lg shadow-blue-500/30">
+                  <Text className="text-base font-semibold text-white">Update Now</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
         </BlurView>
       </View>
