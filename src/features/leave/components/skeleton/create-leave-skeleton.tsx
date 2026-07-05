@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Skeleton } from '@components/ui/skeleton';
+import { SectionHeaderSkeleton } from '@components/skeleton/section-header';
 import { Container, KeyboardSafeView } from '@components/layout';
 
 /**
@@ -37,11 +38,7 @@ export const CreateLeaveSkeleton = () => (
         showsVerticalScrollIndicator={false}
         className="px-4">
         <View className="mt-4">
-          {/* SectionHeader placeholder — mb-7 matches SectionHeader spacing */}
-          <View className="mb-7">
-            <Skeleton className="mb-2 h-7 w-36 rounded-md" />
-            <Skeleton className="h-4 w-56 rounded" />
-          </View>
+          <SectionHeaderSkeleton hasSubtitle titleWidth="w-36" subtitleWidth="w-56" />
         </View>
 
         {/* Form fields — gap-y-2 matches the FormProvider wrapper in CreateLeaveScreen */}

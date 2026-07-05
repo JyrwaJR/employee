@@ -1,29 +1,16 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { Container } from '@components/layout/container';
+import { SectionHeaderSkeleton } from '@components/skeleton/section-header';
 import { Skeleton } from '@components/ui/skeleton';
 
 /**
  * Skeleton placeholder that mimics the {@link HomeHeader} component.
  *
- * Renders the section-header shape with a blue accent bar on the left,
- * a large title placeholder for the user's name, and a smaller subtitle
- * for the greeting text.
+ * Renders the section-header shape with a subtitle for the greeting text.
  */
 const HomeHeaderSkeleton = () => (
-  <View className="mb-7">
-    <View className="flex-row items-center gap-x-4">
-      {/* Accent bar */}
-      <Skeleton className="h-10 w-[3px] rounded-full" />
-      {/* Title + subtitle */}
-      <View className="flex-1 gap-y-2">
-        <Skeleton className="h-7 w-48 rounded-md" />
-        <Skeleton className="h-4 w-36 rounded" />
-      </View>
-    </View>
-    {/* Separator */}
-    <View className="ml-[23px] mt-4 h-[2px] rounded-full bg-gray-100 dark:bg-gray-800" />
-  </View>
+  <SectionHeaderSkeleton hasSubtitle titleWidth="w-48" subtitleWidth="w-36" />
 );
 
 /**

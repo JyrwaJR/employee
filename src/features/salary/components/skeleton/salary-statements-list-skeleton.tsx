@@ -1,6 +1,7 @@
 import React from 'react';
 import { FlatList, View } from 'react-native';
 import { Skeleton } from '@components/ui/skeleton';
+import { SectionHeaderSkeleton } from '@components/skeleton/section-header';
 import { Container } from '@components/layout/container';
 
 /**
@@ -66,11 +67,7 @@ interface SalaryStatementsListSkeletonProps {
  */
 export const SalaryStatementsListSkeleton = ({ count = 6 }: SalaryStatementsListSkeletonProps) => (
   <Container className="flex-1">
-    {/* SectionHeader placeholder */}
-    <View className="mb-7">
-      <Skeleton className="mb-2 h-7 w-40 rounded-md" />
-      <Skeleton className="h-4 w-52 rounded" />
-    </View>
+    <SectionHeaderSkeleton hasSubtitle titleWidth="w-40" subtitleWidth="w-52" />
 
     {/* Skeleton cards */}
     <FlatList
