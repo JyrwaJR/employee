@@ -39,7 +39,8 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from '@components/ui';
-import { AnimationProvider, FadeInView } from '@components/common';
+import { AnimationProvider } from '@providers/animation-provider';
+import { FadeInView } from '@components/common';
 import { KeyboardSafeView } from '@components/layout';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useSnackbar } from '@hooks/use-snackbar';
