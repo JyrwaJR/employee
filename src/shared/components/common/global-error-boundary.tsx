@@ -77,12 +77,14 @@ export class GlobalErrorBoundary extends Component<Props, State> {
                 <TouchableOpacity
                   onPress={this.handleReset}
                   activeOpacity={0.8}
+                  hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
                   className="w-full items-center justify-center rounded-2xl bg-gray-900 py-4 shadow-lg">
                   <Text className="text-lg font-bold text-white">Try Again</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   onPress={() => this.setState({ hasError: false, error: null })}
+                  hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
                   className="mt-4">
                   <Text className="text-sm font-medium text-gray-500 underline">Dismiss</Text>
                 </TouchableOpacity>
