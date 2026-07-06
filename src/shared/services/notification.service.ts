@@ -69,6 +69,7 @@ export const NotificationService = {
     try {
       // 1. Obtain Token from Expo
       const tokenResponse = await Notifications.getExpoPushTokenAsync({ projectId });
+
       const token = tokenResponse.data;
 
       // 2. Register with Backend
@@ -76,8 +77,10 @@ export const NotificationService = {
         logger.info('NotificationService: Skipping backend registration in development', {
           expoToken: token,
         });
+
         return { success: true, token };
       }
+
       const res = await http.post(ENDPOINTS.NOTIFICATION.REGISTER, {
         token,
         emp_cd,

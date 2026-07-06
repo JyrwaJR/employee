@@ -25,7 +25,7 @@ interface LeaveDetailInfoProps {
 const InfoRow = ({ icon, label, value }: { icon: string; label: string; value: string }) => (
   <View className="mb-4 flex-row items-start">
     <View className="mr-3 mt-0.5 w-6 items-center">
-      <Icon name={icon} size={20} color="#6B7280" />
+      <Icon name={icon as any} size={20} color="#6B7280" />
     </View>
     <View className="flex-1">
       <Text variant="subtext" size="xs" className="mb-0.5 font-medium uppercase tracking-wide">
