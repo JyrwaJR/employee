@@ -1,7 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from '../ui/text';
-import { Icon } from '@components/ui';
 import { cn } from '@utils/helpers/cn';
 
 interface GovtHeaderProps {
@@ -12,18 +11,18 @@ interface GovtHeaderProps {
 }
 
 export const GovtHeader = ({ title, subtitle, badge, className }: GovtHeaderProps) => (
-  <View className={cn('mb-8 items-center', className)}>
+  <View className={cn('mb-8 items-center gap-y-2', className)}>
     <View className="mb-3 h-16 w-16 items-center justify-center opacity-80">
-      <Icon name="bank" size={48} />
+      <Text className="text-5xl">🏛️</Text>
     </View>
-    <Text className="mb-1 text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+    <Text variant={'subtext'} className="text-center text-[11px]">
       Government of India
     </Text>
-    <Text variant="heading" size="lg" className="text-center text-gray-900 dark:text-white">
+    <Text variant={'heading'} className="text-center">
       {title}
     </Text>
     {subtitle && (
-      <Text variant="subtext" className="text-center text-sm">
+      <Text variant={'subtext'} className="text-center">
         {subtitle}
       </Text>
     )}
