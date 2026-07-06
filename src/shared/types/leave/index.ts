@@ -60,7 +60,7 @@ export interface Leave extends LeaveBal {
 
   /** Verification / approval status description (e.g. `Approved`, `Pending`). */
   verify_flg_desc: LeaveStatusI;
-  remakrs: string;
+  remarks: string;
 }
 
 /**

@@ -85,6 +85,7 @@ export const UpdateLeaveScreen = () => {
     leave_cd,
     order_dt,
   });
+  console.log('existingLeave', existingLeave);
 
   const isVerified = existingLeave?.verify_flg_desc === 'Verified';
 
@@ -105,7 +106,7 @@ export const UpdateLeaveScreen = () => {
         to_dt: existingLeave.to_dt,
         no_days: existingLeave.no_days,
         reason_cd: existingLeave.leave_reason_cd.toString(),
-        remarks: existingLeave.remakrs,
+        remarks: existingLeave.remarks,
         order_dt: existingLeave.order_dt,
         order_no: existingLeave.order_no,
       });
