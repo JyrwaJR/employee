@@ -1,4 +1,5 @@
 import {
+  DATE_YYYY_MM_DD_REGEX,
   LOWERCASE_LETTER_REGEX,
   NUMBER_REGEX,
   ONLY_NUMBER_REGEX,
@@ -25,3 +26,10 @@ export const passwordValidation = z
   .regex(SPECIAL_CHARACTER_REGEX, 'Must contain a special character');
 
 export const methodValidation = z.enum(METHODS, 'Invalid Method');
+
+export const dateValidation = (label: string) =>
+  z
+    .string('Date is required')
+    .min(10, `${label} is required`)
+    .max(10, `${label} must be 10 characters long`)
+    .regex(DATE_YYYY_MM_DD_REGEX, `${label} must be in dd-mm-yyyy format`);

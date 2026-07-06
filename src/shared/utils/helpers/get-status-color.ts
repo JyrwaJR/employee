@@ -19,6 +19,7 @@ export const getStatusColor = (status: string) => {
         iconName: 'check-circle' as string,
         border: 'border-green-800 dark:border-green-400',
       };
+    case 'Entry':
     case 'Pending':
       return {
         bg: 'bg-orange-100 dark:bg-orange-900/30',

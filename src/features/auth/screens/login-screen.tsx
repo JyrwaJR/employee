@@ -12,12 +12,12 @@ import { FieldInput } from '@components/ui/field-input';
 import { Button } from '@components/ui/button';
 import { useLoginMutation } from '../hooks/use-login-mutation';
 import { useAuthStore } from '@stores/auth.store';
-import { AuthHeader } from '../components/auth-header';
 import { AuthFooter } from '../components/auth-footer';
 import { useGetOAuthToken } from '../hooks/use-get-oauth-token';
 import { toast } from 'sonner-native';
 import { useRateLimit } from '@hooks';
 import { useSnackbar } from '@hooks/use-snackbar';
+import { GovtHeader } from '@components/common';
 
 /** Form field values inferred from the `LoginSchema` Zod validation schema. */
 type LoginFormInputs = z.infer<typeof LoginSchema>;
@@ -115,12 +115,7 @@ export const LoginScreen = () => {
   return (
     <Container>
       <KeyboardSafeView contentContainerClassName="px-6 justify-center">
-        <AuthHeader
-          emoji="✨"
-          title="Welcome back"
-          subtitle="Please enter your Employee code and password to sign in."
-          iconContainerClassName="bg-blue-600"
-        />
+        <GovtHeader title="Authentication" subtitle="Please sign in to continue" />
 
         {/* Form Section */}
         <FormProvider {...methods}>

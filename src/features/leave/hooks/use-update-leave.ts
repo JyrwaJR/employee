@@ -64,9 +64,12 @@ export function useUpdateLeave() {
         emp_cd,
         flag: 'E',
       }),
-    onSuccess: (data, _v, _, context) => {
+    onSuccess: (data, { from_dt, order_dt, leave_cd }, _, context) => {
       if (data.success) {
         queryClient.invalidateQueries({ queryKey: context.mutationKey });
+        const leaveDetailQuerykey = QUERY_KEYS.LEAVE.DETAILS(emp_cd, from_dt, leave_cd, order_dt);
+        queryClient.invalidateQueries({ queryKey: leaveDetailQuerykey });
+
         return data?.data;
       }
       return data?.data;

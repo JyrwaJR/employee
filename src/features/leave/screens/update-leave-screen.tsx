@@ -85,7 +85,6 @@ export const UpdateLeaveScreen = () => {
     leave_cd,
     order_dt,
   });
-  console.log('existingLeave', existingLeave);
 
   const isVerified = existingLeave?.verify_flg_desc === 'Verified';
 

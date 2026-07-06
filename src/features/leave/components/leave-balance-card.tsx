@@ -20,7 +20,7 @@ export const LeaveBalanceCard = ({ item }: LeaveBalanceCardProps) => (
         <View className="flex-row items-center gap-3">
           <View className="rounded-xl bg-blue-100 p-2 dark:bg-blue-900/30">
             <Icon
-              name={LEAVE_ICONS[item?.type as LeaveTypeCode] ?? 'calendar-blank'}
+              name={(LEAVE_ICONS[item?.type as LeaveTypeCode] as any) ?? 'calendar-blank'}
               size={20}
               color="#3B82F6"
             />
@@ -30,7 +30,7 @@ export const LeaveBalanceCard = ({ item }: LeaveBalanceCardProps) => (
               {item.leave_desc}
             </Text>
             <Text variant="subtext" size="xs">
-              Closing as of {item.closing_bal_as_on}
+              {item.closing_bal_as_on ? `Closing as of ${item.closing_bal_as_on}` : '-'}
             </Text>
           </View>
         </View>

@@ -22,7 +22,7 @@
  * };
  * ```
  */
-export type LeaveStatusI = 'Verified' | 'Pending' | 'Rejected';
+export type LeaveStatusI = 'Verified' | 'Pending' | 'Rejected' | 'Entry';
 
 export interface Leave extends LeaveBal {
   /** Leave start date in `DD/MM/YYYY` display format. */
