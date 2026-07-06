@@ -146,13 +146,12 @@ export const UpdateLeaveSchema = z
     leave_cd: leaveCodeValidation,
     from_dt: dateValidation('Start date'),
     to_dt: dateValidation('End date'),
-    no_days: z
-      .string()
-      .min(1, 'Number of days is required')
-      .regex(ONLY_NUMBER_REGEX, 'Invalid number'),
-    remarks: z.string().nullable().optional(),
-    reason_text: z.string().min(1, 'Reason is required'),
-    reason_cd: z.string().min(1, 'Reason is required'),
+    no_days: noDaysValidation,
+    remarks: remarksValidation,
+    order_dt: dateValidation('Order date'),
+    order_no: orderNoValidation,
+    reason_text: reasonTextValidation,
+    reason_cd: reasonCodeValidation,
   })
   .superRefine((data, ctx) => refineDates(data, ctx));
 
