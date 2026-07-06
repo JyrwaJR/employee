@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { View, ScrollView } from 'react-native';
 import { FieldInput, Input, Text } from '@components/ui';
 import { FormProvider, useForm, useWatch, Controller } from 'react-hook-form';
@@ -112,48 +112,61 @@ export const UpdateLeaveScreen = () => {
     }
   }, [existingLeave, methods]);
 
-  // Auto-calculate no_days when from_date or to_date changes
-  const fromDate = useWatch({ control: methods.control, name: 'from_dt' });
-  const toDate = useWatch({ control: methods.control, name: 'to_dt' });
-  const reasonCode = useWatch({ control: methods.control, name: 'reason_cd' });
+  // Single useWatch subscription for the three watched fields.
+  // Previously three separate useWatch calls each created independent
+  // subscriptions, causing up to 3× the re-renders on every keystroke.
+  const [fromDate, toDate, reasonCode] = useWatch({
+    control: methods.control,
+    name: ['from_dt', 'to_dt', 'reason_cd'],
+  }) as [string | undefined, string | undefined, string | undefined];
 
+  // Auto-calculate no_days when from_date or to_date changes.
+  // Important: shouldValidate: false avoids triggering a validation cascade
+  // that re-renders every Controller in the tree when the user types.
   useEffect(() => {
-    // calculate no of days excluding weekends between from_date and to_date
-    const days = calculateDaysBetweenDatesWithoutWeekends(fromDate, toDate);
+    const days = calculateDaysBetweenDatesWithoutWeekends(fromDate ?? '', toDate ?? '');
     if (days) {
-      methods.setValue('no_days', days, { shouldValidate: true, shouldDirty: true });
+      methods.setValue('no_days', days, { shouldValidate: false, shouldDirty: true });
     }
   }, [fromDate, toDate, methods]);
 
+  // Pre-populate reason_text when reason_cd or LeaveReason data changes.
   useEffect(() => {
-    // pre-populate reason_text
     const selectedReason = LeaveReason?.find((reason) => reason.code_value === reasonCode);
     if (selectedReason) {
       methods.setValue('reason_text', selectedReason.code_text, {
-        shouldValidate: true,
-        shouldDirty: true,
+        shouldValidate: false,
       });
     }
   }, [reasonCode, LeaveReason, methods]);
 
-  const onSubmit = (data: UpdateLeaveInput) => {
-    mutate(data, {
-      onSuccess: (response) => {
-        if (response.success) {
-          const leave = response.data;
-          showSnackbar(response.message);
-          if (leave) {
-            const pageUrl = PAGE_ROUTES.LEAVE.INDEX;
-            router.push(pageUrl);
+  // Memoized submit handler — prevents a new function reference on every render,
+  // which would otherwise force CreateLeaveSubmitButton to re-evaluate.
+  const onSubmit = useCallback(
+    (data: UpdateLeaveInput) => {
+      mutate(data, {
+        onSuccess: (response) => {
+          if (response.success) {
+            const leave = response.data;
+            showSnackbar(response.message);
+            if (leave) {
+              const pageUrl = PAGE_ROUTES.LEAVE.INDEX;
+              router.push(pageUrl);
+              return;
+            }
+            router.back();
             return;
           }
-          router.back();
-          return;
-        }
-        showSnackbar(response.message);
-      },
-    });
-  };
+          showSnackbar(response.message);
+        },
+      });
+    },
+    [mutate, showSnackbar, router]
+  );
+
+  // Memoize the handleSubmit wrapper so CreateLeaveSubmitButton gets a stable
+  // callback reference across re-renders.
+  const handleFormSubmit = useMemo(() => methods.handleSubmit(onSubmit), [methods, onSubmit]);
 
   if (isPending || isLoadingLeave) {
     return <UpdateLeaveSkeleton />;
@@ -304,7 +317,7 @@ export const UpdateLeaveScreen = () => {
 
               {/* Submit Button with built-in rate limiting */}
               <CreateLeaveSubmitButton
-                onPress={methods.handleSubmit(onSubmit)}
+                onPress={handleFormSubmit}
                 isDirty={methods.formState.isDirty}
                 isPending={isPending || isVerified}
                 label="Update Leave"

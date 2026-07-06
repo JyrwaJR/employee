@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Button } from '@components/ui/button';
 import { useRateLimit } from '@hooks';
 
@@ -47,27 +47,29 @@ interface CreateLeaveSubmitButtonProps {
  * />
  * ```
  */
-export const CreateLeaveSubmitButton = ({
-  onPress,
-  isDirty,
-  isPending,
-  rateLimitKey = 'CREATE_LEAVE_SUBMIT',
-  loadingText = 'Creating Leave...',
-  label = 'Create Leave',
-}: CreateLeaveSubmitButtonProps) => {
-  const { isLimited, secondsRemaining } = useRateLimit(rateLimitKey, {
-    limit: 1,
-    ms: 5000,
-  });
+export const CreateLeaveSubmitButton = memo(
+  ({
+    onPress,
+    isDirty,
+    isPending,
+    rateLimitKey = 'CREATE_LEAVE_SUBMIT',
+    loadingText = 'Creating Leave...',
+    label = 'Create Leave',
+  }: CreateLeaveSubmitButtonProps) => {
+    const { isLimited, secondsRemaining } = useRateLimit(rateLimitKey, {
+      limit: 1,
+      ms: 5000,
+    });
 
-  return (
-    <Button
-      testID="LEAVE_SUBMIT_BUTTON"
-      title={isPending ? loadingText : isLimited ? `Please wait ${secondsRemaining}` : label}
-      onPress={onPress}
-      disabled={isPending || isLimited || !isDirty}
-    />
-  );
-};
+    return (
+      <Button
+        testID="LEAVE_SUBMIT_BUTTON"
+        title={isPending ? loadingText : isLimited ? `Please wait ${secondsRemaining}` : label}
+        onPress={onPress}
+        disabled={isPending || isLimited || !isDirty}
+      />
+    );
+  }
+);
 
 CreateLeaveSubmitButton.displayName = 'CreateLeaveSubmitButton';
