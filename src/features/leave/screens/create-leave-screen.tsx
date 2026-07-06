@@ -108,10 +108,7 @@ export const CreateLeaveScreen = () => {
     <Container className="flex-1">
       {/* KeyboardSafeView ensures the ScrollView remains visible when the soft keyboard opens */}
       <KeyboardSafeView className="flex-1">
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
-          showsVerticalScrollIndicator={false}
-          className="px-4">
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }} showsVerticalScrollIndicator={false}>
           <View className="mt-4">
             <SectionHeader subtitle="Create a new leave request" title="Create Leave" />
           </View>

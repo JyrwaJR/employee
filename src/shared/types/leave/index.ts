@@ -42,6 +42,7 @@ export interface Leave extends LeaveBal {
 
   /** Order / approval date in `DD/MM/YYYY` display format. */
   order_dt: string;
+  order_no: string;
 
   /** Order / approval date in `YYYY-MM-DD` machine format (ISO-8601 compatible). */
   order_dt1: string;

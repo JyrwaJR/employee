@@ -86,7 +86,7 @@ export const LeaveDetailScreen = () => {
           <LeaveBalanceCard item={data} />
 
           {/* Edit button */}
-          <View className="px-6 pt-4">
+          <View className="pt-4">
             <Button
               title="Edit Leave"
               onPress={() => router.push(PAGE_ROUTES.LEAVE.UPDATE({ leave_cd, from_dt, order_dt }))}

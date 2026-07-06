@@ -43,6 +43,8 @@ const defaultValues: UpdateLeaveInput = {
   reason_text: '',
   reason_cd: '',
   remarks: '',
+  order_dt: '',
+  order_no: '',
 };
 
 /**
@@ -104,6 +106,8 @@ export const UpdateLeaveScreen = () => {
         no_days: existingLeave.no_days,
         reason_cd: existingLeave.leave_reason_cd.toString(),
         remarks: existingLeave.remakrs,
+        order_dt: existingLeave.order_dt,
+        order_no: existingLeave.order_no,
       });
     }
   }, [existingLeave, methods]);
@@ -114,17 +118,20 @@ export const UpdateLeaveScreen = () => {
   const reasonCode = useWatch({ control: methods.control, name: 'reason_cd' });
 
   useEffect(() => {
+    // calculate no of days excluding weekends between from_date and to_date
     const days = calculateDaysBetweenDatesWithoutWeekends(fromDate, toDate);
     if (days) {
-      methods.setValue('no_days', days, { shouldValidate: true });
+      methods.setValue('no_days', days, { shouldValidate: true, shouldDirty: true });
     }
   }, [fromDate, toDate, methods]);
 
   useEffect(() => {
+    // pre-populate reason_text
     const selectedReason = LeaveReason?.find((reason) => reason.code_value === reasonCode);
     if (selectedReason) {
       methods.setValue('reason_text', selectedReason.code_text, {
         shouldValidate: true,
+        shouldDirty: true,
       });
     }
   }, [reasonCode, LeaveReason, methods]);
@@ -158,7 +165,7 @@ export const UpdateLeaveScreen = () => {
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
           showsVerticalScrollIndicator={false}
-          className="px-4">
+          className="px-0">
           <View className="mt-4">
             <SectionHeader subtitle="Update your leave request" title="Update Leave" />
           </View>
