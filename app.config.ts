@@ -6,10 +6,14 @@ const isDev = APP_VARIANT === 'development';
 const isPreview = APP_VARIANT === 'preview';
 const APP_VERSION = '1.0.0';
 
-const adaptiveIcon = './src/shared/assets/icon-adaptive.png';
-const iconAssetUrl = adaptiveIcon;
-const splashAssetUrl = './src/shared/assets/icon-adaptive.png';
-const iconBgColor = '#fdfdfd';
+const ASSETS = {
+  iosIcon: './src/shared/assets/ios-icon-default.png',
+  iosSplash: './src/shared/assets/ios-splash.png',
+  androidIconForeground: './src/shared/assets/android-icon-foreground.png',
+  androidSplash: './src/shared/assets/android-splash.png',
+} as const;
+
+const iconBgColor = '#ffffff';
 
 const getAppName = (baseName: string) => {
   if (isDev) return `${baseName} (Dev)`;
@@ -43,7 +47,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     [
       'expo-notifications',
       {
-        icon: iconAssetUrl,
+        icon: ASSETS.androidIconForeground,
         color: iconBgColor,
         defaultChannel: iconBgColor,
         enableBackgroundRemoteNotifications: true,
@@ -55,10 +59,10 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     tsconfigPaths: true,
   },
   orientation: 'portrait',
-  icon: iconAssetUrl,
+  icon: ASSETS.iosIcon,
   userInterfaceStyle: 'light',
   splash: {
-    image: splashAssetUrl,
+    image: ASSETS.iosSplash,
     resizeMode: 'contain',
     backgroundColor: iconBgColor,
   },
@@ -71,7 +75,12 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
     adaptiveIcon: {
-      foregroundImage: adaptiveIcon,
+      foregroundImage: ASSETS.androidIconForeground,
+      backgroundColor: iconBgColor,
+    },
+    splash: {
+      image: ASSETS.androidSplash,
+      resizeMode: 'contain',
       backgroundColor: iconBgColor,
     },
     package: getIdentifier(),
