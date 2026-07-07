@@ -10,9 +10,10 @@ import { transformData } from '@utils/helpers';
 export const useAnnouncements = () => {
   const { data, isFetching, isLoading, refetch } = useQuery({
     queryKey: QUERY_KEYS.ANNOUNCEMENT.LIST(),
-    queryFn: () => rpc<AnnouncementT[]>(METHODS.GET_ANNOUNCEMENTS),
+    queryFn: () => rpc<AnnouncementT[]>(METHODS.GET_NOTIFICATIONS),
     select: (res) => res.data,
   });
+
   const announcement = transformData<AnnouncementT>(data);
 
   return { data: announcement, isFetching, isLoading, refetch };

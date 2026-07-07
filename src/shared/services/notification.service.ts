@@ -3,8 +3,8 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import * as Constants from 'expo-constants';
 import { logger } from '@utils/logger/logger';
-import { ENDPOINTS } from '@utils/constants/endpoints';
-import { http } from '@utils/api';
+import { rpc } from '@utils/api';
+import { METHODS } from '@utils/constants';
 
 type TErrorType = 'PERMISSION_DENIED' | 'NOT_A_DEVICE' | 'CONFIG_ERROR' | 'NETWORK_ERROR';
 
@@ -81,7 +81,7 @@ export const NotificationService = {
         return { success: true, token };
       }
 
-      const res = await http.post(ENDPOINTS.NOTIFICATION.REGISTER, {
+      const res = await rpc(METHODS.INSERT_PUSH_TOKEN, {
         token,
         emp_cd,
       });
@@ -99,6 +99,6 @@ export const NotificationService = {
   },
 
   async unregister({ emp_cd }: { emp_cd: string }): Promise<void> {
-    await http.post(ENDPOINTS.NOTIFICATION.UNREGISTER, { emp_cd });
+    await rpc(METHODS.INSERT_PUSH_TOKEN, { emp_cd });
   },
 };

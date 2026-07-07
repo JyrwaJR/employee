@@ -125,13 +125,16 @@ async function request<T = any>(
         message: parsed.message,
         status_code: parsed.status_code,
       });
+
       await cleanupSession();
+
       return backendResponse<T>({
         message: parsed.message || 'Unauthorized',
         success_flag: false,
         status_code: '401',
       });
     }
+
     const decrypted = decrypt<DecryptedBackendResponse<T>>(parsed.response);
 
     logger.log('Decrypted Response', {
