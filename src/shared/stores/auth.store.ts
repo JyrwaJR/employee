@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import * as SecureStore from 'expo-secure-store';
-import { UserT, RoleT } from '../types/auth';
+import { UserT } from '../types/auth';
 import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '@utils/logger';
 import { rpc } from '@utils/api';
@@ -13,7 +13,7 @@ type AuthStore = {
   setEmpCode: (emp_cd: string) => void;
   isSignedIn: boolean;
   isAuthLoading: boolean;
-  role: RoleT;
+  role: string;
 
   fetchUser: () => Promise<void>;
   refresh: () => void;
@@ -32,7 +32,7 @@ export const useAuthStore = create<AuthStore>()(
       setEmpCode: (emp_cd: string) => {
         set({ emp_cd });
       },
-      role: 'USER' as RoleT,
+      role: 'USER',
 
       fetchUser: async (keepStaleOnError?: boolean) => {
         const empCode = get().emp_cd;
