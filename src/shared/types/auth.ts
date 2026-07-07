@@ -1,5 +1,3 @@
-export type RoleT = 'SUPER_ADMIN' | 'ADMIN' | 'USER';
-
 export type UserT = {
   id: number;
   emp_cd: string;
@@ -8,7 +6,7 @@ export type UserT = {
   emp_lname: string;
   emp_birth_dt: string;
   emp_sex: 'M' | 'F' | 'O';
-  emp_role: RoleT;
+  emp_role: string;
   emp_dept: string;
   emp_email: string;
   emp_address: string;
