@@ -6,11 +6,10 @@ const isDev = APP_VARIANT === 'development';
 const isPreview = APP_VARIANT === 'preview';
 const APP_VERSION = '1.0.0';
 
-const adaptiveIcon = './src/shared/assets/adaptive-icon.png';
-
+const adaptiveIcon = './src/shared/assets/icon-adaptive.png';
 const iconAssetUrl = adaptiveIcon;
-
-const splashAssetUrl = './src/shared/assets/splash.png';
+const splashAssetUrl = './src/shared/assets/icon-adaptive.png';
+const iconBgColor = '#fdfdfd';
 
 const getAppName = (baseName: string) => {
   if (isDev) return `${baseName} (Dev)`;
@@ -45,8 +44,8 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
       'expo-notifications',
       {
         icon: iconAssetUrl,
-        color: '#ffffff',
-        defaultChannel: 'default',
+        color: iconBgColor,
+        defaultChannel: iconBgColor,
         enableBackgroundRemoteNotifications: true,
       },
     ],
@@ -61,7 +60,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   splash: {
     image: splashAssetUrl,
     resizeMode: 'contain',
-    backgroundColor: '#ffffff',
+    backgroundColor: iconBgColor,
   },
   assetBundlePatterns: ['**/*'],
   ios: {
@@ -73,7 +72,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
     adaptiveIcon: {
       foregroundImage: adaptiveIcon,
-      backgroundColor: '#ffffff',
+      backgroundColor: iconBgColor,
     },
     package: getIdentifier(),
   },
