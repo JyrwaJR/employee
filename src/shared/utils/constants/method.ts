@@ -16,7 +16,7 @@ export const METHODS = {
   // Not implemented below
   GET_EMP_SALARY_STATEMENTS: 'get_employee_salary_statements',
   GET_EMP_SALARY_STATEMENTS_DETAILS: 'get_employee_salary_statements_DETAILS',
-  INSERT_PUSH_TOKEN: 'insert_push_token',
+  INSERT_NOTIFICATION_TOKEN: 'insert_notification_token',
 } as const;
 
 /**

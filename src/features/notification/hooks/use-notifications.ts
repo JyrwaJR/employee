@@ -68,7 +68,8 @@ export const useNotifications = () => {
 
     const register = async () => {
       const { registeredEmpCd } = useNotificationStore.getState();
-      if (registeredEmpCd === emp_cd) {
+
+      if (registeredEmpCd === emp_cd && process.env.NODE_ENV === 'production') {
         logger.info('NotificationHook: Skipping registration — already registered', { emp_cd });
         return;
       }

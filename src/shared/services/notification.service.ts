@@ -73,16 +73,16 @@ export const NotificationService = {
       const token = tokenResponse.data;
 
       // 2. Register with Backend
-      if (process.env.NODE_ENV === 'development') {
-        logger.info('NotificationService: Skipping backend registration in development', {
-          expoToken: token,
-        });
+      // if (process.env.NODE_ENV === 'development') {
+      //   logger.info('NotificationService: Skipping backend registration in development', {
+      //     expoToken: token,
+      //   });
+      //
+      //   return { success: true, token };
+      // }
 
-        return { success: true, token };
-      }
-
-      const res = await rpc(METHODS.INSERT_PUSH_TOKEN, {
-        token,
+      const res = await rpc(METHODS.INSERT_NOTIFICATION_TOKEN, {
+        device_token: token,
         emp_cd,
       });
 
@@ -99,6 +99,6 @@ export const NotificationService = {
   },
 
   async unregister({ emp_cd }: { emp_cd: string }): Promise<void> {
-    await rpc(METHODS.INSERT_PUSH_TOKEN, { emp_cd });
+    await rpc(METHODS.INSERT_NOTIFICATION_TOKEN, { emp_cd });
   },
 };
