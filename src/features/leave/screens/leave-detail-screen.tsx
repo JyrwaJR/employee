@@ -59,6 +59,8 @@ export const LeaveDetailScreen = () => {
 
   const { data, isLoading, isFetching, refetch } = useLeaveDetail({ from_dt, leave_cd, order_dt });
 
+  const isLeaveVerified = data?.verify_flg_desc === 'Verified';
+
   if (!isValidQueries) return <Redirect href={PAGE_ROUTES.LEAVE.INDEX} />;
 
   if (isLoading || isFetching) return <LeaveDetailSkeleton />;
@@ -85,13 +87,17 @@ export const LeaveDetailScreen = () => {
           <LeaveDetailInfo leave={data} />
           <LeaveBalanceCard item={data} />
 
-          {/* Edit button */}
-          <View className="pt-4">
-            <Button
-              title="Edit Leave"
-              onPress={() => router.push(PAGE_ROUTES.LEAVE.UPDATE({ leave_cd, from_dt, order_dt }))}
-            />
-          </View>
+          {/* Edit button & Verified leave cannot be edited */}
+          {!isLeaveVerified && (
+            <View className="pt-4">
+              <Button
+                title={data.verify_flg_desc === 'Verified' ? 'Leave Verified' : 'Edit Leave'}
+                onPress={() =>
+                  router.push(PAGE_ROUTES.LEAVE.UPDATE({ leave_cd, from_dt, order_dt }))
+                }
+              />
+            </View>
+          )}
         </ScrollView>
       </Container>
     </>
