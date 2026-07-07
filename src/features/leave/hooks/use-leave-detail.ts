@@ -3,7 +3,8 @@ import { QUERY_KEYS, METHODS, STALE_TIMES } from '@utils/constants';
 import { rpc } from '@utils/api';
 import { useAuthStore } from '@stores/auth.store';
 import { LeaveListItem } from '@sharedTypes/leave';
-import { ILeaveDetails, LeaveTypeCode } from '../types';
+import { ILeaveDetails } from '../types';
+import type { LeaveTypeCode } from '@sharedTypes/leave';
 
 /** Identifies which leave record to fetch from the backend. */
 type Props = {
