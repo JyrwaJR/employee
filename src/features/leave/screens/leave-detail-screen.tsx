@@ -55,6 +55,7 @@ type LeaveDetailSearchParamsT = {
  */
 export const LeaveDetailScreen = () => {
   const { leave_cd, from_dt, order_dt } = useLocalSearchParams<LeaveDetailSearchParamsT>();
+
   const isValidQueries = !!leave_cd && !!from_dt && !!order_dt;
 
   const { data, isLoading, isFetching, refetch } = useLeaveDetail({ from_dt, leave_cd, order_dt });
@@ -87,7 +88,7 @@ export const LeaveDetailScreen = () => {
           <LeaveDetailInfo leave={data} />
           <LeaveBalanceCard item={data} />
 
-          {/* Edit button & Verified leave cannot be edited */}
+          {/* Edit button & Verified leave cannot be editet thd */}
           {!isLeaveVerified && (
             <View className="pt-4">
               <Button

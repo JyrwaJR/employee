@@ -1,13 +1,41 @@
 /**
+ * Represents the verification status of a leave request.
+ *
+ * - `Verified` — Approved by the approver.
+ * - `Pending` — Awaiting approval decision.
+ * - `Rejected` — Denied by the approver.
+ * - `Entry` — Saved as a draft, not yet submitted for approval.
+ */
+export type LeaveStatusI = 'Verified' | 'Pending' | 'Rejected' | 'Entry';
+
+/**
+ * Three-letter codes identifying each leave type available in the system.
+ *
+ * Examples: `SL` (Sick Leave), `PL` (Personal Leave), `EL`
+ * (Earned Leave), `ML` (Maternity Leave), `HPL` (Half Pay Leave).
+ */
+export type LeaveTypeCode =
+  | 'COM'
+  | 'LND'
+  | 'EOL'
+  | 'LPA'
+  | 'EL'
+  | 'HPL'
+  | 'ML'
+  | 'SL'
+  | 'WPL'
+  | 'PL';
+
+/**
  * Represents a single leave request record returned from the backend API.
  *
- * Each leave record includes the leave type, date range, reason, and
+ * Each entry includes the leave type, date range, reason, and
  * verification status. Date fields are provided in two formats:
  * `DD/MM/YYYY` (display) and `YYYY-MM-DD` (machine / sorting).
  *
  * @example
  * ```ts
- * const leave: Leave = {
+ * const item: LeaveListItem = {
  *   from_dt: '01/06/2026',
  *   from_dt1: '2026-06-01',
  *   leave_cd: 'SL',
@@ -22,76 +50,27 @@
  * };
  * ```
  */
-export type LeaveStatusI = 'Verified' | 'Pending' | 'Rejected' | 'Entry';
-
-export interface Leave extends LeaveBal {
+export interface LeaveListItem {
+  /** Three-letter leave type code (e.g. `SL`, `EL`). */
+  leave_cd: LeaveTypeCode;
+  /** Leave order date in `DD/MM/YYYY` format. */
+  order_dt: string;
+  /** Free-text reason provided by the employee. */
+  reason_for_leave: string;
+  /** Verification / approval status label. */
+  verify_flg_desc: LeaveStatusI;
   /** Leave start date in `DD/MM/YYYY` display format. */
   from_dt: string;
-
-  /** Leave start date in `YYYY-MM-DD` machine format (ISO-8601 compatible). */
-  from_dt1: string;
-
-  /** Leave type code (e.g. `SL` for Sick Leave, `VL` for Vacation Leave). */
-  leave_cd: string;
-
-  /** Human-readable leave type description (e.g. `Sick Leave`). */
-  leave_desc: string;
-
-  /** Number of leave days as a string (parsed from the backend). */
-  no_days: string;
-
-  /** Order / approval date in `DD/MM/YYYY` display format. */
-  order_dt: string;
-  order_no: string;
-
-  /** Order / approval date in `YYYY-MM-DD` machine format (ISO-8601 compatible). */
-  order_dt1: string;
-
-  /** Free-text reason provided by the employee for the leave request. */
-  reason_for_leave: string;
-
-  leave_reason_cd: string;
-
   /** Leave end date in `DD/MM/YYYY` display format. */
   to_dt: string;
-
-  /** Leave end date in `YYYY-MM-DD` machine format (ISO-8601 compatible). */
-  to_dt1: string;
-
-  /** Verification / approval status description (e.g. `Approved`, `Pending`). */
-  verify_flg_desc: LeaveStatusI;
-  remarks: string;
-}
-
-/**
- * The employee's current leave balance snapshot for a single leave type.
- *
- * Returned alongside leave details to show how many days remain after
- * accounting for usage and recent credits.
- *
- * @example
- * ```ts
- * const bal: LeaveBal = {
- *   type: 'SL',
- *   leave_desc: 'Sick Leave',
- *   opening_bal: 10,
- *   no_days_credited: 1,
- *   closing_bal: 8,
- *   closing_bal_as_on: '01/06/2026',
- * };
- * ```
- */
-export type LeaveBal = {
-  /** Remaining leave days after applying credits and deductions. */
-  closing_bal: number;
-  /** The date (in `DD/MM/YYYY`) for which the closing balance is valid. */
-  closing_bal_as_on: string;
-  /** Human-readable leave type description (e.g. `Sick Leave`). */
+  /** Number of leave days as a string (e.g. `"3"`). */
+  no_days: string;
+  /** Human-readable leave type description. */
   leave_desc: string;
-  /** Leave type code (e.g. `SL` for Sick Leave, `VL` for Vacation Leave). */
-  type: string;
-  /** Number of leave days credited to the employee in this period. */
-  no_days_credited: number;
-  /** Leave balance at the start of the period before any activity. */
-  opening_bal: number;
-};
+  /** Leave order date in `YYYY-MM-DD` machine format. */
+  order_dt1: string;
+  /** Leave start date in `YYYY-MM-DD` machine format. */
+  from_dt1: string;
+  /** Leave end date in `YYYY-MM-DD` machine format. */
+  to_dt1: string;
+}

@@ -1,15 +1,15 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from '@components/ui/text';
-import { Leave } from '@sharedTypes/leave';
 import { Icon } from '@components/ui/icon';
+import { ILeaveDetails } from '../types';
 
 /**
  * Props accepted by the {@link LeaveDetailInfo} component.
  */
 interface LeaveDetailInfoProps {
   /** The full leave record whose detail fields to render. */
-  leave: Leave;
+  leave: ILeaveDetails;
 }
 
 /**

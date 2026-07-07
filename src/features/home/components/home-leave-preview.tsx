@@ -4,13 +4,13 @@ import { Text } from '@components/ui/text';
 import { Icon } from '@components/ui/icon';
 import { router } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { Leave } from '@sharedTypes/leave';
+import { LeaveListItem } from '@sharedTypes/leave';
 import { formatDate } from '@utils/formatters/formatters';
 import { cn } from '@utils/helpers/cn';
 import { getStatusColor } from '@utils/helpers';
 
 interface HomeLeavePreviewProps {
-  leave: Leave;
+  leave: LeaveListItem;
 }
 
 export const HomeLeavePreview = ({ leave }: HomeLeavePreviewProps) => {

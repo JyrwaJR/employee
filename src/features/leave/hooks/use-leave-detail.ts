@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS, METHODS, STALE_TIMES } from '@utils/constants';
 import { rpc } from '@utils/api';
 import { useAuthStore } from '@stores/auth.store';
-import { Leave, LeaveBal } from '@sharedTypes/leave';
-import { LeaveTypeCode } from '../types';
+import { LeaveListItem } from '@sharedTypes/leave';
+import { ILeaveDetails, LeaveTypeCode } from '../types';
 
 /** Identifies which leave record to fetch from the backend. */
 type Props = {
@@ -32,9 +32,9 @@ type Props = {
  * @param leave_cd - Leave type code used as part of the composite key.
  * @param order_dt - Order / approval date used as part of the composite key.
  *
- * @returns A React Query result whose `data` is a single {@link Leave}
+ * @returns A React Query result whose `data` is a single {@link LeaveListItem}
  *          record (which includes balance fields from the extended
- *          {@link LeaveBal} type), or `undefined` when the query is
+ *          {@link LeaveBalanceT} type), or `undefined` when the query is
  *          disabled or still loading.
  *
  * @example
@@ -52,7 +52,7 @@ export function useLeaveDetail({ from_dt, leave_cd, order_dt }: Props) {
   return useQuery({
     queryKey: QUERY_KEYS.LEAVE.DETAILS(emp_cd, from_dt, leave_cd, order_dt),
     queryFn: () =>
-      rpc<Leave>(METHODS.GET_EMP_LEAVE_DETAILS, {
+      rpc<ILeaveDetails>(METHODS.GET_EMP_LEAVE_DETAILS, {
         emp_cd,
         from_dt,
         leave_cd,

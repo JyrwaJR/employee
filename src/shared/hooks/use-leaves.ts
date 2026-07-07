@@ -3,7 +3,7 @@ import { rpc } from '@utils/api';
 import { QUERY_KEYS, METHODS, STALE_TIMES } from '@utils/constants';
 import { useAuthStore } from '@stores/auth.store';
 import { transformData } from '@utils/helpers/transform-data';
-import type { Leave } from '@sharedTypes/leave';
+import type { LeaveListItem } from '@sharedTypes/leave';
 
 /**
  * Fetches the authenticated employee's leave list.
@@ -44,11 +44,11 @@ export function useLeaves() {
 
   const { data, isFetching, isLoading, refetch } = useQuery({
     queryKey: QUERY_KEYS.LEAVE.LIST(emp_cd),
-    queryFn: () => rpc<Leave[]>(METHODS.GET_EMP_LEAVES, { emp_cd }),
+    queryFn: () => rpc<LeaveListItem[]>(METHODS.GET_EMP_LEAVES, { emp_cd }),
     staleTime: STALE_TIMES.LEAVE,
     select: (data) => data.data,
     enabled: !!emp_cd && isSignedIn,
   });
 
-  return { data: transformData<Leave>(data), isFetching, isLoading, refetch };
+  return { data: transformData<LeaveListItem>(data), isFetching, isLoading, refetch };
 }

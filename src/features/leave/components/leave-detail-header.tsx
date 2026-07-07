@@ -3,8 +3,7 @@ import { View } from 'react-native';
 import { cn } from '@utils/helpers/cn';
 import { Text } from '@components/ui/text';
 import { getStatusColor } from '@utils/helpers/get-status-color';
-import { Leave } from '@sharedTypes/leave';
-import { LeaveTypeCode } from '../types';
+import { ILeaveDetails, LeaveTypeCode } from '../types';
 import { LEAVE_ICONS } from '../utils/constants';
 import { Icon } from '@components/ui/icon';
 
@@ -13,7 +12,7 @@ import { Icon } from '@components/ui/icon';
  */
 interface LeaveDetailHeaderProps {
   /** The full leave record to render the header for. */
-  leave: Leave;
+  leave: ILeaveDetails;
 }
 
 /**
@@ -43,7 +42,7 @@ export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
         <View className="mb-4 flex-row items-center justify-between">
           <View className={cn('rounded-lg p-2', statusStyle.bg)}>
             <Icon
-              name={LEAVE_ICONS[leave.leave_cd as LeaveTypeCode] ?? 'calendar-account'}
+              name={(LEAVE_ICONS[leave.leave_cd as LeaveTypeCode] as any) ?? 'calendar-account'}
               size={32}
               color={statusStyle.icon}
             />
@@ -53,7 +52,7 @@ export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
               'flex-row items-center gap-1.5 rounded-full px-3 py-1.5',
               statusStyle.bg
             )}>
-            <Icon name={statusStyle.iconName} size={14} color={statusStyle.icon} />
+            <Icon name={statusStyle.iconName as any} size={14} color={statusStyle.icon} />
             <Text className={cn('text-xs font-semibold', statusStyle.text)}>
               {leave.verify_flg_desc}
             </Text>

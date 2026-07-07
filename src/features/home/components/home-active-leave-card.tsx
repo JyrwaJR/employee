@@ -4,12 +4,12 @@ import { Card, CardContent } from '@components/ui/card';
 import { Text } from '@components/ui/text';
 import { Icon } from '@components/ui/icon';
 import { cn } from '@utils/helpers/cn';
-import { Leave } from '@sharedTypes/leave';
+import { LeaveListItem } from '@sharedTypes/leave';
 import { formatDate } from '@utils/formatters/formatters';
 import { getStatusColor } from '@utils/helpers';
 
 interface HomeActiveLeaveCardProps {
-  leave: Leave;
+  leave: LeaveListItem;
 }
 
 export const HomeActiveLeaveCard = ({ leave }: HomeActiveLeaveCardProps) => (

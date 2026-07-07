@@ -1,13 +1,12 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from '@components/ui/text';
-import { LeaveBal } from '@sharedTypes/leave';
-import { LeaveTypeCode } from '../types';
+import { ILeaveDetails, LeaveTypeCode } from '../types';
 import { LEAVE_ICONS } from '../utils/constants';
 import { Icon } from '@components/ui/icon';
 
 interface LeaveBalanceCardProps {
-  item: LeaveBal;
+  item: ILeaveDetails;
 }
 
 export const LeaveBalanceCard = ({ item }: LeaveBalanceCardProps) => (

@@ -3,7 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { cn } from '@utils/helpers/cn';
 import { Text } from '@components/ui/text';
 import { getStatusColor } from '@utils/helpers/get-status-color';
-import { Leave } from '@sharedTypes/leave';
+import { LeaveListItem } from '@sharedTypes/leave';
 import { LeaveTypeCode } from '../types';
 import { LEAVE_ICONS } from '../utils/constants';
 import { useRouter } from 'expo-router';
@@ -11,7 +11,7 @@ import { PAGE_ROUTES } from '@utils/constants';
 import { formatDate } from '@utils/formatters/formatters';
 import { Icon } from '@components/ui/icon';
 
-export const LeaveCard = ({ item }: { item: Leave; onPress?: () => void }) => {
+export const LeaveCard = ({ item }: { item: LeaveListItem; onPress?: () => void }) => {
   const router = useRouter();
   const statusStyle = getStatusColor(item.verify_flg_desc);
   const isEnable = !!item.leave_cd && !!item.from_dt && !!item.order_dt;
