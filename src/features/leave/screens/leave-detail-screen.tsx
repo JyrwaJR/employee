@@ -9,7 +9,7 @@ import { LeaveDetailHeader } from '../components/leave-detail-header';
 import { LeaveDetailInfo } from '../components/leave-detail-info';
 import { LeaveBalanceCard } from '../components/leave-balance-card';
 import { PAGE_ROUTES } from '@utils/constants';
-import { LeaveTypeCode } from '../types';
+import { LeaveTypeCode } from '@sharedTypes/leave';
 import { Button } from '@components/ui/button';
 
 /**

@@ -3,10 +3,10 @@ import { View } from 'react-native';
 import { cn } from '@utils/helpers/cn';
 import { Text } from '@components/ui/text';
 import { getStatusColor } from '@utils/helpers/get-status-color';
-import { ILeaveDetails, LeaveTypeCode } from '../types';
+import { ILeaveDetails } from '../types';
 import { LEAVE_ICONS } from '../utils/constants';
 import { Icon } from '@components/ui/icon';
-
+import { LeaveTypeCode } from '@sharedTypes/leave';
 /**
  * Props accepted by the {@link LeaveDetailHeader} component.
  */

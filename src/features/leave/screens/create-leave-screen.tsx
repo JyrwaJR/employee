@@ -10,7 +10,8 @@ import { CreateLeaveSchema, type CreateLeaveInputs } from '../validators';
 import { useCreateLeave, useLeaveReason } from '../hooks';
 import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants';
-import { LeaveReasonCode, LeaveTypeCode } from '../types';
+import { LeaveReasonCode } from '../types';
+import { LeaveTypeCode } from '@sharedTypes/leave';
 import {
   LeaveTypeDropdown,
   LeaveReasonDropdown,

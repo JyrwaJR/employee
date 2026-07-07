@@ -1,7 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from '@components/ui/text';
-import { ILeaveDetails, LeaveTypeCode } from '../types';
+import { ILeaveDetails } from '../types';
+import { LeaveTypeCode } from '@sharedTypes/leave';
 import { LEAVE_ICONS } from '../utils/constants';
 import { Icon } from '@components/ui/icon';
 
