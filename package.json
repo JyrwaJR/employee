@@ -13,7 +13,6 @@
     "ios": "expo run:ios"
   },
   "dependencies": {
-    "@expo/ui": "0.2.0-canary-20260121-a63c0dd",
     "@hookform/resolvers": "^5.2.2",
     "@react-native-vector-icons/ionicons": "^13.1.2",
     "@react-native-vector-icons/material-design-icons": "^13.1.2",
