@@ -88,7 +88,7 @@ export const FAB = ({
       accessibilityRole="button"
       accessibilityLabel={props.accessibilityLabel ?? 'Floating action button'}
       {...props}>
-      <Icon family="ionicons" name={icon} size={iconSize} color={iconColor} />
+      <Icon family="ionicons" name={icon as any} size={iconSize} color={iconColor} />
     </TouchableOpacity>
   );
 };

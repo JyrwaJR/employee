@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Skeleton } from '@components/ui/skeleton';
 import { Container } from '@components/layout/container';
+import { GovtHeaderSkeleton } from '@components/skeleton/govt-header';
 
 /**
  * Skeleton placeholder that mimics the {@link GovtHeader} component.
@@ -11,18 +12,6 @@ import { Container } from '@components/layout/container';
  * - Designation (subtitle)
  * - FY badge (right-aligned pill)
  */
-const GovtHeaderSkeleton = () => (
-  <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-    <View className="mb-3 flex-row items-center justify-between">
-      <View className="gap-y-1.5">
-        <Skeleton className="h-4 w-44 rounded" />
-        <Skeleton className="h-3 w-28 rounded" />
-      </View>
-      <Skeleton className="h-6 w-20 rounded-full" />
-    </View>
-    <Skeleton className="h-7 w-56 rounded-md" />
-  </View>
-);
 
 /**
  * Skeleton placeholder that mimics the {@link SummaryCard} component.
@@ -74,14 +63,14 @@ const DetailCardSkeleton = ({
  * - Bottom summary rows (base tax, rebate, surcharge, cess, total, effective rate)
  */
 const TaxComputationSkeleton = () => (
-  <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+  <View className="mb-6 rounded-lg border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     <View className="mb-4 flex-row items-center justify-between">
       <Skeleton className="h-4 w-32 rounded" />
       <Skeleton className="h-6 w-24 rounded-full" />
     </View>
 
     {/* Slab table */}
-    <View className="rounded-xl bg-gray-50 p-3 dark:bg-gray-800">
+    <View className="rounded-lg bg-gray-50 p-3 dark:bg-gray-800">
       {/* Table header */}
       <View className="mb-2 flex-row border-b border-gray-200 pb-2 dark:border-gray-700">
         <Skeleton className="h-3 flex-[2] rounded" />
@@ -101,7 +90,7 @@ const TaxComputationSkeleton = () => (
     </View>
 
     {/* Bottom summary rows */}
-    <View className="mt-4 rounded-xl bg-gray-50 p-3 dark:bg-gray-800">
+    <View className="mt-4 rounded-lg bg-gray-50 p-3 dark:bg-gray-800">
       {Array.from({ length: 6 }).map((_, i) => (
         <View key={i} className="mb-3 flex-row items-center justify-between">
           <Skeleton className="h-3 w-36 rounded" />
@@ -126,7 +115,7 @@ const TaxComputationSkeleton = () => (
  */
 export const TaxDetailSkeleton = () => (
   <Container className="flex-1">
-    <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
+    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
       {/* GovtHeader placeholder */}
       <GovtHeaderSkeleton />
 
@@ -149,7 +138,7 @@ export const TaxDetailSkeleton = () => (
       <DetailCardSkeleton titleWidth="w-28" rows={4} />
 
       {/* Edit button placeholder */}
-      <Skeleton className="mb-10 h-12 w-full rounded-xl" />
+      <Skeleton className="mb-10 h-12 w-full rounded-lg" />
     </ScrollView>
   </Container>
 );
