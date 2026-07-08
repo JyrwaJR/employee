@@ -7,11 +7,14 @@ import { Skeleton } from '@components/ui/skeleton';
 /**
  * Skeleton placeholder that mimics the GovtHeader component.
  *
- * Renders shimmer bars for the title and subtitle text.
+ * Renders shimmer bars for the icon, "Government of India" text,
+ * title, and subtitle.
  */
 const LoginHeaderSkeleton = () => (
-  <View className="mb-8 items-center">
-    <Skeleton className="mb-2 h-8 w-48 rounded-md" />
+  <View className="mb-8 items-center gap-y-2">
+    <Skeleton className="mb-3 h-16 w-16 rounded-full" />
+    <Skeleton className="h-3 w-28 rounded" />
+    <Skeleton className="h-8 w-48 rounded-md" />
     <Skeleton className="h-4 w-36 rounded" />
   </View>
 );
@@ -52,7 +55,7 @@ const LoginButtonSkeleton = () => <Skeleton className="mb-8 h-12 w-full rounded-
  * Renders shimmer bars for the text and link in a centered row.
  */
 const LoginFooterSkeleton = () => (
-  <View className="flex-row items-center justify-center gap-x-1">
+  <View className="mt-10 flex-row items-center justify-center gap-x-1">
     <Skeleton className="h-4 w-40 rounded" />
     <Skeleton className="h-4 w-24 rounded" />
   </View>
@@ -62,7 +65,7 @@ const LoginFooterSkeleton = () => (
  * Full-page skeleton loading state for the login screen.
  *
  * Mirrors the layout of LoginScreen with shimmer placeholders for:
- * - GovtHeader (title + subtitle)
+ * - GovtHeader (icon, "Government of India", title, subtitle)
  * - Employee Code field (label + input)
  * - Password field (label + input)
  * - Forgot password link
