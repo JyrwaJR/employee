@@ -56,13 +56,13 @@ const fabVariants = cva('absolute items-center justify-center rounded-full shado
  */
 interface FABProps extends TouchableOpacityProps, VariantProps<typeof fabVariants> {
   /** Name of the Ionicons icon to display inside the button. */
-  icon: string;
+  icon?: string;
   /** Callback invoked when the button is pressed. */
   onPress: () => void;
 }
 
 export const FAB = ({
-  icon,
+  icon = 'add',
   onPress,
   className,
   variant = 'primary',

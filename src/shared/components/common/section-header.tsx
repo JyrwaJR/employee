@@ -33,7 +33,7 @@ export const SectionHeader = ({
   className,
 }: SectionHeaderProps) => {
   return (
-    <View className={cn('mb-7', className)}>
+    <View className={cn('mb-3', className)}>
       <View className="flex-row items-center gap-x-4">
         {/* Left accent bar */}
         <View className="h-10 w-[3px] rounded-full bg-blue-500" />

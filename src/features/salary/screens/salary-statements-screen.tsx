@@ -31,7 +31,6 @@ export const StatementScreen = () => {
         data={statements}
         keyExtractor={(item) => item.id}
         refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}
-        contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => <SalaryStatementListItem item={item} />}
       />
