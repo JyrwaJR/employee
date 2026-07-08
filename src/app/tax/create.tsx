@@ -9,6 +9,7 @@ import { toast } from '@components/ui';
 import { SectionHeader } from '@components/common/section-header';
 import { FieldInput } from '@components/ui/field-input';
 import { useUpdateTaxDetail } from '@features/income-tax/hooks';
+import { CreateTaxSkeleton } from '@features/income-tax/components/skeleton';
 import {
   updateTaxSchema,
   UpdateTaxFormValues,
@@ -49,6 +50,8 @@ export default function CreateTaxRecordScreen() {
       });
     }
   };
+
+  if (isSubmitting || updateMutation.isPending) return <CreateTaxSkeleton />;
 
   return (
     <Container className="flex-1">

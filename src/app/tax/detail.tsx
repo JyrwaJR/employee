@@ -3,7 +3,7 @@ import { View, ScrollView, RefreshControl, TouchableOpacity } from 'react-native
 import { Container } from '@components/layout/container';
 import { Text } from '@components/ui/text';
 import { router } from 'expo-router';
-import { LoadingScreen } from '@components/screens/loading-screen';
+import { TaxDetailSkeleton } from '@features/income-tax/components/skeleton';
 import { GovtHeader } from '@components/common/govt-header';
 import { SummaryCard } from '@components/common/summary-card';
 import { SectionHeader } from '@components/common/section-header';
@@ -14,7 +14,7 @@ import { useEmployeeTax } from '@features/income-tax/hooks';
 export default function EmployeeTaxDetailScreen() {
   const { data, isFetching, isLoading, refetch } = useEmployeeTax();
 
-  if (isLoading) return <LoadingScreen />;
+  if (isLoading) return <TaxDetailSkeleton />;
 
   if (!data) {
     return (

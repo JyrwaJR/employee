@@ -6,12 +6,12 @@ import { useEmployeeTaxes } from '../hooks';
 import { TaxSummaryCard } from '../components';
 import { EmptyScreen } from '@components/screens';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { LoadingScreen } from '@components/screens/loading-screen';
+import { TaxListSkeleton } from '../components/skeleton';
 
 export default function TaxListScreen() {
   const { data: taxList, isLoading, isFetching, refetch } = useEmployeeTaxes();
 
-  if (isLoading) return <LoadingScreen />;
+  if (isLoading) return <TaxListSkeleton />;
 
   if (!taxList || taxList.length === 0) {
     return (

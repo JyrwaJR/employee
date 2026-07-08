@@ -6,7 +6,7 @@ import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from '@components/ui';
 import { SectionHeader } from '@components/common/section-header';
-import { LoadingScreen } from '@components/screens/loading-screen';
+import { EditTaxSkeleton } from '@features/income-tax/components/skeleton';
 import { FieldInput } from '@components/ui/field-input';
 import { useEmployeeTax, useUpdateTaxDetail } from '@features/income-tax/hooks';
 import {
@@ -63,7 +63,7 @@ export default function EditTaxDetailScreen() {
     }
   };
 
-  if (isLoading) return <LoadingScreen />;
+  if (isLoading) return <EditTaxSkeleton />;
 
   return (
     <Container className="flex-1">
