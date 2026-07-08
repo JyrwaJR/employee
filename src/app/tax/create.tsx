@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Container } from '@components/layout/container';
 import { Text } from '@components/ui/text';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from 'expo-router';
-import { toast } from '@components/ui';
+import { Button, toast } from '@components/ui';
 import { SectionHeader } from '@components/common/section-header';
 import { FieldInput } from '@components/ui/field-input';
 import { useUpdateTaxDetail } from '@features/income-tax/hooks';
@@ -56,8 +56,11 @@ export default function CreateTaxRecordScreen() {
   return (
     <Container className="flex-1">
       <FormProvider {...methods}>
-        <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
-          <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <ScrollView
+          className="flex-1"
+          contentContainerClassName="pb-10"
+          showsVerticalScrollIndicator={false}>
+          <View className="mb-6">
             <SectionHeader title="Tax Regime" />
             <View className="flex-row gap-3">
               <Controller
@@ -65,10 +68,10 @@ export default function CreateTaxRecordScreen() {
                 name="regime"
                 render={({ field: { onChange, value } }) => (
                   <>
-                    <TouchableOpacity
+                    <Button
                       onPress={() => onChange('NEW')}
                       className={
-                        'flex-1 rounded-xl p-4 ' +
+                        'flex-1 p-4' +
                         (value === 'NEW'
                           ? 'bg-blue-600'
                           : 'border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800')
@@ -80,11 +83,11 @@ export default function CreateTaxRecordScreen() {
                         }>
                         New Regime
                       </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
+                    </Button>
+                    <Button
                       onPress={() => onChange('OLD')}
                       className={
-                        'flex-1 rounded-xl p-4 ' +
+                        'flex-1 p-4' +
                         (value === 'OLD'
                           ? 'bg-amber-600'
                           : 'border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800')
@@ -96,14 +99,14 @@ export default function CreateTaxRecordScreen() {
                         }>
                         Old Regime
                       </Text>
-                    </TouchableOpacity>
+                    </Button>
                   </>
                 )}
               />
             </View>
           </View>
 
-          <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <View className="mb-6">
             <SectionHeader title="Deductions" />
             <FieldInput
               name="deductions80C"
@@ -143,20 +146,11 @@ export default function CreateTaxRecordScreen() {
             />
           </View>
 
-          <TouchableOpacity
+          <Button
             onPress={handleSubmit(onSubmit)}
-            disabled={isSubmitting || updateMutation.isPending}
-            className={
-              'mb-10 flex-row items-center justify-center rounded-xl p-4 ' +
-              (isSubmitting || updateMutation.isPending ? 'bg-blue-400' : 'bg-blue-600')
-            }>
-            {isSubmitting || updateMutation.isPending ? (
-              <ActivityIndicator color="white" className="mr-2" />
-            ) : null}
-            <Text className="font-semibold text-white">
-              {isSubmitting || updateMutation.isPending ? 'Creating...' : 'Create Tax Record'}
-            </Text>
-          </TouchableOpacity>
+            disabled={isSubmitting || updateMutation.isPending}>
+            {isSubmitting || updateMutation.isPending ? 'Creating...' : 'Create Tax Record'}
+          </Button>
         </ScrollView>
       </FormProvider>
     </Container>

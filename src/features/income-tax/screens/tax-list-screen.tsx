@@ -7,6 +7,7 @@ import { TaxSummaryCard } from '../components';
 import { EmptyScreen } from '@components/screens';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { TaxListSkeleton } from '../components/skeleton';
+import { FAB } from '@components/common';
 
 export default function TaxListScreen() {
   const { data: taxList, isLoading, isFetching, refetch } = useEmployeeTaxes();
@@ -15,11 +16,14 @@ export default function TaxListScreen() {
 
   if (!taxList || taxList.length === 0) {
     return (
-      <EmptyScreen
-        title="No Tax Records Found"
-        message="Tax data is not yet available for any employee."
-        refresh={refetch}
-      />
+      <>
+        <EmptyScreen
+          title="No Tax Records Found"
+          message="Tax data is not yet available for any employee."
+          refresh={refetch}
+        />
+        <FAB onPress={() => router.push(PAGE_ROUTES.TAX.CREATE)} />
+      </>
     );
   }
 
@@ -29,11 +33,11 @@ export default function TaxListScreen() {
         data={taxList}
         keyExtractor={(item) => item.employeeId}
         refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}
-        contentContainerStyle={{ padding: 16, paddingBottom: 100 }}
         renderItem={({ item }) => (
           <TaxSummaryCard item={item} onPress={() => router.push(PAGE_ROUTES.TAX.DETAIL)} />
         )}
       />
+      <FAB onPress={() => router.push(PAGE_ROUTES.TAX.CREATE)} />
     </Container>
   );
 }

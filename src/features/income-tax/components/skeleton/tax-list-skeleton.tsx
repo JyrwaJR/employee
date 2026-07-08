@@ -14,11 +14,11 @@ import { Container } from '@components/layout/container';
  * - Regime indicator dot + label (left) and Tax amount (right)
  */
 const TaxSummaryCardSkeleton = () => (
-  <View className="mb-3 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+  <View className="mb-3 rounded-lg border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     {/* Row 1: Name + Designation | Status badge */}
     <View className="mb-3 flex-row items-center justify-between">
       <View className="flex-1 gap-y-1.5">
-        <Skeleton className="h-5 w-44 rounded-md" />
+        <Skeleton className="h-5 w-44 rounded-lg" />
         <Skeleton className="h-3 w-28 rounded" />
       </View>
       <Skeleton className="h-6 w-20 rounded-full" />
@@ -69,7 +69,7 @@ export const TaxListSkeleton = ({ count = 6 }: TaxListSkeletonProps) => (
     <SectionHeaderSkeleton hasSubtitle titleWidth="w-32" subtitleWidth="w-44" />
 
     <FlatList
-      contentContainerClassName="px-4 pb-20"
+      contentContainerClassName="pb-20"
       data={Array.from({ length: count })}
       renderItem={() => <TaxSummaryCardSkeleton />}
     />

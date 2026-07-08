@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Skeleton } from '@components/ui/skeleton';
 import { Container } from '@components/layout/container';
+import { SectionHeaderSkeleton } from '@components/skeleton';
 
 /**
  * Skeleton placeholder that mimics the Tax Regime selector card in the
@@ -12,11 +13,11 @@ import { Container } from '@components/layout/container';
  * - Two regime buttons (New Regime / Old Regime)
  */
 const RegimeSelectorSkeleton = () => (
-  <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+  <View className="mb-6 border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     <Skeleton className="mb-4 h-4 w-24 rounded" />
     <View className="flex-row gap-3">
-      <Skeleton className="h-12 flex-1 rounded-xl" />
-      <Skeleton className="h-12 flex-1 rounded-xl" />
+      <Skeleton className="h-12 flex-1 rounded-lg" />
+      <Skeleton className="h-12 flex-1 rounded-lg" />
     </View>
   </View>
 );
@@ -43,7 +44,7 @@ const FormFieldSkeleton = () => (
  * - 6 form field skeletons (80C, 80D, HRA, LTA, Home Loan, NPS)
  */
 const DeductionsCardSkeleton = () => (
-  <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+  <View className="mb-6 rounded-lg border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     <Skeleton className="mb-4 h-4 w-24 rounded" />
     {Array.from({ length: 6 }).map((_, i) => (
       <FormFieldSkeleton key={i} />
@@ -64,10 +65,11 @@ const DeductionsCardSkeleton = () => (
  */
 export const CreateTaxSkeleton = () => (
   <Container className="flex-1">
-    <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
+    <SectionHeaderSkeleton />
+    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
       <RegimeSelectorSkeleton />
       <DeductionsCardSkeleton />
-      <Skeleton className="mb-10 h-12 w-full rounded-xl" />
+      <Skeleton className="mb-10 h-12 w-full rounded-lg" />
     </ScrollView>
   </Container>
 );
