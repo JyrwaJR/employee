@@ -7,3 +7,4 @@ export * from './phone-form';
 export * from './reset-password-form';
 export * from './verify-otp-form';
 export * from './auth-term-text';
+export * from './skeleton';
