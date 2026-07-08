@@ -118,7 +118,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   ios: {
     supportsTablet: true,
     bundleIdentifier: getIdentifier(),
-    googleServicesFile: process.env.GOOGLE_SERVICES_JSON_IOS,
+    googleServicesFile: process.env.GOOGLE_SERVICES_PLIST_IOS, // google-service.plist file needed
   },
   android: {
     googleServicesFile: process.env.GOOGLE_SERVICES_JSON,
