@@ -73,7 +73,10 @@ export default function EmployeeTaxDetailScreen() {
 
         <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <View className="mb-4 flex-row items-center justify-between">
-            <SectionHeader title="Tax Computation" />
+            <View className="flex-1">
+              <SectionHeader title="Tax Computation" />
+            </View>
+
             <View
               className={
                 'rounded-full px-3 py-1 ' +

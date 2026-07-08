@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { View, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import { Container } from '@components/layout/container';
 import { Text } from '@components/ui/text';
 import { FormProvider, useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { toast } from '@components/ui';
+import { Button, toast } from '@components/ui';
 import { SectionHeader } from '@components/common/section-header';
 import { EditTaxSkeleton } from '../components/skeleton';
 import { FieldInput } from '@components/ui/field-input';
@@ -65,8 +65,8 @@ export default function EditTaxDetailScreen() {
   return (
     <Container className="flex-1">
       <FormProvider {...methods}>
-        <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
-          <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+          <View className="mb-6">
             <SectionHeader title="Tax Regime" />
             <Text className="mb-3 text-xs text-gray-500">
               Select the tax regime applicable for this employee.
@@ -76,40 +76,20 @@ export default function EditTaxDetailScreen() {
                 control={control}
                 name="regime"
                 render={({ field: { onChange, value } }) => (
-                  <>
-                    <TouchableOpacity
+                  <View className="flex-1 flex-row gap-3">
+                    <Button
                       onPress={() => onChange('NEW')}
-                      className={
-                        'flex-1 rounded-xl p-4 ' +
-                        (value === 'NEW'
-                          ? 'bg-blue-600'
-                          : 'border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800')
-                      }>
-                      <Text
-                        className={
-                          'text-center text-sm font-bold ' +
-                          (value === 'NEW' ? 'text-white' : 'text-gray-700 dark:text-gray-300')
-                        }>
-                        New Regime
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
+                      className="flex-1"
+                      variant={value === 'NEW' ? 'primary' : 'outline'}>
+                      New Regime
+                    </Button>
+                    <Button
                       onPress={() => onChange('OLD')}
-                      className={
-                        'flex-1 rounded-xl p-4 ' +
-                        (value === 'OLD'
-                          ? 'bg-amber-600'
-                          : 'border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800')
-                      }>
-                      <Text
-                        className={
-                          'text-center text-sm font-bold ' +
-                          (value === 'OLD' ? 'text-white' : 'text-gray-700 dark:text-gray-300')
-                        }>
-                        Old Regime
-                      </Text>
-                    </TouchableOpacity>
-                  </>
+                      className="flex-1"
+                      variant={value === 'OLD' ? 'primary' : 'outline'}>
+                      Old Regime
+                    </Button>
+                  </View>
                 )}
               />
             </View>
@@ -118,7 +98,7 @@ export default function EditTaxDetailScreen() {
             )}
           </View>
 
-          <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+          <View className="mb-6">
             <SectionHeader title="Deductions (Old Regime)" />
             <Text className="mb-4 text-xs text-gray-500">
               Enter the deduction amounts claimed by the employee.
@@ -162,20 +142,11 @@ export default function EditTaxDetailScreen() {
             />
           </View>
 
-          <TouchableOpacity
+          <Button
             onPress={handleSubmit(onSubmit)}
-            disabled={isSubmitting || updateMutation.isPending}
-            className={
-              'mb-10 flex-row items-center justify-center rounded-xl p-4 ' +
-              (isSubmitting || updateMutation.isPending ? 'bg-blue-400' : 'bg-blue-600')
-            }>
-            {isSubmitting || updateMutation.isPending ? (
-              <ActivityIndicator color="white" className="mr-2" />
-            ) : null}
-            <Text className="font-semibold text-white">
-              {isSubmitting || updateMutation.isPending ? 'Saving...' : 'Save Tax Details'}
-            </Text>
-          </TouchableOpacity>
+            disabled={isSubmitting || updateMutation.isPending}>
+            {isSubmitting || updateMutation.isPending ? 'Saving...' : 'Save Tax Details'}
+          </Button>
         </ScrollView>
       </FormProvider>
     </Container>

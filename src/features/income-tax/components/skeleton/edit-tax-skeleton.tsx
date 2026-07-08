@@ -2,6 +2,7 @@ import React from 'react';
 import { View, ScrollView } from 'react-native';
 import { Skeleton } from '@components/ui/skeleton';
 import { Container } from '@components/layout/container';
+import { SectionHeaderSkeleton } from '@components/skeleton';
 
 /**
  * Skeleton placeholder that mimics a single form input field
@@ -75,7 +76,9 @@ const DeductionsCardSkeleton = () => (
 export const EditTaxSkeleton = () => (
   <Container className="flex-1">
     <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
+      <SectionHeaderSkeleton />
       <RegimeSelectorSkeleton />
+      <SectionHeaderSkeleton />
       <DeductionsCardSkeleton />
       <Skeleton className="mb-10 h-12 w-full rounded-lg" />
     </ScrollView>
