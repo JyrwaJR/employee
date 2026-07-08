@@ -46,9 +46,10 @@ export const useAuthStore = create<AuthStore>()(
             const res = await rpc<UserT>(METHODS.GET_EMP_DETAILS, { emp_cd: empCode });
 
             if (res.success && res.data) {
+              console.log('user details', res.data);
               logger.info('AuthStore: fetchUser success', { empCode });
               // TODO: Correct the role when change if needed
-              set({ user: res.data, isSignedIn: true, role: res.data.emp_designation });
+              set({ user: res.data, isSignedIn: true, role: 'USER' });
             } else {
               logger.warn('AuthStore: fetchUser returned no data', {
                 empCode,

@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text } from '@components/ui/text';
+import { Button } from '@components/ui/button';
 import { Icon } from '@components/ui/icon';
 import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants/routes';
+import { useAuthStore } from '@stores/auth.store';
 
 interface ForbiddenProps {
   title?: string;
@@ -19,6 +21,7 @@ export const Forbidden = ({
   onPressTryAgain,
 }: ForbiddenProps) => {
   const router = useRouter();
+  const { logout } = useAuthStore();
 
   const handlePress = () => {
     if (onPressHome) {
@@ -29,7 +32,7 @@ export const Forbidden = ({
   };
 
   return (
-    <View className="flex-1 items-center justify-center p-6">
+    <View className="flex-1 items-center justify-center gap-y-2 p-6">
       <View className="mb-6 h-24 w-24 items-center justify-center rounded-full bg-red-50 dark:bg-red-900/20">
         <Icon name="shield-lock-outline" size={48} color="#EF4444" />
       </View>
@@ -42,12 +45,13 @@ export const Forbidden = ({
         {message}
       </Text>
 
-      <TouchableOpacity
-        onPress={handlePress}
-        activeOpacity={0.8}
-        className="rounded-full bg-gray-900 px-8 py-3 dark:bg-white">
-        <Text className="font-semibold text-white dark:text-gray-900">Go Back Home</Text>
-      </TouchableOpacity>
+      <Button onPress={handlePress} variant={'outline'} activeOpacity={0.8}>
+        Go Back Home
+      </Button>
+
+      <Button variant={'destructive'} onPress={logout} activeOpacity={0.8}>
+        Logout
+      </Button>
 
       {onPressTryAgain && (
         <TouchableOpacity
