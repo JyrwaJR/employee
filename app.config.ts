@@ -24,11 +24,11 @@ const ASSETS = {
   /** Default iOS app icon displayed on the home screen and Settings. */
   iosIcon: './src/shared/assets/ios-icon-default.png',
   /** iOS splash screen image shown during app launch. */
-  iosSplash: './src/shared/assets/ios-splash.png',
+  iosSplash: './src/shared/assets/ios-icon-default.png',
   /** Foreground image for the Android adaptive icon (masked by the system shape). */
   androidIconForeground: './src/shared/assets/android-icon-foreground.png',
   /** Android splash screen image displayed during app launch. */
-  androidSplash: './src/shared/assets/android-icon-foreground.png',
+  androidSplash: './src/shared/assets/ios-icon-default.png',
 } as const;
 
 /** Shared background color used for splash screens and adaptive icon backgrounds. */
@@ -55,9 +55,9 @@ const getAppName = (baseName: string) => {
  * @returns The fully-qualified reverse-domain identifier.
  */
 const getIdentifier = () => {
-  if (isDev) return 'com.jyrwaboys.employeemobile';
-  if (isPreview) return 'com.jyrwaboys.employeemobile';
-  return 'com.jyrwaboys.employeemobile';
+  if (isDev) return 'com.jyrwaboys.eis';
+  if (isPreview) return 'com.jyrwaboys.eis';
+  return 'com.jyrwaboys.eis';
 };
 
 /**
@@ -135,9 +135,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   extra: {
     router: {},
-    eas: { projectId: '274cfcf8-439f-4622-ab99-76fa09023690' },
+    eas: {
+      projectId: '2fd849f1-51e3-4a1b-9ece-6d0973d36314',
+    },
   },
-  owner: 'jyrwajr',
+  owner: 'pixel-thread',
   updates: {
     url: 'https://u.expo.dev/14849a6b-819c-4e05-9b59-022a381d8999',
   },
