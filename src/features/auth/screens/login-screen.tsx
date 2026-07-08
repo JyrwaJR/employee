@@ -13,6 +13,7 @@ import { Button } from '@components/ui/button';
 import { useLoginMutation } from '../hooks/use-login-mutation';
 import { useAuthStore } from '@stores/auth.store';
 import { AuthFooter } from '../components/auth-footer';
+import { LoginScreenSkeleton } from '../components/skeleton';
 import { useGetOAuthToken } from '../hooks/use-get-oauth-token';
 import { toast } from 'sonner-native';
 import { useRateLimit } from '@hooks';
@@ -112,6 +113,8 @@ export const LoginScreen = () => {
 
   const isPending = isAuthLoading || isLoginPending || isTokenPending;
 
+  if (isPending) return <LoginScreenSkeleton />;
+
   return (
     <Container>
       <KeyboardSafeView contentContainerClassName="px-6 justify-center">
@@ -144,8 +147,6 @@ export const LoginScreen = () => {
               returnKeyType="done"
               onSubmitEditing={methods.handleSubmit(onSubmit)}
             />
-
-            <View className="mb-8 items-end">
               <Link href={PAGE_ROUTES.AUTH.FORGOT_PASSWORD()} asChild>
                 <TouchableOpacity
                   className="mt-2"
