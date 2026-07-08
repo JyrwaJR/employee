@@ -35,6 +35,10 @@ export const QUERY_KEYS = {
     LIST: (page?: number) => ['announcement_list', page].filter(Boolean),
     DETAILS: (id: string) => ['announcement_details', id] as const,
   },
+  TAX: {
+    LIST: (...args: (string | undefined)[]) => ['income-tax', ...args].filter(Boolean),
+    DETAIL: (...args: (string | undefined)[]) => ['income-tax', 'detail', ...args].filter(Boolean),
+  },
 };
 
 /**
@@ -69,4 +73,6 @@ export const STALE_TIMES = {
   EMPLOYEE: 1000 * 60 * 30, // 30 minutes
   /** Static reference data — pension records. */
   PENSION: 1000 * 60 * 15, // 15 minutes
+  /** Tax data — slow-changing annually. */
+  TAX: 1000 * 60 * 15, // 15 minutes
 } as const;

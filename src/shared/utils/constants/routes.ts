@@ -57,4 +57,10 @@ export const PAGE_ROUTES = {
   },
   STATEMENT: '/statement' as const,
   ANNOUNCEMENT: '/announcements' as const,
+  TAX: {
+    LIST: '/tax' as const,
+    DETAIL: '/tax/detail' as Route,
+    EDIT: '/tax/edit' as Route,
+    CREATE: '/tax/create' as Route,
+  },
 };

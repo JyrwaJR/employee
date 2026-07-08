@@ -33,6 +33,10 @@ export const PAGE_HEADERS = {
   '/leaves/[id]': { title: 'My Leaves', showBackButton: true },
   '/leaves/create': { title: 'Apply for Leaves', showBackButton: true },
   '/ui-lab': { title: 'Ui Lab', showBackButton: true },
+  '/tax': { title: 'Income Tax', showBackButton: false, showDrawer: true },
+  '/tax/detail': { title: 'Tax Computation', showBackButton: true },
+  '/tax/edit': { title: 'Edit Tax Details', showBackButton: true },
+  '/tax/create': { title: 'New Tax Record', showBackButton: true },
 } as const satisfies Record<string, PageHeaderConfig>;
 
 export type PageHeaderRoute = keyof typeof PAGE_HEADERS;

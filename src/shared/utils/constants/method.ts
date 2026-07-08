@@ -17,6 +17,9 @@ export const METHODS = {
   GET_EMP_SALARY_STATEMENTS: 'get_employee_salary_statements',
   GET_EMP_SALARY_STATEMENTS_DETAILS: 'get_employee_salary_statements_DETAILS',
   INSERT_NOTIFICATION_TOKEN: 'insert_notification_token',
+  GET_EMP_TAX_LIST: 'get_employee_tax_list',
+  GET_EMP_TAX_DETAIL: 'get_employee_tax_detail',
+  UPDATE_EMP_TAX_DETAIL: 'update_employee_tax_detail',
 } as const;
 
 /**
