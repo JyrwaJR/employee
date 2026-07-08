@@ -147,13 +147,15 @@ export const LoginScreen = () => {
               returnKeyType="done"
               onSubmitEditing={methods.handleSubmit(onSubmit)}
             />
-            <Link href={PAGE_ROUTES.AUTH.FORGOT_PASSWORD()} asChild>
-              <TouchableOpacity
-                className="mt-2"
-                hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}>
-                <Text variant={'link'}>Forgot password?</Text>
-              </TouchableOpacity>
-            </Link>
+            <View className="mb-8 items-end">
+              <Link href={PAGE_ROUTES.AUTH.FORGOT_PASSWORD()} asChild>
+                <TouchableOpacity
+                  className="mt-2"
+                  hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}>
+                  <Text variant={'link'}>Forgot password?</Text>
+                </TouchableOpacity>
+              </Link>
+            </View>
             <Button
               testID="SIGN_IN_BUTTON"
               onPress={methods.handleSubmit(onSubmit)}
