@@ -2,19 +2,15 @@ import React from 'react';
 import { View } from 'react-native';
 import { Text } from '@components/ui/text';
 
-export const ProfileDetailRow = ({
-  label,
-  value,
-}: {
-  label: string;
-  value: string | undefined;
-}) => (
-  <View className="flex-row justify-between border-b border-gray-100 py-2 last:border-0 dark:border-gray-800">
-    <Text variant="subtext" className="w-1/3 text-sm font-medium">
-      {label}
-    </Text>
-    <Text className="flex-1 text-right text-sm font-medium text-gray-900 dark:text-white">
-      {value || '-'}
-    </Text>
+/** A two-column table row (Label | Value) styled like the NIC e-HRMS portal. */
+export const ProfileDetailRow = ({ label, value }: { label: string; value?: string | null }) => (
+  <View className="flex-row border-b border-gray-200 dark:border-gray-800">
+    <View className="w-2/5 border-r border-gray-200 bg-gray-50 px-3 py-3 dark:border-gray-800 dark:bg-gray-900">
+      <Text className="text-sm font-medium">{label}</Text>
+    </View>
+
+    <View className="flex-1 px-3 py-3">
+      <Text className="text-sm">{value || '-'}</Text>
+    </View>
   </View>
 );

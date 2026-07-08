@@ -24,6 +24,8 @@ export type UserT = {
   emp_type: string;
   gis_applicable: string;
   inc_dt: string;
+
+  office_id: string;
   office_name: string;
   parent_dept: string;
   pay_comm: string;

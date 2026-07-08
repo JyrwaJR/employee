@@ -106,7 +106,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     typedRoutes: true,
     tsconfigPaths: true,
   },
-  orientation: 'portrait',
+  orientation: 'default',
   icon: ASSETS.iosIcon,
   userInterfaceStyle: 'light',
   splash: {
