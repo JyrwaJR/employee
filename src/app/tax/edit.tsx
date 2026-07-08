@@ -20,7 +20,7 @@ export default function EditTaxDetailScreen() {
   const updateMutation = useUpdateTaxDetail();
 
   const methods = useForm<UpdateTaxFormValues>({
-    resolver: zodResolver(updateTaxSchema),
+    resolver: zodResolver(updateTaxSchema) as any,
     defaultValues: {
       regime: 'NEW',
       deductions80C: 0,
