@@ -23,7 +23,7 @@ export const SummaryCard = ({ label, amount, className, status = 'PENDING' }: Su
   const borderClass = statusStyle.border;
 
   return (
-    <View className={cn('mb-6 rounded-3xl p-6 shadow-xl shadow-blue-900/20', bgClass, className)}>
+    <View className={cn('mb-6 rounded-lg p-6', bgClass, className)}>
       <Text className={cn('mb-1 text-sm font-medium', textClass)}>{label}</Text>
       <Text className="mb-6 text-4xl font-bold text-white">{amount}</Text>
 

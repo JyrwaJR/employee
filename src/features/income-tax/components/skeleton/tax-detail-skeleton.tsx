@@ -21,7 +21,7 @@ import { GovtHeaderSkeleton } from '@components/skeleton/govt-header';
  * - Large rupee amount
  */
 const SummaryCardSkeleton = () => (
-  <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+  <View className="mb-6 rounded-lg border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     <Skeleton className="mb-2 h-3 w-32 rounded" />
     <Skeleton className="h-8 w-44 rounded-md" />
   </View>
@@ -42,7 +42,7 @@ const DetailCardSkeleton = ({
   titleWidth?: string;
   rows?: number;
 }) => (
-  <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+  <View className="mb-6 rounded-lg border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     <Skeleton className={`mb-4 h-4 ${titleWidth} rounded`} />
     {Array.from({ length: rows }).map((_, i) => (
       <View key={i} className="mb-4 flex-row items-center justify-between">
