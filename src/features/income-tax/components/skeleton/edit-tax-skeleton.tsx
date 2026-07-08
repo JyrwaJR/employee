@@ -4,31 +4,15 @@ import { Skeleton } from '@components/ui/skeleton';
 import { Container } from '@components/layout/container';
 
 /**
- * Skeleton placeholder that mimics the Tax Regime selector card in the
- * edit form.
- *
- * Layout:
- * - "Tax Regime" section title
- * - Description text
- * - Two regime buttons (New Regime / Old Regime)
- */
-const RegimeSelectorSkeleton = () => (
-  <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-    <Skeleton className="mb-2 h-4 w-24 rounded" />
-    <Skeleton className="mb-4 h-3 w-64 rounded" />
-    <View className="flex-row gap-3">
-      <Skeleton className="h-12 flex-1 rounded-xl" />
-      <Skeleton className="h-12 flex-1 rounded-xl" />
-    </View>
-  </View>
-);
-
-/**
- * Skeleton placeholder that mimics a single form input field.
+ * Skeleton placeholder that mimics a single form input field
+ * in the edit tax form.
  *
  * Layout:
  * - Label text line
  * - Input box (full width rounded rectangle)
+ *
+ * The absence of horizontal padding matches the bare `FieldInput`
+ * components used in the actual edit screen.
  */
 const FormFieldSkeleton = () => (
   <View className="mb-4">
@@ -38,7 +22,28 @@ const FormFieldSkeleton = () => (
 );
 
 /**
- * Skeleton placeholder that mimics the Deductions card in the edit form.
+ * Skeleton placeholder that mimics the Tax Regime section in the
+ * edit form.
+ *
+ * Layout:
+ * - "Tax Regime" section title
+ * - Description text
+ * - Two regime buttons (New Regime / Old Regime)
+ */
+const RegimeSelectorSkeleton = () => (
+  <View className="mb-6">
+    <Skeleton className="mb-2 h-4 w-24 rounded" />
+    <Skeleton className="mb-3 h-3 w-64 rounded" />
+    <View className="flex-row gap-3">
+      <Skeleton className="h-12 flex-1 rounded-lg" />
+      <Skeleton className="h-12 flex-1 rounded-lg" />
+    </View>
+  </View>
+);
+
+/**
+ * Skeleton placeholder that mimics the Deductions section in the
+ * edit form.
  *
  * Layout:
  * - "Deductions (Old Regime)" section title
@@ -46,7 +51,7 @@ const FormFieldSkeleton = () => (
  * - 6 form field skeletons (80C, 80D, HRA, LTA, Home Loan, NPS)
  */
 const DeductionsCardSkeleton = () => (
-  <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+  <View className="mb-6">
     <Skeleton className="mb-2 h-4 w-44 rounded" />
     <Skeleton className="mb-4 h-3 w-64 rounded" />
     {Array.from({ length: 6 }).map((_, i) => (
@@ -59,7 +64,7 @@ const DeductionsCardSkeleton = () => (
  * Skeleton loading state for the edit tax detail screen.
  *
  * Renders skeleton placeholders that mirror the form layout:
- * Tax Regime selector → Deductions card with 6 fields → Save button.
+ * Tax Regime selector → Deductions section with 6 fields → Save button.
  * Replaces the generic `LoadingScreen` while tax data is being fetched.
  *
  * @example
@@ -69,10 +74,10 @@ const DeductionsCardSkeleton = () => (
  */
 export const EditTaxSkeleton = () => (
   <Container className="flex-1">
-    <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
+    <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
       <RegimeSelectorSkeleton />
       <DeductionsCardSkeleton />
-      <Skeleton className="mb-10 h-12 w-full rounded-xl" />
+      <Skeleton className="mb-10 h-12 w-full rounded-lg" />
     </ScrollView>
   </Container>
 );
