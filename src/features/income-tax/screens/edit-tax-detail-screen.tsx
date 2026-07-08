@@ -9,15 +9,15 @@ import { SectionHeader } from '@components/common/section-header';
 import { EditTaxSkeleton } from '../components/skeleton';
 import { FieldInput } from '@components/ui/field-input';
 import { useEmployeeTax, useUpdateTaxDetail } from '../hooks';
-import { updateTaxSchema, UpdateTaxFormValues } from '../validators/tax.validator';
+import { UpdateTaxSchema, UpdateTaxInput } from '../validators/tax.validator';
 import { router } from 'expo-router';
 
 export default function EditTaxDetailScreen() {
   const { data, isLoading } = useEmployeeTax();
   const updateMutation = useUpdateTaxDetail();
 
-  const methods = useForm<UpdateTaxFormValues>({
-    resolver: zodResolver(updateTaxSchema) as any,
+  const methods = useForm<UpdateTaxInput>({
+    resolver: zodResolver(UpdateTaxSchema) as any,
     defaultValues: {
       regime: 'NEW',
       deductions80C: 0,
@@ -46,7 +46,7 @@ export default function EditTaxDetailScreen() {
     }
   }, [data, reset]);
 
-  const onSubmit = async (values: UpdateTaxFormValues) => {
+  const onSubmit = async (values: UpdateTaxInput) => {
     try {
       await updateMutation.mutateAsync(values);
       toast.success('Tax Details Updated', {

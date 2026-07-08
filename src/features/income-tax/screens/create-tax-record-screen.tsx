@@ -10,13 +10,13 @@ import { SectionHeader } from '@components/common/section-header';
 import { FieldInput } from '@components/ui/field-input';
 import { useUpdateTaxDetail } from '../hooks';
 import { CreateTaxSkeleton } from '../components/skeleton';
-import { updateTaxSchema, UpdateTaxFormValues } from '../validators/tax.validator';
+import { CreateTaxInput, CreateTaxSchema } from '../validators/tax.validator';
 
 export default function CreateTaxRecordScreen() {
   const updateMutation = useUpdateTaxDetail();
 
-  const methods = useForm<UpdateTaxFormValues>({
-    resolver: zodResolver(updateTaxSchema) as any,
+  const methods = useForm<CreateTaxInput>({
+    resolver: zodResolver(CreateTaxSchema) as any,
     defaultValues: {
       regime: 'NEW',
       deductions80C: 0,
@@ -34,7 +34,7 @@ export default function CreateTaxRecordScreen() {
     formState: { isSubmitting },
   } = methods;
 
-  const onSubmit = async (values: UpdateTaxFormValues) => {
+  const onSubmit = async (values: CreateTaxInput) => {
     try {
       await updateMutation.mutateAsync(values);
       toast.success('Tax Record Created', {
