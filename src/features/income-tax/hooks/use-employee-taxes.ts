@@ -17,5 +17,6 @@ export function useEmployeeTaxes() {
   });
 
   const transformedData = transformData<EmployeeTaxSummary>(data);
+
   return { data: transformedData, isFetching, isError, error, refetch, isLoading };
 }

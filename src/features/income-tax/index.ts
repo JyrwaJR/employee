@@ -1,4 +1,3 @@
-export * from './utils/constants';
 export * from './components';
 export * from './hooks';
 export * from './screens';
