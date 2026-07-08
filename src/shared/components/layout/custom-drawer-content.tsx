@@ -1,45 +1,31 @@
-import { useAuthStore } from '@stores/auth.store';
-
 import colors from 'tailwindcss/colors';
-
 import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
 import { Link, Route, usePathname } from 'expo-router';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Pressable, Text, View } from 'react-native';
 import { useThemeStore } from '@stores/theme.store';
+import { transformData } from '@utils/helpers';
 
 export type MenuItemsT = {
-  id: number;
+  id?: number;
   title: string;
   href: Route;
 };
 
-const menuItems: MenuItemsT[] = [
-  { id: 1, title: 'Home', href: '/' },
-  { id: 2, title: 'Settings', href: '/settings' },
-];
-
-const adminDrawerMenuItems: MenuItemsT[] = [
-  { id: 1, title: 'Home', href: '/' },
-  { id: 2, title: 'Employees', href: '/employees' },
-  { id: 3, title: 'Income Tax', href: '/tax' },
-  { id: 4, title: 'Settings', href: '/settings' },
-  { id: 5, title: 'Announcements', href: '/announcements' },
-];
+const menuItems: MenuItemsT[] = transformData<MenuItemsT>([
+  { title: 'Home', href: '/' },
+  { title: 'Income Tax', href: '/tax' },
+  { title: 'Settings', href: '/settings' },
+]);
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
-  const { user } = useAuthStore();
   const { theme } = useThemeStore();
   const isDark = theme === 'dark';
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
 
   const bgColor = isDark ? colors.slate[900] : colors.white;
-
-  const isAdmin = user?.role === 'SUPER_ADMIN' || user?.role === 'ADMIN';
-
-  let items: MenuItemsT[] = isAdmin ? adminDrawerMenuItems : menuItems;
 
   return (
     <DrawerContentScrollView
@@ -56,7 +42,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       </View>
 
       <View className="flex-1 flex-col gap-2 px-3">
-        {items.map((item) => {
+        {menuItems.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link key={item.id} href={item.href} asChild>

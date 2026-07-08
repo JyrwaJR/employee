@@ -33,7 +33,7 @@ export const PAGE_HEADERS = {
   '/leaves/[id]': { title: 'My Leaves', showBackButton: true },
   '/leaves/create': { title: 'Apply for Leaves', showBackButton: true },
   '/ui-lab': { title: 'Ui Lab', showBackButton: true },
-  '/tax': { title: 'Income Tax', showBackButton: false, showDrawer: true },
+  '/tax': { title: 'Income Tax', showBackButton: true },
   '/tax/detail': { title: 'Tax Computation', showBackButton: true },
   '/tax/edit': { title: 'Edit Tax Details', showBackButton: true },
   '/tax/create': { title: 'New Tax Record', showBackButton: true },
