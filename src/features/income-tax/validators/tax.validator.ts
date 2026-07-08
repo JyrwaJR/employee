@@ -1,25 +1,29 @@
 import { z } from 'zod';
 
+function numberField(min: number, max?: number, message?: string) {
+  return z.string().transform((val, ctx) => {
+    const n = Number(val);
+    if (val === '' || Number.isNaN(n)) return 0;
+    if (n < min) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'Cannot be negative' });
+      return z.NEVER;
+    }
+    if (max !== undefined && message !== undefined && n > max) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, message });
+      return z.NEVER;
+    }
+    return n;
+  });
+}
+
 export const updateTaxSchema = z.object({
   regime: z.enum(['NEW', 'OLD'], { message: 'Please select a tax regime' }),
-  deductions80C: z.coerce
-    .number()
-    .min(0, 'Cannot be negative')
-    .max(150000, 'Max Rs 1,50,000 under Section 80C'),
-  deductions80D: z.coerce
-    .number()
-    .min(0, 'Cannot be negative')
-    .max(100000, 'Max Rs 1,00,000 under Section 80D'),
-  hraExemption: z.coerce.number().min(0, 'Cannot be negative'),
-  ltaExemption: z.coerce.number().min(0, 'Cannot be negative'),
-  homeLoanInterest: z.coerce
-    .number()
-    .min(0, 'Cannot be negative')
-    .max(200000, 'Max Rs 2,00,000 under Section 24(b)'),
-  npsContribution: z.coerce
-    .number()
-    .min(0, 'Cannot be negative')
-    .max(50000, 'Max Rs 50,000 under Section 80CCD(1B)'),
+  deductions80C: numberField(0, 150000, 'Max Rs 1,50,000 under Section 80C'),
+  deductions80D: numberField(0, 100000, 'Max Rs 1,00,000 under Section 80D'),
+  hraExemption: numberField(0),
+  ltaExemption: numberField(0),
+  homeLoanInterest: numberField(0, 200000, 'Max Rs 2,00,000 under Section 24(b)'),
+  npsContribution: numberField(0, 50000, 'Max Rs 50,000 under Section 80CCD(1B)'),
 });
 
-export type UpdateTaxFormValues = z.infer<typeof updateTaxSchema>;
+export type UpdateTaxFormValues = z.output<typeof updateTaxSchema>;
