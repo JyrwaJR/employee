@@ -1,3 +1,4 @@
+export type RoleT = 'Super Admin' | 'Admin' | 'User';
 export type UserT = {
   id: number;
   emp_cd: string;
