@@ -1,5 +1,4 @@
 import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
-import { STALE_TIMES } from '@utils/constants';
 import { logger } from '@utils/logger';
 import { toast } from 'sonner-native';
 
@@ -15,7 +14,7 @@ export * from './online-manager';
 /**
  * Singleton React Query client configured for production.
  *
- * - 5-minute stale time with 30-minute garbage collection window.
+ * - 15-minute stale time with 30-minute garbage collection window.
  * - Query errors trigger a global toast and structured log (individual queries
  *   can opt out via `meta: { silent: true }`).
  * - Mutation errors trigger an on-screen toast and are logged.
@@ -39,7 +38,7 @@ export const queryClient = new QueryClient({
   }),
   defaultOptions: {
     queries: {
-      staleTime: STALE_TIMES.GLOBAL, // 5 minutes
+      staleTime: 1000 * 60 * 15, // 15 minutes — baseline stale time
       gcTime: 1000 * 60 * 30, // 30 min — gives persistence time to serialize
       retry: 3,
       refetchOnReconnect: true,
