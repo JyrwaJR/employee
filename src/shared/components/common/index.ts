@@ -11,6 +11,5 @@ export * from './detail-row';
 export * from './govt-header';
 export * from './money-row';
 export * from './search-input';
-export * from './fade-in-view';
 export * from './fab';
 export * from './network-banner';
