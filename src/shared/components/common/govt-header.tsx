@@ -12,8 +12,8 @@ interface GovtHeaderProps {
 
 export const GovtHeader = ({ title, subtitle, badge, className }: GovtHeaderProps) => (
   <View className={cn('mb-8 items-center gap-y-2', className)}>
-    <View className="mb-3 h-16 w-16 items-center justify-center opacity-80">
-      <Text className="text-5xl">🏛️</Text>
+    <View className="mb-3 h-[70px] w-[70px] items-center justify-center opacity-80">
+      <Text className="text-7xl">🏛️</Text>
     </View>
     <Text variant={'subtext'} className="text-center text-[11px]">
       Government of India
