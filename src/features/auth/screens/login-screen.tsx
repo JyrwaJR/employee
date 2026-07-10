@@ -70,9 +70,9 @@ const formDefaultValue: LoginFormInputs = {
  */
 export const LoginScreen = () => {
   const { isSignedIn, isAuthLoading } = useAuthStore();
-  const { startCooldown, isLimited, secondsRemaining } = useRateLimit('LOGIN_BUTTON_RATE_LIMIT', {
+  const { startCooldown, isLimited } = useRateLimit('LOGIN_BUTTON_RATE_LIMIT', {
     limit: 1,
-    ms: 5000,
+    ms: 10000,
   });
 
   const { showSnackbar } = useSnackbar();
@@ -117,7 +117,7 @@ export const LoginScreen = () => {
 
   return (
     <Container>
-      <KeyboardSafeView contentContainerClassName="px-6 justify-center">
+      <KeyboardSafeView contentContainerClassName="justify-center">
         <GovtHeader title="Authentication" subtitle="Please sign in to continue" />
 
         {/* Form Section */}
@@ -160,16 +160,16 @@ export const LoginScreen = () => {
               testID="SIGN_IN_BUTTON"
               onPress={methods.handleSubmit(onSubmit)}
               isLoading={isPending}
-              disabled={isSignedIn}>
-              {isLimited ? `Please wait ${secondsRemaining}` : 'Continue'}
+              disabled={isSignedIn || isLimited}>
+              Continue
             </Button>
           </View>
         </FormProvider>
 
         <AuthFooter
-          text="Don't have an account?"
-          linkText="Register here"
-          linkHref={PAGE_ROUTES.AUTH.SIGN_UP}
+          text="By signing in, you agree to our"
+          linkText="Terms of Service"
+          linkHref={PAGE_ROUTES.HOME}
           testID="SIGNUP_BUTTON"
         />
       </KeyboardSafeView>
