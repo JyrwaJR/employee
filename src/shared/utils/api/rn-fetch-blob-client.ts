@@ -112,7 +112,7 @@ async function request<T = any>(
 
     if (!response.data) {
       return backendResponse<T>({
-        message: 'No response data',
+        message: 'Something went wrong. Please try again.',
         success_flag: false,
         status_code: response.respInfo.status.toString() || '500',
       });
