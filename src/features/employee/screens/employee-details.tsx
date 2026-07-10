@@ -13,10 +13,11 @@ import { SectionCard } from '../components/section-card';
 import { ActionButton } from '../components/action-button';
 
 /**
- * Employee detail screen displaying full profile information for a single employee.
- * Fetches employee data by route param `id` and renders sections for profile header,
- * official details, financial overview (pay level, status, basic pay), and contact
- * information. Shows a "View Salary History" link for SUPER_ADMIN users only.
+ * Employee detail screen displaying full profile information from the `UserT` object
+ * returned by `useEmployee`. Renders a profile header (avatar, full name, designation,
+ * employee code), quick actions (call, email), official details (department, office
+ * location, date of joining), financial overview (pay scale, status, basic pay), and
+ * contact information. Shows a "View Salary History" link for `SUPER_ADMIN` users only.
  * Handles loading, error, and null-data states gracefully.
  */
 export default function EmployeeDetailScreen() {
@@ -24,7 +25,7 @@ export default function EmployeeDetailScreen() {
   const idx = id.toString() || '';
   const auth = useAuthStore();
 
-  const { data, isFetching, isError, error } = useEmployee({ employeeId: idx });
+  const { data, isFetching, isError, error } = useEmployee({ emp_cd: idx });
 
   // Handle Query Error
   React.useEffect(() => {
@@ -39,7 +40,7 @@ export default function EmployeeDetailScreen() {
     };
   }, [isError, error]);
 
-  const user = data?.user;
+  const user = data;
 
   if (isFetching) {
     return <LoadingScreen />;
@@ -57,11 +58,9 @@ export default function EmployeeDetailScreen() {
           <Text variant="heading" size="2xl" className="text-center text-gray-900 dark:text-white">
             {[user?.emp_fname, user?.emp_mname, user?.emp_lname].filter(Boolean).join(' ')}
           </Text>
-          <Text className="mb-1 text-sm font-medium text-blue-600">{auth.role}</Text>
+          <Text className="mb-1 text-sm font-medium text-blue-600">{data?.emp_designation}</Text>
           <View className="mt-2 rounded-full bg-gray-100 px-3 py-1 dark:bg-gray-800">
-            <Text className="text-xs font-medium text-gray-500 dark:text-gray-400">
-              {data?.employee_id}
-            </Text>
+            <Text className="text-xs font-medium text-gray-500 dark:text-gray-400">{idx}</Text>
           </View>
 
           {/* Quick Actions */}
@@ -83,9 +82,9 @@ export default function EmployeeDetailScreen() {
         {/* Content */}
         <View className="px-6 pb-10">
           <SectionCard title="Official Details">
-            <InfoRow label="Department" value={data?.department ?? ''} icon="🏢" />
-            <InfoRow label="Office Location" value={data?.office_location ?? ''} icon="📍" />
-            <InfoRow label="Date of Joining" value={data?.date_of_joining || ''} icon="📅" />
+            <InfoRow label="Department" value={data?.emp_dept ?? ''} icon="🏢" />
+            <InfoRow label="Office Location" value={data?.office_name ?? ''} icon="📍" />
+            <InfoRow label="Date of Joining" value={data?.emp_date_of_joining || ''} icon="📅" />
           </SectionCard>
 
           <SectionCard title="Financial Overview">
@@ -95,12 +94,12 @@ export default function EmployeeDetailScreen() {
                   Current Pay Level
                 </Text>
                 <Text className="text-lg font-bold text-gray-900 dark:text-white">
-                  {data?.pay_level || '-'}
+                  {data?.pay_scale || '-'}
                 </Text>
               </View>
               <View className="rounded-lg bg-green-50 px-3 py-1 dark:bg-green-900/30">
                 <Text className="text-xs font-bold text-green-700 dark:text-green-400">
-                  {data?.status}
+                  {data?.emp_status}
                 </Text>
               </View>
             </View>
@@ -110,9 +109,7 @@ export default function EmployeeDetailScreen() {
             </View>
             {auth.role === 'SUPER_ADMIN' && (
               <TouchableOpacity
-                onPress={() =>
-                  router.push(PAGE_ROUTES.EMPLOYEES.SALARY_HISTORY(data?.id as string))
-                }
+                onPress={() => router.push(PAGE_ROUTES.EMPLOYEES.SALARY_HISTORY(idx))}
                 className="mt-4 flex-row items-center justify-center">
                 <Text className="text-sm font-semibold text-blue-600">View Salary History →</Text>
               </TouchableOpacity>
