@@ -12,6 +12,13 @@ import { InfoRow } from '../components/info-row';
 import { SectionCard } from '../components/section-card';
 import { ActionButton } from '../components/action-button';
 
+/**
+ * Employee detail screen displaying full profile information for a single employee.
+ * Fetches employee data by route param `id` and renders sections for profile header,
+ * official details, financial overview (pay level, status, basic pay), and contact
+ * information. Shows a "View Salary History" link for SUPER_ADMIN users only.
+ * Handles loading, error, and null-data states gracefully.
+ */
 export default function EmployeeDetailScreen() {
   const { id } = useLocalSearchParams();
   const idx = id.toString() || '';
@@ -34,8 +41,6 @@ export default function EmployeeDetailScreen() {
 
   const user = data?.user;
 
-  const currentSalary = data?.current_structure;
-
   if (isFetching) {
     return <LoadingScreen />;
   }
@@ -46,13 +51,13 @@ export default function EmployeeDetailScreen() {
         {/* Profile Header */}
         <View className="mb-6 items-center rounded-b-[32px] border-b border-gray-100 bg-white px-6 pb-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <Image
-            source={{ uri: `https://i.pravatar.cc/300?u=${user?.first_name}` }}
+            source={{ uri: `https://i.pravatar.cc/300?u=${user?.emp_fname}` }}
             className="mb-4 h-24 w-24 rounded-full border-4 border-white bg-gray-200 shadow-sm dark:border-gray-800"
           />
           <Text variant="heading" size="2xl" className="text-center text-gray-900 dark:text-white">
-            {user?.first_name}
+            {[user?.emp_fname, user?.emp_mname, user?.emp_lname].filter(Boolean).join(' ')}
           </Text>
-          <Text className="mb-1 text-sm font-medium text-blue-600">{user?.role}</Text>
+          <Text className="mb-1 text-sm font-medium text-blue-600">{auth.role}</Text>
           <View className="mt-2 rounded-full bg-gray-100 px-3 py-1 dark:bg-gray-800">
             <Text className="text-xs font-medium text-gray-500 dark:text-gray-400">
               {data?.employee_id}
@@ -64,12 +69,12 @@ export default function EmployeeDetailScreen() {
             <ActionButton
               label="Call"
               icon="📞"
-              onPress={() => Linking.openURL(`tel:${user?.phone}`)}
+              onPress={() => Linking.openURL(`tel:${user?.emp_phone}`)}
             />
             <ActionButton
               label="Email"
               icon="✉️"
-              onPress={() => Linking.openURL(`mailto:${user?.email}`)}
+              onPress={() => Linking.openURL(`mailto:${user?.emp_email}`)}
               primary
             />
           </View>
@@ -101,11 +106,9 @@ export default function EmployeeDetailScreen() {
             </View>
             <View className="flex-row justify-between rounded-xl bg-gray-50 p-3 dark:bg-gray-800">
               <Text className="font-medium text-gray-600 dark:text-gray-300">Basic Pay</Text>
-              <Text className="font-bold text-gray-900 dark:text-white">
-                {currentSalary?.basic_pay}
-              </Text>
+              <Text className="font-bold text-gray-900 dark:text-white">{user?.basic_pay}</Text>
             </View>
-            {auth.user?.role === 'SUPER_ADMIN' && (
+            {auth.role === 'SUPER_ADMIN' && (
               <TouchableOpacity
                 onPress={() =>
                   router.push(PAGE_ROUTES.EMPLOYEES.SALARY_HISTORY(data?.id as string))
@@ -117,8 +120,8 @@ export default function EmployeeDetailScreen() {
           </SectionCard>
 
           <SectionCard title="Contact Information">
-            <InfoRow label="Mobile" value={user?.phone || '-'} icon="📱" />
-            <InfoRow label="Email" value={user?.auth.email || '-'} icon="📧" />
+            <InfoRow label="Mobile" value={user?.emp_phone || '-'} icon="📱" />
+            <InfoRow label="Email" value={user?.emp_email || '-'} icon="📧" />
           </SectionCard>
         </View>
       </ScrollView>
