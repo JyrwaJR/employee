@@ -4,11 +4,13 @@ import { Text } from '@components/ui/text';
 import { cn } from '@utils/helpers/cn';
 import { Icon } from '@components/ui/icon';
 
+/** A selectable filter option with label and value. */
 export interface FilterOption {
   label: string;
   value: string;
 }
 
+/** Props for the FilterCard collapsible filter component. */
 export interface FilterCardProps {
   // Collapsible Props
   isOpen?: boolean;
@@ -66,6 +68,12 @@ const SectionLabel = ({ title }: { title: string }) => (
   </Text>
 );
 
+/**
+ * Renders a collapsible filter card with status, year, and month filter sections.
+ * Supports controlled or uncontrolled open state via isOpen/onToggle.
+ * Each filter section renders horizontal chip selectors.
+ * Returns null if no filter sections have options configured.
+ */
 export const FilterCard = ({
   isOpen: externalIsOpen,
   onToggle,

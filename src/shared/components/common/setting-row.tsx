@@ -3,6 +3,8 @@ import { View, TouchableOpacity, Switch } from 'react-native';
 import { Text } from '@components/ui/text';
 import { Icon } from '@components/ui/icon';
 import { cn } from '@utils/helpers/cn';
+
+/** Props for the SettingRow component. */
 interface SettingRowProps {
   icon: string;
   label: string;
@@ -16,6 +18,10 @@ interface SettingRowProps {
   iconColor?: string;
 }
 
+/**
+ * Renders a settings row with icon, label, optional description, and a right element (chevron, switch, or custom).
+ * Supports destructive styling and press handling for navigation or actions.
+ */
 export const SettingRow = ({
   icon,
   label,

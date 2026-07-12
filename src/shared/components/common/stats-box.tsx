@@ -2,6 +2,7 @@ import { cn } from '@utils/helpers/cn';
 import { View } from 'react-native';
 import { Text } from '../ui/text';
 
+/** Renders a single stat value with label in a card. Used in dashboard stat grids. */
 export const StatBox = ({
   label,
   value,

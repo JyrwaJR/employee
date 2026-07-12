@@ -9,6 +9,10 @@ import { PAGE_ROUTES } from '@utils/constants';
 import { formatDate } from '@utils/formatters/formatters';
 import { getStatusColor } from '@utils/helpers';
 
+/**
+ * Renders a salary statement list item card with month/year, net pay, status badge, and navigation.
+ * Tapping navigates to the salary pay slip detail screen.
+ */
 export const SalaryStatementListItem = ({ item }: { item: SalaryStatement }) => {
   const statusStyle = getStatusColor(item.status);
   return (

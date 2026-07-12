@@ -10,6 +10,10 @@ type MoneyRowProps = {
   isDeduction?: boolean;
 };
 
+/**
+ * Displays a monetary label-value row with Indian Rupee formatting.
+ * Supports bold emphasis for total rows and red styling for deduction rows.
+ */
 export const MoneyRow = ({ label, value, isBold = false, isDeduction = false }: MoneyRowProps) => (
   <View
     className={cn(

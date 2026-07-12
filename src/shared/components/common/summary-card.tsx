@@ -13,6 +13,10 @@ interface SummaryCardProps {
   status?: SalaryStatementStatus;
 }
 
+/**
+ * Displays a salary summary card with amount, status color, pay level, and masked bank account.
+ * Uses the authenticated user's pay scale and account info from auth store.
+ */
 export const SummaryCard = ({ label, amount, className, status = 'PENDING' }: SummaryCardProps) => {
   const { user } = useAuthStore();
   const statusStyle = getStatusColor(status);
