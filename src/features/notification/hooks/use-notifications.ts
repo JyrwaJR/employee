@@ -7,7 +7,7 @@ import { useNotificationStore } from '@stores/notification.store';
 import { toast } from '@components/ui';
 import { withRetry } from '@utils/helpers/retry';
 import { NotificationService } from '@services/notification.service';
-import { isExpo } from '@utils/helpers/expo';
+import { isRealDevice } from '@utils/helpers/expo';
 
 /**
  * Whitelist of permitted internal routes for push-triggered navigation.
@@ -62,7 +62,7 @@ export const useNotifications = () => {
   }, [lastResponse]);
 
   useEffect(() => {
-    if (isExpo() && !emp_cd) return;
+    if (!isRealDevice() && !emp_cd) return;
 
     let isMounted = true;
 

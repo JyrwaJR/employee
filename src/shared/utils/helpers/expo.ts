@@ -8,6 +8,6 @@ import * as Device from 'expo-device';
  *
  * @returns `true` if running in an Expo-compatible native environment.
  */
-export function isExpo(): boolean {
+export function isRealDevice(): boolean {
   return Device.isDevice;
 }

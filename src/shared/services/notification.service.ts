@@ -99,6 +99,23 @@ export const NotificationService = {
   },
 
   async unregister({ emp_cd }: { emp_cd: string }): Promise<void> {
-    await rpc(METHODS.INSERT_NOTIFICATION_TOKEN, { emp_cd });
+    try {
+      const projectId =
+        Constants?.default.easConfig?.projectId ??
+        Constants?.default.expoConfig?.extra?.eas?.projectId;
+
+      if (!projectId) {
+        logger.error('NotificationService: EAS Project ID not found');
+        return;
+      }
+
+      const tokenResponse = await Notifications.getExpoPushTokenAsync({ projectId });
+
+      const token = tokenResponse.data;
+      await rpc(METHODS.INSERT_NOTIFICATION_TOKEN, { emp_cd, token });
+    } catch (error) {
+      logger.error('NotificationService: Unregistration lifecycle failure', error);
+      return;
+    }
   },
 };
