@@ -3,25 +3,41 @@ import { View, TouchableOpacity } from 'react-native';
 import { Icon } from '@components/ui/icon';
 import { cn } from '@utils/helpers/cn';
 import { Text } from '@components/ui/text';
-import { SalaryStatement } from '@sharedTypes/satatement';
-import { router } from 'expo-router';
-import { PAGE_ROUTES } from '@utils/constants';
 import { formatDate } from '@utils/formatters/formatters';
 import { getStatusColor } from '@utils/helpers';
 
+/** Status values returned by the salary statement API. */
+type SalaryStatementStatus = 'PENDING' | 'PROCESSED' | 'PAID' | 'FAILED' | 'HELD';
+
+/** Data shape expected by the salary statement list item card. */
+type SalaryStatementListItemData = {
+  id: string;
+  month: string;
+  year: number;
+  created_at: string;
+  status: SalaryStatementStatus;
+  total_earnings: string;
+};
+
 /**
- * Renders a salary statement list item card with month/year, net pay, status badge, and navigation.
- * Tapping navigates to the salary pay slip detail screen.
+ * Renders a salary statement list item card with month/year, net pay,
+ * and status badge.
+ *
+ * When `onPress` is provided, the card renders as a `TouchableOpacity`
+ * with a chevron icon and navigates when tapped. When `onPress` is
+ * omitted, it renders as a static `View` (non-interactive).
  */
-export const SalaryStatementListItem = ({ item }: { item: SalaryStatement }) => {
+export const SalaryStatementListItem = ({
+  item,
+  onPress,
+}: {
+  item: SalaryStatementListItemData;
+  onPress?: () => void;
+}) => {
   const statusStyle = getStatusColor(item.status);
-  return (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      onPress={() => {
-        router.push(PAGE_ROUTES.EMPLOYEES.SALARY_PAY_SLIP(item.id));
-      }}
-      className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm active:bg-gray-50 dark:border-gray-800 dark:bg-slate-900 dark:active:bg-slate-800">
+
+  const cardContent = (
+    <>
       <View className="mb-2 flex-row items-center justify-between">
         <View className="flex-row items-center gap-2">
           <View className="rounded-lg bg-blue-100 p-2 dark:bg-blue-900/30">
@@ -36,7 +52,7 @@ export const SalaryStatementListItem = ({ item }: { item: SalaryStatement }) => 
             </Text>
           </View>
         </View>
-        <Icon name="chevron-right" size={24} color="#94A3B8" />
+        {onPress && <Icon name="chevron-right" size={24} color="#94A3B8" />}
       </View>
 
       <View className="my-2 h-[1px] bg-gray-100 dark:bg-gray-800" />
@@ -64,6 +80,23 @@ export const SalaryStatementListItem = ({ item }: { item: SalaryStatement }) => 
           <Text className="text-[10px] text-slate-400">Salary Slip</Text>
         </View>
       </View>
-    </TouchableOpacity>
+    </>
+  );
+
+  if (onPress) {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={onPress}
+        className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm active:bg-gray-50 dark:border-gray-800 dark:bg-slate-900 dark:active:bg-slate-800">
+        {cardContent}
+      </TouchableOpacity>
+    );
+  }
+
+  return (
+    <View className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-slate-900">
+      {cardContent}
+    </View>
   );
 };
