@@ -33,25 +33,21 @@ export const SectionHeader = ({
   className,
 }: SectionHeaderProps) => {
   return (
-    <View className={cn('mb-3', className)}>
+    <View className={cn('mb-4', className)}>
       <View className="flex-row items-center gap-x-4">
         {/* Left accent bar */}
         <View className="h-10 w-[3px] rounded-full bg-blue-500" />
 
         {/* Icon */}
         {icon && (
-          <View className="h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 dark:bg-blue-900/20">
+          <View className="h-12 w-12 items-center justify-center rounded-2xl bg-primary-soft">
             <Text className="text-xl">{icon}</Text>
           </View>
         )}
 
         {/* Title + subtitle */}
         <View className="flex-1">
-          <Text
-            variant="heading"
-            size="3xl"
-            weight="bold"
-            className="text-gray-900 dark:text-white">
+          <Text variant="heading" size="3xl" weight="bold" className="text-foreground">
             {title}
           </Text>
           {subtitle && (
@@ -65,7 +61,7 @@ export const SectionHeader = ({
       </View>
 
       {/* Separator */}
-      <View className="ml-[23px] mt-4 h-[2px] rounded-full bg-gray-100 dark:bg-gray-800" />
+      <View className="ml-[23px] mt-4 h-[2px] rounded-full bg-muted" />
     </View>
   );
 };

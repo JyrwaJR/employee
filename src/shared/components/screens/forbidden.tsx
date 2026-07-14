@@ -2,10 +2,10 @@ import React from 'react';
 import { View, TouchableOpacity } from 'react-native';
 import { Text } from '@components/ui/text';
 import { Button } from '@components/ui/button';
-import { Icon } from '@components/ui/icon';
 import { useRouter } from 'expo-router';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import { useAuthStore } from '@stores/auth.store';
+import { Icon } from '@components/ui/icon';
 
 interface ForbiddenProps {
   title?: string;
@@ -37,7 +37,7 @@ export const Forbidden = ({
         <Icon name="shield-lock-outline" size={48} color="#EF4444" />
       </View>
 
-      <Text variant="heading" size="3xl" className="mb-2 text-center text-gray-900 dark:text-white">
+      <Text variant="heading" size="3xl" className="mb-2 text-center text-foreground">
         {title}
       </Text>
 
@@ -57,8 +57,8 @@ export const Forbidden = ({
         <TouchableOpacity
           onPress={onPressTryAgain}
           activeOpacity={0.7}
-          className="mt-4 rounded-full border border-gray-200 px-8 py-3 dark:border-gray-700">
-          <Text className="font-medium text-gray-700 dark:text-gray-300">Try Again</Text>
+          className="mt-4 rounded-full border border-border px-8 py-3">
+          <Text className="font-medium text-charcoal">Try Again</Text>
         </TouchableOpacity>
       )}
     </View>

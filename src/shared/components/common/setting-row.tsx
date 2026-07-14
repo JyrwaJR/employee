@@ -38,13 +38,13 @@ export const SettingRow = ({
     <View
       className={cn(
         'flex-row items-center justify-between py-4',
-        showBorder ? 'border-b border-gray-100 dark:border-gray-800' : ''
+        showBorder ? 'border-b border-border' : ''
       )}>
       <View className="flex-row items-center gap-4">
         <View
           className={cn(
             'items-center justify-center rounded-full p-2',
-            isDestructive ? 'bg-red-50 dark:bg-red-900/20' : 'bg-gray-100 dark:bg-slate-800'
+            isDestructive ? 'bg-red-50 dark:bg-red-900/20' : 'bg-muted'
           )}>
           <Icon
             name={icon}
@@ -56,13 +56,11 @@ export const SettingRow = ({
           <Text
             className={cn(
               'text-base font-medium',
-              isDestructive ? 'text-red-600' : 'text-gray-900 dark:text-white'
+              isDestructive ? 'text-red-600' : 'text-foreground'
             )}>
             {label}
           </Text>
-          {description && (
-            <Text className="text-xs text-gray-500 dark:text-gray-400">{description}</Text>
-          )}
+          {description && <Text className="text-xs text-graphite">{description}</Text>}
         </View>
       </View>
 

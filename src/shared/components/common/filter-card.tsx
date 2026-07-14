@@ -48,22 +48,16 @@ const FilterChip = ({ label, selected, onPress, disabled }: FilterChipProps) => 
     activeOpacity={0.7}
     className={cn(
       'mr-3 rounded-full border px-4 py-1.5',
-      selected
-        ? 'border-blue-600 bg-blue-600'
-        : 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800'
+      selected ? 'border-blue-600 bg-blue-600' : 'border-border bg-card'
     )}>
-    <Text
-      className={cn(
-        'text-xs font-semibold',
-        selected ? 'text-white' : 'text-gray-600 dark:text-gray-300'
-      )}>
+    <Text className={cn('text-xs font-semibold', selected ? 'text-white' : 'text-charcoal')}>
       {label}
     </Text>
   </TouchableOpacity>
 );
 
 const SectionLabel = ({ title }: { title: string }) => (
-  <Text className="mb-2 ml-1 text-xs font-bold uppercase tracking-wider text-gray-400">
+  <Text className="mb-2 ml-1 text-xs font-bold uppercase tracking-wider text-graphite">
     {title}
   </Text>
 );
@@ -117,18 +111,14 @@ export const FilterCard = ({
   }
 
   return (
-    <View
-      className={cn(
-        'rounded-2xl border border-gray-100 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900',
-        className
-      )}>
+    <View className={cn('rounded-2xl border border-border bg-card shadow-sm', className)}>
       {/* Header / Toggle Button */}
       <TouchableOpacity
         onPress={handleToggle}
         className="flex-row items-center justify-between rounded-t-2xl bg-gray-50/50 p-4 dark:bg-white/5">
         <View className="flex-row items-center gap-2">
           <Icon name="filter-variant" size={16} color="#64748B" />
-          <Text className="text-sm font-semibold text-gray-700 dark:text-gray-200">Filters</Text>
+          <Text className="text-sm font-semibold text-charcoal">Filters</Text>
         </View>
         <Icon name={showContent ? 'chevron-up' : 'chevron-down'} size={20} color="#94A3B8" />
       </TouchableOpacity>

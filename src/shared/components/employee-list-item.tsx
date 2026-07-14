@@ -15,14 +15,14 @@ export const EmployeeListItem = ({ item, onPress }: Props) => {
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.7}
-      className="mb-3 flex-row items-center rounded-2xl border border-gray-100 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      className="mb-4 flex-row items-center rounded-2xl border border-border bg-card p-4 shadow-sm">
       <Image
         source={{ uri: `https://i.pravatar.cc/150?u=${item.emp_cd}` }}
-        className="h-12 w-12 rounded-full bg-gray-100 dark:bg-gray-800"
+        className="h-12 w-12 rounded-full bg-muted"
       />
 
       <View className="ml-4 flex-1">
-        <Text variant="heading" className="text-gray-900 dark:text-white">
+        <Text variant="heading" className="text-foreground">
           {item.emp_fname}
         </Text>
         <Text variant="subtext" className="text-sm">

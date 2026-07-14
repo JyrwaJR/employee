@@ -7,6 +7,7 @@ import { EmptyScreen } from '@components/screens';
 import { FilterCard, SectionHeader } from '@components/common';
 import { SalaryStatementsListSkeleton } from '../components/skeleton';
 import { months, years } from '@utils/helpers';
+import { Card } from '@components/ui/card';
 import { Text } from '@components/ui/text';
 
 /**
@@ -43,17 +44,15 @@ export const StatementScreen = () => {
     return (
       <Container className="flex-1">
         <SectionHeader title="Salary Statement" />
-        <View className="p-4">
-          <FilterCard
-            year={selectedYear}
-            years={years}
-            onYearChange={(value) => setSelectedYear(value)}
-            month={selectedMonth}
-            months={months}
-            onMonthChange={(value) => setSelectedMonth(value)}
-            isOpen
-          />
-        </View>
+        <FilterCard
+          year={selectedYear}
+          years={years}
+          onYearChange={(value) => setSelectedYear(value)}
+          month={selectedMonth}
+          months={months}
+          onMonthChange={(value) => setSelectedMonth(value)}
+          isOpen
+        />
         <EmptyScreen
           title="No Statement Found"
           message="No salary statement is available for the selected month and year"
@@ -64,112 +63,96 @@ export const StatementScreen = () => {
   }
 
   return (
-    <Container className="flex-1">
+    <Container className="flex-1 gap-y-2">
       <SectionHeader title="Salary Statement" />
-      <View className="p-4">
-        <FilterCard
-          year={selectedYear}
-          years={years}
-          onYearChange={(value) => setSelectedYear(value)}
-          month={selectedMonth}
-          months={months}
-          onMonthChange={(value) => setSelectedMonth(value)}
-        />
-      </View>
+      <FilterCard
+        year={selectedYear}
+        years={years}
+        onYearChange={(value) => setSelectedYear(value)}
+        month={selectedMonth}
+        months={months}
+        onMonthChange={(value) => setSelectedMonth(value)}
+      />
       <ScrollView
-        className="flex-1 px-4"
+        className="flex-1"
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}>
         {/* Employee Information */}
-        <View className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-slate-900">
-          <Text className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-400">
+        <Card variant="bordered" className="p-5">
+          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
             Employee Information
           </Text>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-gray-500">Employee Name</Text>
-            <Text className="max-w-[60%] text-right text-sm font-semibold text-slate-900 dark:text-white">
+            <Text className="text-sm text-graphite">Employee Name</Text>
+            <Text className="max-w-[60%] text-right text-sm font-semibold text-foreground">
               {[user?.emp_fname, user?.emp_mname, user?.emp_lname].filter(Boolean).join(' ')}
             </Text>
           </View>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-gray-500">Office / Department</Text>
-            <Text className="max-w-[60%] text-right text-sm font-semibold text-slate-900 dark:text-white">
+            <Text className="text-sm text-graphite">Office / Department</Text>
+            <Text className="max-w-[60%] text-right text-sm font-semibold text-foreground">
               {user?.emp_dept || '-'}
             </Text>
           </View>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-gray-500">Designation</Text>
-            <Text className="max-w-[60%] text-right text-sm font-semibold text-slate-900 dark:text-white">
+            <Text className="text-sm text-graphite">Designation</Text>
+            <Text className="max-w-[60%] text-right text-sm font-semibold text-foreground">
               {user?.emp_designation || '-'}
             </Text>
           </View>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-gray-500">Pay Level</Text>
-            <Text className="text-sm font-semibold text-slate-900 dark:text-white">
-              {user?.pay_scale || '-'}
-            </Text>
+            <Text className="text-sm text-graphite">Pay Level</Text>
+            <Text className="text-sm font-semibold text-foreground">{user?.pay_scale || '-'}</Text>
           </View>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-gray-500">Period</Text>
-            <Text className="text-sm font-semibold text-slate-900 dark:text-white">
+            <Text className="text-sm text-graphite">Period</Text>
+            <Text className="text-sm font-semibold text-foreground">
               {selectedMonth} {selectedYear}
             </Text>
           </View>
           <View className="flex-row justify-between">
-            <Text className="text-sm text-gray-500">GPF Number</Text>
-            <Text className="text-sm font-semibold text-slate-900 dark:text-white">
-              {statement.gpf_no}
-            </Text>
+            <Text className="text-sm text-graphite">GPF Number</Text>
+            <Text className="text-sm font-semibold text-foreground">{statement.gpf_no}</Text>
           </View>
-        </View>
+        </Card>
 
         {/* GPF Information */}
-        <View className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-slate-900">
-          <Text className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-400">
+        <Card variant="bordered" className="p-5">
+          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
             GPF Information
           </Text>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-gray-500">Description</Text>
-            <Text className="text-sm font-semibold text-slate-900 dark:text-white">
-              {statement.gpf_desc}
-            </Text>
+            <Text className="text-sm text-graphite">Description</Text>
+            <Text className="text-sm font-semibold text-foreground">{statement.gpf_desc}</Text>
           </View>
           <View className="flex-row justify-between">
-            <Text className="text-sm text-gray-500">GPF Number</Text>
-            <Text className="text-sm font-semibold text-slate-900 dark:text-white">
-              {statement.gpf_no}
-            </Text>
+            <Text className="text-sm text-graphite">GPF Number</Text>
+            <Text className="text-sm font-semibold text-foreground">{statement.gpf_no}</Text>
           </View>
-        </View>
+        </Card>
 
         {/* Bank & Voucher Details */}
-        <View className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-slate-900">
-          <Text className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-400">
+        <Card variant="bordered" className="p-5">
+          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
             Bank & Voucher Details
           </Text>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-gray-500">Bank Account</Text>
-            <Text className="text-sm font-semibold text-slate-900 dark:text-white">
-              {statement.bank_no}
-            </Text>
+            <Text className="text-sm text-graphite">Bank Account</Text>
+            <Text className="text-sm font-semibold text-foreground">{statement.bank_no}</Text>
           </View>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-gray-500">Voucher Number</Text>
-            <Text className="text-sm font-semibold text-slate-900 dark:text-white">
-              {statement.voucher_no}
-            </Text>
+            <Text className="text-sm text-graphite">Voucher Number</Text>
+            <Text className="text-sm font-semibold text-foreground">{statement.voucher_no}</Text>
           </View>
           <View className="flex-row justify-between">
-            <Text className="text-sm text-gray-500">Voucher Date</Text>
-            <Text className="text-sm font-semibold text-slate-900 dark:text-white">
-              {statement.voucher_date}
-            </Text>
+            <Text className="text-sm text-graphite">Voucher Date</Text>
+            <Text className="text-sm font-semibold text-foreground">{statement.voucher_date}</Text>
           </View>
-        </View>
+        </Card>
 
         {/* Salary Breakdown */}
-        <View className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-slate-900">
-          <Text className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-400">
+        <Card variant="bordered" className="p-5">
+          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
             Salary Breakdown
           </Text>
           {statement.s_data.map((item, index) => (
@@ -180,38 +163,30 @@ export const StatementScreen = () => {
                 borderBottomWidth: index < statement.s_data.length - 1 ? 1 : 0,
                 borderColor: '#E5E7EB',
               }}>
-              <Text className="text-sm text-slate-700 dark:text-slate-300">{item.pName}</Text>
-              <Text className="text-sm font-semibold text-slate-900 dark:text-white">
-                {item.amount}
-              </Text>
+              <Text className="text-sm text-charcoal">{item.pName}</Text>
+              <Text className="text-sm font-semibold text-foreground">{item.amount}</Text>
             </View>
           ))}
-        </View>
+        </Card>
 
         {/* Totals */}
-        <View className="mb-8 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-slate-900">
-          <Text className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-400">
+        <Card variant="bordered" className="p-5">
+          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
             Totals
           </Text>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-gray-500">Total Emolument</Text>
-            <Text className="text-sm font-bold text-slate-900 dark:text-white">
-              {statement.totalEmolument}
-            </Text>
+            <Text className="text-sm text-graphite">Total Emolument</Text>
+            <Text className="text-sm font-bold text-foreground">{statement.totalEmolument}</Text>
           </View>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-gray-500">Total Pay Items</Text>
-            <Text className="text-sm font-bold text-slate-900 dark:text-white">
-              {statement.totalPayItem}
-            </Text>
+            <Text className="text-sm text-graphite">Total Pay Items</Text>
+            <Text className="text-sm font-bold text-foreground">{statement.totalPayItem}</Text>
           </View>
           <View className="flex-row justify-between">
-            <Text className="text-sm text-gray-500">Net Amount (NG)</Text>
-            <Text className="text-sm font-bold text-green-600 dark:text-green-400">
-              {statement.totalng}
-            </Text>
+            <Text className="text-sm text-graphite">Net Amount (NG)</Text>
+            <Text className="text-sm font-bold text-semantic-up">{statement.totalng}</Text>
           </View>
-        </View>
+        </Card>
       </ScrollView>
     </Container>
   );

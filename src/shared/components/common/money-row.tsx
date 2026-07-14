@@ -17,24 +17,17 @@ type MoneyRowProps = {
 export const MoneyRow = ({ label, value, isBold = false, isDeduction = false }: MoneyRowProps) => (
   <View
     className={cn(
-      'flex-row justify-between border-b border-gray-100 py-3 last:border-0 dark:border-gray-800',
-      isBold && 'border-t border-gray-200 pt-4 dark:border-gray-700'
+      'flex-row justify-between border-b border-border py-3 last:border-0',
+      isBold && 'border-t border-border pt-4'
     )}>
     <Text
-      className={cn(
-        'text-sm',
-        isBold
-          ? 'font-bold text-gray-900 dark:text-white'
-          : 'font-medium text-gray-600 dark:text-gray-300'
-      )}>
+      className={cn('text-sm', isBold ? 'font-bold text-foreground' : 'font-medium text-charcoal')}>
       {label}
     </Text>
     <Text
       className={cn(
         'text-sm font-medium tabular-nums',
-        isBold
-          ? 'text-base font-bold text-gray-900 dark:text-white'
-          : 'text-gray-900 dark:text-white',
+        isBold ? 'text-base font-bold text-foreground' : 'text-foreground',
         isDeduction && !isBold && 'text-red-500'
       )}>
       {isDeduction && !isBold ? '-' : ''}₹

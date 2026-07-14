@@ -28,9 +28,7 @@ export const GovtHeader = ({ title, subtitle, badge, className }: GovtHeaderProp
     )}
     {badge && (
       <View className="mt-4 rounded-full bg-gray-200 px-4 py-1 dark:bg-gray-800">
-        <Text className="text-xs font-bold uppercase text-gray-600 dark:text-gray-300">
-          {badge}
-        </Text>
+        <Text className="text-xs font-bold uppercase text-charcoal">{badge}</Text>
       </View>
     )}
   </View>

@@ -14,15 +14,9 @@ export const YearFilter = ({ selected, year, onPress }: Props) => (
     onPress={onPress}
     className={cn(
       'mr-3 rounded-full border px-5 py-2',
-      selected
-        ? 'border-blue-600 bg-blue-600'
-        : 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800'
+      selected ? 'border-blue-600 bg-blue-600' : 'border-border bg-card'
     )}>
-    <Text
-      className={cn(
-        'text-sm font-semibold',
-        selected ? 'text-white' : 'text-gray-600 dark:text-gray-300'
-      )}>
+    <Text className={cn('text-sm font-semibold', selected ? 'text-white' : 'text-charcoal')}>
       {year}
     </Text>
   </TouchableOpacity>

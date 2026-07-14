@@ -3,6 +3,7 @@ import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { Container } from '@components/layout/container';
 import { Text } from '@components/ui/text';
+import { Card } from '@components/ui/card';
 import { Icon } from '@components/ui/icon';
 import { MoneyRow } from '@components/common/money-row';
 import { SectionHeader } from '@components/common/section-header';
@@ -69,30 +70,30 @@ export const PensionDetailScreen = () => {
         />
         {/* Pensioner Details Grid */}
         ...
-        <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
-          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-gray-400">
+        <Card variant="bordered" className="mb-6 p-5">
+          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
             Pensioner Particulars
           </Text>
           <DetailRow label="Name" value={data.name} />
           <DetailRow label="Bank Name" value={data.bankName} />
           <DetailRow label="PAN No" value={data.pan} />
-        </View>
+        </Card>
         {/* Earnings Section */}
-        <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <Card variant="bordered" className="mb-6 p-5">
           <SectionHeader title="Earnings" icon="💰" />
           {earningsList.map((item, index) => (
             <MoneyRow key={index} label={item.label} value={item.value} />
           ))}
           <MoneyRow label="Gross Pension" value={data.grossAmount} isBold />
-        </View>
+        </Card>
         {/* Deductions Section */}
-        <View className="mb-8 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <Card variant="bordered" className="mb-8 p-5">
           <SectionHeader title="Deductions" icon="📉" />
           {deductionsList.map((item, index) => (
             <MoneyRow key={index} label={item.label} value={item.value} isDeduction />
           ))}
           <MoneyRow label="Total Deductions" value={data.totalDeductions} isBold isDeduction />
-        </View>
+        </Card>
         {/* Footer Note */}
         <Text variant="subtext" className="mb-6 px-8 text-center text-xs leading-5">
           This is a computer-generated pension slip. No signature is required. Generated via NIC
@@ -100,9 +101,9 @@ export const PensionDetailScreen = () => {
         </Text>
         {/* Actions */}
         <View className="mb-10 flex-row gap-4">
-          <TouchableOpacity className="flex-1 flex-row items-center justify-center gap-2 rounded-xl border border-gray-300 bg-white p-4 dark:border-gray-700 dark:bg-slate-800">
-            <Icon name="download-outline" size={20} color="#3B82F6" />
-            <Text className="font-semibold text-blue-600 dark:text-blue-400">Download PDF</Text>
+          <TouchableOpacity className="flex-1 flex-row items-center justify-center gap-2 rounded-xl border border-border bg-card p-4">
+            <Icon name="download-outline" size={20} color="#024ad8" />
+            <Text className="font-semibold text-primary">Download PDF</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
