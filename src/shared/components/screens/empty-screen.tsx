@@ -26,15 +26,11 @@ export const EmptyScreen = ({
 
   return (
     <Container className={cn('flex-1 items-center justify-center px-6')}>
-      <View
-        className={cn(
-          'mb-6 h-24 w-24 items-center justify-center rounded-full',
-          'bg-gray-100 dark:bg-gray-800'
-        )}>
-        <Icon name={icon} size={48} color={isDarkMode ? '#9CA3AF' : '#6B7280'} />
+      <View className={cn('mb-6 h-24 w-24 items-center justify-center rounded-full', 'bg-muted')}>
+        <Icon name={icon as any} size={48} color={isDarkMode ? '#9CA3AF' : '#6B7280'} />
       </View>
 
-      <Text variant="heading" className={cn('mb-2 text-center text-gray-900 dark:text-white')}>
+      <Text variant="heading" className={cn('mb-2 text-center text-foreground')}>
         {title}
       </Text>
 
@@ -49,8 +45,8 @@ export const EmptyScreen = ({
       <TouchableOpacity
         onPress={refresh}
         activeOpacity={0.8}
-        className={cn('rounded-full bg-gray-900 px-8 py-3 dark:bg-white')}>
-        <Text className={cn('font-semibold text-white dark:text-gray-900')}>{refreshLabel}</Text>
+        className={cn('rounded-full bg-ink px-8 py-3')}>
+        <Text className={cn('font-semibold text-primary-foreground')}>{refreshLabel}</Text>
       </TouchableOpacity>
     </Container>
   );
