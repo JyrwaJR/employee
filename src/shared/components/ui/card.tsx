@@ -1,18 +1,49 @@
 import * as React from 'react';
 import { View, ViewProps, Text as RNText } from 'react-native';
+import { cva, type VariantProps } from 'class-variance-authority';
 import { Text } from './text';
 import { cn } from '../../utils/helpers/cn';
+
+/**
+ * Card variant styles following HP design system.
+ *
+ * - **default**: No border, `shadow-sm` elevation — for cards inside section bands
+ * - **bordered**: `border border-border`, `shadow-sm` — for standalone cards on canvas
+ * - **elevated**: No border, `shadow-lg` — for modal-like cards, floating panels
+ * - **flat**: No border, no shadow — for cards inside other cards
+ */
+const cardVariants = cva('rounded-xl bg-card shadow-sm', {
+  variants: {
+    variant: {
+      default: '',
+      bordered: 'border border-border',
+      elevated: 'shadow-lg',
+      flat: 'shadow-none',
+    },
+  },
+  defaultVariants: {
+    variant: 'default',
+  },
+});
+
+interface CardProps extends ViewProps, VariantProps<typeof cardVariants> {
+  className?: string;
+}
 
 /**
  * Card container following HP design system.
  *
  * Uses `{rounded.xl}` (16px) corners, `{colors.canvas}` background,
- * and Soft Lift elevation (`shadow-sm`). Padding defaults to
- * `{spacing.xl}` (24px) as the standard card internal spacing.
+ * and configurable elevation. Supports four variants:
+ *
+ * - `default` — clean card with `shadow-sm`
+ * - `bordered` — card with `border border-border` for visual separation
+ * - `elevated` — elevated card with `shadow-lg` for modals/floating panels
+ * - `flat` — no shadow, for nested card contexts
  *
  * @example
  * ```tsx
- * <Card>
+ * <Card variant="bordered">
  *   <CardHeader>
  *     <CardTitle>Product Name</CardTitle>
  *   </CardHeader>
@@ -23,8 +54,8 @@ import { cn } from '../../utils/helpers/cn';
  * </Card>
  * ```
  */
-const Card = React.forwardRef<View, ViewProps>(({ className, ...props }, ref) => (
-  <View ref={ref} className={cn('rounded-xl bg-card shadow-sm', className)} {...props} />
+const Card = React.forwardRef<View, CardProps>(({ className, variant, ...props }, ref) => (
+  <View ref={ref} className={cn(cardVariants({ variant }), className)} {...props} />
 ));
 
 Card.displayName = 'Card';
