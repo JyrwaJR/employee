@@ -3,19 +3,33 @@ import { useAuthStore } from '@stores/auth.store';
 import { useQuery } from '@tanstack/react-query';
 import { rpc } from '@utils/api';
 import { METHODS, QUERY_KEYS, STALE_TIMES } from '@utils/constants';
-import { transformData } from '@utils/helpers/transform-data';
+import { getCurrentMonth, getCurrentYear, getMonthNumber } from '@utils/helpers';
 
-export function useSalaryStatements() {
+type Props = {
+  month?: string;
+  year?: number;
+};
+
+export function useSalaryStatements({
+  month = getCurrentMonth(),
+  year = getCurrentYear(),
+}: Props = {}) {
   const { emp_cd, isSignedIn } = useAuthStore();
+
+  const monthNumber = getMonthNumber(month);
+
   const { data, isFetched, isError, error, refetch, isLoading, isFetching } = useQuery({
-    queryKey: QUERY_KEYS.SALARY.STATEMENTS(emp_cd),
-    queryFn: () => rpc<SalaryStatement[]>(METHODS.GET_EMP_SALARY_STATEMENTS, { emp_cd }),
+    queryKey: QUERY_KEYS.SALARY.STATEMENTS(emp_cd, monthNumber, year),
+    queryFn: () =>
+      rpc<SalaryStatement>(METHODS.GET_SALARY_STATEMENTS, {
+        emp_cd,
+        sal_mon: monthNumber,
+        sal_year: year,
+      }),
     staleTime: STALE_TIMES.SALARY,
     select: (data) => data?.data,
     enabled: !!emp_cd && isSignedIn,
   });
 
-  const transformedData = transformData<SalaryStatement>(data);
-
-  return { data: transformedData, isFetched, isError, error, refetch, isLoading, isFetching };
+  return { data, isFetched, isError, error, refetch, isLoading, isFetching };
 }

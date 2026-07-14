@@ -113,3 +113,26 @@ export function calculateDaysBetweenDatesWithoutWeekends(
   if (count < 1) return null;
   return String(count);
 }
+
+export const MONTHS = {
+  JANUARY: 1,
+  FEBRUARY: 2,
+  MARCH: 3,
+  APRIL: 4,
+  MAY: 5,
+  JUNE: 6,
+  JULY: 7,
+  AUGUST: 8,
+  SEPTEMBER: 9,
+  OCTOBER: 10,
+  NOVEMBER: 11,
+  DECEMBER: 12,
+} as const;
+
+export const getMonthNumber = (month: string): number => {
+  return MONTHS[month.toUpperCase() as keyof typeof MONTHS];
+};
+
+export const getCurrentMonth = (): string => new Date().toLocaleString('en-US', { month: 'long' });
+
+export const getCurrentYear = (): number => new Date().getFullYear();

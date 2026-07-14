@@ -13,8 +13,8 @@ export const METHODS = {
   GET_LEAVE_REASON: 'get_leave_reason',
   INSERT_UPDATE_LEAVE: 'insert_update_leave',
   GET_NOTIFICATIONS: 'get_notifications',
+  GET_SALARY_STATEMENTS: 'get_salary_statement',
   // Not implemented below
-  GET_EMP_SALARY_STATEMENTS: 'get_employee_salary_statements',
   GET_EMP_SALARY_STATEMENTS_DETAILS: 'get_employee_salary_statements_DETAILS',
   INSERT_NOTIFICATION_TOKEN: 'insert_notification_token',
   GET_EMP_TAX_LIST: 'get_employee_tax_list',

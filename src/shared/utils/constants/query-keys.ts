@@ -14,7 +14,7 @@ export const QUERY_KEYS = {
   },
   SALARY: {
     PAYSLIP: (...args: string[]) => ['salary', ...args] as const,
-    STATEMENTS: (...args: string[]) => ['employee salary', ...args].filter(Boolean),
+    STATEMENTS: (...args: any[]) => ['employee salary', ...args].filter(Boolean),
   },
   PENSION: {
     LIST: (employeeId: string, year: string, month: string, status: string) =>
