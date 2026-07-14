@@ -72,7 +72,6 @@ export const StatementScreen = () => {
           month={selectedMonth}
           months={months}
           onMonthChange={(value) => setSelectedMonth(value)}
-          isOpen
         />
       </View>
       <ScrollView
