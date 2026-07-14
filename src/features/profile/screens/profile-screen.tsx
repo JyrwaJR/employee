@@ -7,7 +7,7 @@ import { SettingRow } from '@components/common/setting-row';
 import { ProfileDetailRow } from '../components/profile-detail-row';
 import { ConfirmLogoutAlert } from '../components';
 import { useProfileSections } from '../hooks/use-profile-sections';
-import { Card, CardHeader, CardTitle, CardContent } from '@components/ui/card';
+import { Card, CardHeader, CardContent } from '@components/ui/card';
 import { GovtHeader } from '@components/common/govt-header';
 
 export const ProfileScreen = () => {
@@ -36,10 +36,12 @@ export const ProfileScreen = () => {
       <ScrollView className="flex-1 pt-6" showsVerticalScrollIndicator={false}>
         {/* Profile sections rendered as NIC portal-style cards */}
         {profileSections.map((section) => (
-          <Card key={section.title} variant="bordered" className="mb-5 overflow-hidden">
+          <Card key={section.title} variant="bordered" className="mb-4 overflow-hidden">
             {/* Section header */}
-            <CardHeader className="bg-surface-soft px-4 py-3">
-              <CardTitle>{section.title}</CardTitle>
+            <CardHeader className="bg-surface-soft px-4 py-2.5">
+              <Text className="text-xs font-bold uppercase tracking-wider text-graphite">
+                {section.title}
+              </Text>
             </CardHeader>
 
             {/* Two-column table rows */}

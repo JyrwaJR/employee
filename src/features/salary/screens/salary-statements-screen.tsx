@@ -74,7 +74,8 @@ export const StatementScreen = () => {
         onMonthChange={(value) => setSelectedMonth(value)}
       />
       <ScrollView
-        className="flex-1"
+        className="flex-1 gap-y-2"
+        contentContainerClassName="gap-y-2"
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}>
         {/* Employee Information */}
@@ -83,29 +84,29 @@ export const StatementScreen = () => {
             Employee Information
           </Text>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Employee Name</Text>
+            <Text className="text-xs font-medium text-graphite">Employee Name</Text>
             <Text className="max-w-[60%] text-right text-sm font-semibold text-foreground">
               {[user?.emp_fname, user?.emp_mname, user?.emp_lname].filter(Boolean).join(' ')}
             </Text>
           </View>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Office / Department</Text>
+            <Text className="text-xs font-medium text-graphite">Office / Department</Text>
             <Text className="max-w-[60%] text-right text-sm font-semibold text-foreground">
               {user?.emp_dept || '-'}
             </Text>
           </View>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Designation</Text>
+            <Text className="text-xs font-medium text-graphite">Designation</Text>
             <Text className="max-w-[60%] text-right text-sm font-semibold text-foreground">
               {user?.emp_designation || '-'}
             </Text>
           </View>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Pay Level</Text>
+            <Text className="text-xs font-medium text-graphite">Pay Level</Text>
             <Text className="text-sm font-semibold text-foreground">{user?.pay_scale || '-'}</Text>
           </View>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Period</Text>
+            <Text className="text-xs font-medium text-graphite">Period</Text>
             <Text className="text-sm font-semibold text-foreground">
               {selectedMonth} {selectedYear}
             </Text>
@@ -122,11 +123,11 @@ export const StatementScreen = () => {
             GPF Information
           </Text>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Description</Text>
+            <Text className="text-xs font-medium text-graphite">Description</Text>
             <Text className="text-sm font-semibold text-foreground">{statement.gpf_desc}</Text>
           </View>
           <View className="flex-row justify-between">
-            <Text className="text-sm text-graphite">GPF Number</Text>
+            <Text className="text-xs font-medium text-graphite">GPF Number</Text>
             <Text className="text-sm font-semibold text-foreground">{statement.gpf_no}</Text>
           </View>
         </Card>
@@ -137,15 +138,15 @@ export const StatementScreen = () => {
             Bank & Voucher Details
           </Text>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Bank Account</Text>
+            <Text className="text-xs font-medium text-graphite">Bank Account</Text>
             <Text className="text-sm font-semibold text-foreground">{statement.bank_no}</Text>
           </View>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Voucher Number</Text>
+            <Text className="text-xs font-medium text-graphite">Voucher Number</Text>
             <Text className="text-sm font-semibold text-foreground">{statement.voucher_no}</Text>
           </View>
           <View className="flex-row justify-between">
-            <Text className="text-sm text-graphite">Voucher Date</Text>
+            <Text className="text-xs font-medium text-graphite">Voucher Date</Text>
             <Text className="text-sm font-semibold text-foreground">{statement.voucher_date}</Text>
           </View>
         </Card>
@@ -175,15 +176,15 @@ export const StatementScreen = () => {
             Totals
           </Text>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Total Emolument</Text>
+            <Text className="text-xs font-medium text-graphite">Total Emolument</Text>
             <Text className="text-sm font-bold text-foreground">{statement.totalEmolument}</Text>
           </View>
           <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Total Pay Items</Text>
+            <Text className="text-xs font-medium text-graphite">Total Pay Items</Text>
             <Text className="text-sm font-bold text-foreground">{statement.totalPayItem}</Text>
           </View>
           <View className="flex-row justify-between">
-            <Text className="text-sm text-graphite">Net Amount (NG)</Text>
+            <Text className="text-xs font-medium text-graphite">Net Amount (NG)</Text>
             <Text className="text-sm font-bold text-semantic-up">{statement.totalng}</Text>
           </View>
         </Card>
