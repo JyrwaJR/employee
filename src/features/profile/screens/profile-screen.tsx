@@ -7,6 +7,8 @@ import { SettingRow } from '@components/common/setting-row';
 import { ProfileDetailRow } from '../components/profile-detail-row';
 import { ConfirmLogoutAlert } from '../components';
 import { useProfileSections } from '../hooks/use-profile-sections';
+import { Card, CardHeader, CardTitle, CardContent } from '@components/ui/card';
+import { GovtHeader } from '@components/common/govt-header';
 
 export const ProfileScreen = () => {
   const { user, emp_cd } = useAuthStore();
@@ -15,61 +17,53 @@ export const ProfileScreen = () => {
 
   return (
     <Container>
-      {/* Header / Govt Branding */}
-      <View className="border-b border-gray-200 bg-white pb-4 pt-4 dark:border-gray-800 dark:bg-gray-900">
-        <View className="mb-4 items-center">
-          <View className="mb-2 h-10 w-10 items-center justify-center opacity-80">
-            <Text className="text-2xl">🏛️</Text>
-          </View>
-          <Text className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
-            Government of India
-          </Text>
-          <Text variant="heading" size="lg" className="mt-1 text-gray-900 dark:text-white">
-            Employee Profile
-          </Text>
-        </View>
+      {/* Identity Header — Govt branding */}
+      <View className="border-b border-border bg-background pb-4 pt-4">
+        <GovtHeader
+          title={user ? `${user.emp_fname} ${user.emp_lname}` : 'Loading...'}
+          subtitle={user ? `Current DDO: ${user.ddo_code} - ${user.ddo_name}` : undefined}
+          badge={emp_cd ? `Employee Code: ${emp_cd}` : undefined}
+        />
 
-        {/* Identity Card Style Block */}
-        <View className="flex-row items-center rounded-lg border border-gray-200 bg-gray-50 p-4 dark:border-gray-700 dark:bg-gray-800/50">
-          <View className="ml-4 flex-1">
-            <Text className="text-lg font-bold leading-tight text-gray-900 dark:text-white">
-              {user?.emp_fname} {user?.emp_lname}
-            </Text>
-            <Text className="mt-1 text-xs font-medium uppercase text-blue-700 dark:text-blue-400">
-              Current DDO: {user?.ddo_code} - {user?.ddo_name}
-            </Text>
-            <Text className="mt-1 text-xs text-gray-500">
-              Employee Code:&nbsp;
-              <Text className="font-mono text-gray-700 dark:text-gray-300">{emp_cd || '-'}</Text>
-            </Text>
-          </View>
-        </View>
+        {/* Employee code inline when no badge */}
+        {!emp_cd && (
+          <Text variant="subtext" size="xs" className="text-center text-graphite">
+            Employee Code: —
+          </Text>
+        )}
       </View>
 
       <ScrollView className="flex-1 pt-6" showsVerticalScrollIndicator={false}>
         {/* Profile sections rendered as NIC portal-style cards */}
         {profileSections.map((section) => (
-          <View
-            key={section.title}
-            className="mb-5 overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+          <Card key={section.title} variant="bordered" className="mb-5 overflow-hidden">
             {/* Section header */}
-            <View className="border-b border-gray-200 bg-slate-100 px-4 py-3 dark:border-gray-700 dark:bg-slate-800">
-              <Text className="font-semibold">{section.title}</Text>
-            </View>
+            <CardHeader className="bg-surface-soft px-4 py-3">
+              <CardTitle>{section.title}</CardTitle>
+            </CardHeader>
 
             {/* Two-column table rows */}
-            {section.fields.map((field) => (
-              <ProfileDetailRow key={field.label} label={field.label} value={field.value || '-'} />
-            ))}
-          </View>
+            <CardContent className="p-0">
+              {section.fields.map((field) => (
+                <ProfileDetailRow
+                  key={field.label}
+                  label={field.label}
+                  value={field.value || '-'}
+                />
+              ))}
+            </CardContent>
+          </Card>
         ))}
 
         {/* Settings */}
         <View className="mb-10">
-          <Text className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-400">
+          <Text
+            variant="subtext"
+            size="xs"
+            className="mb-2 font-bold uppercase tracking-wider text-graphite">
             Preferences & Account
           </Text>
-          <View className="rounded-lg border border-gray-200 bg-white px-2 dark:border-gray-800 dark:bg-gray-900">
+          <Card variant="bordered" className="px-2">
             <SettingRow icon="lock-outline" label="Change Password" onPress={() => {}} />
             <SettingRow icon="file-document-outline" label="Service Record" onPress={() => {}} />
             <SettingRow
@@ -79,12 +73,12 @@ export const ProfileScreen = () => {
               onPress={() => setShowLogoutAlert(!showLogoutAlert)}
               showBorder={false}
             />
-          </View>
+          </Card>
         </View>
 
         {/* Footer */}
         <View className="items-center pb-8 opacity-60">
-          <Text className="text-center text-[10px] text-gray-400">
+          <Text variant="subtext" size="xs" className="text-graphite">
             NIC e-HRMS v2.0 • Government of India
           </Text>
         </View>
