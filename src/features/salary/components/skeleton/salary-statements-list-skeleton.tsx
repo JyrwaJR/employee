@@ -70,6 +70,7 @@ export const SalaryStatementsListSkeleton = ({}: SalaryStatementsListSkeletonPro
 
     {/* Statement detail content skeleton */}
     <View className="px-4">
+      <SectionCardSkeleton rows={5} />
       <SectionCardSkeleton rows={2} />
       <SectionCardSkeleton rows={3} />
       <SalaryItemsCardSkeleton />

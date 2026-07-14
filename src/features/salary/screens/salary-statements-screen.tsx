@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, RefreshControl, View } from 'react-native';
 import { Container } from '@components/layout/container';
+import { useAuthStore } from '@stores/auth.store';
 import { useSalaryStatements } from '../hooks';
 import { EmptyScreen } from '@components/screens';
 import { FilterCard, SectionHeader } from '@components/common';
@@ -23,6 +24,7 @@ import { Text } from '@components/ui/text';
 export const StatementScreen = () => {
   const [selectedYear, setSelectedYear] = useState<string>('2026');
   const [selectedMonth, setSelectedMonth] = useState<string>('JAN');
+  const { user } = useAuthStore();
   const {
     data: statement,
     isLoading,
@@ -78,6 +80,49 @@ export const StatementScreen = () => {
         className="flex-1 px-4"
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}>
+        {/* Employee Information */}
+        <View className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-slate-900">
+          <Text className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-400">
+            Employee Information
+          </Text>
+          <View className="mb-2 flex-row justify-between">
+            <Text className="text-sm text-gray-500">Employee Name</Text>
+            <Text className="max-w-[60%] text-right text-sm font-semibold text-slate-900 dark:text-white">
+              {[user?.emp_fname, user?.emp_mname, user?.emp_lname].filter(Boolean).join(' ')}
+            </Text>
+          </View>
+          <View className="mb-2 flex-row justify-between">
+            <Text className="text-sm text-gray-500">Office / Department</Text>
+            <Text className="max-w-[60%] text-right text-sm font-semibold text-slate-900 dark:text-white">
+              {user?.emp_dept || '-'}
+            </Text>
+          </View>
+          <View className="mb-2 flex-row justify-between">
+            <Text className="text-sm text-gray-500">Designation</Text>
+            <Text className="max-w-[60%] text-right text-sm font-semibold text-slate-900 dark:text-white">
+              {user?.emp_designation || '-'}
+            </Text>
+          </View>
+          <View className="mb-2 flex-row justify-between">
+            <Text className="text-sm text-gray-500">Pay Level</Text>
+            <Text className="text-sm font-semibold text-slate-900 dark:text-white">
+              {user?.pay_scale || '-'}
+            </Text>
+          </View>
+          <View className="mb-2 flex-row justify-between">
+            <Text className="text-sm text-gray-500">Period</Text>
+            <Text className="text-sm font-semibold text-slate-900 dark:text-white">
+              {selectedMonth} {selectedYear}
+            </Text>
+          </View>
+          <View className="flex-row justify-between">
+            <Text className="text-sm text-gray-500">GPF Number</Text>
+            <Text className="text-sm font-semibold text-slate-900 dark:text-white">
+              {statement.gpf_no}
+            </Text>
+          </View>
+        </View>
+
         {/* GPF Information */}
         <View className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-slate-900">
           <Text className="mb-3 text-xs font-bold uppercase tracking-wider text-gray-400">
