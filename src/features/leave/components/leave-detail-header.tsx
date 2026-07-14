@@ -6,6 +6,7 @@ import { getStatusColor } from '@utils/helpers/get-status-color';
 import { ILeaveDetails } from '../types';
 import { LEAVE_ICONS } from '../utils/constants';
 import { Icon } from '@components/ui/icon';
+import { Card } from '@components/ui/card';
 import { LeaveTypeCode } from '@sharedTypes/leave';
 /**
  * Props accepted by the {@link LeaveDetailHeader} component.
@@ -38,7 +39,7 @@ export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
 
   return (
     <View className="mt-4">
-      <View className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+      <Card variant="bordered" className="p-6">
         <View className="mb-4 flex-row items-center justify-between">
           <View className={cn('rounded-lg p-2', statusStyle.bg)}>
             <Icon
@@ -48,10 +49,7 @@ export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
             />
           </View>
           <View
-            className={cn(
-              'flex-row items-center gap-1.5 rounded-full px-3 py-1.5',
-              statusStyle.bg
-            )}>
+            className={cn('flex-row items-center gap-1.5 rounded-full px-3 py-1', statusStyle.bg)}>
             <Icon name={statusStyle.iconName as any} size={14} color={statusStyle.icon} />
             <Text className={cn('text-xs font-semibold', statusStyle.text)}>
               {leave.verify_flg_desc}
@@ -59,13 +57,13 @@ export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
           </View>
         </View>
 
-        <Text variant="heading" size="2xl" className="mb-1 text-gray-900 dark:text-white">
+        <Text variant="heading" size="2xl" className="mb-1 text-foreground">
           {leave.leave_desc}
         </Text>
         <Text variant="subtext" size="sm">
           {leave.no_days} {parseInt(leave.no_days) === 1 ? 'day' : 'days'}
         </Text>
-      </View>
+      </Card>
     </View>
   );
 };
