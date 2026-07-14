@@ -1,11 +1,9 @@
-import colors from 'tailwindcss/colors';
 import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-navigation/drawer';
 import { Link, Route, usePathname } from 'expo-router';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Pressable, Text, View } from 'react-native';
-import { useThemeStore } from '@stores/theme.store';
-import { transformData } from '@utils/helpers';
+import { cn } from '@utils/helpers/cn';
 
 export type MenuItemsT = {
   id?: number;
@@ -13,19 +11,15 @@ export type MenuItemsT = {
   href: Route;
 };
 
-const menuItems: MenuItemsT[] = transformData<MenuItemsT>([
-  { title: 'Home', href: '/' },
-  { title: 'Income Tax', href: '/tax' },
-  { title: 'Settings', href: '/settings' },
-]);
+const menuItems: MenuItemsT[] = [
+  { title: 'Home', href: '/' as Route },
+  { title: 'Income Tax', href: '/tax' as Route },
+  { title: 'Settings', href: '/settings' as Route },
+];
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
-  const { theme } = useThemeStore();
-  const isDark = theme === 'dark';
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
-
-  const bgColor = isDark ? colors.slate[900] : colors.white;
 
   return (
     <DrawerContentScrollView
@@ -33,10 +27,10 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       contentContainerStyle={{
         paddingTop: insets.top,
         flex: 1,
-        backgroundColor: bgColor,
-      }}>
+      }}
+      className="bg-background">
       <View className="mb-6 flex-row items-center justify-center pt-4">
-        <Text className="text-center text-2xl font-bold text-gray-900 dark:text-white">
+        <Text className="text-center text-2xl font-bold text-foreground">
           {process.env.EXPO_PUBLIC_APP_NAME}
         </Text>
       </View>
@@ -47,15 +41,15 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
           return (
             <Link key={item.id} href={item.href} asChild>
               <Pressable
-                className={`flex-row items-center rounded-xl p-4 ${
-                  isActive ? 'bg-blue-50 dark:bg-blue-900/20' : 'bg-transparent'
-                }`}>
+                className={cn(
+                  'flex-row items-center rounded-xl p-4',
+                  isActive ? 'bg-primary-soft' : 'bg-transparent'
+                )}>
                 <Text
-                  className={`text-base font-medium ${
-                    isActive
-                      ? 'text-blue-700 dark:text-blue-400'
-                      : 'text-slate-600 dark:text-slate-400'
-                  }`}>
+                  className={cn(
+                    'text-base font-medium',
+                    isActive ? 'text-primary' : 'text-charcoal'
+                  )}>
                   {item.title}
                 </Text>
               </Pressable>
