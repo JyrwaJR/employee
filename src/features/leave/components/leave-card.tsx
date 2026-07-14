@@ -32,9 +32,9 @@ export const LeaveCard = ({ item }: { item: LeaveListItem; onPress?: () => void 
       disabled={!isEnable}
       onPress={onPressLeave}
       className="mb-4 active:opacity-80">
-      <Card variant="bordered" className="p-4">
-        <View className="mb-2 flex-row items-center justify-between">
-          <View className="flex-row items-center gap-2">
+      <Card variant="bordered" className="p-5">
+        <View className="mb-3 flex-row items-center justify-between">
+          <View className="flex-row items-center gap-3">
             <View className={cn('rounded-lg p-2', statusStyle.bg)}>
               <Icon
                 name={(LEAVE_ICONS[item.leave_cd as LeaveTypeCode] as any) ?? 'calendar-account'}
@@ -46,7 +46,7 @@ export const LeaveCard = ({ item }: { item: LeaveListItem; onPress?: () => void 
               <Text variant="display-xs" className="text-foreground">
                 {item.leave_desc}
               </Text>
-              <Text variant="subtext" className="text-xs font-medium">
+              <Text variant="subtext" size="xs" className="font-medium">
                 Applied on {formatDate(item.order_dt1)}
               </Text>
             </View>
@@ -62,15 +62,19 @@ export const LeaveCard = ({ item }: { item: LeaveListItem; onPress?: () => void 
 
         <View className="my-2 h-[1px] bg-border" />
 
-        <View className="mt-1 flex-row justify-between">
+        <View className="mt-2 flex-row justify-between">
           <View className="flex-1">
-            <Text variant="subtext" size="xs" className="text-charcoal">
+            <Text variant="subtext" size="xs" className="mb-1 font-medium text-graphite">
               Duration
             </Text>
             <View className="flex-row items-center">
-              <Text className="font-semibold text-foreground">{formatDate(item.from_dt1)}</Text>
+              <Text className="text-sm font-semibold text-foreground">
+                {formatDate(item.from_dt1)}
+              </Text>
               <Text className="mx-2 text-graphite">→</Text>
-              <Text className="font-semibold text-foreground">{formatDate(item.to_dt1)}</Text>
+              <Text className="text-sm font-semibold text-foreground">
+                {formatDate(item.to_dt1)}
+              </Text>
             </View>
             <Text className="mt-1 text-xs font-medium text-primary">
               {parseInt(item.no_days)} Days
@@ -79,7 +83,7 @@ export const LeaveCard = ({ item }: { item: LeaveListItem; onPress?: () => void 
         </View>
 
         {item.reason_for_leave && (
-          <View className="mt-3 rounded-lg bg-surface-soft p-2">
+          <View className="mt-3 rounded-lg bg-surface-soft p-3">
             <Text numberOfLines={1} variant="caption-sm" className="italic text-charcoal">
               {item.reason_for_leave}
             </Text>

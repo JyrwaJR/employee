@@ -29,17 +29,17 @@ const InfoRow = ({ icon, label, value }: { icon: string; label: string; value: s
       <Icon name={icon as any} size={20} color={'#636363'} />
     </View>
     <View className="flex-1">
-      <Text variant="subtext" size="xs" className="mb-0.5 font-medium uppercase tracking-wide">
+      <Text variant="subtext" size="xs" className="mb-0.5 font-medium text-graphite">
         {label}
       </Text>
-      <Text className="text-sm font-medium text-foreground">{value}</Text>
+      <Text className="text-sm font-semibold text-foreground">{value}</Text>
     </View>
   </View>
 );
 
 export const LeaveDetailInfo = ({ leave }: LeaveDetailInfoProps) => (
   <Card variant="bordered" className="mt-4 p-5">
-    <Text variant="heading" size="lg" className="mb-4 text-foreground">
+    <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
       Leave Details
     </Text>
     <InfoRow icon="calendar-range" label="From" value={leave.from_dt} />
@@ -53,7 +53,7 @@ export const LeaveDetailInfo = ({ leave }: LeaveDetailInfoProps) => (
     <InfoRow icon="calendar-clock" label="Order Date" value={leave.order_dt} />
     {leave.reason_for_leave && (
       <View className="mt-2 rounded-xl bg-surface-soft p-4">
-        <Text variant="subtext" size="xs" className="mb-1.5 font-medium uppercase tracking-wide">
+        <Text variant="subtext" size="xs" className="mb-1.5 font-medium text-graphite">
           Reason
         </Text>
         <Text className="text-sm leading-5 text-charcoal">{leave.reason_for_leave}</Text>

@@ -13,7 +13,7 @@ interface LeaveBalanceCardProps {
 
 export const LeaveBalanceCard = ({ item }: LeaveBalanceCardProps) => (
   <View className="mt-4">
-    <Text variant="heading" size="lg" className="mb-3 text-foreground">
+    <Text className="mb-3 text-xs font-bold uppercase tracking-wider text-graphite">
       Leave Balance
     </Text>
     <Card variant="bordered" className="p-5">
