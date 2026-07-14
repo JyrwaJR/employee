@@ -9,8 +9,8 @@ export const HomeLeaveEmptyCard = () => (
   <Card>
     <CardContent className="p-5">
       <View className="flex-row items-center">
-        <Icon name="calendar-check" size={22} color="#9CA3AF" />
-        <Text variant="subtext" className="ml-3 text-sm font-medium">
+        <Icon name="calendar-check" size={22} color="#636363" />
+        <Text variant="subtext" className="ml-3 text-sm font-medium text-charcoal">
           No upcoming leaves
         </Text>
       </View>

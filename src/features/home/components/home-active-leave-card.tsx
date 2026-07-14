@@ -17,8 +17,8 @@ export const HomeActiveLeaveCard = ({ leave }: HomeActiveLeaveCardProps) => (
     <CardContent className="p-5">
       <View className="mb-3 flex-row items-center justify-between">
         <View className="flex-row items-center">
-          <Icon name="umbrella" size={22} color="#3B82F6" />
-          <Text variant="heading" size="lg" className="ml-2 text-gray-900 dark:text-white">
+          <Icon name="umbrella" size={22} color="#024ad8" />
+          <Text variant="heading" size="lg" className="ml-2 text-foreground">
             Active Leave
           </Text>
         </View>
@@ -28,14 +28,12 @@ export const HomeActiveLeaveCard = ({ leave }: HomeActiveLeaveCardProps) => (
       </View>
       <View className="flex-row items-center justify-between">
         <View>
-          <Text className="text-sm font-medium text-gray-700 dark:text-gray-300">
-            {leave.leave_cd}
-          </Text>
+          <Text className="text-sm font-medium text-charcoal">{leave.leave_cd}</Text>
           <Text variant="subtext" size="sm">
             {formatDate(leave.from_dt)} — {formatDate(leave.to_dt)}
           </Text>
         </View>
-        <Text className="text-lg font-bold text-gray-900 dark:text-white">
+        <Text className="text-lg font-bold text-foreground">
           {leave.no_days} {parseInt(leave.no_days) === 1 ? 'day' : 'days'}
         </Text>
       </View>
