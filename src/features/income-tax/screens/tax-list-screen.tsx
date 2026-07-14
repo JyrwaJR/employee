@@ -9,7 +9,7 @@ import { PAGE_ROUTES } from '@utils/constants/routes';
 import { TaxListSkeleton } from '../components/skeleton';
 import { FAB } from '@components/common';
 
-export default function TaxListScreen() {
+export const TaxListScreen = () => {
   const { data: taxList, isLoading, isFetching, refetch } = useEmployeeTaxes();
 
   if (isLoading) return <TaxListSkeleton />;
@@ -40,4 +40,4 @@ export default function TaxListScreen() {
       <FAB onPress={() => router.push(PAGE_ROUTES.TAX.CREATE)} />
     </Container>
   );
-}
+};

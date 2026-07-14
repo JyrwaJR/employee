@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, ScrollView } from 'react-native';
+import { Text } from '@components/ui/text';
 import { Container } from '@components/layout/container';
 import { SectionHeader } from '@components/common/section-header';
 import { useLocalAuthStore } from '@stores/local-auth.store';
@@ -54,7 +55,7 @@ export const SettingsScreen = () => {
           {/* Notifications Section */}
           <SectionHeader title="Security" />
 
-          <View className="mb-8 overflow-hidden rounded-xl border border-gray-200 px-4 dark:border-gray-800">
+          <View className="mb-8 overflow-hidden rounded-xl border border-border px-4">
             <SettingRow
               icon={'security'}
               label="Enable Biometric"
@@ -66,7 +67,9 @@ export const SettingsScreen = () => {
           </View>
 
           <View className="mt-4 items-center">
-            <Text className="text-sm text-gray-400 dark:text-gray-600">v1.0.0 (Build 100)</Text>
+            <Text variant="subtext" size="sm" className="text-graphite">
+              v1.0.0 (Build 100)
+            </Text>
           </View>
         </View>
       </ScrollView>
@@ -94,5 +97,3 @@ export const SettingsScreen = () => {
     </Container>
   );
 };
-
-export default SettingsScreen;

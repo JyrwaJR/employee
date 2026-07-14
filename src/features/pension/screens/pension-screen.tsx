@@ -15,7 +15,7 @@ const statusOptions = [
   { label: 'Pending', value: 'PENDING' },
 ];
 
-const PensionScreen = () => {
+export const PensionScreen = () => {
   const [selectedYear, setSelectedYear] = React.useState('2026');
   const [selectedMonth, setSelectedMonth] = React.useState('JANUARY');
   const [status, setStatus] = React.useState('PAID');
@@ -55,7 +55,7 @@ const PensionScreen = () => {
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
             <View className="mt-20 items-center justify-center">
-              <Text className="mb-4 text-4xl">📂</Text>
+              <Text className="mb-4 text-4xl text-graphite">📄</Text>
               <Text variant="subtext" className="text-center font-medium">
                 No records found for {selectedYear}
               </Text>
@@ -66,5 +66,3 @@ const PensionScreen = () => {
     </>
   );
 };
-
-export default PensionScreen;
