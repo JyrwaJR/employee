@@ -8,7 +8,7 @@ interface StackHeaderLayoutProps {
 }
 
 export const StackHeaderLayout = ({ children }: StackHeaderLayoutProps) => (
-  <View className="flex-1 bg-white dark:bg-slate-950">
+  <View className="flex-1">
     <StackHeader />
     {children ?? <Slot />}
   </View>
