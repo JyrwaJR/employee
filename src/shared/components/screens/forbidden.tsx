@@ -34,7 +34,7 @@ export const Forbidden = ({
   return (
     <View className="flex-1 items-center justify-center gap-y-2 p-6">
       <View className="mb-6 h-24 w-24 items-center justify-center rounded-full bg-red-50 dark:bg-red-900/20">
-        <Icon name="shield-lock-outline" size={48} color="#EF4444" />
+        <Icon name="shield-checkmark" size={48} color="#EF4444" />
       </View>
 
       <Text variant="heading" size="3xl" className="mb-2 text-center text-foreground">

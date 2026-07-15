@@ -1,7 +1,7 @@
 import { cn } from '@utils/helpers/cn';
 import React from 'react';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
-import { Icon } from '@components/ui/icon';
+import { Icon, type IoniconsIconName } from '@components/ui/icon';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const fabVariants = cva('absolute items-center justify-center rounded-full shadow-lg', {
@@ -56,13 +56,13 @@ const fabVariants = cva('absolute items-center justify-center rounded-full shado
  */
 interface FABProps extends TouchableOpacityProps, VariantProps<typeof fabVariants> {
   /** Name of the Ionicons icon to display inside the button. */
-  icon?: string;
+  icon?: IoniconsIconName;
   /** Callback invoked when the button is pressed. */
   onPress: () => void;
 }
 
 export const FAB = ({
-  icon = 'add',
+  icon = 'add' as IoniconsIconName,
   onPress,
   className,
   variant = 'primary',
@@ -88,7 +88,7 @@ export const FAB = ({
       accessibilityRole="button"
       accessibilityLabel={props.accessibilityLabel ?? 'Floating action button'}
       {...props}>
-      <Icon family="ionicons" name={icon as any} size={iconSize} color={iconColor} />
+      <Icon name={icon} size={iconSize} color={iconColor} />
     </TouchableOpacity>
   );
 };

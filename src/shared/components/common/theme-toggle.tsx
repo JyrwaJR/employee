@@ -7,7 +7,6 @@ export const ThemeToggle = () => {
   return (
     <TouchableOpacity onPress={toggleTheme}>
       <Icon
-        family="ionicons"
         name={theme === 'dark' ? 'moon' : 'sunny'}
         size={24}
         color={theme === 'dark' ? '#FFFFFF' : '#000000'}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Text } from '@components/ui/text';
-import { Icon } from '@components/ui/icon';
+import { Icon, type IoniconsIconName } from '@components/ui/icon';
 import { Card } from '@components/ui/card';
 import { ILeaveDetails } from '../types';
 
@@ -23,10 +23,18 @@ interface LeaveDetailInfoProps {
  * @param label - Short label text (e.g. `From`, `To`, `Duration`).
  * @param value - The value text shown below the label.
  */
-const InfoRow = ({ icon, label, value }: { icon: string; label: string; value: string }) => (
+const InfoRow = ({
+  icon,
+  label,
+  value,
+}: {
+  icon: IoniconsIconName;
+  label: string;
+  value: string;
+}) => (
   <View className="mb-4 flex-row items-start">
     <View className="mr-3 mt-0.5 w-6 items-center">
-      <Icon name={icon as any} size={20} color={'#636363'} />
+      <Icon name={icon} size={20} color={'#636363'} />
     </View>
     <View className="flex-1">
       <Text variant="subtext" size="xs" className="mb-0.5 font-medium text-graphite">
@@ -42,15 +50,15 @@ export const LeaveDetailInfo = ({ leave }: LeaveDetailInfoProps) => (
     <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
       Leave Details
     </Text>
-    <InfoRow icon="calendar-range" label="From" value={leave.from_dt} />
-    <InfoRow icon="calendar-check" label="To" value={leave.to_dt} />
+    <InfoRow icon="calendar-outline" label="From" value={leave.from_dt} />
+    <InfoRow icon="calendar-number-outline" label="To" value={leave.to_dt} />
     <InfoRow
-      icon="counter"
+      icon="calculator-outline"
       label="Duration"
       value={`${leave.no_days} ${parseInt(leave.no_days) === 1 ? 'day' : 'days'}`}
     />
-    <InfoRow icon="clipboard-text" label="Leave Type" value={leave.leave_desc} />
-    <InfoRow icon="calendar-clock" label="Order Date" value={leave.order_dt} />
+    <InfoRow icon="clipboard-outline" label="Leave Type" value={leave.leave_desc} />
+    <InfoRow icon="alarm-outline" label="Order Date" value={leave.order_dt} />
     {leave.reason_for_leave && (
       <View className="mt-2 rounded-md bg-surface-soft p-4">
         <Text variant="subtext" size="xs" className="mb-1.5 font-medium text-graphite">

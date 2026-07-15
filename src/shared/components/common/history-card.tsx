@@ -41,7 +41,7 @@ export const SalaryStatementListItem = ({
       <View className="mb-2 flex-row items-center justify-between">
         <View className="flex-row items-center gap-2">
           <View className="rounded-lg bg-primary-soft p-2">
-            <Icon name="file-document-outline" size={24} color="#2563EB" />
+            <Icon name="document-text-outline" size={24} color="#2563EB" />
           </View>
           <View>
             <Text className="text-lg font-bold text-foreground">
@@ -52,7 +52,7 @@ export const SalaryStatementListItem = ({
             </Text>
           </View>
         </View>
-        {onPress && <Icon name="chevron-right" size={24} color="#94A3B8" />}
+        {onPress && <Icon name="chevron-forward" size={24} color="#94A3B8" />}
       </View>
 
       <View className="my-2 h-[1px] bg-muted" />
@@ -69,7 +69,7 @@ export const SalaryStatementListItem = ({
               statusStyle.bg
             )}>
             <Icon
-              name={item.status === 'PAID' ? 'check-circle' : 'clock-outline'}
+              name={item.status === 'PAID' ? 'checkmark-circle' : 'time-outline'}
               size={12}
               color={item.status === 'PAID' ? '#166534' : '#C2410C'}
             />

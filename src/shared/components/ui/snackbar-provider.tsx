@@ -153,12 +153,7 @@ export const SnackbarProvider = () => {
           }}>
           {icon ? (
             <View style={{ marginRight: 8 }}>
-              <Icon
-                family="ionicons"
-                name={icon}
-                size={20}
-                color={isDark ? '#1a1a1a' : '#ffffff'}
-              />
+              <Icon name={icon} size={20} color={isDark ? '#1a1a1a' : '#ffffff'} />
             </View>
           ) : null}
           <Text

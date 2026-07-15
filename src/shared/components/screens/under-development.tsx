@@ -22,7 +22,7 @@ export const UnderDevelopment = ({
   return (
     <Container className="flex-1 items-center justify-center">
       <View className="mb-6 items-center justify-center rounded-full bg-primary-soft p-6">
-        <Icon name="hammer-wrench" size={48} color="#024ad8" />
+        <Icon name="construct" size={48} color="#024ad8" />
       </View>
 
       <Text className="mb-4 text-center text-xl font-bold text-foreground">{title}</Text>

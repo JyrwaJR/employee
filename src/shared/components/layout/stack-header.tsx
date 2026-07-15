@@ -43,7 +43,7 @@ export const StackHeader = memo(() => {
                 className="mr-3"
                 hitSlop={{ top: 15, bottom: 15, left: 15, right: 15 }}
                 activeOpacity={0.7}>
-                <Icon family="ionicons" name="chevron-back" size={24} color={iconColor} />
+                <Icon name="chevron-back" size={24} color={iconColor} />
               </TouchableOpacity>
             )
           )}

@@ -1,4 +1,5 @@
-import { LeaveTypeCode } from '@features/leave/types';
+import { LeaveTypeCode } from '@sharedTypes/leave';
+import { type IoniconsIconName } from '@components/ui/icon';
 
 export const LEAVE_TYPES: Record<LeaveTypeCode, LeaveTypeCode> = {
   COM: 'COM',
@@ -14,32 +15,31 @@ export const LEAVE_TYPES: Record<LeaveTypeCode, LeaveTypeCode> = {
 };
 
 /**
- * Maps every recognised {@link LeaveTypeCode} to a matching
- * `MaterialCommunityIcons` glyph so leave cards and headers show
- * a distinct visual per type.
+ * Maps every recognised {@link LeaveTypeCode} to a matching Ionicons
+ * glyph so leave cards and headers show a distinct visual per type.
  *
- * Falls back to `'calendar-blank'` when the type is unknown (e.g.
+ * Falls back to `'calendar-outline'` when the type is unknown (e.g.
  * during loading or a new server-side type not yet in the union).
  */
-export const LEAVE_ICONS: Record<LeaveTypeCode, string> = {
+export const LEAVE_ICONS: Record<LeaveTypeCode, IoniconsIconName> = {
   /** Compensatory Off */
   COM: 'heart',
   /** Leave Not Due */
-  LND: 'bank',
+  LND: 'business',
   /** Extra Ordinary Leave */
-  EOL: 'beach',
+  EOL: 'sunny-outline',
   /** Leave Preparatory to Retirement */
-  LPA: 'human-greeting',
+  LPA: 'hand-left',
   /** Earned Leave */
   EL: 'umbrella',
   /** Half Pay Leave */
-  HPL: 'clock-outline',
+  HPL: 'time-outline',
   /** Maternity Leave */
-  ML: 'human-female',
+  ML: 'woman',
   /** Sick Leave */
-  SL: 'medical-bag',
+  SL: 'medkit',
   /** Work Place Leave */
-  WPL: 'home-account',
+  WPL: 'home',
   /** Personal / Privilege Leave */
-  PL: 'shield-star',
+  PL: 'shield-checkmark',
 };

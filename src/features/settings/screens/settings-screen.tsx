@@ -57,7 +57,7 @@ export const SettingsScreen = () => {
 
           <View className="mb-8 overflow-hidden rounded-md border border-border px-4">
             <SettingRow
-              icon={'security'}
+              icon={'shield-checkmark'}
               label="Enable Biometric"
               description="Adjust the appearance of the app"
               value={isEnabled}

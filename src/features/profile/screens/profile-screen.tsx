@@ -66,10 +66,10 @@ export const ProfileScreen = () => {
             Preferences & Account
           </Text>
           <Card variant="bordered" className="px-2">
-            <SettingRow icon="lock-outline" label="Change Password" onPress={() => {}} />
-            <SettingRow icon="file-document-outline" label="Service Record" onPress={() => {}} />
+            <SettingRow icon="lock-closed-outline" label="Change Password" onPress={() => {}} />
+            <SettingRow icon="document-text-outline" label="Service Record" onPress={() => {}} />
             <SettingRow
-              icon="logout"
+              icon="log-out-outline"
               label="Log Out"
               isDestructive
               onPress={() => setShowLogoutAlert(!showLogoutAlert)}

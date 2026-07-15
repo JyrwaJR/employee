@@ -43,14 +43,14 @@ export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
         <View className="mb-4 flex-row items-center justify-between">
           <View className={cn('rounded-lg p-2', statusStyle.bg)}>
             <Icon
-              name={(LEAVE_ICONS[leave.leave_cd as LeaveTypeCode] as any) ?? 'calendar-account'}
+              name={LEAVE_ICONS[leave.leave_cd as LeaveTypeCode] ?? 'calendar-number-outline'}
               size={32}
               color={statusStyle.icon}
             />
           </View>
           <View
             className={cn('flex-row items-center gap-1.5 rounded-full px-3 py-1', statusStyle.bg)}>
-            <Icon name={statusStyle.iconName as any} size={14} color={statusStyle.icon} />
+            <Icon name={statusStyle.iconName} size={14} color={statusStyle.icon} />
             <Text className={cn('text-xs font-semibold', statusStyle.text)}>
               {leave.verify_flg_desc}
             </Text>

@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useSnackbarStore } from '@stores/snackbar.store';
+import type { IoniconsIconName } from '@components/ui/icon';
 
 /**
  * Convenience hook for showing and dismissing the snackbar banner.
@@ -16,7 +17,7 @@ export const useSnackbar = () => {
   const dismissSnackbar = useSnackbarStore((state) => state.dismissSnackbar);
 
   const show = useCallback(
-    (message: string, icon?: string) => {
+    (message: string, icon?: IoniconsIconName) => {
       showSnackbar(message, icon);
     },
     [showSnackbar]

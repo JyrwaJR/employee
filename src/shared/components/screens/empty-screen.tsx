@@ -1,6 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Icon } from '@components/ui/icon';
+import { type IoniconsIconName } from '@react-native-vector-icons/ionicons';
 import { useTheme } from '@hooks/use-theme';
 import { cn } from '@utils/helpers/cn';
 import { Container } from '../layout/container';
@@ -11,7 +12,7 @@ interface EmptyScreenProps {
   title: string;
   refresh?: () => void;
   message?: string;
-  icon?: string;
+  icon?: IoniconsIconName;
   refreshLabel?: string;
 }
 
@@ -19,7 +20,7 @@ export const EmptyScreen = ({
   title,
   refresh,
   message,
-  icon = 'inbox-outline',
+  icon = 'file-tray-outline' as IoniconsIconName,
   refreshLabel = 'Refresh',
 }: EmptyScreenProps) => {
   const theme = useTheme();
@@ -28,7 +29,7 @@ export const EmptyScreen = ({
   return (
     <Container className={cn('flex-1 items-center justify-center px-6')}>
       <View className={cn('mb-6 h-24 w-24 items-center justify-center rounded-full', 'bg-muted')}>
-        <Icon name={icon as any} size={48} color={isDarkMode ? '#9CA3AF' : '#6B7280'} />
+        <Icon name={icon} size={48} color={isDarkMode ? '#9CA3AF' : '#6B7280'} />
       </View>
 
       <Text variant="heading" className={cn('mb-2 text-center text-foreground')}>

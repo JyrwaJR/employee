@@ -32,12 +32,11 @@ export const HomeLeavePreview = ({ leave }: HomeLeavePreviewProps) => {
             <Text className="flex-1 text-sm font-semibold text-foreground" numberOfLines={1}>
               {leave.leave_desc}
             </Text>
-            <View
-              className={cn('rounded-full px-3 py-1', getStatusColor(leave.verify_flg_desc).bg)}>
+            <View className={cn('rounded-md px-3 py-1', getStatusColor(leave.verify_flg_desc).bg)}>
               <Text className="text-xs font-semibold">{leave.verify_flg_desc}</Text>
             </View>
           </View>
-          <Icon name="chevron-right" size={18} color="#636363" />
+          <Icon name="chevron-forward" size={18} color="#636363" />
         </View>
         <Text variant="subtext" size="xs" className="mb-1">
           {formatDate(leave.from_dt1)} — {formatDate(leave.to_dt1)}

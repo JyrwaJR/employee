@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, TouchableOpacity, Switch } from 'react-native';
 import { Text } from '@components/ui/text';
-import { Icon } from '@components/ui/icon';
+import { Icon, type IoniconsIconName } from '@components/ui/icon';
 import { cn } from '@utils/helpers/cn';
 
 /** Props for the SettingRow component. */
 interface SettingRowProps {
-  icon: string;
+  icon: IoniconsIconName;
   label: string;
   description?: string;
   isDestructive?: boolean;
@@ -75,7 +75,7 @@ export const SettingRow = ({
           style={{ transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] }}
         />
       ) : (
-        <Icon name="chevron-right" size={20} color="#CBD5E1" />
+        <Icon name="chevron-forward" size={20} color="#CBD5E1" />
       )}
     </View>
   );

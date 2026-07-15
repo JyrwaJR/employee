@@ -20,7 +20,7 @@ export const HomeQuickActions = () => {
             activeOpacity={0.7}
             className="items-center">
             <View className="mb-2 h-14 w-14 items-center justify-center rounded-2xl bg-primary-soft">
-              <Icon name={action.icon as any} size={26} color="#024ad8" />
+              <Icon name={action.icon} size={26} color="#024ad8" />
             </View>
             <Text variant="subtext" size="xs" className="text-center font-medium">
               {action.label}

@@ -20,7 +20,7 @@ export const CustomTabBar = ({
         const isFocused = state.index === index;
 
         const config = tabConfig.find((t: TabRouteT) => t.name === route.name);
-        const iconName = config?.icon || 'help';
+        const iconName = config?.icon || 'help-circle-outline';
         const label =
           (options.tabBarLabel as string) || options.title || config?.title || route.name;
 
@@ -43,12 +43,7 @@ export const CustomTabBar = ({
             activeOpacity={0.7}
             testID={`TAB_${route.name.toUpperCase().replace('INDEX', 'HOME')}`}
             className="flex-1 items-center justify-center p-2">
-            <Icon
-              family="material"
-              name={iconName}
-              size={24}
-              color={isFocused ? '#024ad8' : '#636363'}
-            />
+            <Icon name={iconName} size={24} color={isFocused ? '#024ad8' : '#636363'} />
             <Text
               variant="subtext"
               size="xs"

@@ -21,7 +21,7 @@ export const LeaveBalanceCard = ({ item }: LeaveBalanceCardProps) => (
         <View className="flex-row items-center gap-3">
           <View className="rounded-md bg-primary-soft p-2">
             <Icon
-              name={(LEAVE_ICONS[item?.type as LeaveTypeCode] as any) ?? 'calendar-blank'}
+              name={LEAVE_ICONS[item?.type as LeaveTypeCode] ?? 'calendar-outline'}
               size={20}
               color="#024ad8"
             />

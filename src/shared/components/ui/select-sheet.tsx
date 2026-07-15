@@ -130,7 +130,7 @@ export const SelectSheet = (props: SelectSheetProps) => {
           )}>
           {displayText}
         </Text>
-        <Icon family="ionicons" name="chevron-down" size={18} color="#9ca3af" />
+        <Icon name="chevron-down" size={18} color="#9ca3af" />
       </TouchableOpacity>
 
       {error && (
@@ -232,12 +232,7 @@ const SelectSheetModal = (props: SelectSheetModalProps) => {
               condition={options.length === 0}
               ifTrue={
                 <View className="items-center justify-center px-5 py-10">
-                  <Icon
-                    family="ionicons"
-                    name="information-circle-outline"
-                    size={32}
-                    color="#9ca3af"
-                  />
+                  <Icon name="information-circle-outline" size={32} color="#9ca3af" />
                   <Text className="mt-3 text-center text-muted-foreground">
                     No options available
                   </Text>
@@ -246,7 +241,7 @@ const SelectSheetModal = (props: SelectSheetModalProps) => {
                       activeOpacity={0.7}
                       onPress={refetch}
                       className="mt-4 flex-row items-center gap-x-2 rounded-lg bg-blue-50 px-6 py-2.5 dark:bg-blue-900/20">
-                      <Icon family="ionicons" name="refresh" size={18} color="#3b82f6" />
+                      <Icon name="refresh" size={18} color="#3b82f6" />
                       <Text weight="semibold" className="text-blue-600 dark:text-blue-400">
                         Retry
                       </Text>
@@ -295,9 +290,9 @@ const SelectSheetModal = (props: SelectSheetModalProps) => {
                       )}
                     </View>
                     {isSelected ? (
-                      <Icon family="ionicons" name="checkmark-circle" size={22} color="#3b82f6" />
+                      <Icon name="checkmark-circle" size={22} color="#3b82f6" />
                     ) : (
-                      <Icon family="ionicons" name="ellipse-outline" size={22} color="#d1d5db" />
+                      <Icon name="ellipse-outline" size={22} color="#d1d5db" />
                     )}
                   </TouchableOpacity>
                 );

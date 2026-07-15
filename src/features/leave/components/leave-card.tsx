@@ -37,7 +37,7 @@ export const LeaveCard = ({ item }: { item: LeaveListItem; onPress?: () => void 
           <View className="flex-row items-center gap-3">
             <View className={cn('rounded-md p-2', statusStyle.bg)}>
               <Icon
-                name={(LEAVE_ICONS[item.leave_cd as LeaveTypeCode] as any) ?? 'calendar-account'}
+                name={LEAVE_ICONS[item.leave_cd as LeaveTypeCode] ?? 'calendar-number-outline'}
                 size={24}
                 color={statusStyle.icon}
               />
@@ -52,7 +52,7 @@ export const LeaveCard = ({ item }: { item: LeaveListItem; onPress?: () => void 
             </View>
           </View>
           <View className={cn('flex-row items-center gap-1 rounded-md px-3 py-1', statusStyle.bg)}>
-            <Icon name={statusStyle.iconName as any} size={12} color={statusStyle.icon} />
+            <Icon name={statusStyle.iconName} size={12} color={statusStyle.icon} />
             <Text className={cn('text-xs font-medium', statusStyle.text)}>
               {item.verify_flg_desc}
             </Text>

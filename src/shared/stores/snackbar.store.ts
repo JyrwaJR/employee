@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { type IoniconsIconName } from '@components/ui/icon';
 
 interface SnackbarState {
   /** The message text to display. Null means hidden. */
@@ -6,7 +7,7 @@ interface SnackbarState {
   /** Whether the banner is currently visible (animating in). */
   visible: boolean;
   /** Optional ionicons icon name to display before the message. */
-  icon: string | null;
+  icon: IoniconsIconName | null;
 
   /**
    * Show the snackbar with the given message.
@@ -14,7 +15,7 @@ interface SnackbarState {
    * @param message - The text to display.
    * @param icon - Optional ionicons icon name (e.g. "checkmark-circle").
    */
-  showSnackbar: (message: string, icon?: string) => void;
+  showSnackbar: (message: string, icon?: IoniconsIconName) => void;
 
   /** Hide the snackbar immediately. Clears message and icon. */
   dismissSnackbar: () => void;
@@ -32,7 +33,7 @@ export const useSnackbarStore = create<SnackbarState>((set) => ({
   visible: false,
   icon: null,
 
-  showSnackbar: (message: string, icon?: string) =>
+  showSnackbar: (message: string, icon?: IoniconsIconName) =>
     set({
       message,
       icon: icon ?? null,

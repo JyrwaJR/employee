@@ -100,7 +100,7 @@ export const AccordionTrigger = ({
         {children}
       </Text>
       <Animated.View style={arrowStyle}>
-        <Icon family="ionicons" name="chevron-down" size={18} color="#636363" />
+        <Icon name="chevron-down" size={18} color="#636363" />
       </Animated.View>
     </TouchableOpacity>
   );
