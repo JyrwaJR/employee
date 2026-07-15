@@ -3,17 +3,17 @@ import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuthStore } from '@stores/auth.store';
 import { CustomTabBar } from './custom-tab-bar';
-import { getTabConfig } from '@config/tabs';
+import { COMMON_TABS } from '@config/tabs';
 import { StackHeader } from '../stack-header';
 
 export const TabLayout = () => {
   const { role } = useAuthStore();
   const insets = useSafeAreaInsets();
 
-  const tabConfig = getTabConfig(role);
+  const tabConfig = COMMON_TABS;
 
   return (
-    <View className="flex-1 bg-white dark:bg-slate-950">
+    <View className="flex-1">
       <StackHeader />
       <Tabs
         key={role}
