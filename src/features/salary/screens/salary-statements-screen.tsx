@@ -23,7 +23,7 @@ import { Text } from '@components/ui/text';
  * empty state is shown.
  */
 const currentMonth: string = getPreviousMonth();
-const currentYear: string = getCurrentYear();
+const currentYear: string = getCurrentYear().toString();
 
 export const StatementScreen = () => {
   const [selectedYear, setSelectedYear] = useState<string>(currentYear);
@@ -107,15 +107,23 @@ export const StatementScreen = () => {
             <Text className="text-sm text-graphite">Pay Level</Text>
             <Text className="text-sm font-semibold text-foreground">{user?.pay_scale || '-'}</Text>
           </View>
+          {statement.pay_in_pb ? (
+            <View className="mb-2 flex-row justify-between">
+              <Text className="text-sm text-graphite">Pay in Pay Band</Text>
+              <Text className="text-sm font-semibold text-foreground">{statement.pay_in_pb}</Text>
+            </View>
+          ) : null}
+          {statement.grade_pay ? (
+            <View className="mb-2 flex-row justify-between">
+              <Text className="text-sm text-graphite">Grade Pay</Text>
+              <Text className="text-sm font-semibold text-foreground">{statement.grade_pay}</Text>
+            </View>
+          ) : null}
           <View className="mb-2 flex-row justify-between">
             <Text className="text-sm text-graphite">Period</Text>
             <Text className="text-sm font-semibold text-foreground">
               {selectedMonth} {selectedYear}
             </Text>
-          </View>
-          <View className="flex-row justify-between">
-            <Text className="text-sm text-graphite">GPF Number</Text>
-            <Text className="text-sm font-semibold text-foreground">{statement.gpf_no}</Text>
           </View>
         </Card>
 
@@ -189,7 +197,24 @@ export const StatementScreen = () => {
             <Text className="text-sm text-graphite">Net Amount (NG)</Text>
             <Text className="text-sm font-bold text-semantic-up">{statement.totalng}</Text>
           </View>
+          {statement.net_pay ? (
+            <View className="mt-2 flex-row justify-between border-t border-border pt-2">
+              <Text className="text-sm font-bold text-foreground">Net Pay</Text>
+              <Text className="text-sm font-bold text-foreground">{statement.net_pay}</Text>
+            </View>
+          ) : null}
         </Card>
+        {/* Net Pay in Words */}
+        {statement.net_pay_in_word ? (
+          <Card variant="bordered" className="p-5">
+            <Text className="mb-2 text-xs font-bold uppercase tracking-wider text-graphite">
+              Net Pay (in Words)
+            </Text>
+            <Text className="text-sm font-semibold italic text-foreground">
+              {statement.net_pay_in_word}
+            </Text>
+          </Card>
+        ) : null}
       </ScrollView>
     </Container>
   );
