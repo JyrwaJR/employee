@@ -2,19 +2,23 @@ import { DrawerContentComponentProps, DrawerContentScrollView } from '@react-nav
 import { Link, Route, usePathname } from 'expo-router';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { cn } from '@utils/helpers/cn';
+import { Icon } from '@components/ui';
+import { IoniconsIconName } from '@react-native-vector-icons/ionicons';
+import { Text } from '@components/ui/text';
 
 export type MenuItemsT = {
   id?: number;
   title: string;
   href: Route;
+  icon: IoniconsIconName;
 };
 
 const menuItems: MenuItemsT[] = [
-  { title: 'Home', href: '/' as Route },
-  { title: 'Income Tax', href: '/tax' as Route },
-  { title: 'Settings', href: '/settings' as Route },
+  { title: 'Home', href: '/' as Route, icon: 'home-outline' },
+  { title: 'Income Tax', href: '/tax' as Route, icon: 'cash-outline' },
+  { title: 'Settings', href: '/settings' as Route, icon: 'settings-outline' },
 ];
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
@@ -30,7 +34,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
       }}
       className="bg-background">
       <View className="mb-6 flex-row items-center justify-center pt-4">
-        <Text className="text-center text-2xl font-bold text-foreground">
+        <Text className={cn('text-center text-2xl font-semibold')}>
           {process.env.EXPO_PUBLIC_APP_NAME}
         </Text>
       </View>
@@ -42,12 +46,13 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             <Link key={item.title + item.href} href={item.href} asChild>
               <Pressable
                 className={cn(
-                  'flex-row items-center rounded-md p-4',
+                  'flex-row items-center gap-2 rounded-md p-4',
                   isActive ? 'bg-primary-soft' : 'bg-transparent'
                 )}>
+                <Icon name={item.icon} size={24} color={isActive ? 'primary' : ''} />
                 <Text
                   className={cn(
-                    'text-base font-medium',
+                    'ml-2 text-base font-medium',
                     isActive ? 'text-primary' : 'text-charcoal'
                   )}>
                   {item.title}
