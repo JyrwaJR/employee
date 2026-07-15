@@ -2,8 +2,9 @@ import { useAuthStore } from '@stores/auth.store';
 import { useLocalAuthStore } from '@stores/local-auth.store';
 import { useCallback, useEffect } from 'react';
 import { Forbidden } from '@components/screens/forbidden';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { isRealDevice } from '@utils/helpers/expo';
+import { Container } from '@components/layout';
 
 export const LocalAuthRedirect = ({ children }: { children: React.ReactNode }) => {
   const isAuthenticated = useLocalAuthStore((s) => s.isAuthenticated);
@@ -32,9 +33,9 @@ export const LocalAuthRedirect = ({ children }: { children: React.ReactNode }) =
     <View className="flex-1">
       {children}
       {isEnabled && !isRealDevice() && user && !isAuthenticated && (
-        <View style={StyleSheet.absoluteFill} className="bg-white dark:bg-slate-950">
+        <Container>
           <Forbidden onPressTryAgain={() => handleTryAgain()} />
-        </View>
+        </Container>
       )}
     </View>
   );

@@ -24,7 +24,7 @@ import { Text } from '@components/ui/text';
  */
 export const StatementScreen = () => {
   const [selectedYear, setSelectedYear] = useState<string>('2026');
-  const [selectedMonth, setSelectedMonth] = useState<string>('JAN');
+  const [selectedMonth, setSelectedMonth] = useState<string>('JANUARY');
   const { user } = useAuthStore();
   const {
     data: statement,
@@ -64,7 +64,6 @@ export const StatementScreen = () => {
 
   return (
     <Container className="flex-1 gap-y-2">
-      <SectionHeader title="Salary Statement" />
       <FilterCard
         year={selectedYear}
         years={years}
