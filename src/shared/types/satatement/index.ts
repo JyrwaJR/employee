@@ -1,5 +1,5 @@
 type SalaryItem = {
-  pName: string;
+  pname: string;
   amount: string;
 };
 
@@ -13,4 +13,8 @@ export type SalaryStatement = {
   totalEmolument: number;
   totalPayItem: number;
   totalng: number;
+  grade_pay: string;
+  pay_in_pb: string;
+  net_pay: number;
+  net_pay_in_word: string;
 };

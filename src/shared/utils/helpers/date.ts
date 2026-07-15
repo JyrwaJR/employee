@@ -135,4 +135,9 @@ export const getMonthNumber = (month: string): number => {
 
 export const getCurrentMonth = (): string => new Date().toLocaleString('en-US', { month: 'long' });
 
+export const getPreviousMonth = (): string => {
+  const date = new Date();
+  date.setMonth(date.getMonth() - 1);
+  return date.toLocaleString('en-US', { month: 'long' });
+};
 export const getCurrentYear = (): number => new Date().getFullYear();

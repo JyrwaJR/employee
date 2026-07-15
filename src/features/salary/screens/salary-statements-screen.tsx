@@ -6,7 +6,7 @@ import { useSalaryStatements } from '../hooks';
 import { EmptyScreen } from '@components/screens';
 import { FilterCard, SectionHeader } from '@components/common';
 import { SalaryStatementsListSkeleton } from '../components/skeleton';
-import { months, years } from '@utils/helpers';
+import { getPreviousMonth, months, years } from '@utils/helpers';
 import { Card } from '@components/ui/card';
 import { Text } from '@components/ui/text';
 
@@ -22,9 +22,11 @@ import { Text } from '@components/ui/text';
  * view. When no statement is available for the selected period, an
  * empty state is shown.
  */
+const currentMonth: string = getPreviousMonth();
+
 export const StatementScreen = () => {
   const [selectedYear, setSelectedYear] = useState<string>('2026');
-  const [selectedMonth, setSelectedMonth] = useState<string>('JANUARY');
+  const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth.toUpperCase());
   const { user } = useAuthStore();
   const {
     data: statement,
@@ -163,7 +165,7 @@ export const StatementScreen = () => {
                 borderBottomWidth: index < statement.s_data.length - 1 ? 1 : 0,
                 borderColor: '#E5E7EB',
               }}>
-              <Text className="text-sm text-charcoal">{item.pName}</Text>
+              <Text className="text-sm text-charcoal">{item.pname}</Text>
               <Text className="text-sm font-semibold text-foreground">{item.amount}</Text>
             </View>
           ))}
