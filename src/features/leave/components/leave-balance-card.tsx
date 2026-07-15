@@ -19,7 +19,7 @@ export const LeaveBalanceCard = ({ item }: LeaveBalanceCardProps) => (
     <Card variant="bordered" className="p-5">
       <View className="flex-row items-center justify-between py-3">
         <View className="flex-row items-center gap-3">
-          <View className="rounded-xl bg-primary-soft p-2">
+          <View className="rounded-md bg-primary-soft p-2">
             <Icon
               name={(LEAVE_ICONS[item?.type as LeaveTypeCode] as any) ?? 'calendar-blank'}
               size={20}

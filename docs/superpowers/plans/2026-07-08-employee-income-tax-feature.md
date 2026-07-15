@@ -705,7 +705,7 @@ import { TaxSlabBreakdown } from '../types';
  */
 export function TaxSlabBreakdownTable({ slabs }: { slabs: TaxSlabBreakdown[] }) {
   return (
-    <View className="rounded-xl bg-gray-50 p-3 dark:bg-gray-800">
+    <View className="rounded-md bg-gray-50 p-3 dark:bg-gray-800">
       {/* Header */}
       <View className="mb-2 flex-row border-b border-gray-200 pb-2 dark:border-gray-700">
         <Text className="flex-[2] text-xs font-bold uppercase text-gray-500">Slab</Text>
@@ -828,7 +828,7 @@ export default function EmployeeTaxDetailScreen() {
             </View>
           </View>
           <TaxSlabBreakdownTable slabs={data.slabBreakdown} />
-          <View className="mt-4 rounded-xl bg-gray-50 p-3 dark:bg-gray-800">
+          <View className="mt-4 rounded-md bg-gray-50 p-3 dark:bg-gray-800">
             <DetailRow label="Base Tax" value={`Rs ${data.baseTax.toLocaleString('en-IN')}`} />
             <DetailRow label="Rebate u/s 87A" value={`Rs ${data.rebate87A.toLocaleString('en-IN')}`} isNegative={data.rebate87A > 0} />
             <DetailRow label="Surcharge" value={`Rs ${data.surcharge.toLocaleString('en-IN')}`} />
@@ -883,7 +883,7 @@ export default function EmployeeTaxDetailScreen() {
         {/* Edit Button */}
         <TouchableOpacity
           onPress={() => router.push(PAGE_ROUTES.TAX.EDIT(employeeId))}
-          className="mb-10 flex-row items-center justify-center rounded-xl bg-blue-600 p-4">
+          className="mb-10 flex-row items-center justify-center rounded-md bg-blue-600 p-4">
           <Text className="font-semibold text-white">Edit Tax Details</Text>
         </TouchableOpacity>
 
@@ -1017,7 +1017,7 @@ export default function EditTaxDetailScreen() {
                 <>
                   <TouchableOpacity
                     onPress={() => onChange('NEW')}
-                    className={`flex-1 rounded-xl p-4 ${
+                    className={`flex-1 rounded-md p-4 ${
                       value === 'NEW'
                         ? 'bg-blue-600'
                         : 'border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800'
@@ -1031,7 +1031,7 @@ export default function EditTaxDetailScreen() {
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => onChange('OLD')}
-                    className={`flex-1 rounded-xl p-4 ${
+                    className={`flex-1 rounded-md p-4 ${
                       value === 'OLD'
                         ? 'bg-amber-600'
                         : 'border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800'
@@ -1154,7 +1154,7 @@ export default function EditTaxDetailScreen() {
         <TouchableOpacity
           onPress={handleSubmit(onSubmit)}
           disabled={isSubmitting || updateMutation.isPending}
-          className={`mb-10 flex-row items-center justify-center rounded-xl p-4 ${
+          className={`mb-10 flex-row items-center justify-center rounded-md p-4 ${
             isSubmitting || updateMutation.isPending ? 'bg-blue-400' : 'bg-blue-600'
           }`}>
           {isSubmitting || updateMutation.isPending ? (

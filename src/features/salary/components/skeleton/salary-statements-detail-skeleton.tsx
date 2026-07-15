@@ -117,7 +117,7 @@ export const SalaryStatementsDetailSkeleton = () => (
       <MoneySectionSkeleton />
 
       {/* Download button placeholder */}
-      <Skeleton className="mb-4 h-12 w-full rounded-xl" />
+      <Skeleton className="mb-4 h-12 w-full rounded-md" />
 
       {/* Footer note placeholder */}
       <View className="mb-10 items-center px-8">

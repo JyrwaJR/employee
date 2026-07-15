@@ -72,7 +72,7 @@ Font: **Forma DJR Micro** (HP bespoke). Closest substitutes: **Inter** or **Manr
 ## Shapes & Spacing
 
 - **Base unit**: 8px
-- **Card radius**: 16px (`rounded-xl`)
+- **Card radius**: 16px (`rounded-md`)
 - **Button radius**: 4px (`rounded-md`)
 - **Button height**: 44px
 - **Card padding**: 16–24px

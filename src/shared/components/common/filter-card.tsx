@@ -47,7 +47,7 @@ const FilterChip = ({ label, selected, onPress, disabled }: FilterChipProps) => 
     disabled={disabled}
     activeOpacity={0.7}
     className={cn(
-      'mr-3 rounded-full border px-4 py-1.5',
+      'mr-3 rounded-md border px-4 py-1.5',
       selected ? 'border-blue-600 bg-blue-600' : 'border-border bg-card'
     )}>
     <Text className={cn('text-xs font-semibold', selected ? 'text-white' : 'text-charcoal')}>

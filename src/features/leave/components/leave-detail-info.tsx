@@ -52,7 +52,7 @@ export const LeaveDetailInfo = ({ leave }: LeaveDetailInfoProps) => (
     <InfoRow icon="clipboard-text" label="Leave Type" value={leave.leave_desc} />
     <InfoRow icon="calendar-clock" label="Order Date" value={leave.order_dt} />
     {leave.reason_for_leave && (
-      <View className="mt-2 rounded-xl bg-surface-soft p-4">
+      <View className="mt-2 rounded-md bg-surface-soft p-4">
         <Text variant="subtext" size="xs" className="mb-1.5 font-medium text-graphite">
           Reason
         </Text>

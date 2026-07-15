@@ -35,7 +35,7 @@ export const LeaveCard = ({ item }: { item: LeaveListItem; onPress?: () => void 
       <Card variant="bordered" className="p-5">
         <View className="mb-3 flex-row items-center justify-between">
           <View className="flex-row items-center gap-3">
-            <View className={cn('rounded-lg p-2', statusStyle.bg)}>
+            <View className={cn('rounded-md p-2', statusStyle.bg)}>
               <Icon
                 name={(LEAVE_ICONS[item.leave_cd as LeaveTypeCode] as any) ?? 'calendar-account'}
                 size={24}
@@ -51,8 +51,7 @@ export const LeaveCard = ({ item }: { item: LeaveListItem; onPress?: () => void 
               </Text>
             </View>
           </View>
-          <View
-            className={cn('flex-row items-center gap-1 rounded-full px-3 py-1', statusStyle.bg)}>
+          <View className={cn('flex-row items-center gap-1 rounded-md px-3 py-1', statusStyle.bg)}>
             <Icon name={statusStyle.iconName as any} size={12} color={statusStyle.icon} />
             <Text className={cn('text-xs font-medium', statusStyle.text)}>
               {item.verify_flg_desc}
@@ -83,7 +82,7 @@ export const LeaveCard = ({ item }: { item: LeaveListItem; onPress?: () => void 
         </View>
 
         {item.reason_for_leave && (
-          <View className="mt-3 rounded-lg bg-surface-soft p-3">
+          <View className="mt-3 rounded-md bg-surface-soft p-3">
             <Text numberOfLines={1} variant="caption-sm" className="italic text-charcoal">
               {item.reason_for_leave}
             </Text>

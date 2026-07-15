@@ -42,7 +42,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
             <Link key={item.title + item.href} href={item.href} asChild>
               <Pressable
                 className={cn(
-                  'flex-row items-center rounded-xl p-4',
+                  'flex-row items-center rounded-md p-4',
                   isActive ? 'bg-primary-soft' : 'bg-transparent'
                 )}>
                 <Text

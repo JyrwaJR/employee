@@ -46,7 +46,7 @@ const LeaveDetailInfoSkeleton = () => (
     ))}
 
     {/* Reason section */}
-    <View className="rounded-xl bg-gray-50 p-4 dark:bg-gray-800/50">
+    <View className="rounded-md bg-gray-50 p-4 dark:bg-gray-800/50">
       <Skeleton className="mb-2 h-3 w-12 rounded" />
       <Skeleton className="h-3 w-full rounded" />
     </View>
@@ -64,7 +64,7 @@ const LeaveBalanceSkeleton = () => (
     <View className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
       <View className="flex-row items-center justify-between py-3">
         <View className="flex-row items-center gap-3">
-          <Skeleton className="h-10 w-10 rounded-xl" />
+          <Skeleton className="h-10 w-10 rounded-md" />
           <View className="gap-y-1.5">
             <Skeleton className="h-4 w-32 rounded" />
             <Skeleton className="h-3 w-24 rounded" />

@@ -55,7 +55,7 @@ export const SettingsScreen = () => {
           {/* Notifications Section */}
           <SectionHeader title="Security" />
 
-          <View className="mb-8 overflow-hidden rounded-xl border border-border px-4">
+          <View className="mb-8 overflow-hidden rounded-md border border-border px-4">
             <SettingRow
               icon={'security'}
               label="Enable Biometric"

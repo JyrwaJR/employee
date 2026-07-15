@@ -264,7 +264,7 @@ const SelectSheetModal = (props: SelectSheetModalProps) => {
                       runOnJS(onSelect)(option.value);
                     }}
                     className={cn(
-                      'mx-3 flex-row items-center justify-between rounded-xl border border-transparent px-4 py-4',
+                      'mx-3 flex-row items-center justify-between rounded-md border border-transparent px-4 py-4',
                       isSelected
                         ? 'bg-blue-50 dark:bg-blue-900/20'
                         : 'active:bg-gray-50 dark:active:bg-gray-800'

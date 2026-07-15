@@ -67,7 +67,7 @@ export class GlobalErrorBoundary extends Component<Props, State> {
                 </Text>
 
                 {__DEV__ && this.state.error && (
-                  <View className="mb-8 w-full rounded-xl bg-black/5 p-4">
+                  <View className="mb-8 w-full rounded-md bg-black/5 p-4">
                     <Text className="font-mono text-xs text-red-600">
                       {this.state.error.toString()}
                     </Text>

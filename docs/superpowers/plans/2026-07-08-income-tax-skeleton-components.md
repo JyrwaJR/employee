@@ -257,7 +257,7 @@ const TaxComputationSkeleton = () => (
     </View>
 
     {/* Slab table */}
-    <View className="rounded-xl bg-gray-50 p-3 dark:bg-gray-800">
+    <View className="rounded-md bg-gray-50 p-3 dark:bg-gray-800">
       {/* Table header */}
       <View className="mb-2 flex-row border-b border-gray-200 pb-2 dark:border-gray-700">
         <Skeleton className="flex-[2] h-3 rounded" />
@@ -279,7 +279,7 @@ const TaxComputationSkeleton = () => (
     </View>
 
     {/* Bottom summary rows */}
-    <View className="mt-4 rounded-xl bg-gray-50 p-3 dark:bg-gray-800">
+    <View className="mt-4 rounded-md bg-gray-50 p-3 dark:bg-gray-800">
       {Array.from({ length: 6 }).map((_, i) => (
         <View key={i} className="mb-3 flex-row items-center justify-between">
           <Skeleton className="h-3 w-36 rounded" />
@@ -327,7 +327,7 @@ export const TaxDetailSkeleton = () => (
       <DetailCardSkeleton titleWidth="w-28" rows={4} />
 
       {/* Edit button placeholder */}
-      <Skeleton className="mb-10 h-12 w-full rounded-xl" />
+      <Skeleton className="mb-10 h-12 w-full rounded-md" />
     </ScrollView>
   </Container>
 );
@@ -383,8 +383,8 @@ const RegimeSelectorSkeleton = () => (
     <Skeleton className="mb-2 h-4 w-24 rounded" />
     <Skeleton className="mb-4 h-3 w-64 rounded" />
     <View className="flex-row gap-3">
-      <Skeleton className="flex-1 h-12 rounded-xl" />
-      <Skeleton className="flex-1 h-12 rounded-xl" />
+      <Skeleton className="flex-1 h-12 rounded-md" />
+      <Skeleton className="flex-1 h-12 rounded-md" />
     </View>
   </View>
 );
@@ -438,7 +438,7 @@ export const EditTaxSkeleton = () => (
     <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
       <RegimeSelectorSkeleton />
       <DeductionsCardSkeleton />
-      <Skeleton className="mb-10 h-12 w-full rounded-xl" />
+      <Skeleton className="mb-10 h-12 w-full rounded-md" />
     </ScrollView>
   </Container>
 );
@@ -488,8 +488,8 @@ const RegimeSelectorSkeleton = () => (
   <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     <Skeleton className="mb-4 h-4 w-24 rounded" />
     <View className="flex-row gap-3">
-      <Skeleton className="flex-1 h-12 rounded-xl" />
-      <Skeleton className="flex-1 h-12 rounded-xl" />
+      <Skeleton className="flex-1 h-12 rounded-md" />
+      <Skeleton className="flex-1 h-12 rounded-md" />
     </View>
   </View>
 );
@@ -540,7 +540,7 @@ export const CreateTaxSkeleton = () => (
     <ScrollView className="flex-1 px-6 pt-6" showsVerticalScrollIndicator={false}>
       <RegimeSelectorSkeleton />
       <DeductionsCardSkeleton />
-      <Skeleton className="mb-10 h-12 w-full rounded-xl" />
+      <Skeleton className="mb-10 h-12 w-full rounded-md" />
     </ScrollView>
   </Container>
 );

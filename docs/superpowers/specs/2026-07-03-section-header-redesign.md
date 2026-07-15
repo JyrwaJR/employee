@@ -24,8 +24,8 @@ Two-layer depth effect:
 
 | Layer           | Implementation                                   | Optional?                              |
 | --------------- | ------------------------------------------------ | -------------------------------------- |
-| Background wash | `bg-surface-soft rounded-xl`                     | Yes — `background={false}` disables it |
-| Floating card   | `bg-white dark:bg-gray-900 rounded-xl shadow-sm` | Always present                         |
+| Background wash | `bg-surface-soft rounded-md`                     | Yes — `background={false}` disables it |
+| Floating card   | `bg-white dark:bg-gray-900 rounded-md shadow-sm` | Always present                         |
 
 ## 3. Props API
 
@@ -53,9 +53,9 @@ interface SectionHeaderProps {
 ### Structure
 
 ```
-<View className={cn(background && 'bg-surface-soft rounded-xl', className)}>
+<View className={cn(background && 'bg-surface-soft rounded-md', className)}>
   <View className="mx-4 pt-4">                              ← spacing for wash padding
-    <View className="bg-white dark:bg-gray-900 rounded-xl
+    <View className="bg-white dark:bg-gray-900 rounded-md
                     px-4 py-3 shadow-sm elevation-2">        ← floating card
       <View className="flex-row items-center gap-x-4">
         [Accent Bar] [Icon] [Title + Subtitle] [rightElement]
@@ -76,7 +76,7 @@ interface SectionHeaderProps {
 
 **Icon container:**
 
-- 44×44, `rounded-xl` (12px)
+- 44×44, `rounded-md` (12px)
 - Background: `bg-surface-soft dark:bg-gray-800`
 - Inset depth: `border border-hairline` + `shadow-sm` for a recessed look
 

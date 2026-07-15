@@ -62,7 +62,7 @@
 
 | Token         | Tailwind Class | Value  | When to Use                                             |
 | ------------- | -------------- | ------ | ------------------------------------------------------- |
-| card radius   | `rounded-xl`   | 16px   | Cards, section containers — **never use `rounded-2xl`** |
+| card radius   | `rounded-md`   | 16px   | Cards, section containers — **never use `rounded-2xl`** |
 | button radius | `rounded-md`   | 4px    | All buttons, text inputs                                |
 | lg            | `rounded-lg`   | 8px    | Badge pills, category cards                             |
 | pill          | `rounded-full` | 9999px | Status badges, chips, filter tags                       |
@@ -149,7 +149,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@components/ui/card';
 **Fallback** (when Card layout doesn't work):
 
 ```tsx
-<View className="rounded-xl border border-border bg-card p-6 shadow-sm">{/* content */}</View>
+<View className="rounded-md border border-border bg-card p-6 shadow-sm">{/* content */}</View>
 ```
 
 Card variants available:
@@ -208,7 +208,7 @@ Use `mb-4` for consistent list item spacing.
 | `bg-gray-100`                               | `bg-muted`                                                     |
 | `border-gray-100` / `border-gray-200`       | `border-border`                                                |
 | `text-blue-600` / `text-blue-700`           | `text-primary`                                                 |
-| `rounded-2xl`                               | `rounded-xl`                                                   |
+| `rounded-2xl`                               | `rounded-md`                                                   |
 | `text-xs font-bold uppercase text-gray-400` | `<Text variant="subtext" size="xs">`                           |
 | `text-lg font-bold`                         | `<Text variant="heading" size="lg">`                           |
 | `text-sm font-semibold`                     | `<Text variant="body-emphasis">` or `<Text weight="semibold">` |

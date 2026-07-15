@@ -6,7 +6,7 @@ import { Container } from '@components/layout/container';
 
 /** A skeleton card block used for each section of the salary statement. */
 const SectionCardSkeleton = ({ rows = 2 }: { rows?: number }) => (
-  <View className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-slate-900">
+  <View className="mb-4 rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-slate-900">
     <Skeleton className="mb-4 h-3 w-28 rounded" />
     {Array.from({ length: rows }).map((_, i) => (
       <View key={i} className="mb-3 flex-row items-center justify-between">
@@ -19,7 +19,7 @@ const SectionCardSkeleton = ({ rows = 2 }: { rows?: number }) => (
 
 /** A skeleton card for the salary items table with multiple item rows. */
 const SalaryItemsCardSkeleton = () => (
-  <View className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-slate-900">
+  <View className="mb-4 rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-slate-900">
     <Skeleton className="mb-4 h-3 w-28 rounded" />
     {Array.from({ length: 4 }).map((_, i) => (
       <View key={i} className="mb-3 flex-row items-center justify-between">

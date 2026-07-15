@@ -15,7 +15,7 @@ import { Container } from '@components/layout/container';
  * - Reason line (optional-style box)
  */
 const LeaveCardSkeleton = () => (
-  <View className="mb-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
+  <View className="mb-4 rounded-md border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     {/* Row 1: Icon + Title + Badge */}
     <View className="mb-2 flex-row items-center justify-between">
       <View className="flex-row items-center gap-2">

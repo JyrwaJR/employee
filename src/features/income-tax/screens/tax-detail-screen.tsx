@@ -97,7 +97,7 @@ export const EmployeeTaxDetailScreen = () => {
               </Text>
             </View>
           </View>
-          <View className="rounded-xl bg-surface-soft p-3">
+          <View className="rounded-md bg-surface-soft p-3">
             <View className="mb-2 flex-row border-b border-border pb-2">
               <Text variant="subtext" size="xs" className="flex-[2] font-bold uppercase">
                 Slab
@@ -140,7 +140,7 @@ export const EmployeeTaxDetailScreen = () => {
               </View>
             ))}
           </View>
-          <View className="mt-4 rounded-xl bg-surface-soft p-3">
+          <View className="mt-4 rounded-md bg-surface-soft p-3">
             <DetailRow label="Base Tax" value={'Rs ' + data.baseTax.toLocaleString('en-IN')} />
             <DetailRow
               label="Rebate u/s 87A"

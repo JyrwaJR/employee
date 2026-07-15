@@ -86,14 +86,14 @@ export const SalaryStatementListItem = ({
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={onPress}
-        className="mb-4 rounded-xl border border-border bg-card p-4 shadow-sm active:bg-gray-50 dark:active:bg-slate-800">
+        className="mb-4 rounded-md border border-border bg-card p-4 shadow-sm active:bg-gray-50 dark:active:bg-slate-800">
         {cardContent}
       </TouchableOpacity>
     );
   }
 
   return (
-    <View className="mb-4 rounded-xl border border-border bg-card p-4 shadow-sm">
+    <View className="mb-4 rounded-md border border-border bg-card p-4 shadow-sm">
       {cardContent}
     </View>
   );
