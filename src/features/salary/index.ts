@@ -1,6 +1,3 @@
-// Public API
-export * from './utils/constants';
-
 // Components
 export * from './components';
 

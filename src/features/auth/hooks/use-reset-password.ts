@@ -4,8 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { useSearchParams } from 'expo-router/build/hooks';
-import { axioshttp } from '@utils/api/http';
-import { AUTH_ENDPOINT } from '@features/auth/utils/constants';
 import { toast } from '@components/ui';
 import { PAGE_ROUTES } from '@utils/constants/routes';
 import {
@@ -14,6 +12,7 @@ import {
   ResetPasswordInputs,
   ResetPasswordOtpInputs,
 } from '../validators/reset-password.schema';
+import { http } from '@utils/api';
 
 export const useResetPassword = () => {
   const router = useRouter();
@@ -39,7 +38,7 @@ export const useResetPassword = () => {
   });
 
   const sendOtpMutation = useMutation({
-    mutationFn: async (data: { phone_no: string }) => axioshttp.post(AUTH_ENDPOINT.GET_OTP, data),
+    mutationFn: async (data: { phone_no: string }) => http.post('', data),
     onSuccess: (data: any) => {
       if (data.success) {
         setStatus('INPUT_OTP');
@@ -61,7 +60,7 @@ export const useResetPassword = () => {
       password: string;
       confirm_password: string;
     }) => {
-      return axioshttp.post(AUTH_ENDPOINT.FORGOT_PASSWORD, data);
+      return http.post('', data);
     },
     onSuccess: (data: any) => {
       if (data.success) {

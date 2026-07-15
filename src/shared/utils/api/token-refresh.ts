@@ -1,7 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig, AxiosInstance } from 'axios';
 import { TokenStoreManager } from '@stores/token.store';
 import { queryClient } from '../react-query';
-import { ENDPOINTS } from '@utils/constants';
 import { cleanupSession } from './session-cleanup';
 
 /** Tracks whether a token refresh is already in-flight to prevent concurrent calls. */
@@ -42,15 +41,7 @@ function processQueue(error: any, token: string | null = null) {
  */
 export function shouldSkipRefresh(url?: string) {
   if (!url) return true;
-  const skipUrls = [
-    ENDPOINTS.AUTH.LOGIN,
-    ENDPOINTS.AUTH.SIGN_UP,
-    ENDPOINTS.AUTH.REFRESH,
-    ENDPOINTS.AUTH.LOGOUT,
-    ENDPOINTS.AUTH.FORGOT_PASSWORD,
-    ENDPOINTS.AUTH.GET_OTP,
-    ENDPOINTS.AUTH.VERIFY_OTP,
-  ];
+  const skipUrls = [''];
   return skipUrls.some((path) => url.includes(path));
 }
 
@@ -111,7 +102,7 @@ export async function attemptTokenRefresh(
       throw new Error('MISSING_REFRESH_TOKEN');
     }
 
-    const res = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}${ENDPOINTS.AUTH.REFRESH}`, {
+    const res = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}${''}`, {
       refresh_token: refreshToken,
     });
 

@@ -1,5 +1,5 @@
-import { ForgotPassword } from '@features/auth/screens/forgot-password-screen';
+import { UnderDevelopment } from '@components/screens';
 
 export default function page() {
-  return <ForgotPassword />;
+  return <UnderDevelopment />;
 }

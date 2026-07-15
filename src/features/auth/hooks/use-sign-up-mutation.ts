@@ -1,11 +1,10 @@
-import { AUTH_ENDPOINT } from '@features/auth/utils/constants';
 import { PAGE_ROUTES } from '@utils/constants/routes';
-import { axioshttp } from '@utils/api/http';
 import { toast } from '@components/ui';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'expo-router';
 import { SignUpSchema } from '../validators/signup.schema';
 import { z } from 'zod';
+import { http } from '@utils/api';
 
 /**
  * Type-safe Sign Up Mutation.
@@ -18,7 +17,7 @@ export function useSignUpMutation() {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (data: SignUpInputs) => axioshttp.post(AUTH_ENDPOINT.SIGN_UP, data),
+    mutationFn: (data: SignUpInputs) => http.post('', data),
     onSuccess: (data) => {
       if (data.success) {
         router.replace(PAGE_ROUTES.AUTH.LOGIN);
