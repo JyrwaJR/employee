@@ -39,6 +39,7 @@ export const QUERY_KEYS = {
     LIST: (...args: (string | undefined)[]) => ['income-tax', ...args].filter(Boolean),
     DETAIL: (...args: (string | undefined)[]) => ['income-tax', 'detail', ...args].filter(Boolean),
   },
+  SALARY_YEAR: (...args: string[]) => ['salary', 'year', ...args] as const,
 };
 
 /**

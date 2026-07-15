@@ -6,9 +6,10 @@ import { useSalaryStatements } from '../hooks';
 import { EmptyScreen } from '@components/screens';
 import { FilterCard, SectionHeader } from '@components/common';
 import { SalaryStatementsListSkeleton } from '../components/skeleton';
-import { getCurrentYear, getPreviousMonth, months, years } from '@utils/helpers';
+import { getCurrentYear, getPreviousMonth, months } from '@utils/helpers';
 import { Card } from '@components/ui/card';
 import { Text } from '@components/ui/text';
+import { useSalaryYears } from '@hooks/use-salary-years';
 
 /**
  * Displays a single salary statement for the selected month and year.
@@ -30,6 +31,12 @@ export const StatementScreen = () => {
   const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth.toUpperCase());
   const { user } = useAuthStore();
   const {
+    data: salaryYears,
+    isFetching: isFetchingSalYear,
+    isLoading: isLoadingSalYear,
+  } = useSalaryYears();
+
+  const {
     data: statement,
     isLoading,
     isFetching,
@@ -39,7 +46,7 @@ export const StatementScreen = () => {
     year: parseInt(selectedYear),
   });
 
-  if (isLoading) {
+  if (isLoading || isLoadingSalYear) {
     return <SalaryStatementsListSkeleton />;
   }
 
@@ -49,12 +56,12 @@ export const StatementScreen = () => {
         <SectionHeader title="Salary Statement" />
         <FilterCard
           year={selectedYear}
-          years={years}
+          years={salaryYears?.map((year) => year.sal_year)}
           onYearChange={(value) => setSelectedYear(value)}
           month={selectedMonth}
           months={months}
           onMonthChange={(value) => setSelectedMonth(value)}
-          isOpen
+          isOpen={isFetchingSalYear || isLoadingSalYear ? false : true}
         />
         <EmptyScreen
           title="No Statement Found"
@@ -69,11 +76,12 @@ export const StatementScreen = () => {
     <Container className="flex-1 gap-y-2">
       <FilterCard
         year={selectedYear}
-        years={years}
+        years={salaryYears?.map((year) => year.sal_year)}
         onYearChange={(value) => setSelectedYear(value)}
         month={selectedMonth}
         months={months}
         onMonthChange={(value) => setSelectedMonth(value)}
+        isOpen={isFetchingSalYear || isLoadingSalYear ? false : undefined}
       />
       <ScrollView
         className="flex-1 gap-y-2"
