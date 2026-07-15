@@ -1,5 +1,5 @@
 import { LeaveTypeCode } from '@sharedTypes/leave';
-import { type IoniconsIconName } from '@components/ui/icon';
+import type { IoniconsIconName } from '@react-native-vector-icons/ionicons';
 
 export const LEAVE_TYPES: Record<LeaveTypeCode, LeaveTypeCode> = {
   COM: 'COM',

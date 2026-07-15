@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { Icon } from '@components/ui/icon';
-import { type IoniconsIconName } from '@react-native-vector-icons/ionicons';
+import type { IoniconsIconName } from '@react-native-vector-icons/ionicons';
 import { useTheme } from '@hooks/use-theme';
 import { cn } from '@utils/helpers/cn';
 import { Container } from '../layout/container';

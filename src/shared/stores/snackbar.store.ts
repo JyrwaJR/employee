@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { type IoniconsIconName } from '@components/ui/icon';
+import type { IoniconsIconName } from '@react-native-vector-icons/ionicons';
 
 interface SnackbarState {
   /** The message text to display. Null means hidden. */

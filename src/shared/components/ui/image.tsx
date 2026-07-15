@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { View, Image as RNImage, ImageProps as RNImageProps, StyleSheet } from 'react-native';
 import { Skeleton } from './skeleton';
-import { Icon, type IoniconsIconName } from '@components/ui/icon';
+import { Icon } from '@components/ui/icon';
+import type { IoniconsIconName } from '@react-native-vector-icons/ionicons';
 import { cn } from '../../utils/helpers/cn';
 
 interface ImageProps extends RNImageProps {

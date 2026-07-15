@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, TouchableOpacity, Switch } from 'react-native';
 import { Text } from '@components/ui/text';
-import { Icon, type IoniconsIconName } from '@components/ui/icon';
+import { Icon } from '@components/ui/icon';
+import type { IoniconsIconName } from '@react-native-vector-icons/ionicons';
 import { cn } from '@utils/helpers/cn';
 
 /** Props for the SettingRow component. */

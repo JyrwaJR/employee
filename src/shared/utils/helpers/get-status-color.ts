@@ -1,4 +1,4 @@
-import { type IoniconsIconName } from '@components/ui/icon';
+import type { IoniconsIconName } from '@react-native-vector-icons/ionicons';
 
 /**
  * Returns Tailwind CSS classes and Ionicons icon data for a given status label.
@@ -26,7 +26,7 @@ export const getStatusColor = (
         bg: 'bg-green-100 dark:bg-green-900/30',
         text: 'text-green-800 dark:text-green-400',
         icon: '#166534',
-        iconName: 'checkmark-circle',
+        iconName: 'checkmark-circle-outline',
         border: 'border-green-800 dark:border-green-400',
       };
     case 'Entry':
@@ -43,7 +43,7 @@ export const getStatusColor = (
         bg: 'bg-red-100 dark:bg-red-900/30',
         text: 'text-red-800 dark:text-red-400',
         icon: '#991B1B',
-        iconName: 'close-circle',
+        iconName: 'close-circle-outline',
         border: 'border-red-800 dark:border-red-400',
       };
     default:

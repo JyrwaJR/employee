@@ -1,7 +1,5 @@
 import Ionicons, { type IoniconsIconName } from '@react-native-vector-icons/ionicons';
 
-export type { IoniconsIconName };
-
 /**
  * Props for the {@link Icon} component.
  *

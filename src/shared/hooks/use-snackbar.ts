@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useSnackbarStore } from '@stores/snackbar.store';
-import type { IoniconsIconName } from '@components/ui/icon';
+import type { IoniconsIconName } from '@react-native-vector-icons/ionicons';
 
 /**
  * Convenience hook for showing and dismissing the snackbar banner.

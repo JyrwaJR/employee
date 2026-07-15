@@ -1,7 +1,8 @@
 import { cn } from '@utils/helpers/cn';
 import React from 'react';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
-import { Icon, type IoniconsIconName } from '@components/ui/icon';
+import { Icon } from '@components/ui/icon';
+import type { IoniconsIconName } from '@react-native-vector-icons/ionicons';
 import { cva, type VariantProps } from 'class-variance-authority';
 
 const fabVariants = cva('absolute items-center justify-center rounded-full shadow-lg', {
