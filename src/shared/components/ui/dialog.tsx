@@ -7,6 +7,7 @@ import Animated, {
   withTiming,
   interpolate,
   Extrapolate,
+  runOnJS,
 } from 'react-native-reanimated';
 import { Text } from './text';
 import { cn } from '../../utils/helpers/cn';
@@ -65,10 +66,12 @@ export const DialogContent = ({ children, className, onClose, ...props }: Dialog
   }));
 
   const handleClose = () => {
-    // We trigger the fade out before calling the parent onClose
+    // Trigger a 200ms fade-out animation, then notify the parent via runOnJS
     progress.value = withTiming(0, { duration: 200 }, () => {
-      // Small timeout to ensure Reanimated's UI thread is done before React state flips
-      onClose?.();
+      // runOnJS bridges from the Reanimated UI thread to the React JS thread
+      if (onClose) {
+        runOnJS(onClose)();
+      }
     });
   };
 
