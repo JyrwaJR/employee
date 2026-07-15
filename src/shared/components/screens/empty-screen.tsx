@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { Icon } from '@components/ui/icon';
 import { useTheme } from '@hooks/use-theme';
 import { cn } from '@utils/helpers/cn';
 import { Container } from '../layout/container';
 import { Text } from '../ui/text';
+import { Button } from '@components/ui';
 
 interface EmptyScreenProps {
   title: string;
@@ -42,12 +43,9 @@ export const EmptyScreen = ({
 
       {!message && <View className={cn('mb-8')} />}
 
-      <TouchableOpacity
-        onPress={refresh}
-        activeOpacity={0.8}
-        className={cn('rounded-full bg-ink px-8 py-3')}>
-        <Text className={cn('font-semibold text-primary-foreground')}>{refreshLabel}</Text>
-      </TouchableOpacity>
+      <Button variant={'outline-ink'} onPress={() => refresh?.()} activeOpacity={0.8}>
+        {refreshLabel}
+      </Button>
     </Container>
   );
 };
