@@ -6,7 +6,7 @@ import { useSalaryStatements } from '../hooks';
 import { EmptyScreen } from '@components/screens';
 import { FilterCard, SectionHeader } from '@components/common';
 import { SalaryStatementsListSkeleton } from '../components/skeleton';
-import { getPreviousMonth, months, years } from '@utils/helpers';
+import { getCurrentYear, getPreviousMonth, months, years } from '@utils/helpers';
 import { Card } from '@components/ui/card';
 import { Text } from '@components/ui/text';
 
@@ -23,9 +23,10 @@ import { Text } from '@components/ui/text';
  * empty state is shown.
  */
 const currentMonth: string = getPreviousMonth();
+const currentYear: string = getCurrentYear();
 
 export const StatementScreen = () => {
-  const [selectedYear, setSelectedYear] = useState<string>('2026');
+  const [selectedYear, setSelectedYear] = useState<string>(currentYear);
   const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth.toUpperCase());
   const { user } = useAuthStore();
   const {
