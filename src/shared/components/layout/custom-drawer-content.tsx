@@ -39,7 +39,7 @@ export function CustomDrawerContent(props: DrawerContentComponentProps) {
         {menuItems.map((item) => {
           const isActive = pathname === item.href;
           return (
-            <Link key={item.id} href={item.href} asChild>
+            <Link key={item.title + item.href} href={item.href} asChild>
               <Pressable
                 className={cn(
                   'flex-row items-center rounded-xl p-4',

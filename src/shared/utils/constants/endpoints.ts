@@ -1,5 +1,4 @@
 import { AUTH_ENDPOINT } from '@features/auth/utils/constants/auth.endpoint';
-import { EMPLOYEE_ENDPOINT } from '@features/employee/utils/constants/employee.endpoint';
 import { NOTIFICATION_ENDPOINT } from '@features/notification/utils/constants/notification.endpoint';
 import { PENSION_ENDPOINT } from '@features/pension/utils/constants/pension.endpoint';
 import { SALARY_ENDPOINT } from '@features/salary/utils/constants/salary.endpoint';
@@ -17,7 +16,6 @@ import { SALARY_ENDPOINT } from '@features/salary/utils/constants/salary.endpoin
  */
 export const ENDPOINTS = {
   AUTH: AUTH_ENDPOINT,
-  EMPLOYEE: EMPLOYEE_ENDPOINT,
   NOTIFICATION: NOTIFICATION_ENDPOINT,
   PENSION: PENSION_ENDPOINT,
   SALARY: SALARY_ENDPOINT,

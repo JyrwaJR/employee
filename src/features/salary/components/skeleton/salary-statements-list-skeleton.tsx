@@ -47,7 +47,7 @@ export const SalaryStatementsListSkeleton = ({}: SalaryStatementsListSkeletonPro
     <SectionHeaderSkeleton hasSubtitle titleWidth="w-40" subtitleWidth="w-52" />
 
     {/* Filter card placeholder */}
-    <View className="mx-4 mb-4 rounded-2xl border border-gray-100 dark:border-gray-800">
+    <View className="mb-4 rounded-2xl border border-gray-100 dark:border-gray-800">
       <View className="flex-row items-center justify-between rounded-t-2xl bg-gray-50/50 p-4 dark:bg-white/5">
         <Skeleton className="h-4 w-16 rounded" />
         <Skeleton className="h-5 w-5 rounded" />
@@ -69,7 +69,7 @@ export const SalaryStatementsListSkeleton = ({}: SalaryStatementsListSkeletonPro
     </View>
 
     {/* Statement detail content skeleton */}
-    <View className="px-4">
+    <View>
       <SectionCardSkeleton rows={5} />
       <SectionCardSkeleton rows={2} />
       <SectionCardSkeleton rows={3} />
