@@ -147,7 +147,7 @@ export const LoginScreen = () => {
               returnKeyType="done"
               onSubmitEditing={methods.handleSubmit(onSubmit)}
             />
-            <View className="mb-8 items-end">
+            <View className="mb-8 mr-2 items-end">
               <Link href={PAGE_ROUTES.AUTH.FORGOT_PASSWORD()} asChild>
                 <TouchableOpacity
                   className="mt-2"
