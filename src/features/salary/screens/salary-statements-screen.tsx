@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, RefreshControl, View } from 'react-native';
+import { ScrollView, RefreshControl } from 'react-native';
 import { Container } from '@components/layout/container';
 import { useAuthStore } from '@stores/auth.store';
 import { useSalaryStatements } from '../hooks';
@@ -7,25 +7,34 @@ import { EmptyScreen } from '@components/screens';
 import { FilterCard, SectionHeader } from '@components/common';
 import { SalaryStatementsListSkeleton } from '../components/skeleton';
 import { getCurrentYear, getPreviousMonth, months } from '@utils/helpers';
-import { Card } from '@components/ui/card';
-import { Text } from '@components/ui/text';
 import { useSalaryYears } from '@hooks/use-salary-years';
+import {
+  EmployeeInfoCard,
+  GPFInfoCard,
+  BankVoucherCard,
+  SalaryBreakdownCard,
+  TotalsCard,
+  NetPayWordsCard,
+} from '../components';
+
+const currentMonth: string = getPreviousMonth();
+const currentYear: string = getCurrentYear().toString();
 
 /**
  * Displays a single salary statement for the selected month and year.
  *
- * The API returns one `SalaryStatement` object per month/year query
- * (not an array). This screen renders the statement's GPF information,
- * bank/voucher details, salary breakdown items, and totals in a
- * scrollable card-based layout.
+ * Delegates distinct sections of the statement to individual card components:
+ * - EmployeeInfoCard — authenticated user details + pay information
+ * - GPFInfoCard — GPF description and number
+ * - BankVoucherCard — bank account and voucher details
+ * - SalaryBreakdownCard — line-item salary breakdown
+ * - TotalsCard — aggregated totals (emolument, pay items, net amounts)
+ * - NetPayWordsCard — net pay expressed in words (conditional)
  *
  * A month/year filter at the top lets the user pick which period to
  * view. When no statement is available for the selected period, an
  * empty state is shown.
  */
-const currentMonth: string = getPreviousMonth();
-const currentYear: string = getCurrentYear().toString();
-
 export const StatementScreen = () => {
   const [selectedYear, setSelectedYear] = useState<string>(currentYear);
   const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth.toUpperCase());
@@ -88,140 +97,40 @@ export const StatementScreen = () => {
         contentContainerClassName="gap-y-2"
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}>
-        {/* Employee Information */}
-        <Card variant="bordered" className="p-5">
-          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
-            Employee Information
-          </Text>
-          <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Employee Name</Text>
-            <Text className="max-w-[60%] text-right text-sm font-semibold text-foreground">
-              {[user?.emp_fname, user?.emp_mname, user?.emp_lname].filter(Boolean).join(' ')}
-            </Text>
-          </View>
-          <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Office / Department</Text>
-            <Text className="max-w-[60%] text-right text-sm font-semibold text-foreground">
-              {user?.emp_dept || '-'}
-            </Text>
-          </View>
-          <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Designation</Text>
-            <Text className="max-w-[60%] text-right text-sm font-semibold text-foreground">
-              {user?.emp_designation || '-'}
-            </Text>
-          </View>
-          <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Pay Level</Text>
-            <Text className="text-sm font-semibold text-foreground">{user?.pay_scale || '-'}</Text>
-          </View>
-          {statement.pay_in_pb ? (
-            <View className="mb-2 flex-row justify-between">
-              <Text className="text-sm text-graphite">Pay in Pay Band</Text>
-              <Text className="text-sm font-semibold text-foreground">{statement.pay_in_pb}</Text>
-            </View>
-          ) : null}
-          {statement.grade_pay ? (
-            <View className="mb-2 flex-row justify-between">
-              <Text className="text-sm text-graphite">Grade Pay</Text>
-              <Text className="text-sm font-semibold text-foreground">{statement.grade_pay}</Text>
-            </View>
-          ) : null}
-          <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Period</Text>
-            <Text className="text-sm font-semibold text-foreground">
-              {selectedMonth} {selectedYear}
-            </Text>
-          </View>
-        </Card>
+        <EmployeeInfoCard
+          user={{
+            emp_fname: user?.emp_fname ?? '',
+            emp_mname: user?.emp_mname ?? '',
+            emp_lname: user?.emp_lname ?? '',
+            emp_dept: user?.emp_dept ?? '',
+            emp_designation: user?.emp_designation ?? '',
+            pay_scale: user?.pay_scale ?? '',
+          }}
+          payInPb={statement.pay_in_pb}
+          gradePay={statement.grade_pay}
+          selectedMonth={selectedMonth}
+          selectedYear={selectedYear}
+        />
 
-        {/* GPF Information */}
-        <Card variant="bordered" className="p-5">
-          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
-            GPF Information
-          </Text>
-          <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Description</Text>
-            <Text className="text-sm font-semibold text-foreground">{statement.gpf_desc}</Text>
-          </View>
-          <View className="flex-row justify-between">
-            <Text className="text-sm text-graphite">GPF Number</Text>
-            <Text className="text-sm font-semibold text-foreground">{statement.gpf_no}</Text>
-          </View>
-        </Card>
+        <GPFInfoCard gpfDesc={statement.gpf_desc} gpfNo={statement.gpf_no} />
 
-        {/* Bank & Voucher Details */}
-        <Card variant="bordered" className="p-5">
-          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
-            Bank & Voucher Details
-          </Text>
-          <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Bank Account</Text>
-            <Text className="text-sm font-semibold text-foreground">{statement.bank_no}</Text>
-          </View>
-          <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Voucher Number</Text>
-            <Text className="text-sm font-semibold text-foreground">{statement.voucher_no}</Text>
-          </View>
-          <View className="flex-row justify-between">
-            <Text className="text-sm text-graphite">Voucher Date</Text>
-            <Text className="text-sm font-semibold text-foreground">{statement.voucher_date}</Text>
-          </View>
-        </Card>
+        <BankVoucherCard
+          bankNo={statement.bank_no}
+          voucherNo={statement.voucher_no}
+          voucherDate={statement.voucher_date}
+        />
 
-        {/* Salary Breakdown */}
-        <Card variant="bordered" className="p-5">
-          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
-            Salary Breakdown
-          </Text>
-          {statement.s_data.map((item, index) => (
-            <View
-              key={index}
-              className="flex-row justify-between py-2"
-              style={{
-                borderBottomWidth: index < statement.s_data.length - 1 ? 1 : 0,
-                borderColor: '#E5E7EB',
-              }}>
-              <Text className="text-sm text-charcoal">{item.pname}</Text>
-              <Text className="text-sm font-semibold text-foreground">{item.amount}</Text>
-            </View>
-          ))}
-        </Card>
+        <SalaryBreakdownCard items={statement.s_data} />
 
-        {/* Totals */}
-        <Card variant="bordered" className="p-5">
-          <Text className="mb-4 text-xs font-bold uppercase tracking-wider text-graphite">
-            Totals
-          </Text>
-          <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Total Emolument</Text>
-            <Text className="text-sm font-bold text-foreground">{statement.totalEmolument}</Text>
-          </View>
-          <View className="mb-2 flex-row justify-between">
-            <Text className="text-sm text-graphite">Total Pay Items</Text>
-            <Text className="text-sm font-bold text-foreground">{statement.totalPayItem}</Text>
-          </View>
-          <View className="flex-row justify-between">
-            <Text className="text-sm text-graphite">Net Amount (NG)</Text>
-            <Text className="text-sm font-bold text-semantic-up">{statement.totalng}</Text>
-          </View>
-          {statement.net_pay ? (
-            <View className="mt-2 flex-row justify-between border-t border-border pt-2">
-              <Text className="text-sm font-bold text-foreground">Net Pay</Text>
-              <Text className="text-sm font-bold text-foreground">{statement.net_pay}</Text>
-            </View>
-          ) : null}
-        </Card>
-        {/* Net Pay in Words */}
+        <TotalsCard
+          totalEmolument={statement.totalEmolument}
+          totalPayItem={statement.totalPayItem}
+          totalng={statement.totalng}
+          netPay={statement.net_pay}
+        />
+
         {statement.net_pay_in_word ? (
-          <Card variant="bordered" className="p-5">
-            <Text className="mb-2 text-xs font-bold uppercase tracking-wider text-graphite">
-              Net Pay (in Words)
-            </Text>
-            <Text className="text-sm font-semibold italic text-foreground">
-              {statement.net_pay_in_word}
-            </Text>
-          </Card>
+          <NetPayWordsCard netPayInWord={statement.net_pay_in_word} />
         ) : null}
       </ScrollView>
     </Container>
