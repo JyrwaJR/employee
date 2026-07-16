@@ -47,7 +47,7 @@ const ActiveLeaveCardSkeleton = () => (
         <Skeleton className="h-6 w-6 rounded" />
         <Skeleton className="h-5 w-28 rounded-md" />
       </View>
-      <Skeleton className="h-6 w-20 rounded-full" />
+      <Skeleton className="h-6 w-20 rounded-md" />
     </View>
     {/* Body row: leave description + date range + day count */}
     <View className="flex-row items-center justify-between">
@@ -72,7 +72,7 @@ const LeavePreviewSkeleton = () => (
     <View className="mb-2 flex-row items-center justify-between">
       <View className="flex-1 flex-row items-center gap-x-2">
         <Skeleton className="h-5 w-40 rounded-md" />
-        <Skeleton className="h-5 w-16 rounded-full" />
+        <Skeleton className="h-5 w-16 rounded-md" />
       </View>
       <Skeleton className="ml-2 h-5 w-5 rounded" />
     </View>

@@ -30,7 +30,7 @@ export function TaxSummaryCard({
             <Text className="text-base font-bold text-foreground">{item.employeeName}</Text>
             <Text className="text-xs text-graphite">{item.designation}</Text>
           </View>
-          <View className={cn('rounded-full px-3 py-1', getStatusColor(item.filingStatus).bg)}>
+          <View className={cn('rounded-md px-3 py-1', getStatusColor(item.filingStatus).bg)}>
             <Text className="text-xs font-semibold">
               {statusLabels[item.filingStatus] || item.filingStatus}
             </Text>
@@ -52,7 +52,7 @@ export function TaxSummaryCard({
           <View className="flex-row items-center gap-1">
             <View
               className={
-                'h-2 w-2 rounded-full ' + (item.regime === 'NEW' ? 'bg-primary' : 'bg-amber-500')
+                'h-2 w-2 rounded-md ' + (item.regime === 'NEW' ? 'bg-primary' : 'bg-amber-500')
               }
             />
             <Text className="text-xs text-graphite">

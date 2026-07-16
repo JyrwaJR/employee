@@ -44,7 +44,7 @@ export const SettingRow = ({
       <View className="flex-row items-center gap-4">
         <View
           className={cn(
-            'items-center justify-center rounded-full p-2',
+            'items-center justify-center rounded-md p-2',
             isDestructive ? 'bg-red-50 dark:bg-red-900/20' : 'bg-muted'
           )}>
           <Icon

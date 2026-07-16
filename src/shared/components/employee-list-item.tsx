@@ -18,7 +18,7 @@ export const EmployeeListItem = ({ item, onPress }: Props) => {
       className="mb-4 flex-row items-center rounded-2xl border border-border bg-card p-4 shadow-sm">
       <Image
         source={{ uri: `https://i.pravatar.cc/150?u=${item.emp_cd}` }}
-        className="h-12 w-12 rounded-full bg-muted"
+        className="h-12 w-12 rounded-md bg-muted"
       />
 
       <View className="ml-4 flex-1">
@@ -30,7 +30,7 @@ export const EmployeeListItem = ({ item, onPress }: Props) => {
         </Text>
       </View>
 
-      <View className={cn('rounded-full px-3 py-1', getStatusColor(item.emp_status).bg)}>
+      <View className={cn('rounded-md px-3 py-1', getStatusColor(item.emp_status).bg)}>
         <Text className={cn('text-xs font-semibold', getStatusColor(item.emp_status).text)}>
           {item.emp_status}
         </Text>

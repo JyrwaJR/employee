@@ -63,7 +63,7 @@ export const GovtHeaderSkeleton = ({
     {/* Optional subtitle — matches subtext variant */}
     {hasSubtitle && <Skeleton className={cn('h-4 rounded', subtitleWidth)} />}
 
-    {/* Optional badge pill — matches rounded-full badge */}
-    {hasBadge && <Skeleton className={cn('mt-4 h-6 rounded-full', badgeWidth)} />}
+    {/* Optional badge pill — matches rounded-md badge */}
+    {hasBadge && <Skeleton className={cn('mt-4 h-6 rounded-md', badgeWidth)} />}
   </View>
 );

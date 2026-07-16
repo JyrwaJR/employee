@@ -54,7 +54,7 @@ export class GlobalErrorBoundary extends Component<Props, State> {
               tint="light"
               className="w-full overflow-hidden rounded-3xl border border-white/40 bg-white/60 p-8 shadow-2xl">
               <View className="items-center">
-                <View className="mb-6 h-20 w-20 items-center justify-center rounded-full bg-red-100">
+                <View className="mb-6 h-20 w-20 items-center justify-center rounded-md bg-red-100">
                   <Icon name="alert-circle-outline" size={48} color="#ef4444" />
                 </View>
 

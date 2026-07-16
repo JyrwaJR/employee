@@ -25,7 +25,7 @@ const LeaveCardSkeleton = () => (
           <Skeleton className="h-3 w-28 rounded" />
         </View>
       </View>
-      <Skeleton className="h-6 w-20 rounded-full" />
+      <Skeleton className="h-6 w-20 rounded-md" />
     </View>
 
     {/* Divider */}

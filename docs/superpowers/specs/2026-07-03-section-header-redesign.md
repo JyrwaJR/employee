@@ -70,7 +70,7 @@ interface SectionHeaderProps {
 
 **Accent bar:**
 
-- 4px wide, `h-10`, `rounded-full`
+- 4px wide, `h-10`, `rounded-md`
 - Color: `bg-bloom-coral` (solid — no gradient library)
 - A 1px shadow for 3D depth effect
 

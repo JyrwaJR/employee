@@ -215,7 +215,7 @@ const SelectSheetModal = (props: SelectSheetModalProps) => {
         <Animated.View style={[sheetStyle]} className="rounded-lg bg-background pb-2">
           {/* Handle bar */}
           <View className="items-center py-3">
-            <View className="h-1.5 w-10 rounded-full bg-gray-300 dark:bg-gray-600" />
+            <View className="h-1.5 w-10 rounded-md bg-gray-300 dark:bg-gray-600" />
           </View>
 
           {/* Title */}

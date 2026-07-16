@@ -49,7 +49,7 @@ export const LeaveDetailHeader = ({ leave }: LeaveDetailHeaderProps) => {
             />
           </View>
           <View
-            className={cn('flex-row items-center gap-1.5 rounded-full px-3 py-1', statusStyle.bg)}>
+            className={cn('flex-row items-center gap-1.5 rounded-md px-3 py-1', statusStyle.bg)}>
             <Icon name={statusStyle.iconName} size={14} color={statusStyle.icon} />
             <Text className={cn('text-xs font-semibold', statusStyle.text)}>
               {leave.verify_flg_desc}

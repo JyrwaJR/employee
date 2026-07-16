@@ -51,7 +51,7 @@ export const SectionHeaderSkeleton = ({
   <View className={cn('mb-7', className)}>
     <View className="flex-row items-center gap-x-4">
       {/* Left accent bar */}
-      <Skeleton className="h-10 w-[3px] rounded-full" />
+      <Skeleton className="h-10 w-[3px] rounded-md" />
 
       {/* Icon */}
       {hasIcon && <Skeleton className="h-12 w-12 rounded-2xl" />}
@@ -64,6 +64,6 @@ export const SectionHeaderSkeleton = ({
     </View>
 
     {/* Separator */}
-    <View className="ml-[23px] mt-4 h-[2px] rounded-full bg-gray-100 dark:bg-gray-800" />
+    <View className="ml-[23px] mt-4 h-[2px] rounded-md bg-gray-100 dark:bg-gray-800" />
   </View>
 );

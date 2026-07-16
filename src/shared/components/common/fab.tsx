@@ -5,7 +5,7 @@ import { Icon } from '@components/ui/icon';
 import type { IoniconsIconName } from '@react-native-vector-icons/ionicons';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-const fabVariants = cva('absolute items-center justify-center rounded-full shadow-lg', {
+const fabVariants = cva('absolute items-center justify-center rounded-md shadow-lg', {
   variants: {
     variant: {
       primary: 'bg-primary shadow-primary/30',

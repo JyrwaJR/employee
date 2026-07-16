@@ -13,7 +13,7 @@ export const AnnouncementCardSkeleton = () => (
   <View className="mb-4 rounded-lg border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     {/* Unread dot */}
     <View className="mb-3">
-      <Skeleton className="h-2 w-2 rounded-full" />
+      <Skeleton className="h-2 w-2 rounded-md" />
     </View>
 
     {/* Title */}
@@ -29,7 +29,7 @@ export const AnnouncementCardSkeleton = () => (
     {/* Footer: date + priority */}
     <View className="flex-row items-center justify-between pt-3">
       <Skeleton className="h-3 w-24 rounded" />
-      <Skeleton className="h-4 w-14 rounded-full" />
+      <Skeleton className="h-4 w-14 rounded-md" />
     </View>
   </View>
 );

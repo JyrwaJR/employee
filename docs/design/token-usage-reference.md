@@ -65,7 +65,7 @@
 | card radius   | `rounded-md`   | 16px   | Cards, section containers — **never use `rounded-2xl`** |
 | button radius | `rounded-md`   | 4px    | All buttons, text inputs                                |
 | lg            | `rounded-lg`   | 8px    | Badge pills, category cards                             |
-| pill          | `rounded-full` | 9999px | Status badges, chips, filter tags                       |
+| pill          | `rounded-md`   | 9999px | Status badges, chips, filter tags                       |
 
 ## Shadow / Elevation
 
@@ -122,7 +122,7 @@ Always use the `Text` component with its `variant` prop. **Never use raw `classN
 Standard padding for status badges across the entire app:
 
 ```tsx
-<View className={cn('rounded-full px-3 py-1', statusStyle.bg)}>
+<View className={cn('rounded-md px-3 py-1', statusStyle.bg)}>
   <Text className={cn('text-xs font-semibold', statusStyle.text)}>{status}</Text>
 </View>
 ```

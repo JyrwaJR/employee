@@ -195,9 +195,9 @@ const ProgressBar = ({ label, used, total, color }: ProgressBarProps) => {
           {used}/{total}
         </Text>
       </View>
-      <View className="h-2.5 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
+      <View className="h-2.5 overflow-hidden rounded-md bg-gray-100 dark:bg-gray-800">
         <View
-          className="h-full rounded-full"
+          className="h-full rounded-md"
           style={{
             width: `${Math.min(percentage * 100, 100)}%`,
             backgroundColor: color,
@@ -356,7 +356,7 @@ export const ActiveLeaveCard = ({ leave }: ActiveLeaveCardProps) => {
               Active Leave
             </Text>
           </View>
-          <View className={cn('rounded-full px-3 py-1', statusColor)}>
+          <View className={cn('rounded-md px-3 py-1', statusColor)}>
             <Text className="text-xs font-semibold">{leave.status}</Text>
           </View>
         </View>
@@ -487,7 +487,7 @@ export const HomeScreen = () => {
           title={user ? `${user.first_name} ${user.last_name}` : 'Loading...'}
           subtitle={`${isAfterNoon ? 'Good Afternoon' : 'Good Morning'} · ${user?.department ?? ''}`}
           rightElement={
-            <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800">
+            <TouchableOpacity className="h-10 w-10 items-center justify-center rounded-md bg-gray-100 dark:bg-gray-800">
               <MaterialCommunityIcons
                 name="bell"
                 size={24}

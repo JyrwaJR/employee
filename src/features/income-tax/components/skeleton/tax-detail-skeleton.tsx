@@ -66,7 +66,7 @@ const TaxComputationSkeleton = () => (
   <View className="mb-6 rounded-lg border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     <View className="mb-4 flex-row items-center justify-between">
       <Skeleton className="h-4 w-32 rounded" />
-      <Skeleton className="h-6 w-24 rounded-full" />
+      <Skeleton className="h-6 w-24 rounded-md" />
     </View>
 
     {/* Slab table */}

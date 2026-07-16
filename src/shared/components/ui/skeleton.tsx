@@ -83,7 +83,7 @@ export function Skeleton({ className, animate = true }: SkeletonProps) {
 
 interface SkeletonItemProps {
   children: React.ReactNode;
-  /** Tailwind class for the skeleton shape (e.g., 'rounded-full') */
+  /** Tailwind class for the skeleton shape (e.g., 'rounded-md') */
   className?: string;
   /** Optional container styles */
   containerClassName?: string;

@@ -22,7 +22,7 @@ export const HomeActiveLeaveCard = ({ leave }: HomeActiveLeaveCardProps) => (
             Active Leave
           </Text>
         </View>
-        <View className={cn('rounded-full px-3 py-1', getStatusColor(leave.verify_flg_desc).bg)}>
+        <View className={cn('rounded-md px-3 py-1', getStatusColor(leave.verify_flg_desc).bg)}>
           <Text className="text-xs font-semibold">{leave.verify_flg_desc}</Text>
         </View>
       </View>

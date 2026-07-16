@@ -36,7 +36,7 @@ export const SectionHeader = ({
     <View className={cn('mb-4', className)}>
       <View className="flex-row items-center gap-x-4">
         {/* Left accent bar */}
-        <View className="h-10 w-[3px] rounded-full bg-blue-500" />
+        <View className="h-10 w-[3px] rounded-md bg-blue-500" />
 
         {/* Icon */}
         {icon && (
@@ -61,7 +61,7 @@ export const SectionHeader = ({
       </View>
 
       {/* Separator */}
-      <View className="ml-[23px] mt-4 h-[2px] rounded-full bg-muted" />
+      <View className="ml-[23px] mt-4 h-[2px] rounded-md bg-muted" />
     </View>
   );
 };

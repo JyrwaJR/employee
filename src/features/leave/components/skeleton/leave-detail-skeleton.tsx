@@ -15,7 +15,7 @@ const LeaveDetailHeaderSkeleton = () => (
   <View className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm dark:border-gray-800 dark:bg-gray-900">
     <View className="mb-4 flex-row items-center justify-between">
       <Skeleton className="h-16 w-16 rounded-lg" />
-      <Skeleton className="h-7 w-24 rounded-full" />
+      <Skeleton className="h-7 w-24 rounded-md" />
     </View>
     <Skeleton className="mb-2 h-8 w-52 rounded-md" />
     <Skeleton className="h-4 w-20 rounded" />

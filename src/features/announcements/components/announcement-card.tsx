@@ -13,7 +13,7 @@ export const AnnouncementCard = ({ item }: { item: AnnouncementT }) => {
     <TouchableOpacity activeOpacity={0.7} className="mb-4">
       <Card variant="bordered" className="p-5">
         <View className="mb-3 flex-row items-center justify-between">
-          {item.type === 'UR' && <View className="h-2 w-2 rounded-full bg-primary" />}
+          {item.type === 'UR' && <View className="h-2 w-2 rounded-md bg-primary" />}
         </View>
 
         <Text variant="heading" size="sm" className="mb-1 text-foreground">

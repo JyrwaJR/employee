@@ -545,7 +545,7 @@ export function TaxSummaryCard({
           </Text>
           <Text className="text-xs text-gray-500">{item.designation}</Text>
         </View>
-        <View className={`rounded-full px-3 py-1 ${statusColors[item.filingStatus] || ''}`}>
+        <View className={`rounded-md px-3 py-1 ${statusColors[item.filingStatus] || ''}`}>
           <Text className="text-xs font-semibold">
             {statusLabels[item.filingStatus] || item.filingStatus}
           </Text>
@@ -570,7 +570,7 @@ export function TaxSummaryCard({
       <View className="mt-2 flex-row justify-between">
         <View className="flex-row items-center gap-1">
           <View
-            className={`h-2 w-2 rounded-full ${item.regime === 'NEW' ? 'bg-blue-500' : 'bg-amber-500'}`}
+            className={`h-2 w-2 rounded-md ${item.regime === 'NEW' ? 'bg-blue-500' : 'bg-amber-500'}`}
           />
           <Text className="text-xs text-gray-500">{item.regime === 'NEW' ? 'New Regime' : 'Old Regime'}</Text>
         </View>
@@ -821,7 +821,7 @@ export default function EmployeeTaxDetailScreen() {
         <View className="mb-6 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm dark:border-gray-800 dark:bg-gray-900">
           <View className="mb-4 flex-row items-center justify-between">
             <SectionHeader title="Tax Computation" />
-            <View className={`rounded-full px-3 py-1 ${data.regime === 'NEW' ? 'bg-blue-100 dark:bg-blue-900/30' : 'bg-amber-100 dark:bg-amber-900/30'}`}>
+            <View className={`rounded-md px-3 py-1 ${data.regime === 'NEW' ? 'bg-blue-100 dark:bg-blue-900/30' : 'bg-amber-100 dark:bg-amber-900/30'}`}>
               <Text className={`text-xs font-bold ${data.regime === 'NEW' ? 'text-blue-700 dark:text-blue-400' : 'text-amber-700 dark:text-amber-400'}`}>
                 {data.regime === 'NEW' ? 'New Regime' : 'Old Regime'}
               </Text>

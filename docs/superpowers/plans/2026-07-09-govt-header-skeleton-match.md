@@ -33,7 +33,7 @@
 | Icon                  | Emoji in `h-16 w-16` centered view    | Missing                                                  |
 | "Govt of India" label | `text-[11px]` subtext variant         | Missing (replaced by left-aligned skeleton lines)        |
 | Title                 | Centered `heading` variant            | Below the row                                            |
-| Badge                 | Below title in `rounded-full` pill    | Right-aligned in the top row                             |
+| Badge                 | Below title in `rounded-md` pill      | Right-aligned in the top row                             |
 | Bottom margin         | `mb-8`                                | `mb-6`                                                   |
 
 - [ ] **Step 1: Rewrite `skeleton/govt-header.tsx`**
@@ -106,8 +106,8 @@ export const GovtHeaderSkeleton = ({
     {/* Optional subtitle — matches subtext variant */}
     {hasSubtitle && <Skeleton className={cn('h-4 rounded', subtitleWidth)} />}
 
-    {/* Optional badge pill — matches rounded-full badge */}
-    {hasBadge && <Skeleton className={cn('mt-4 h-6 rounded-full', badgeWidth)} />}
+    {/* Optional badge pill — matches rounded-md badge */}
+    {hasBadge && <Skeleton className={cn('mt-4 h-6 rounded-md', badgeWidth)} />}
   </View>
 );
 ````
@@ -118,7 +118,7 @@ export const GovtHeaderSkeleton = ({
 - **Govt of India label:** `h-3 w-28 rounded` — `h-3` approximates `text-[11px]` (~14px line height), `w-28` (~112px) accommodates "Government of India" at that font size.
 - **Title:** `h-7 rounded-md` — matches `variant="heading"` (~28px line height). Width defaults to `w-56` (~224px) which covers most title lengths.
 - **Subtitle:** `h-4 rounded` — matches `variant="subtext"` (~16px line height). Width defaults to `w-40` (~160px).
-- **Badge:** `h-6 rounded-full` with `mt-4` — matches the badge's `mt-4 rounded-full`. Width defaults to `w-24` (~96px).
+- **Badge:** `h-6 rounded-md` with `mt-4` — matches the badge's `mt-4 rounded-md`. Width defaults to `w-24` (~96px).
 
 - [ ] **Step 2: Add GovtHeaderSkeleton to the skeleton barrel export**
 

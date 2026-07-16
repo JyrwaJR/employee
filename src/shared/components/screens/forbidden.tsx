@@ -33,7 +33,7 @@ export const Forbidden = ({
 
   return (
     <View className="flex-1 items-center justify-center gap-y-2 p-6">
-      <View className="mb-6 h-24 w-24 items-center justify-center rounded-full bg-red-50 dark:bg-red-900/20">
+      <View className="mb-6 h-24 w-24 items-center justify-center rounded-md bg-red-50 dark:bg-red-900/20">
         <Icon name="shield-checkmark" size={48} color="#EF4444" />
       </View>
 
@@ -57,7 +57,7 @@ export const Forbidden = ({
         <TouchableOpacity
           onPress={onPressTryAgain}
           activeOpacity={0.7}
-          className="mt-4 rounded-full border border-border px-8 py-3">
+          className="mt-4 rounded-md border border-border px-8 py-3">
           <Text className="font-medium text-charcoal">Try Again</Text>
         </TouchableOpacity>
       )}

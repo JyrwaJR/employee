@@ -24,7 +24,7 @@ export const UpdateModal: React.FC = () => {
           intensity={30}
           className="w-full overflow-hidden rounded-3xl border border-white/20 bg-white/70 p-8 shadow-2xl">
           <View className="items-center">
-            <View className="mb-4 h-16 w-16 items-center justify-center rounded-full bg-blue-500/10">
+            <View className="mb-4 h-16 w-16 items-center justify-center rounded-md bg-blue-500/10">
               <Icon name="rocket-outline" size={32} color="#3b82f6" />
             </View>
 

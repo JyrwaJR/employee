@@ -21,7 +21,7 @@ const TaxSummaryCardSkeleton = () => (
         <Skeleton className="h-5 w-44 rounded-lg" />
         <Skeleton className="h-3 w-28 rounded" />
       </View>
-      <Skeleton className="h-6 w-20 rounded-full" />
+      <Skeleton className="h-6 w-20 rounded-md" />
     </View>
 
     {/* Row 2: PAN | Gross Income */}
@@ -39,7 +39,7 @@ const TaxSummaryCardSkeleton = () => (
     {/* Row 3: Regime | Tax */}
     <View className="flex-row items-center justify-between">
       <View className="flex-row items-center gap-1">
-        <Skeleton className="h-2 w-2 rounded-full" />
+        <Skeleton className="h-2 w-2 rounded-md" />
         <Skeleton className="h-3 w-20 rounded" />
       </View>
       <Skeleton className="h-4 w-24 rounded" />

@@ -64,10 +64,7 @@ export const SalaryStatementListItem = ({
         </View>
         <View className="items-end">
           <View
-            className={cn(
-              'mb-1 flex-row items-center gap-1 rounded-full px-2 py-1',
-              statusStyle.bg
-            )}>
+            className={cn('mb-1 flex-row items-center gap-1 rounded-md px-2 py-1', statusStyle.bg)}>
             <Icon
               name={item.status === 'PAID' ? 'checkmark-circle' : 'time-outline'}
               size={12}

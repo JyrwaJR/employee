@@ -55,15 +55,15 @@ export const SalaryStatementsListSkeleton = ({}: SalaryStatementsListSkeletonPro
       <View className="px-4 pb-4 pt-2">
         <Skeleton className="mb-2 h-3 w-8 rounded" />
         <View className="flex-row gap-2">
-          <Skeleton className="h-8 w-16 rounded-full" />
-          <Skeleton className="h-8 w-16 rounded-full" />
-          <Skeleton className="h-8 w-16 rounded-full" />
+          <Skeleton className="h-8 w-16 rounded-md" />
+          <Skeleton className="h-8 w-16 rounded-md" />
+          <Skeleton className="h-8 w-16 rounded-md" />
         </View>
         <Skeleton className="mb-2 mt-4 h-3 w-10 rounded" />
         <View className="flex-row gap-2">
-          <Skeleton className="h-8 w-20 rounded-full" />
-          <Skeleton className="h-8 w-24 rounded-full" />
-          <Skeleton className="h-8 w-20 rounded-full" />
+          <Skeleton className="h-8 w-20 rounded-md" />
+          <Skeleton className="h-8 w-24 rounded-md" />
+          <Skeleton className="h-8 w-20 rounded-md" />
         </View>
       </View>
     </View>

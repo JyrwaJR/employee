@@ -28,7 +28,7 @@ export const EmptyScreen = ({
 
   return (
     <Container className={cn('flex-1 items-center justify-center px-6')}>
-      <View className={cn('mb-6 h-24 w-24 items-center justify-center rounded-full', 'bg-muted')}>
+      <View className={cn('mb-6 h-24 w-24 items-center justify-center rounded-md', 'bg-muted')}>
         <Icon name={icon} size={48} color={isDarkMode ? '#9CA3AF' : '#6B7280'} />
       </View>
 

@@ -82,7 +82,7 @@ export const LoginScreenSkeleton = () => (
 
       {/* Dev UI Lab link (visible in dev only, but skeleton shows it always) */}
       <View className="mt-8 items-center">
-        <Skeleton className="h-8 w-44 rounded-full" />
+        <Skeleton className="h-8 w-44 rounded-md" />
       </View>
     </KeyboardSafeView>
   </Container>

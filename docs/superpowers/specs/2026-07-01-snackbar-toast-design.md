@@ -20,7 +20,7 @@
 ```
 
 - **Position:** 16px above the bottom safe-area edge, horizontally centered
-- **Shape:** Pill/fully rounded (`rounded-full`), padding ~12px vertical × 16px horizontal
+- **Shape:** Pill/fully rounded (`rounded-md`), padding ~12px vertical × 16px horizontal
 - **Max width:** 90% of screen width; text truncated with ellipsis if too long
 - **Light theme:** Dark background (`bg-ink` / `#1a1a1a`), white text
 - **Dark theme:** White background (`bg-white`), dark text

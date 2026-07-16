@@ -12,7 +12,7 @@ import { Skeleton } from '@components/ui/skeleton';
  */
 const LoginHeaderSkeleton = () => (
   <View className="mb-8 items-center gap-y-2">
-    <Skeleton className="mb-3 h-16 w-16 rounded-full" />
+    <Skeleton className="mb-3 h-16 w-16 rounded-md" />
     <Skeleton className="h-3 w-28 rounded" />
     <Skeleton className="h-8 w-48 rounded-md" />
     <Skeleton className="h-4 w-36 rounded" />

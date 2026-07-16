@@ -84,7 +84,7 @@ export const EmployeeTaxDetailScreen = () => {
 
             <View
               className={cn(
-                'rounded-full px-3 py-1',
+                'rounded-md px-3 py-1',
                 data.regime === 'NEW' ? 'bg-primary-soft' : 'bg-amber-100 dark:bg-amber-900/30'
               )}>
               <Text
