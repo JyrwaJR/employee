@@ -2,15 +2,10 @@ import React from 'react';
 import { View } from 'react-native';
 import { Card } from '@components/ui/card';
 import { Text } from '@components/ui/text';
-import type { UserT } from '@sharedTypes/auth';
+import { useAuthStore } from '@stores/auth.store';
 
 /** Props for the EmployeeInfoCard component. */
 interface EmployeeInfoCardProps {
-  /** The authenticated user object containing personal and employment details. */
-  user: Pick<
-    UserT,
-    'emp_fname' | 'emp_mname' | 'emp_lname' | 'emp_dept' | 'emp_designation' | 'pay_scale'
-  >;
   /** Pay in pay band amount from the salary statement (optional). */
   payInPb?: string;
   /** Grade pay amount from the salary statement (optional). */
@@ -23,13 +18,14 @@ interface EmployeeInfoCardProps {
 
 /** Renders the employee information card with name, department, designation, pay level, and period. */
 export const EmployeeInfoCard = ({
-  user,
   payInPb,
   gradePay,
   selectedMonth,
   selectedYear,
 }: EmployeeInfoCardProps) => {
-  const fullName = [user.emp_fname, user.emp_mname, user.emp_lname].filter(Boolean).join(' ');
+  const { user } = useAuthStore();
+
+  const fullName = [user?.emp_fname, user?.emp_mname, user?.emp_lname].filter(Boolean).join(' ');
 
   return (
     <Card variant="bordered" className="p-5">
@@ -45,18 +41,18 @@ export const EmployeeInfoCard = ({
       <View className="mb-2 flex-row justify-between">
         <Text className="text-sm text-graphite">Office / Department</Text>
         <Text className="max-w-[60%] text-right text-sm font-semibold text-foreground">
-          {user.emp_dept || '-'}
+          {user?.emp_dept || '-'}
         </Text>
       </View>
       <View className="mb-2 flex-row justify-between">
         <Text className="text-sm text-graphite">Designation</Text>
         <Text className="max-w-[60%] text-right text-sm font-semibold text-foreground">
-          {user.emp_designation || '-'}
+          {user?.emp_designation || '-'}
         </Text>
       </View>
       <View className="mb-2 flex-row justify-between">
         <Text className="text-sm text-graphite">Pay Level</Text>
-        <Text className="text-sm font-semibold text-foreground">{user.pay_scale || '-'}</Text>
+        <Text className="text-sm font-semibold text-foreground">{user?.pay_scale || '-'}</Text>
       </View>
       {payInPb ? (
         <View className="mb-2 flex-row justify-between">

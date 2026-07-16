@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
 import { Container } from '@components/layout/container';
-import { useAuthStore } from '@stores/auth.store';
 import { useSalaryStatements } from '../hooks';
 import { EmptyScreen } from '@components/screens';
 import { FilterCard, SectionHeader } from '@components/common';
@@ -38,7 +37,6 @@ const currentYear: string = getCurrentYear().toString();
 export const StatementScreen = () => {
   const [selectedYear, setSelectedYear] = useState<string>(currentYear);
   const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth.toUpperCase());
-  const { user } = useAuthStore();
   const {
     data: salaryYears,
     isFetching: isFetchingSalYear,
@@ -98,14 +96,6 @@ export const StatementScreen = () => {
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl onRefresh={refetch} refreshing={isFetching} />}>
         <EmployeeInfoCard
-          user={{
-            emp_fname: user?.emp_fname ?? '',
-            emp_mname: user?.emp_mname ?? '',
-            emp_lname: user?.emp_lname ?? '',
-            emp_dept: user?.emp_dept ?? '',
-            emp_designation: user?.emp_designation ?? '',
-            pay_scale: user?.pay_scale ?? '',
-          }}
           payInPb={statement.pay_in_pb}
           gradePay={statement.grade_pay}
           selectedMonth={selectedMonth}
