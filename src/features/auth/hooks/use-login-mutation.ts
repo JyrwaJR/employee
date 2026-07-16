@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { z } from 'zod';
 import { LoginSchema } from '../validators/login.schema';
 import { rpc } from '@utils/api';
@@ -19,7 +19,6 @@ type LoginResponse = {
 
 export const useLoginMutation = () => {
   const { fetchUser, setEmpCode } = useAuthStore();
-  const queryClient = useQueryClient();
   return useMutation<ApiResponse<LoginResponse>, unknown, LoginFormInputs>({
     mutationKey: QUERY_KEYS.AUTH.ME,
     meta: { auth: true },
@@ -33,21 +32,27 @@ export const useLoginMutation = () => {
         emp_cd: data.emp_cd,
       });
     },
-    onSuccess: async (data, { emp_cd }, _, context) => {
+    onSuccess: async (data, { emp_cd }) => {
       if (data.success) {
         logger.info('Successfully logged in');
-        queryClient.invalidateQueries({ queryKey: context.mutationKey });
+
+        // Mark user as signed-in immediately so AuthRedirect navigates to home
+        // without waiting for the user profile fetch to complete.
+        useAuthStore.setState({ isSignedIn: true });
+
         if (emp_cd) {
-          logger.info('Start Fetching user', emp_cd);
-          fetchUser();
-          logger.info('End Fetching user', emp_cd);
+          // Fetch user profile in background — doesn't block navigation.
+          // The profile populates the store asynchronously after the home
+          // screen renders.
+          fetchUser().catch((err) => {
+            logger.error('Background fetchUser failed', err);
+          });
         }
 
         return data;
       }
-      logger.info('Unsuccessful login Removing Current access Token Start');
+      logger.info('Unsuccessful login — removing access token');
       await TokenStoreManager.removeAccessToken();
-      logger.info('Unsuccessful login Removing Current access Token End');
 
       return data;
     },
