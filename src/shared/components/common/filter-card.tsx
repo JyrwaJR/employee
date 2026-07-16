@@ -3,6 +3,7 @@ import { View, ScrollView, TouchableOpacity } from 'react-native';
 import { Text } from '@components/ui/text';
 import { cn } from '@utils/helpers/cn';
 import { Icon } from '@components/ui/icon';
+import { months as defaultMonths } from '@utils/helpers';
 
 /** A selectable filter option with label and value. */
 export interface FilterOption {
@@ -79,7 +80,7 @@ export const FilterCard = ({
   years,
   month,
   onMonthChange,
-  months,
+  months = defaultMonths,
   className,
 }: FilterCardProps) => {
   // Internal state for when external state is not provided
@@ -110,12 +111,24 @@ export const FilterCard = ({
     return null;
   }
 
+  const sortedYears = years?.sort((a, b) => {
+    if (a === year) return -1;
+    if (b === year) return 1;
+    return 0;
+  });
+
+  const sortedMonth = months?.sort((a, b) => {
+    if (a === month) return -1;
+    if (b === month) return 1;
+    return 0;
+  });
+
   return (
     <View className={cn('rounded-2xl border border-border bg-card shadow-sm', className)}>
       {/* Header / Toggle Button */}
       <TouchableOpacity
         onPress={handleToggle}
-        className="flex-row items-center justify-between rounded-t-2xl bg-gray-50/50 p-4 dark:bg-white/5">
+        className="flex-row items-center justify-between rounded-t-md p-4 ">
         <View className="flex-row items-center gap-2">
           <Icon name="funnel" size={16} color="#64748B" />
           <Text className="text-sm font-semibold text-charcoal">Filters</Text>
@@ -148,7 +161,7 @@ export const FilterCard = ({
             <View className={cn(hasStatus && 'mt-2', hasMonths ? 'mb-4' : '')}>
               <SectionLabel title="Year" />
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {years?.map((y) => (
+                {sortedYears?.map((y) => (
                   <FilterChip
                     key={y}
                     label={y}
@@ -165,7 +178,7 @@ export const FilterCard = ({
             <View className={cn((hasStatus || hasYears) && 'mt-2')}>
               <SectionLabel title="Month" />
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                {months?.map((m) => (
+                {sortedMonth?.map((m) => (
                   <FilterChip
                     key={m}
                     label={m}

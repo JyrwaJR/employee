@@ -183,7 +183,7 @@ export const LoginScreen = () => {
               onPress={methods.handleSubmit(onSubmit)}
               isLoading={isButtonLoading}
               disabled={isSignedIn || isLimited}>
-              {isOAuthError ? 'Retry Connection' : 'Continue'}
+              {isOAuthError ? 'Retry Connection' : isLimited ? 'Please wait' : 'Continue'}
             </Button>
           </View>
         </FormProvider>

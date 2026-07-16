@@ -5,7 +5,7 @@ import { useSalaryStatements } from '../hooks';
 import { EmptyScreen } from '@components/screens';
 import { FilterCard, SectionHeader } from '@components/common';
 import { SalaryStatementsListSkeleton } from '../components/skeleton';
-import { getCurrentYear, getPreviousMonth, months } from '@utils/helpers';
+import { getCurrentYear, getPreviousMonth } from '@utils/helpers';
 import { useSalaryYears } from '@hooks/use-salary-years';
 import {
   EmployeeInfoCard,
@@ -53,20 +53,6 @@ export const StatementScreen = () => {
     year: parseInt(selectedYear),
   });
 
-  const sortedYears = salaryYears
-    ?.map((year) => year.sal_year)
-    .sort((a, b) => {
-      if (a === selectedYear) return -1;
-      if (b === selectedYear) return 1;
-      return 0;
-    });
-
-  const sortedMonth = months.sort((a, b) => {
-    if (a === selectedMonth) return -1;
-    if (b === selectedMonth) return 1;
-    return 0;
-  });
-
   const noStatementMessage = `No salary statement is available for the selected month ${selectedMonth.toLowerCase()} and year ${selectedYear}.`;
 
   if (isLoading || isLoadingSalYear) {
@@ -79,10 +65,9 @@ export const StatementScreen = () => {
         <SectionHeader title="Salary Statement" />
         <FilterCard
           year={selectedYear}
-          years={sortedYears}
+          years={salaryYears?.map((year) => year.sal_year)}
           onYearChange={(value) => setSelectedYear(value)}
           month={selectedMonth}
-          months={sortedMonth}
           onMonthChange={(value) => setSelectedMonth(value)}
           isOpen={isFetchingSalYear || isLoadingSalYear ? false : true}
         />
@@ -95,10 +80,9 @@ export const StatementScreen = () => {
     <Container className="flex-1 gap-y-2">
       <FilterCard
         year={selectedYear}
-        years={sortedYears}
+        years={salaryYears?.map((year) => year.sal_year)}
         onYearChange={(value) => setSelectedYear(value)}
         month={selectedMonth}
-        months={months}
         onMonthChange={(value) => setSelectedMonth(value)}
         isOpen={isFetchingSalYear || isLoadingSalYear ? false : undefined}
       />
