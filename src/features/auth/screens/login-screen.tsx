@@ -38,28 +38,31 @@ const formDefaultValue: LoginFormInputs = {
 /**
  * The primary login screen displayed to unauthenticated users.
  *
- * Orchestrates a two-step authentication flow:
- *   1. **OAuth token acquisition** — Fetches an OAuth bearer token via
- *      `useGetOAuthToken`. This step is required before the credentials
- *      can be submitted.
+ * Authentication flow:
+ *   1. **OAuth token acquisition (eager)** — On mount, the screen immediately
+ *      starts fetching an OAuth bearer token via `useGetOAuthToken`. This
+ *      happens in parallel with the user filling out the form so the token
+ *      is typically ready by the time they tap "Continue".
  *   2. **Credential validation** — Submits the employee code and password
- *      via `useLoginMutation` using the acquired OAuth token.
+ *      via `useLoginMutation` using the already-acquired OAuth token. The
+ *      `onSubmit` handler is gated on token readiness.
  *
  * ### Rate limiting
  *
  * A sliding-window rate limiter guards the submit handler, allowing only
- * **1 submission per 5 seconds**. When the limit is active the button
- * displays a "Please wait N" label and the handler returns early.
+ * **1 submission per 10 seconds**. When the limit is active the button
+ * displays cooldown state and the handler returns early.
  *
  * ### Edge cases
  *
  * - **Already signed in** — The submit button is disabled when
  *   `isSignedIn` is `true` to prevent duplicate submissions.
- * - **Pending mutations** — Both the OAuth token and login mutations
- *   contribute to `isPending`, which shows a loading spinner on the
- *   button and disables interaction.
- * - **API errors** — Backend validation errors returned from the login
- *   mutation are surfaced via `toast.error()`.
+ * - **OAuth token still loading** — If the user taps "Continue" before the
+ *   OAuth token is ready, a snackbar message asks them to wait.
+ * - **OAuth token failed** — The button label changes to "Retry Connection".
+ *   Tapping retries the OAuth fetch.
+ * - **Login API errors** — Backend validation errors are surfaced via
+ *   `toast.error()`.
  * - **Developer mode** — A link to the UI Laboratory is rendered below
  *   the form when `__DEV__` is `true`, toggled via `EXPO_PUBLIC_APP_ENV`.
  *
@@ -86,34 +89,53 @@ export const LoginScreen = () => {
 
   const { mutate: loginMutate, isPending: isLoginPending } = useLoginMutation();
 
-  const { mutate, isPending: isTokenPending } = useGetOAuthToken();
+  const {
+    refetch: fetchOAuthToken,
+    isLoading: isOAuthFetching,
+    isSuccess: isTokenReady,
+    isError: isOAuthError,
+  } = useGetOAuthToken();
+
+  // Pre-fetch OAuth token eagerly on mount — parallel with user input
+  React.useEffect(() => {
+    if (!isTokenReady && !isOAuthFetching && !isOAuthError) {
+      fetchOAuthToken();
+    }
+  }, [fetchOAuthToken, isTokenReady, isOAuthFetching, isOAuthError]);
 
   const onSubmit = (data: LoginFormInputs) => {
-    if (isLimited) {
+    if (isLimited) return;
+
+    // If the OAuth token fetch failed, retry on button tap
+    if (isOAuthError) {
+      fetchOAuthToken();
+      return;
+    }
+
+    // If the OAuth token is still being fetched, inform the user
+    if (!isTokenReady) {
+      showSnackbar('Preparing authentication, please wait...');
       return;
     }
 
     startCooldown();
 
-    mutate(undefined, {
-      onSuccess: async () => {
-        loginMutate(data, {
-          onSuccess: (sData) => {
-            if (sData.success) {
-              showSnackbar(sData.message);
-              return sData;
-            }
-            toast.error(sData.message);
-            return sData;
-          },
-        });
+    loginMutate(data, {
+      onSuccess: (sData) => {
+        if (sData.success) {
+          showSnackbar(sData.message);
+          return sData;
+        }
+        toast.error(sData.message);
+        return sData;
       },
     });
   };
 
-  const isPending = isAuthLoading || isLoginPending || isTokenPending;
+  // Only show skeleton during cold-start auth hydration
+  if (isAuthLoading) return <LoginScreenSkeleton />;
 
-  if (isPending) return <LoginScreenSkeleton />;
+  const isButtonLoading = isOAuthFetching || isLoginPending;
 
   return (
     <Container>
@@ -159,9 +181,9 @@ export const LoginScreen = () => {
             <Button
               testID="SIGN_IN_BUTTON"
               onPress={methods.handleSubmit(onSubmit)}
-              isLoading={isPending}
+              isLoading={isButtonLoading}
               disabled={isSignedIn || isLimited}>
-              Continue
+              {isOAuthError ? 'Retry Connection' : 'Continue'}
             </Button>
           </View>
         </FormProvider>

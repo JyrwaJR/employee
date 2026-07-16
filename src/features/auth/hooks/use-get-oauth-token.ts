@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { TokenStoreManager } from '@stores/token.store';
 import { logger } from '@utils/logger';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -22,26 +22,44 @@ type GetOAuthResponse = {
   token_type: string;
 };
 
+/**
+ * Fetches an OAuth2 bearer token via the client-credentials grant and stores
+ * it in SecureStore for subsequent API calls.
+ *
+ * Uses `useQuery` with `enabled: false` so the caller controls when the fetch
+ * starts (e.g., on screen mount). The result is cached for 5 minutes to avoid
+ * redundant fetches if the component remounts.
+ *
+ * @returns A query result with `refetch` to trigger the fetch, `isLoading`
+ *   while in-flight, `isSuccess` when a token has been stored, and
+ *   `isError`/`error` on failure.
+ */
 export function useGetOAuthToken() {
-  return useMutation({
-    mutationFn: () =>
-      RNFetchBlob.config({
-        trusty: true,
-      }).fetch('POST', url, headers, 'grant_type=client_credentials'),
-    onSuccess: async (res) => {
+  return useQuery({
+    queryKey: ['oauth-token'],
+    queryFn: async () => {
+      const res = await RNFetchBlob.config({ trusty: true }).fetch(
+        'POST',
+        url,
+        headers,
+        'grant_type=client_credentials'
+      );
+
       const data = JSON.parse(res.data) as GetOAuthResponse;
 
-      if (!data) return;
-
-      logger.info('Get OAuth Token Success', { accessToken: !!data.access_token });
-
-      if (data.access_token) {
-        logger.info('Setting access token');
-        await TokenStoreManager.addAccessToken(data.access_token);
-        logger.info('Successfully set access token');
+      if (!data || !data.access_token) {
+        throw new Error('OAuth response missing access_token');
       }
 
-      return data as GetOAuthResponse;
+      logger.info('Get OAuth Token Success', { accessToken: !!data.access_token });
+      await TokenStoreManager.addAccessToken(data.access_token);
+      logger.info('Successfully set access token');
+
+      return data;
     },
+    // Don't auto-fetch — the screen triggers it via refetch() on mount
+    enabled: false,
+    retry: 2,
+    staleTime: 1000 * 60 * 5,
   });
 }
