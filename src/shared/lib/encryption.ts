@@ -3,7 +3,22 @@ import CryptoJS from 'crypto-js';
 const appSk = process.env.EXPO_PUBLIC_APP_SK ?? '';
 const appIv = process.env.EXPO_PUBLIC_APP_IV ?? '';
 
+/**
+ * Module-level cache for the derived AES key and IV.
+ *
+ * The key and IV are derived from static environment variables
+ * (`EXPO_PUBLIC_APP_SK` and `EXPO_PUBLIC_APP_IV`) via SHA256. Since these
+ * values never change during the app lifecycle, computing the hashes once
+ * and reusing them eliminates 6 redundant SHA256 calls per login flow.
+ */
+let cachedKey: CryptoJS.lib.WordArray | null = null;
+let cachedIv: CryptoJS.lib.WordArray | null = null;
+
 const getKeyAndIv = () => {
+  if (cachedKey && cachedIv) {
+    return { key: cachedKey, iv: cachedIv };
+  }
+
   if (!appSk || !appIv) {
     throw new Error('Missing environment variables');
   }
@@ -11,10 +26,10 @@ const getKeyAndIv = () => {
   const keyHash = CryptoJS.SHA256(appSk).toString();
   const ivHash = CryptoJS.SHA256(appIv).toString();
 
-  return {
-    key: CryptoJS.enc.Utf8.parse(keyHash.substring(0, 32)),
-    iv: CryptoJS.enc.Utf8.parse(ivHash.substring(0, 16)),
-  };
+  cachedKey = CryptoJS.enc.Utf8.parse(keyHash.substring(0, 32));
+  cachedIv = CryptoJS.enc.Utf8.parse(ivHash.substring(0, 16));
+
+  return { key: cachedKey, iv: cachedIv };
 };
 
 export function encrypt(plain: string): string {
