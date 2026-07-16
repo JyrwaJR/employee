@@ -53,6 +53,22 @@ export const StatementScreen = () => {
     year: parseInt(selectedYear),
   });
 
+  const sortedYears = salaryYears
+    ?.map((year) => year.sal_year)
+    .sort((a, b) => {
+      if (a === selectedYear) return -1;
+      if (b === selectedYear) return 1;
+      return 0;
+    });
+
+  const sortedMonth = months.sort((a, b) => {
+    if (a === selectedMonth) return -1;
+    if (b === selectedMonth) return 1;
+    return 0;
+  });
+
+  const noStatementMessage = `No salary statement is available for the selected month ${selectedMonth.toLowerCase()} and year ${selectedYear}.`;
+
   if (isLoading || isLoadingSalYear) {
     return <SalaryStatementsListSkeleton />;
   }
@@ -63,18 +79,14 @@ export const StatementScreen = () => {
         <SectionHeader title="Salary Statement" />
         <FilterCard
           year={selectedYear}
-          years={salaryYears?.map((year) => year.sal_year)}
+          years={sortedYears}
           onYearChange={(value) => setSelectedYear(value)}
           month={selectedMonth}
-          months={months}
+          months={sortedMonth}
           onMonthChange={(value) => setSelectedMonth(value)}
           isOpen={isFetchingSalYear || isLoadingSalYear ? false : true}
         />
-        <EmptyScreen
-          title="No Statement Found"
-          message="No salary statement is available for the selected month and year"
-          refresh={refetch}
-        />
+        <EmptyScreen title="No Statement Found" message={noStatementMessage} refresh={refetch} />
       </Container>
     );
   }
@@ -83,7 +95,7 @@ export const StatementScreen = () => {
     <Container className="flex-1 gap-y-2">
       <FilterCard
         year={selectedYear}
-        years={salaryYears?.map((year) => year.sal_year)}
+        years={sortedYears}
         onYearChange={(value) => setSelectedYear(value)}
         month={selectedMonth}
         months={months}
