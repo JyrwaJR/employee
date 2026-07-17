@@ -54,7 +54,7 @@ export const HomeScreen = () => {
 
         {activeLeaves?.length > 0 && (
           <View className="mb-4">
-            <Text variant="heading" size="lg" className="mb-4 text-gray-900 dark:text-white">
+            <Text variant="heading" size="lg" className="mb-4">
               Active Leaves
             </Text>
             {activeLeaves.map((item) => (
@@ -64,7 +64,7 @@ export const HomeScreen = () => {
         )}
 
         <View className="mb-6">
-          <Text variant="heading" size="lg" className="mb-4 text-gray-900 dark:text-white">
+          <Text variant="heading" size="lg" className="mb-4">
             Leave History
           </Text>
           {otherLeaves.length === 0 ? (
